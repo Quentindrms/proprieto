@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import { createMemo } from "solid-js";
 import Heading from "./heading";
-import Text from "./text";
 
 interface ProgressBarProps {
     label: string;
