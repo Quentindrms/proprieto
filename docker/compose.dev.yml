@@ -1,0 +1,64 @@
+name: proprio-developement 
+services:
+  frontend:
+    container_name: proprio-frontend-dev
+    build:
+      context: ../services/frontend
+      dockerfile: .dev.dockerfile 
+    ports: 
+      - ${FRONTEND_PORT:-3000}:3000
+      - ${HMR_PORT:-24678}:24678
+    volumes: 
+      - ../services/frontend:/app
+    environment: 
+      - NODE_ENV=development
+    networks:
+      - frontback
+  
+  adminer:
+    container_name: proprieto-adminer-dev
+    image: adminer:latest
+    ports:
+      - ${ADMINER_PORT:-8080}:8080
+    environment:
+      - ADMINER_HOST=postgres
+      - ADMINER_USER=${DB_USERNAME}
+      - ADMINER_PASSWORD=${DB_PASSWORD}
+    networks:
+      - database
+  
+  backend: 
+    container_name: proprieto-backend-dev
+    build: 
+      context: ../services/backend
+      dockerfile: .dev.dockerfile
+    ports:
+      - ${BACKEND_PORT:-4000}:4000
+    environment:
+      - NODE_ENV=development
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - DATABASE_URL=postgresql://${DB_USERNAME}:${DB_PASSWORD}@postgres:5432/${DB_NAME}?schema=public
+      - JWT_SECRET=${JWT_SECRET}
+    networks:
+      - database
+      - frontback
+
+  postgres:
+    image: postgres:18-alpine
+    container_name: proprieto-database-development
+    volumes:
+      - ../database/development:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    networks:
+      - database
+
+networks:
+  database: 
+    driver: bridge
+  frontback: 
+    driver: bridge

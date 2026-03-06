@@ -1,0 +1,28 @@
+{
+  "scripts": {
+    "dev": "vike dev",
+    "build": "vike build",
+    "preview": "vike build && vike preview",
+    "prod": "vike build && node ./dist/server/index.mjs"
+  },
+  "dependencies": {
+    "@photonjs/fastify": "^0.1.12",
+    "@universal-middleware/core": "^0.4.16",
+    "fastify": "^5.7.4",
+    "fastify-raw-body": "^5.0.0",
+    "solid-js": "^1.9.11",
+    "telefunc": "^0.2.19",
+    "vike": "^0.4.253",
+    "vike-photon": "^0.1.24",
+    "vike-solid": "^0.8.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.2.1",
+    "@types/node": "^20.19.30",
+    "tailwindcss": "^4.2.1",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1",
+    "vite-plugin-solid": "^2.11.10"
+  },
+  "type": "module"
+}
