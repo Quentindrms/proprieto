@@ -8,7 +8,7 @@ interface ButtonProps extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {
     color?: ButtonColor;
 }
 
-export default function Button(props: ButtonProps) {
+export function Button(props: ButtonProps) {
     const colorClases: Record<ButtonColor, string> = {
         green: "bg-solid-green hover:bg-solid-green-hover",
         red: "bg-solid-red hover:bg-solid-red-hover",
