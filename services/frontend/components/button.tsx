@@ -1,11 +1,11 @@
 import clsx from "clsx";
-import { type JSX, splitProps } from "solid-js";
+import type { JSX } from "solid-js";
 import type { ButtonColor } from "../types/styleTypes";
 
 interface ButtonProps extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {
     type: "submit" | "button" | "menu";
     children: JSX.Element;
-    color?: ButtonColor,
+    color?: ButtonColor;
 }
 
 export default function Button(props: ButtonProps) {
@@ -16,12 +16,15 @@ export default function Button(props: ButtonProps) {
         gold: "bg-solid-gold hover:bg-solid-gold-hover",
     };
 
-    const globalClasses = " w-fit rounded-xl p-2 text-primary font-bold font-title";
+    const globalClasses =
+        " w-fit rounded-xl p-2 text-primary font-bold font-title";
     return (
-        <button type={props.type}
+        <button
+            type={props.type}
             class={clsx([
                 globalClasses,
-                props.color ? colorClases[props.color] : colorClases.gold])}
+                props.color ? colorClases[props.color] : colorClases.gold,
+            ])}
         >
             {props.children}
         </button>
