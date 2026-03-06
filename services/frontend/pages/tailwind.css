@@ -1,39 +1,38 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&family=TASA+Orbiter:wght@400..800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&family=TASA+Orbiter:wght@400..800&display=swap");
 @import "tailwindcss";
 
 @theme {
-  --color-background-base: #0e0f13;
-  --color-background-surface: #16171e;
-  --color-background-elevated: #1e2029;
-  --color-background-border: #2a2c38;
+	--color-background-base: #0e0f13;
+	--color-background-surface: #16171e;
+	--color-background-elevated: #1e2029;
+	--color-background-border: #2a2c38;
 
-  --color-text-primary: #f0ede6;
-  --color-text-muted: #7a7d8e;
+	--color-text-primary: #f0ede6;
+	--color-text-muted: #7a7d8e;
 
-  --color-brand: #c9a84c;
-  --color-brand-light: #e8c97e;
+	--color-brand: #c9a84c;
+	--color-brand-light: #e8c97e;
 
-  --color-success: #4caf7d;
-  --color-danger: #e05c5c;
-  --color-info: #5c8ee0;
+	--color-success: #4caf7d;
+	--color-danger: #e05c5c;
+	--color-info: #5c8ee0;
 
-  --color-success-subtle: rgba(76, 175, 125, 0.15);
-  --color-danger-subtle: rgba(224, 92, 92, 0.15);
-  --color-info-subtle: rgba(92, 142, 224, 0.15);
-  --color-brand-subtle: rgba(201, 168, 76, 0.15);
+	--color-success-subtle: rgba(76, 175, 125, 0.15);
+	--color-danger-subtle: rgba(224, 92, 92, 0.15);
+	--color-info-subtle: rgba(92, 142, 224, 0.15);
+	--color-brand-subtle: rgba(201, 168, 76, 0.15);
 
-  --font-title: "TASA Orbiter";
-  --font-sans: "Roboto Serif", sans-serif;
+	--font-title: "TASA Orbiter";
+	--font-sans: "Roboto Serif", sans-serif;
 
-  --text-extra-small: 0.6rem;
-  --text-small: 0.8rem;
-  --text-base: 1rem;
-  --text-medium: 1.25rem;
-  --text-large: 1.50rem;
-  --text-extra-large: 1.75rem;
-  --text-big: 2rem;
+	--text-extra-small: 0.6rem;
+	--text-small: 0.8rem;
+	--text-base: 1rem;
+	--text-medium: 1.25rem;
+	--text-large: 4rem;
+	--text-extra-large: 2rem;
+	--text-big: 2rem;
 }
 
 @layer base {
-
 }
