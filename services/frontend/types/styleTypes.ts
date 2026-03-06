@@ -1,5 +1,3 @@
-import { JSXElement } from "solid-js";
-
 export type TextSize =
 	| "extra-small"
 	| "small"
