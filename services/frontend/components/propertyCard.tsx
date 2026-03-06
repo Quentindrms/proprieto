@@ -38,8 +38,8 @@ export default function PropertyCard(props: PropertyCardProps) {
                 </div>
             </div>
             <div id="footer" class="flex justify-between">
-                <Button type="button" color="blue">Modifier</Button>
-                <Button type="button" color="red">Supprimer</Button>
+                <Button type="button" color="blue" onClick={props.onEdit}>Modifier</Button>
+                <Button type="button" color="red" onClick={props.onDelete}>Supprimer</Button>
             </div>
         </div >
     );
