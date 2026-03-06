@@ -1,5 +1,27 @@
 @import "tailwindcss";
 
+@theme {
+  --color-background-base: #0e0f13;
+  --color-background-surface: #16171e;
+  --color-background-elevated: #1e2029;
+  --color-background-border: #2a2c38;
+  
+  --color-text-primary: #f0ede6;
+  --color-text-muted: #7a7d8e;
+
+  --color-brand: #c9a84c;
+  --color-brand-light: #e8c97e;
+
+  --color-success: #4caf7d;
+  --color-danger: #e05c5c;
+  --color-info: #5c8ee0;
+
+  --color-success-subtle: rgba(76, 175, 125, 0.15);
+  --color-danger-subtle: rgba(224, 92, 92, 0.15);
+  --color-info-subtle: rgba(92, 142, 224, 0.15);
+  --color-brand-subtle: rgba(201, 168, 76, 0.15)
+}
+
 @layer base {
   h1 {
     @apply mb-4 text-4xl font-bold tracking-tight text-gray-900;
