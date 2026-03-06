@@ -4,6 +4,8 @@ import Text from "./text";
 
 interface ClientCardProps {
     client: Client;
+    onDelete?: () => void,
+    onEdit?: () => void,
 }
 
 export default function ClientCard(props: ClientCardProps) {
