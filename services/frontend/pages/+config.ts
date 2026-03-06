@@ -7,8 +7,8 @@ import vikeSolid from "vike-solid/config";
 
 export default {
   // https://vike.dev/head-tags
-  title: "My Vike App",
-  description: "Demo showcasing Vike",
+  title: "Proprieto",
+  description: "La gestion locative simplifiée",
 
   extends: [vikeSolid, vikePhoton],
 
