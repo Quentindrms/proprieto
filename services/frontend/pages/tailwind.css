@@ -17,6 +17,10 @@
 	--color-solid-red: #e05c5c;
 	--color-solid-blue: #5c8ee0;
 	--color-solid-gold: #c9a84c;
+	--color-solid-green-hover: #3d9668;
+	--color-solid-red-hover: #c94444;
+	--color-solid-blue-hover: #4a7acc;
+	--color-solid-gold-hover: #b0923e;
 
 	--color-badge-green: rgba(76, 175, 125, 0.15);
 	--color-badge-red: rgba(224, 92, 92, 0.15);
