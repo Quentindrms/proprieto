@@ -1,9 +1,9 @@
 import clsx from "clsx";
-import type { JSXElement } from "solid-js";
+import type { JSX, JSXElement } from "solid-js";
 import { Dynamic } from "solid-js/web";
 import type { HeadingComponents, TextSize } from "../types/styleTypes";
 
-interface HeadingProps {
+interface HeadingProps extends JSX.HTMLAttributes<HTMLHeadingElement> {
     size: TextSize;
     components: HeadingComponents;
     children: JSXElement;
@@ -21,10 +21,10 @@ export default function Heading(props: HeadingProps) {
         big: "text-big",
     }
 
-    const globalClasses = "font-title"
+    const globalClasses = "font-title font-bold p-1 color-text-brand"
 
     return (
-        <Dynamic component={props.components} class={clsx([globalClasses, sizeClasses[props.size]])}>
+        <Dynamic component={props.components} class={clsx([globalClasses, sizeClasses[props.size], `text-brand`])}>
             {props.children}
         </Dynamic>
     );
