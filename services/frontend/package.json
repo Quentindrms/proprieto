@@ -8,6 +8,7 @@
   "dependencies": {
     "@photonjs/fastify": "^0.1.12",
     "@universal-middleware/core": "^0.4.16",
+    "clsx": "^2.1.1",
     "fastify": "^5.7.4",
     "fastify-raw-body": "^5.0.0",
     "solid-js": "^1.9.11",
