@@ -20,7 +20,7 @@ export function StatCard(props: StatCardProps) {
 
 
     return (
-        <div class="flex flex-col gap-2 border border-background-border bg-background-surface w-2xs rounded-2xl pt-2 pb-2 pl-4 pr-4 shadow-md shadow-background-surface">
+        <div class="flex flex-col gap-2 border border-background-border bg-background-surface w-3xs rounded-2xl pt-2 pb-2 pl-4 pr-4 shadow-md shadow-background-surface">
             <Text components="p" size="medium">{props.title}</Text>
             <Text
                 components="p"
