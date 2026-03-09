@@ -4,9 +4,9 @@ import Text from "./text";
 export default function Navbar() {
 
     return (
-        <div class="w-xs  p-2 flex flex-col border-r border-background-border">
-            <div class="text-center">
-                <Heading components="h1" size="big">Proprieto</Heading>
+        <div class="w-xs p-2 flex flex-col border-r border-background-border">
+            <div class="text-center p-3">
+                <Heading components="h1" size="big"><a href="/app">Proprieto</a></Heading>
                 <Text components="p">Gestion immobilière</Text>
             </div>
 
@@ -18,7 +18,6 @@ export default function Navbar() {
                 <NavbarLink name="Propriétés" value="/app/" />
                 <NavbarLink name="Contrats" value="/app/" />
 
-
                 <Heading components="h2" size="large" color="white">Finances</Heading>
                 <NavbarLink name="Revenus" value="/app/" />
                 <NavbarLink name="Dépense" value="/app/" />
@@ -29,7 +28,6 @@ export default function Navbar() {
 
                 <Heading components="h2" size="large" color="white">Compte</Heading>
                 <NavbarLink name="Paramètres" value="/app/" />
-
             </div>
         </div>
     )
