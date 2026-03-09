@@ -1,5 +1,5 @@
 import type { JSX, Setter } from "solid-js";
-import { createContext, createEffect, createSignal, splitProps, useContext } from "solid-js";
+import { createContext, createEffect, createSignal, For, splitProps, useContext } from "solid-js";
 import Text from "./text";
 
 const FormContext = createContext<{
@@ -81,6 +81,48 @@ export function TextField(props: TextFieldProps) {
                 id={rest.name}
                 {...rest}
             />
+        </fieldset>
+    )
+}
+
+interface SelectProps extends JSX.SelectHTMLAttributes<HTMLSelectElement> {
+    label: string,
+    labelOptions: string,
+    options: { value: string; label: JSX.Element; disabled?: boolean }[]
+}
+
+export function Select(props: SelectProps) {
+
+    const formContext = useContext(FormContext);
+    const [local, rest] = splitProps(props, ["label", "labelOptions", "options"])
+
+    createEffect(() => {
+        formContext.setHasRequiredFields(true)
+    })
+
+    return (
+        <fieldset class="flex flex-col">
+            <Label label={local.label} required={rest.required} />
+
+            <select
+                class="bg-primary"
+                id={rest.name}
+                {...rest}
+            >
+
+                <option value="" disabled selected>
+                    - {local.labelOptions} -
+                </option>
+
+                <For each={local.options}>
+                    {(option) => (
+                        <option value={option.value} disabled={option.disabled}>
+                            {option.label}
+                        </option>
+                    )}
+                </For>
+
+            </select>
         </fieldset>
     )
 }
