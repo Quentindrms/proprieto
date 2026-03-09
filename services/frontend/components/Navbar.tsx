@@ -15,19 +15,19 @@ export default function Navbar() {
                 <NavbarLink name="Tableau de bord" value="/app/" />
 
                 <Heading components="h2" size="large" color="white">Patrimoine</Heading>
-                <NavbarLink name="Propriétés" value="/app/" />
-                <NavbarLink name="Contrats" value="/app/" />
+                <NavbarLink name="Propriétés" value="/app/properties" />
+                <NavbarLink name="Contrats" value="/app/contracts" />
 
                 <Heading components="h2" size="large" color="white">Finances</Heading>
-                <NavbarLink name="Revenus" value="/app/" />
-                <NavbarLink name="Dépense" value="/app/" />
+                <NavbarLink name="Revenus" value="/app/incomes" />
+                <NavbarLink name="Dépense" value="/app/outcomes" />
 
                 <Heading components="h2" size="large" color="white">Contacts</Heading>
-                <NavbarLink name="Clients" value="/app/" />
-                <NavbarLink name="Prestataires" value="/app/" />
+                <NavbarLink name="Clients" value="/app/clients" />
+                <NavbarLink name="Prestataires" value="/app/contractors" />
 
                 <Heading components="h2" size="large" color="white">Compte</Heading>
-                <NavbarLink name="Paramètres" value="/app/" />
+                <NavbarLink name="Paramètres" value="/app/account" />
             </div>
         </div>
     )
