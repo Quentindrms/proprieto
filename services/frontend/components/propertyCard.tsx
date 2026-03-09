@@ -11,8 +11,8 @@ interface PropertyCardProps {
 
 export default function PropertyCard(props: PropertyCardProps) {
     return (
-        <div class="bg-background-surface m-w-xs m-w-md rounded-xl">
-            <div id="header" class="border border-background-border flex justify-between items-center p-2 rounded-xl" >
+        <div class="bg-background-surface border border-background-border m-w-xs m-w-md rounded-xl">
+            <div id="header" class="border-b border-background-border flex justify-between items-center p-2 rounded-xl" >
                 <div class="flex flex-col gap-1 border-b border-background-border">
                     <Text components="p">{props.property.name}</Text>
                     <Badge color="blue">{props.property.type}</Badge>
