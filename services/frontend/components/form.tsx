@@ -30,11 +30,11 @@ export function Form(props: FormProps) {
             <form
                 {...rest}
                 onSubmit={handleSubmit}
-                class=""
+                class="flex flex-col bg-background-elevated rounded-2xl w-xl"
             >
                 {hasRequiredFields() && (
                     <Text components="p">
-                        Tous les champs marqués d'un * sonnt obligatoires
+                        Tous les champs marqués d'un * sont obligatoires
                     </Text>
                 )}
                 {local.children}
@@ -50,7 +50,8 @@ interface LabelProps extends JSX.LabelHTMLAttributes<HTMLLabelElement> {
 
 export function Label(props: LabelProps) {
     return (
-        <label for={props.for}>
+        <label class="text-primary p-2"
+            for={props.for}>
             {props.label}
             {props.required && <span class="">*</span>}
         </label>
@@ -73,10 +74,10 @@ export function TextField(props: TextFieldProps) {
     })
 
     return (
-        <fieldset class="">
+        <fieldset class="flex flex-col">
             <Label label={local.label} required={rest.required} for={rest.name} />
             <input
-                class=""
+                class="bg-primary rounded-md m-2"
                 id={rest.name}
                 {...rest}
             />
