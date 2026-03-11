@@ -5,13 +5,13 @@ import {
 	FaSolidRemove,
 } from "solid-icons/fa";
 import type { JSX } from "solid-js";
-import type { ButtonColor } from "../types/styleTypes";
+import type { ButtonColor, ButtonIcons } from "../types/styleTypes";
 
 interface ButtonProps extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {
 	type: "submit" | "button" | "menu";
 	children: JSX.Element;
 	color?: ButtonColor;
-	icons?: "add" | "delete" | "edit";
+	icons?: ButtonIcons;
 }
 
 export function Button(props: ButtonProps) {
