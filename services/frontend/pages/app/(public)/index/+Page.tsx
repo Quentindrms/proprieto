@@ -6,33 +6,19 @@ import {
 	StatCardWrapper,
 } from "../../../../components/cards";
 import Heading from "../../../../components/heading";
+import { PageNamerDater } from "../../../../components/pageNamer";
 import SearchField from "../../../../components/searchField";
 import Text from "../../../../components/text";
 
 export default function Page() {
-	const date = new Date().toLocaleDateString("fr-FR", {
-		day: "2-digit",
-		month: "long",
-		year: "numeric",
-		hour: "numeric",
-		hourCycle: "h24",
-	});
-
 	return (
 		<div class="min-h-dvh w-dvw flex flex-col gap-5">
-			<div class="flex justify-between items-center p-2">
-				<div>
-					<Heading components="h1" size="big" color="white">
-						Bonjour, username
-					</Heading>
-					<Text components="p" size="base">
-						{date} - Vue d'ensemble
-					</Text>
-				</div>
-				<Button type="button" icons="add">
-					Ajouter une propriété
-				</Button>
-			</div>
+			<PageNamerDater
+				buttonText="Ajouter une propriété"
+				onClick={() => {}}
+				username="username"
+				buttonIcons="add"
+			/>
 			<div>
 				<div class="p-2">
 					<SearchField name="searchField" />
