@@ -29,13 +29,16 @@ export function Button(props: ButtonProps) {
 	};
 
 	const globalClasses =
-		"flex gap-5 w-fit rounded-xl p-2 text-primary font-bold font-title";
+		"w-fit rounded-xl p-2 text-primary font-bold font-title";
+
+	const flexClasses = "flex gap-5 items-center";
 	return (
 		<button
 			type={props.type}
 			class={clsx([
 				globalClasses,
 				props.color ? colorClases[props.color] : colorClases.gold,
+				props.icons ? flexClasses : "",
 			])}
 		>
 			{props.icons && IconClasses[props.icons]}
