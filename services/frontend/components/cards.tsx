@@ -42,7 +42,7 @@ interface StatCardWrapperProps {
 }
 
 export function StatCardWrapper(props: StatCardWrapperProps) {
-	return <div class="flex flex-row gap-5">{props.children}</div>;
+	return <div class="flex flex-row gap-5 p-2">{props.children}</div>;
 }
 
 interface BasicCardProps {
