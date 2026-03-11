@@ -29,7 +29,9 @@ export default function Page() {
 						{date} - Vue d'ensemble
 					</Text>
 				</div>
-				<Button type="button">Ajouter une propriété</Button>
+				<Button type="button" icons="add">
+					Ajouter une propriété
+				</Button>
 			</div>
 			<div>
 				<div class="p-2">
