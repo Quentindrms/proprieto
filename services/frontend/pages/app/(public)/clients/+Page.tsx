@@ -23,36 +23,36 @@ export default function Page() {
 					client={{
 						adress: "13 rue des écoles 69000 LYON",
 						email: "email@email.fr",
-						name: "Mouloud",
+						name: "PRÉNOM",
 						phone: "0600741537",
-						surname: "SALARABE",
+						surname: "NOM DE FAMILLE",
 					}}
 				/>
 				<ClientCard
 					client={{
 						adress: "13 rue des écoles 69000 LYON",
 						email: "email@email.fr",
-						name: "Mouloud",
+						name: "PRÉNOM",
 						phone: "0600741537",
-						surname: "SALARABE",
+						surname: "NOM DE FAMILLE",
 					}}
 				/>
 				<ClientCard
 					client={{
 						adress: "13 rue des écoles 69000 LYON",
 						email: "email@email.fr",
-						name: "Mouloud",
+						name: "PRÉNOM",
 						phone: "0600741537",
-						surname: "SALARABE",
+						surname: "NOM DE FAMILLE",
 					}}
 				/>
 				<ClientCard
 					client={{
 						adress: "13 rue des écoles 69000 LYON",
 						email: "email@email.fr",
-						name: "Mouloud",
+						name: "PRÉNOM",
 						phone: "0600741537",
-						surname: "SALARABE",
+						surname: "NOM DE FAMILLE",
 					}}
 				/>
 			</div>
