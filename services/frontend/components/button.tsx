@@ -29,7 +29,7 @@ export function Button(props: ButtonProps) {
 	};
 
 	const globalClasses =
-		"w-fit rounded-xl p-2 text-primary font-bold font-title";
+		"w-fit h-fit rounded-xl p-2 text-primary font-bold font-title";
 
 	const flexClasses = "flex gap-5 items-center";
 	return (
