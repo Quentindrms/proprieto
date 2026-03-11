@@ -18,3 +18,5 @@ export type AccentColor = "green" | "red" | "blue" | "gold";
 export type ButtonColor = "green" | "red" | "blue" | "gold";
 
 export type BadgeColor = "green" | "red" | "blue" | "gold";
+
+export type ButtonIcons = "add" | "edit" | "delete";
