@@ -1,6 +1,10 @@
 import Board from "../../../../components/board";
 import { Button } from "../../../../components/button";
-import { BasicCard, StatCard } from "../../../../components/cards";
+import {
+	BasicCard,
+	StatCard,
+	StatCardWrapper,
+} from "../../../../components/cards";
 import Heading from "../../../../components/heading";
 import SearchField from "../../../../components/searchField";
 import Text from "../../../../components/text";
@@ -9,7 +13,7 @@ export default function Page() {
 	const date = new Date();
 
 	return (
-		<div class="min-h-dvh flex flex-col gap-5">
+		<div class="min-h-dvh w-dvw flex flex-col gap-5">
 			<div class="flex justify-between items-center p-2">
 				<div>
 					<Heading components="h1" size="big" color="white">
@@ -27,7 +31,8 @@ export default function Page() {
 					<SearchField name="searchField" />
 				</div>
 			</div>
-			<div id="top-wrapper" class="flex justify-center items-center gap-5 p-2">
+
+			<StatCardWrapper>
 				<StatCard
 					legend="Deuis hier"
 					value="0"
@@ -55,7 +60,8 @@ export default function Page() {
 					accentColor="blue"
 					title="Titre"
 				/>
-			</div>
+			</StatCardWrapper>
+
 			<div class="flex flex-col gap-5">
 				<div id="wrapper-board" class="flex gap-5 justify-center">
 					<Board name="board" columns={["1", "2", "3", "4", "5"]}>
