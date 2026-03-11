@@ -1,6 +1,5 @@
 import Board from "../../../../components/board";
 import { StatCard, StatCardWrapper } from "../../../../components/cards";
-import ClientCard from "../../../../components/clientCard";
 import PageNamer from "../../../../components/pageNamer";
 import Text from "../../../../components/text";
 
@@ -20,7 +19,7 @@ export default function Page() {
 				<StatCard legend="Sans contrat" value="0" title="" />
 			</StatCardWrapper>
 
-			<div class="p-5 grid [grid-template-columns:max-content_max-content_max-content] gap-x-5 gap-y-5">
+			<div class="p-5 grid grid-cols-[max-content_max-content_max-content] gap-x-5 gap-y-5">
 				<Board name="Pestataires" columns={[]}>
 					<Text components="p">Test</Text>
 				</Board>
