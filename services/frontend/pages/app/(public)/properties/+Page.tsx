@@ -23,7 +23,9 @@ export default function Page() {
 				<Heading components="h1" size="large" color="white">
 					Mes propriétés
 				</Heading>
-				<Button type="button">Créer une nouvelle propriété</Button>
+				<Button type="button" icons="add">
+					Créer une nouvelle propriété
+				</Button>
 			</div>
 			<StatCardWrapper>
 				<StatCard title="" value="0" legend="Propriétés au total" />
