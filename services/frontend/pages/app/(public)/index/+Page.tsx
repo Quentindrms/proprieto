@@ -10,7 +10,13 @@ import SearchField from "../../../../components/searchField";
 import Text from "../../../../components/text";
 
 export default function Page() {
-	const date = new Date();
+	const date = new Date().toLocaleDateString("fr-FR", {
+		day: "2-digit",
+		month: "long",
+		year: "numeric",
+		hour: "numeric",
+		hourCycle: "h24",
+	});
 
 	return (
 		<div class="min-h-dvh w-dvw flex flex-col gap-5">
@@ -20,8 +26,7 @@ export default function Page() {
 						Bonjour, username
 					</Heading>
 					<Text components="p" size="base">
-						{date.getDate()} / {date.getMonth() + 1} / {date.getFullYear()} -
-						Vue d'ensemble
+						{date} - Vue d'ensemble
 					</Text>
 				</div>
 				<Button type="button">Ajouter une propriété</Button>
