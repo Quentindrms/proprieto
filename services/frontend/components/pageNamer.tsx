@@ -9,7 +9,7 @@ interface PageNamerProps {
 
 export default function PageNamer(props: PageNamerProps) {
 	return (
-		<div class="flex justify-between">
+		<div class="flex justify-between p-4">
 			<Heading components="h1" size="large">
 				{props.pageName}
 			</Heading>
