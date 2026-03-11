@@ -7,8 +7,8 @@ export default function Page() {
 	return (
 		<div class="w-dvw h-dvh">
 			<PageNamer
-				pageName="Mes clients"
-				buttonText="Ajouter un client"
+				pageName="Mes prestataires"
+				buttonText="Ajouter un prestataire"
 				onClick={() => {}}
 			/>
 			<StatCardWrapper>
