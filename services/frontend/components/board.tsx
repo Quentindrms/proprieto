@@ -1,4 +1,4 @@
-import { For, type JSX } from "solid-js";
+import { For, type JSX, Show } from "solid-js";
 import type { BadgeColor } from "../types/styleTypes";
 import { Badge } from "./badge";
 import Heading from "./heading";
@@ -36,7 +36,20 @@ export default function Board(props: BoardProps) {
 							</For>
 						</tr>
 					</thead>
-					<tbody>{props.children}</tbody>
+					<tbody>
+						<Show
+							when={props.columns.length > 0}
+							fallback={
+								<tr>
+									<td colspan={99999} class="p-4 text-center">
+										<Text components="p">Aucune donnée</Text>
+									</td>
+								</tr>
+							}
+						>
+							{props.children}
+						</Show>
+					</tbody>
 				</table>
 			</div>
 		</div>
