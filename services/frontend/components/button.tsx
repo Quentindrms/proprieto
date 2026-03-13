@@ -22,10 +22,10 @@ export function Button(props: ButtonProps) {
 		gold: "bg-solid-gold hover:bg-solid-gold-hover",
 	};
 
-	const IconClasses: Record<string, JSX.Element> = {
-		add: <FaSolidPlus size={25} color="" />,
-		edit: <FaRegularPenToSquare size={25} />,
-		delete: <FaSolidRemove size={25} />,
+	const IconClasses: Record<string, () => JSX.Element> = {
+		add: () => <FaSolidPlus size={25} color="" />,
+		edit: () => <FaRegularPenToSquare size={25} />,
+		delete: () => <FaSolidRemove size={25} />,
 	};
 
 	const globalClasses =
@@ -41,7 +41,7 @@ export function Button(props: ButtonProps) {
 				props.icons ? flexClasses : "",
 			])}
 		>
-			{props.icons && IconClasses[props.icons]}
+			{props.icons && IconClasses[props.icons]?.()}
 			{props.children}
 		</button>
 	);
