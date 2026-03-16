@@ -5,7 +5,7 @@ export default function Layout(props: { children?: JSX.Element }) {
 	return (
 		<div class="min-h-dvh bg-background-base flex">
 			<Navbar />
-			{props.children}
+			<main class="flex min-w-0">{props.children}</main>
 		</div>
 	);
 }
