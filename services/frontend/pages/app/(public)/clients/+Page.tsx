@@ -1,6 +1,6 @@
-import { StatCard, StatCardWrapper } from "../../../../components/cards";
-import ClientCard from "../../../../components/clientCard";
-import PageNamer from "../../../../components/pageNamer";
+import { StatCard, StatCardWrapper } from "@components/cards";
+import ClientCard from "@components/clientCard";
+import PageNamer from "@components/pageNamer";
 
 export default function Page() {
 	return (
