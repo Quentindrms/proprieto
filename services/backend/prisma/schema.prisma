@@ -17,15 +17,19 @@ model User {
   name      String  @db.VarChar(120)
   firstName String  @map("first_name") @db.VarChar(120)
   address   String  @db.VarChar(250)
-  email     String  @db.VarChar(254)
-  phone     String? @db.VarChar(20)
+  email     String  @unique @db.VarChar(254)
+  phone     String? @unique @db.VarChar(20)
   password  String  @db.VarChar(250)
+
+  property Property[]
 }
 
-model EntityType {
-  id   String @id @unique @default(uuid()) @map("id_entity") @db.Uuid
+model PropertyType {
+  id   String @id @unique @default(uuid()) @map("id_property") @db.Uuid
   slug String @unique @db.VarChar(150)
   name String @db.VarChar(150)
+
+  property Property[]
 }
 
 model Client {
@@ -35,6 +39,9 @@ model Client {
   email     String @db.VarChar(254)
   address   String @db.VarChar(250)
   phone     String @db.VarChar(20)
+
+  income   Income[]
+  contract Contract[]
 }
 
 model Providers {
@@ -42,19 +49,26 @@ model Providers {
   name      String @db.VarChar(120)
   firstName String @map("first_name") @db.VarChar(120)
   email     String @db.VarChar(254)
+  address   String @db.VarChar(250)
   phone     String @db.VarChar(20)
+
+  outcome Outcome[]
 }
 
 model OutcomeCategory {
   id   String @id @unique @default(uuid()) @map("id_outcome_category") @db.Uuid
   slug String @unique @db.VarChar(150)
   name String @db.VarChar(150)
+
+  outcome Outcome[]
 }
 
 model IncomeCategory {
   id   String @id @unique @default(uuid()) @map("id_income_category") @db.Uuid
   slug String @unique @db.VarChar(150)
   name String @db.VarChar(150)
+
+  income Income[]
 }
 
 model Property {
@@ -65,6 +79,15 @@ model Property {
   sellPrice     Int?      @map("sell_price") @db.Integer()
   sellDate      DateTime? @map("sell_date")
   isDeleted     Boolean   @map("is_deleted")
+
+  userId         String     @db.Uuid
+  propertyTypeId String?    @db.Uuid
+  income         Income[]
+  outcome        Outcome[]
+  contract       Contract[]
+
+  user         User          @relation(fields: [userId], references: [id])
+  propertyType PropertyType? @relation(fields: [propertyTypeId], references: [id])
 }
 
 model Outcome {
@@ -76,10 +99,18 @@ model Outcome {
   issueDate   DateTime @map("issue_date")
   paidOn      DateTime @map("paid_on")
   frequency   String   @db.VarChar(50)
+
+  propertyId        String @db.Uuid
+  outcomeCategoryId String @db.Uuid
+  providersId       String @db.Uuid
+
+  property        Property        @relation(fields: [propertyId], references: [id])
+  outcomeCategory OutcomeCategory @relation(fields: [outcomeCategoryId], references: [id])
+  providers       Providers       @relation(fields: [providersId], references: [id])
 }
 
 model Income {
-  id          String   @id @unique @default(uuid()) @map("id_outcome") @db.Uuid
+  id          String   @id @unique @default(uuid()) @map("id_income") @db.Uuid
   name        String   @db.VarChar(150)
   amount      Int      @db.Integer()
   isReccuring Boolean  @map("is_reccuring")
@@ -87,6 +118,16 @@ model Income {
   issueDate   DateTime @map("issue_date")
   paidOn      DateTime @map("paid_on")
   frequency   String   @db.VarChar(50)
+
+  propertyId       String  @db.Uuid
+  incomeCategoryId String  @db.Uuid
+  contractId       String? @db.Uuid
+  clientId         String  @db.Uuid
+
+  property       Property       @relation(fields: [propertyId], references: [id])
+  incomeCategory IncomeCategory @relation(fields: [incomeCategoryId], references: [id])
+  contract       Contract?      @relation(fields: [contractId], references: [id])
+  client         Client         @relation(fields: [clientId], references: [id])
 }
 
 model Contract {
@@ -94,4 +135,11 @@ model Contract {
   startDate DateTime  @map("start_date")
   endDate   DateTime? @map("end_date")
   lease     Int       @db.Integer()
+
+  propertyId String   @db.Uuid
+  clientId   String   @db.Uuid
+  income     Income[]
+
+  property Property @relation(fields: [propertyId], references: [id])
+  client   Client   @relation(fields: [clientId], references: [id])
 }
