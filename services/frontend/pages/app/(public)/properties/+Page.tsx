@@ -18,7 +18,7 @@ export default function Page() {
 	};
 
 	return (
-		<div class="">
+		<div class="w-dvw">
 			<div class="flex justify-between p-2">
 				<Heading components="h1" size="large" color="white">
 					Mes propriétés
