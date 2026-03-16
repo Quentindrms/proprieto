@@ -22,6 +22,8 @@ model User {
   password  String  @db.VarChar(250)
 
   property Property[]
+
+  @@map("user")
 }
 
 model PropertyType {
@@ -30,6 +32,8 @@ model PropertyType {
   name String @db.VarChar(150)
 
   property Property[]
+
+  @@map("property_type")
 }
 
 model Client {
@@ -42,6 +46,8 @@ model Client {
 
   income   Income[]
   contract Contract[]
+
+  @@map("client")
 }
 
 model Providers {
@@ -53,6 +59,8 @@ model Providers {
   phone     String @db.VarChar(20)
 
   outcome Outcome[]
+
+  @@map("providers")
 }
 
 model OutcomeCategory {
@@ -61,6 +69,8 @@ model OutcomeCategory {
   name String @db.VarChar(150)
 
   outcome Outcome[]
+
+  @@map("outcome_category")
 }
 
 model IncomeCategory {
@@ -69,6 +79,8 @@ model IncomeCategory {
   name String @db.VarChar(150)
 
   income Income[]
+
+  @@map("income_category")
 }
 
 model Property {
@@ -88,6 +100,8 @@ model Property {
 
   user         User          @relation(fields: [userId], references: [id])
   propertyType PropertyType? @relation(fields: [propertyTypeId], references: [id])
+
+  @@map("property")
 }
 
 model Outcome {
@@ -107,6 +121,8 @@ model Outcome {
   property        Property        @relation(fields: [propertyId], references: [id])
   outcomeCategory OutcomeCategory @relation(fields: [outcomeCategoryId], references: [id])
   providers       Providers       @relation(fields: [providersId], references: [id])
+
+  @@map("outcome")
 }
 
 model Income {
@@ -128,6 +144,8 @@ model Income {
   incomeCategory IncomeCategory @relation(fields: [incomeCategoryId], references: [id])
   contract       Contract?      @relation(fields: [contractId], references: [id])
   client         Client         @relation(fields: [clientId], references: [id])
+
+  @@map("income")
 }
 
 model Contract {
@@ -142,4 +160,6 @@ model Contract {
 
   property Property @relation(fields: [propertyId], references: [id])
   client   Client   @relation(fields: [clientId], references: [id])
+
+  @@map("contract")
 }
