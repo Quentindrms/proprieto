@@ -24,9 +24,45 @@ model User {
 
 model EntityType {
   id   String @id @unique @default(uuid()) @map("id_entity") @db.Uuid
-  slug String @db.VarChar(150)
+  slug String @unique @db.VarChar(150)
   name String @db.VarChar(150)
 }
 
 model Client {
+  id        String @id @unique @default(uuid()) @map("id_client") @db.Uuid
+  name      String @db.VarChar(120)
+  firstName String @map("first_name") @db.VarChar(120)
+  email     String @db.VarChar(254)
+  address   String @db.VarChar(250)
+  phone     String @db.VarChar(20)
+}
+
+model Providers {
+  id        String @id @unique @default(uuid()) @map("id_provider") @db.Uuid
+  name      String @db.VarChar(120)
+  firstName String @map("first_name") @db.VarChar(120)
+  email     String @db.VarChar(254)
+  phone     String @db.VarChar(20)
+}
+
+model OutcomeCategory {
+  id   String @id @unique @default(uuid()) @map("id_outcome_category") @db.Uuid
+  slug String @unique @db.VarChar(150)
+  name String @db.VarChar(150)
+}
+
+model IncomeCategory {
+  id   String @id @unique @default(uuid()) @map("id_income_category") @db.Uuid
+  slug String @unique @db.VarChar(150)
+  name String @db.VarChar(150)
+}
+
+model Property {
+  id            String    @id @unique @default(uuid()) @map("id_property") @db.Uuid
+  name          String    @db.VarChar(120)
+  purchasePrice Int?      @map("purchase_price") @db.Integer()
+  purshaseDate  DateTime? @map("purchase_date")
+  sellPrice     Int?      @map("sell_price") @db.Integer()
+  sellDate      DateTime? @map("sell_date")
+  isDeleted     Boolean   @map("is_deleted")
 }
