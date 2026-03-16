@@ -40,15 +40,17 @@ export default function Board(props: BoardProps) {
 						<Show
 							when={props.columns.length > 0}
 							fallback={
-								<tr>
+								<tr class="">
 									<td colspan={99999} class="p-4 text-center">
 										<Text components="p">Aucune donnée</Text>
 									</td>
 								</tr>
 							}
 						>
-							<tr>
-								<For each={props.cells}>{(cell) => <td>{cell}</td>}</For>
+							<tr class="flex flex-col gap-2">
+								<For each={props.cells}>
+									{(cell) => <td class="text-primary font-sans">{cell}</td>}
+								</For>
 							</tr>
 						</Show>
 					</tbody>
