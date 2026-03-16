@@ -50,9 +50,12 @@ export default function Page() {
 
 			<div class="flex flex-col gap-5">
 				<div id="wrapper-board" class="flex gap-5 justify-center">
-					<Board name="board" columns={["1", "2", "3", "4", "5"]}>
-						Zizicopter
-					</Board>
+					<Board
+						name="board"
+						columns={["1", "2", "3", "4", "5"]}
+						cells={["test", "test 1", "test 2", "test 3"]}
+					/>
+
 					<BasicCard title="Répartition" />
 				</div>
 				<div class="flex gap-5 justify-around">
