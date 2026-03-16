@@ -1,7 +1,7 @@
-import Board from "../../../../components/board";
-import { StatCard, StatCardWrapper } from "../../../../components/cards";
-import PageNamer from "../../../../components/pageNamer";
-import Text from "../../../../components/text";
+import Board from "@components/board";
+import { StatCard, StatCardWrapper } from "@components/cards";
+import PageNamer from "@components/pageNamer";
+import Text from "@components/text";
 
 export default function Page() {
 	return (
