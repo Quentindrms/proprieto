@@ -4,7 +4,7 @@ import Text from "./text";
 export default function Navbar() {
 
     return (
-        <div class="h-full w-xs shrink-0 p-2 flex flex-col border-r border-background-border">
+        <div class="h-dvh w-xs shrink-0 p-2 flex flex-col border-r border-background-border">
             <div class="text-center p-3">
                 <Heading components="h1" size="big"><a href="/app">Proprieto</a></Heading>
                 <Text components="p">Gestion immobilière</Text>
