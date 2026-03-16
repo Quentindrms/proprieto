@@ -1,9 +1,9 @@
-import Board from "../../../../components/board";
-import { StatCard, StatCardWrapper } from "../../../../components/cards";
-import Heading from "../../../../components/heading";
-import PageNamer from "../../../../components/pageNamer";
-import SearchField from "../../../../components/searchField";
-import Text from "../../../../components/text";
+import Board from "@components/board";
+import { StatCard, StatCardWrapper } from "@components/cards";
+import Heading from "@components/heading";
+import PageNamer from "@components/pageNamer";
+import SearchField from "@components/searchField";
+import Text from "@components/text";
 
 export default function Page() {
 	return (

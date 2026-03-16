@@ -1,21 +1,14 @@
-import Board from "../../../../components/board";
-import { Button } from "../../../../components/button";
-import {
-	BasicCard,
-	StatCard,
-	StatCardWrapper,
-} from "../../../../components/cards";
-import Heading from "../../../../components/heading";
-import { PageNamerDater } from "../../../../components/pageNamer";
-import SearchField from "../../../../components/searchField";
-import Text from "../../../../components/text";
+import Board from "@components/board";
+import { BasicCard, StatCard, StatCardWrapper } from "@components/cards";
+import { PageNamerDater } from "@components/pageNamer";
+import SearchField from "@components/searchField";
 
 export default function Page() {
 	return (
 		<div class="min-h-dvh w-dvw flex flex-col gap-5">
 			<PageNamerDater
 				buttonText="Ajouter une propriété"
-				onClick={() => { }}
+				onClick={() => {}}
 				username="username"
 				buttonIcons="add"
 			/>
