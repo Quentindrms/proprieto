@@ -1,3 +1,4 @@
+import { createSignal, onMount } from "solid-js";
 import type { ButtonIcons } from "../types/styleTypes";
 import { Button } from "./button";
 import Heading from "./heading";
@@ -31,12 +32,18 @@ interface PageNamerDaterProps {
 }
 
 export function PageNamerDater(props: PageNamerDaterProps) {
-	const date = new Date().toLocaleDateString("fr-FR", {
-		day: "2-digit",
-		month: "long",
-		year: "numeric",
-		hour: "numeric",
-		hourCycle: "h24",
+	const [date, setDate] = createSignal<string>();
+
+	onMount(() => {
+		setDate(
+			new Date().toLocaleDateString("fr-FR", {
+				day: "2-digit",
+				month: "long",
+				year: "numeric",
+				hour: "numeric",
+				hourCycle: "h24",
+			}),
+		);
 	});
 
 	return (
@@ -45,7 +52,7 @@ export function PageNamerDater(props: PageNamerDaterProps) {
 				<Heading components="h1" size="large">
 					Bonjour, {props.username}
 				</Heading>
-				<Text>{date}</Text> - Vue d'ensemble
+				<Text>{date()}</Text> - Vue d'ensemble
 			</div>
 			<Button type="button" onClick={props.onClick} icons={props.buttonIcons}>
 				{props.buttonText}
