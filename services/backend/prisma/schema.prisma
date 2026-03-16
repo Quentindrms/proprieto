@@ -66,3 +66,32 @@ model Property {
   sellDate      DateTime? @map("sell_date")
   isDeleted     Boolean   @map("is_deleted")
 }
+
+model Outcome {
+  id          String   @id @unique @default(uuid()) @map("id_outcome") @db.Uuid
+  name        String   @db.VarChar(150)
+  amount      Int      @db.Integer()
+  isReccuring Boolean  @map("is_reccuring")
+  isPaid      Boolean  @map("is_paid")
+  issueDate   DateTime @map("issue_date")
+  paidOn      DateTime @map("paid_on")
+  frequency   String   @db.VarChar(50)
+}
+
+model Income {
+  id          String   @id @unique @default(uuid()) @map("id_outcome") @db.Uuid
+  name        String   @db.VarChar(150)
+  amount      Int      @db.Integer()
+  isReccuring Boolean  @map("is_reccuring")
+  isPaid      Boolean  @map("is_paid")
+  issueDate   DateTime @map("issue_date")
+  paidOn      DateTime @map("paid_on")
+  frequency   String   @db.VarChar(50)
+}
+
+model Contract {
+  id        String    @id @unique @default(uuid()) @map("id_contract") @db.Uuid
+  startDate DateTime  @map("start_date")
+  endDate   DateTime? @map("end_date")
+  lease     Int       @db.Integer()
+}
