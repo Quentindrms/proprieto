@@ -1,9 +1,9 @@
-import { Button } from "../../../../components/button";
-import { StatCard, StatCardWrapper } from "../../../../components/cards";
-import Heading from "../../../../components/heading";
-import PropertyCard from "../../../../components/propertyCard";
-import SearchField from "../../../../components/searchField";
-import type { Property } from "../../../../types/property";
+import type { Property } from "@app/types/property";
+import { Button } from "@components/button";
+import { StatCard, StatCardWrapper } from "@components/cards";
+import Heading from "@components/heading";
+import PropertyCard from "@components/propertyCard";
+import SearchField from "@components/searchField";
 
 export default function Page() {
 	const property: Property = {
