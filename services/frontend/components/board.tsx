@@ -7,7 +7,7 @@ import Text from "./text";
 
 export interface BoardProps {
 	name: string;
-	children: JSX.Element;
+	cells: string[];
 	columns: string[];
 }
 
@@ -47,7 +47,9 @@ export default function Board(props: BoardProps) {
 								</tr>
 							}
 						>
-							{props.children}
+							<tr>
+								<For each={props.cells}>{(cell) => <td>{cell}</td>}</For>
+							</tr>
 						</Show>
 					</tbody>
 				</table>
