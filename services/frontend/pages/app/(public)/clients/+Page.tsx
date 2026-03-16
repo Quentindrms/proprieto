@@ -4,11 +4,11 @@ import PageNamer from "../../../../components/pageNamer";
 
 export default function Page() {
 	return (
-		<div class="">
+		<div class="w-dvw">
 			<PageNamer
 				pageName="Mes clients"
 				buttonText="Ajouter un client"
-				onClick={() => { }}
+				onClick={() => {}}
 			/>
 			<StatCardWrapper>
 				<StatCard legend="Clients totaux" value="0" title="" />
