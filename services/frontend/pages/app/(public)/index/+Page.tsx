@@ -15,7 +15,7 @@ export default function Page() {
 		<div class="min-h-dvh w-dvw flex flex-col gap-5">
 			<PageNamerDater
 				buttonText="Ajouter une propriété"
-				onClick={() => {}}
+				onClick={() => { }}
 				username="username"
 				buttonIcons="add"
 			/>
