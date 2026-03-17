@@ -34,6 +34,8 @@ services:
       dockerfile: .dev.dockerfile
     ports:
       - ${BACKEND_PORT:-4000}:4000
+    volumes:
+      - ../services/backend:/app
     environment:
       - NODE_ENV=development
       - DB_USERNAME=${DB_USERNAME}
