@@ -9,11 +9,18 @@ export class AuthController {
 	constructor(private readonly authService: AuthService) {}
 
 	@Post("login")
-	async login() {}
+	async login(
+		@Body() body: { email: string; password: string },
+		@Res() response: Response,
+	) {
+		const logged = await this.authService.login(body);
+		if (!logged) return response.status(401).send({ success: false });
+		return response.status(200).send({ success: true });
+	}
 
 	@Post("register")
 	async register(@Body() body: CreateAccountDto, @Res() response: Response) {
-		const registeredUser = this.authService.register(body);
+		const registeredUser = await this.authService.register(body);
 		if (!registeredUser)
 			return response.status(400).send({ message: "An error as occured" });
 		return response.status(200).send({ message: "Account created" });
