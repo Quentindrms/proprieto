@@ -1,5 +1,6 @@
 import { Controller } from "@nestjs/common";
-import type { OutcomeService } from "./outcome.service";
+//biome-ignore lint/style/useImportType: required for NestJS DI
+import { OutcomeService } from "./outcome.service";
 
 @Controller("outcome")
 export class OutcomeController {
