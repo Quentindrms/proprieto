@@ -14,6 +14,12 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
+    "paths": {
+      "@libs/*": ["./libs/*"],
+      "@prisma/*": ["./generated/prisma/*"],
+      "@src/*": ["./src/*"],
+      "@types/*": ["./types/*"]
+    },
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
