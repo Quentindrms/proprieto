@@ -14,8 +14,13 @@ export class AuthController {
 		@Res() response: Response,
 	) {
 		const logged = await this.authService.login(body);
-		if (!logged) return response.status(401).send({ success: false });
-		return response.status(200).send({ success: true });
+		console.log(logged);
+		if (logged.success === false) {
+			return response.status(401).send({ success: false });
+		}
+		return response
+			.status(200)
+			.send({ success: logged.success, token: logged.token });
 	}
 
 	@Post("register")

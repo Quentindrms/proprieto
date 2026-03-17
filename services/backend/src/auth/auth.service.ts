@@ -1,13 +1,12 @@
 import { prisma } from "@libs/DatabaseClient";
 import { Injectable } from "@nestjs/common";
 import argon2 from "argon2";
-import { log } from "console";
+import jwt from "jsonwebtoken";
 import type { CreateAccountDto } from "types/DtoType";
 
 @Injectable()
 export class AuthService {
 	async register(account: CreateAccountDto) {
-		const argon2 = require("argon2");
 		try {
 			const user = await prisma.user.create({
 				data: {
@@ -36,10 +35,14 @@ export class AuthService {
 		try {
 			if (!(await argon2.verify(user.password, loginDetails.password)))
 				throw Error("Identifiants invalides");
-			return true;
+			return { token: this.generateToken(user.id), sucess: true };
 		} catch (error) {
 			console.trace(error);
-			return false;
+			return { success: false };
 		}
+	}
+
+	private generateToken(userUuid: string) {
+		return jwt.sign({ userUuid }, process.env.JWT_SECRET);
 	}
 }
