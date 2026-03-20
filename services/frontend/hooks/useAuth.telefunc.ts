@@ -10,7 +10,9 @@ export async function onLogin(email: string, password: string) {
 		const response = await authService.login(email, password);
 		if (response?.token) {
 			setAuthCookie(context.fastify.reply, response.token);
+			return { success: true };
 		}
+		return { success: false };
 	} catch (error) {
 		console.trace(error);
 	}
