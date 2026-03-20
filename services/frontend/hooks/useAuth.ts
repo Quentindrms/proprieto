@@ -44,7 +44,12 @@ export function useAuth() {
 
 	async function handleRegister(event: SubmitEvent) {
 		event.preventDefault();
-		onRegister(formData());
+		const response = await onRegister(formData());
+		if (response?.success) {
+			toast.success("Inscription réussie");
+		} else {
+			toast.error("Une erreur est survenue lors de l'inscription");
+		}
 	}
 
 	return {
