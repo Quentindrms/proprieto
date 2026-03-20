@@ -9,7 +9,9 @@ export function useAuth() {
 		try {
 			event.preventDefault();
 			onLogin(email(), password());
-		} catch (error) {}
+		} catch (error) {
+			console.trace(error);
+		}
 	}
 
 	return {
