@@ -1,4 +1,5 @@
 import type { User } from "@app/types/user";
+import fastifyCookie from "@fastify/cookie";
 import { apply, serve } from "@photonjs/fastify";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import fastify from "fastify";
@@ -30,6 +31,10 @@ async function startApp() {
 		forceCloseConnections: true,
 	});
 
+	app.register(fastifyCookie, {
+		secret: "CHANGE BEFORE PRODUCTION",
+		parseOptions: {},
+	});
 	// /!\ Mandatory if you need to access the request body in any Universal Middleware or Handler
 	await app.register(rawBody);
 
