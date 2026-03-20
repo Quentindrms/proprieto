@@ -6,6 +6,7 @@
     "prod": "vike build && node ./dist/server/index.mjs"
   },
   "dependencies": {
+    "@fastify/cookie": "^11.0.2",
     "@photonjs/fastify": "^0.1.12",
     "@universal-middleware/core": "^0.4.16",
     "clsx": "^2.1.1",
