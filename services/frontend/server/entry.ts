@@ -15,6 +15,7 @@ declare global {
 		interface PageContext {
 			//Authentification
 			user?: User;
+			isAuthenticated?: boolean;
 
 			//Server data
 			fastify: {
