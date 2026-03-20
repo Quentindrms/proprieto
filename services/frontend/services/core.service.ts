@@ -3,7 +3,7 @@ export class CoreService {
 	protected authToken: string | null;
 
 	constructor(authToken: string | null = null) {
-		(this.BASE_URL = "http://localhost:4000"), (this.authToken = authToken);
+		(this.BASE_URL = "http://backend:4000"), (this.authToken = authToken);
 	}
 
 	private async handleFetch(
@@ -33,15 +33,15 @@ export class CoreService {
 		}
 	}
 
-	public async get<T = never>(endpoint: string) {
+	protected async get<T = never>(endpoint: string) {
 		const response = await this.handleFetch(endpoint, {
 			method: "GET",
 			headers: { "Content-Type": "application/json" },
 		});
-		return this.handleJsonResponse(response);
+		return this.handleJsonResponse<T>(response);
 	}
 
-	public async post<T = never, K = unknown>(
+	protected async post<T = never, K = unknown>(
 		endpoint: string,
 		body?: K,
 	): Promise<T> {
@@ -50,10 +50,10 @@ export class CoreService {
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(body),
 		});
-		return this.handleJsonResponse(response);
+		return this.handleJsonResponse<T>(response);
 	}
 
-	public async put<T = never, K = unknown>(
+	protected async put<T = never, K = unknown>(
 		endpoint: string,
 		body?: K,
 	): Promise<T> {
@@ -62,18 +62,18 @@ export class CoreService {
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(body),
 		});
-		return this.handleJsonResponse(response);
+		return this.handleJsonResponse<T>(response);
 	}
 
-	public async delete<T = never>(endpoint: string): Promise<T> {
+	protected async delete<T = never>(endpoint: string): Promise<T> {
 		const response = await this.handleFetch(endpoint, {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 		});
-		return this.handleJsonResponse(response);
+		return this.handleJsonResponse<T>(response);
 	}
 
-	public async patch<T = never, K = unknown>(
+	protected async patch<T = never, K = unknown>(
 		endpoint: string,
 		body?: K,
 	): Promise<T> {
@@ -82,6 +82,6 @@ export class CoreService {
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(body),
 		});
-		return this.handleJsonResponse(response);
+		return this.handleJsonResponse<T>(response);
 	}
 }
