@@ -33,7 +33,7 @@ export class CoreService {
 		}
 	}
 
-	private async get<T = never>(endpoint: string) {
+	public async get<T = never>(endpoint: string) {
 		const response = await this.handleFetch(endpoint, {
 			method: "GET",
 			headers: { "Content-Type": "application/json" },
@@ -41,7 +41,7 @@ export class CoreService {
 		return this.handleJsonResponse(response);
 	}
 
-	private async post<T = never, K = unknown>(
+	public async post<T = never, K = unknown>(
 		endpoint: string,
 		body?: K,
 	): Promise<T> {
@@ -53,7 +53,7 @@ export class CoreService {
 		return this.handleJsonResponse(response);
 	}
 
-	private async put<T = never, K = unknown>(
+	public async put<T = never, K = unknown>(
 		endpoint: string,
 		body?: K,
 	): Promise<T> {
@@ -65,7 +65,7 @@ export class CoreService {
 		return this.handleJsonResponse(response);
 	}
 
-	private async delete<T = never>(endpoint: string): Promise<T> {
+	public async delete<T = never>(endpoint: string): Promise<T> {
 		const response = await this.handleFetch(endpoint, {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
@@ -73,7 +73,7 @@ export class CoreService {
 		return this.handleJsonResponse(response);
 	}
 
-	private async patch<T = never, K = unknown>(
+	public async patch<T = never, K = unknown>(
 		endpoint: string,
 		body?: K,
 	): Promise<T> {
