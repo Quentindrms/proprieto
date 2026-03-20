@@ -1,5 +1,5 @@
 import { AuthService } from "@services/auth.service";
-import { setAuthCookie, setCookie } from "@utils/cookie";
+import { setAuthCookie } from "@utils/cookie";
 import { getContext } from "@utils/telefunc";
 
 export async function onLogin(email: string, password: string) {
