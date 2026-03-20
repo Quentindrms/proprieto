@@ -1,4 +1,5 @@
 import type { User, UserCreation } from "@app/types/user";
+import type { FastifyReply } from "fastify";
 import { CoreService } from "./core.service";
 
 export class AuthService extends CoreService {
@@ -23,5 +24,9 @@ export class AuthService extends CoreService {
 
 	async verify(token: string) {
 		return this.post<{ user: User; token: string }>("/auth/verify", { token });
+	}
+
+	async logout(reply: FastifyReply) {
+		reply.clearCookie("auth");
 	}
 }
