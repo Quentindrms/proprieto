@@ -14,8 +14,7 @@ export class AuthController {
 		@Res() response: Response,
 	) {
 		const logged = await this.authService.login(body);
-		console.log(logged);
-		if (logged.success === false) {
+		if (!logged.success) {
 			return response.status(401).send({ success: false });
 		}
 		return response
