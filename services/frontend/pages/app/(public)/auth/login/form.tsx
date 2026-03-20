@@ -1,12 +1,6 @@
 import { useAuth } from "@hooks/useAuth";
-import { createSignal } from "solid-js";
 import { Button } from "../../../../../components/button";
 import { TextField } from "../../../../../components/form";
-
-interface LoginFormField {
-	email: string;
-	password: string;
-}
 
 export default function LoginForm() {
 	const auth = useAuth();
