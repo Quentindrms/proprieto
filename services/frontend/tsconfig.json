@@ -24,7 +24,9 @@
       "@app/types/*":["types/*"],
       "@assets/*":["assets/*"],
       "@hooks/*":["hooks/*"],
-      "@services/*":["services/*"]
+      "@services/*":["services/*"],
+      "@utils/*":["utils/*"]
+
     }
   },
   "exclude": [
