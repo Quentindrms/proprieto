@@ -28,4 +28,15 @@ export class AuthController {
 		if (!registeredUser) return response.status(400).send({ success: false });
 		return response.status(200).send({ success: true });
 	}
+
+	@Post("/verify")
+	async verify(@Body() body: { token: string }, @Res() res: Response) {
+		const { user } = await this.authService.verify(body.token);
+		const newToken = await this.authService.generateNewToken(user.id);
+
+		res.status(201).send({
+			user: { userId: user.id },
+			token: newToken,
+		});
+	}
 }
