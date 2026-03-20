@@ -2,7 +2,7 @@ import { User, type UserCreation } from "@app/types/user";
 import { createSignal } from "solid-js";
 import toast from "solid-toast";
 import { navigate } from "vike/client/router";
-import { onLogin } from "./useAuth.telefunc";
+import { onLogin, onRegister } from "./useAuth.telefunc";
 
 export function useAuth() {
 	const [email, setEmail] = createSignal<string>("");
@@ -44,7 +44,7 @@ export function useAuth() {
 
 	async function handleRegister(event: SubmitEvent) {
 		event.preventDefault();
-		console.log(formData());
+		onRegister(formData());
 	}
 
 	return {
