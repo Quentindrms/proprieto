@@ -26,6 +26,6 @@ export class AuthController {
 	async register(@Body() body: CreateAccountDto, @Res() response: Response) {
 		const registeredUser = await this.authService.register(body);
 		if (!registeredUser) return response.status(400).send({ success: false });
-		return response.status(200).send({ sucess: true });
+		return response.status(200).send({ success: true });
 	}
 }
