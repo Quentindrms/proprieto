@@ -1,5 +1,5 @@
-import { Body, Controller, Post, Res } from "@nestjs/common";
-import type { Response } from "express";
+import { Body, Controller, Get, Post, Req, Res } from "@nestjs/common";
+import type { Request, Response } from "express";
 import type { CreateAccountDto } from "types/DtoType";
 //biome-ignore lint/style/useImportType: required for NestJS DI
 import { AuthService } from "./auth.service";
