@@ -4,7 +4,7 @@ import {
 	FaSolidPlus,
 	FaSolidRemove,
 } from "solid-icons/fa";
-import type { JSX } from "solid-js";
+import { type JSX, splitProps } from "solid-js";
 import type { ButtonColor, ButtonIcons } from "../types/styleTypes";
 
 interface ButtonProps extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -15,6 +15,8 @@ interface ButtonProps extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export function Button(props: ButtonProps) {
+	const [local, rest] = splitProps(props, ["color", "icons", "children"]);
+
 	const colorClases: Record<ButtonColor, string> = {
 		green: "bg-solid-green hover:bg-solid-green-hover",
 		red: "bg-solid-red hover:bg-solid-red-hover",
@@ -34,15 +36,16 @@ export function Button(props: ButtonProps) {
 	const flexClasses = "flex gap-5 items-center";
 	return (
 		<button
+			{...rest}
 			type={props.type}
 			class={clsx([
 				globalClasses,
-				props.color ? colorClases[props.color] : colorClases.gold,
-				props.icons ? flexClasses : "",
+				local.color ? colorClases[local.color] : colorClases.gold,
+				local.icons ? flexClasses : "",
 			])}
 		>
-			{props.icons && IconClasses[props.icons]?.()}
-			{props.children}
+			{local.icons && IconClasses[local.icons]?.()}
+			{local.children}
 		</button>
 	);
 }
