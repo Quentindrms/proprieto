@@ -1,5 +1,6 @@
 import { Controller } from "@nestjs/common";
-import type { ContractService } from "./contract.service";
+//biome-ignore lint/style/useImportType: required for NestJS DI
+import { ContractService } from "./contract.service";
 
 @Controller("contracts")
 export class ContractController {

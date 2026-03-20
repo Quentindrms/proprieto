@@ -23,6 +23,10 @@
       "@components/*":["components/*"],
       "@app/types/*":["types/*"],
       "@assets/*":["assets/*"],
+      "@hooks/*":["hooks/*"],
+      "@services/*":["services/*"],
+      "@utils/*":["utils/*"]
+
     }
   },
   "exclude": [
