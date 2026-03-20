@@ -33,7 +33,6 @@ export function useAuth() {
 			const response = await onLogin(email(), password());
 			if (response?.success) {
 				toast.success("Connexion réussie");
-				navigate("/app/");
 			} else {
 				toast.error("Une erreur est survenue lors de la connexion");
 			}
