@@ -3,7 +3,8 @@ export class CoreService {
 	protected authToken: string | null;
 
 	constructor(authToken: string | null = null) {
-		(this.BASE_URL = "http://backend:4000"), (this.authToken = authToken);
+		this.BASE_URL = "http://backend:4000";
+		this.authToken = authToken;
 	}
 
 	private async handleFetch(
