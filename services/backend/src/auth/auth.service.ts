@@ -31,11 +31,11 @@ export class AuthService {
 				email: loginDetails.email,
 			},
 		});
-		if (!user) throw Error("Identifiants invalides");
+		if (!user) throw Error("Utilisateur inexistant");
 		try {
 			if (!(await argon2.verify(user.password, loginDetails.password)))
 				throw Error("Identifiants invalides");
-			return { token: this.generateToken(user.id), sucess: true };
+			return { token: this.generateToken(user.id), success: true };
 		} catch (error) {
 			console.trace(error);
 			return { success: false };
