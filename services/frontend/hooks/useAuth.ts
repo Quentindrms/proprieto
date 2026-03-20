@@ -1,3 +1,4 @@
+import { User, type UserCreation } from "@app/types/user";
 import { createSignal } from "solid-js";
 import toast from "solid-toast";
 import { navigate } from "vike/client/router";
@@ -6,10 +7,25 @@ import { onLogin } from "./useAuth.telefunc";
 export function useAuth() {
 	const [email, setEmail] = createSignal<string>("");
 	const [password, setPassword] = createSignal<string>("");
-	const [passwordValidation, setPasswordValidation] = createSignal<string>("");
-	const [name, setName] = createSignal<string>("");
-	const [firstName, setFirstName] = createSignal<string>("");
-	const [phone, setPhone] = createSignal<string>("");
+	const [formData, setFormData] = createSignal<UserCreation>({
+		name: "",
+		firstName: "",
+		address: "",
+		email: "",
+		password: "",
+		passwordValidation: "",
+		phone: "",
+	});
+
+	function handleRegisterInputChange(field: keyof UserCreation) {
+		return (e: InputEvent) => {
+			const target = e.target as HTMLInputElement;
+			setFormData((prev) => ({
+				...prev,
+				[field]: target.value,
+			}));
+		};
+	}
 
 	async function handleLogin(event: SubmitEvent) {
 		try {
@@ -28,6 +44,7 @@ export function useAuth() {
 
 	async function handleRegister(event: SubmitEvent) {
 		event.preventDefault();
+		console.log(formData());
 	}
 
 	return {
@@ -35,15 +52,8 @@ export function useAuth() {
 		email,
 		setPassword,
 		password,
-		setFirstName,
-		firstName,
-		setName,
-		name,
-		setPhone,
-		phone,
-		setPasswordValidation,
-		passwordValidation,
 		handleLogin,
+		handleRegisterInputChange,
 		handleRegister,
 	};
 }
