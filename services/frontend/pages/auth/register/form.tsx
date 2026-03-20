@@ -1,7 +1,7 @@
 import { UserCreation } from "@app/types/user";
+import { Button } from "@components/button";
+import { TextField } from "@components/form";
 import { useAuth } from "@hooks/useAuth";
-import { Button } from "../../../../../components/button";
-import { TextField } from "../../../../../components/form";
 
 export default function RegisterForm() {
 	const auth = useAuth();
