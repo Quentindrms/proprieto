@@ -1,3 +1,4 @@
+import type { User } from "@app/types/user";
 import { CoreService } from "./core.service";
 
 export class AuthService extends CoreService {
@@ -7,5 +8,9 @@ export class AuthService extends CoreService {
 		} catch (error) {
 			console.trace(error);
 		}
+	}
+
+	async verify(token: string) {
+		return this.post<{ user: User; token: string }>("/auth/verify", { token });
 	}
 }
