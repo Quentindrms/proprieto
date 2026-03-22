@@ -79,3 +79,20 @@ export function ModalHeader(props: ModalHeaderProps) {
 		</header>
 	);
 }
+
+interface ModalBodyProps extends JSX.HTMLAttributes<HTMLDivElement> {}
+
+export function ModalBody(props: ModalBodyProps) {
+	const modal = useContext(ModalContext);
+
+	return (
+		<div
+			{...props}
+			class={clsx(
+				"p-2 grow overflow-y-auto bg-background-surface rounded-b-md",
+			)}
+		>
+			{props.children}
+		</div>
+	);
+}
