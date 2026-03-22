@@ -19,7 +19,9 @@ export function useProperty() {
 		};
 	}
 
-	function create() {}
+	function create(event: SubmitEvent) {
+		event.preventDefault();
+	}
 
 	return {
 		createProperty,
