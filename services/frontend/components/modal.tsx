@@ -2,10 +2,9 @@ import clsx from "clsx";
 import {
 	type Accessor,
 	createContext,
-	createSignal,
 	type JSX,
-	Show,
 	splitProps,
+	useContext,
 } from "solid-js";
 
 interface ModalProps extends JSX.HTMLAttributes<HTMLDivElement> {
@@ -19,7 +18,7 @@ const ModalContext = createContext<{ close: () => void }>({
 	close: () => {},
 });
 
-export default function Modal(props: ModalProps) {
+export function Modal(props: ModalProps) {
 	const [local, rest] = splitProps(props, [
 		"isOpened",
 		"isClosing",
@@ -53,8 +52,30 @@ export default function Modal(props: ModalProps) {
 					rest.class,
 				)}
 			>
-				<section>{local.children}</section>
+				<section class="bg-background-surface w-2xl flex flex-col border border-background-border rounded-xl p-2 gap-2">
+					{local.children}
+				</section>
 			</div>
 		</ModalContext.Provider>
+	);
+}
+
+interface ModalHeaderProps extends JSX.HTMLAttributes<HTMLDivElement> {}
+
+export function ModalHeader(props: ModalHeaderProps) {
+	const modal = useContext(ModalContext);
+
+	return (
+		<header
+			class={clsx(
+				"flex justify-between items-center border-b border-background-border",
+				props.class,
+			)}
+		>
+			{props.children}
+			<button type="button" onClick={modal.close} class="text-primary">
+				X
+			</button>
+		</header>
 	);
 }
