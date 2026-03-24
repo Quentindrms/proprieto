@@ -5,14 +5,21 @@ import Heading from "@components/heading";
 import { Modal, ModalBody, ModalHeader } from "@components/modal";
 import PropertyCard from "@components/propertyCard";
 import SearchField from "@components/searchField";
-import Text from "@components/text";
 import { useModal } from "@hooks/useModal";
+import { useProperty } from "@hooks/useProperty";
+import { For } from "solid-js";
+import { useData } from "vike-solid/useData";
+import type { Data } from "./+data";
 import CreatePropertyForm from "./form";
 
 export default function Page() {
-	const modal = useModal(1500);
+	const data = useData<Data>();
 
-	const property: Property = {
+	const modal = useModal(1500);
+	const property = useProperty();
+
+	const testProperty: Property = {
+		id: "1",
 		name: "Ma propriété",
 		purshacePrice: "100 000",
 		purshaceDate: new Date(),
@@ -58,12 +65,14 @@ export default function Page() {
 			</div>
 
 			<div class="p-4 grid grid-cols-3 gap-4">
-				<PropertyCard property={property} />
-				<PropertyCard property={property} />
-				<PropertyCard property={property} />
-				<PropertyCard property={property} />
-				<PropertyCard property={property} />
+				<For each={data.properties}>
+					{(property) => <PropertyCard property={property} />}
+				</For>
 			</div>
+
+			<Button type="button" onClick={property.browseProperties}>
+				Click
+			</Button>
 		</div>
 	);
 }
