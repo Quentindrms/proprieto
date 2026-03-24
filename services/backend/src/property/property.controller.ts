@@ -17,5 +17,7 @@ export class PropertyController {
 		const user = request.user;
 		if (!user) return response.status(401).send({});
 		const property = this.propertyService.create(body, user.id);
+		if (!property) return response.status(422).send({});
+		return response.status(200).send({ message: "success" });
 	}
 }
