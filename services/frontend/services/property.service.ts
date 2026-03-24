@@ -1,4 +1,4 @@
-import type { CreateProperty } from "@app/types/property";
+import type { CreateProperty, Property } from "@app/types/property";
 import { CoreService } from "./core.service";
 
 export class PropertyService extends CoreService {
@@ -7,6 +7,6 @@ export class PropertyService extends CoreService {
 	}
 
 	async browseProperties() {
-		return this.get<{}>("/property/browse");
+		return this.get<Property[]>("/property/browse");
 	}
 }

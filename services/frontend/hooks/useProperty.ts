@@ -32,7 +32,7 @@ export function useProperty() {
 
 	async function browseProperties() {
 		const response = await onBrowse();
-		console.log(response);
+		if (!response) return;
 		return response;
 	}
 
