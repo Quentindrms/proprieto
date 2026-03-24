@@ -9,6 +9,8 @@ export interface CreateAccountDto {
 
 export interface CreatePropertyDto {
 	name: string;
+	purshacePrice?: number;
+	purshaceDate?: Date;
 	isActive: boolean;
 	type: string;
 }
