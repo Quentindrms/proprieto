@@ -1,6 +1,7 @@
 import type { CreateProperty } from "@app/types/property";
 import { PropertyService } from "@services/property.service";
 import { getAuthTokenFromContext } from "@utils/telefunc";
+import toast from "solid-toast";
 
 export async function onCreate(data: CreateProperty) {
 	const authToken = getAuthTokenFromContext();

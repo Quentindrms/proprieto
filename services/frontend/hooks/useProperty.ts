@@ -1,5 +1,6 @@
 import type { CreateProperty } from "@app/types/property";
 import { createSignal } from "solid-js";
+import toast from "solid-toast";
 import { onCreate } from "./useProperty.telefunc";
 
 export function useProperty() {
@@ -20,8 +21,13 @@ export function useProperty() {
 		};
 	}
 
-	function create() {
-		onCreate(createProperty());
+	async function create() {
+		const response = await onCreate(createProperty());
+		if (response?.message !== "success") {
+			toast.error("Une erreur est survenue lors de la création");
+			return;
+		}
+		toast.success("Propriété créee");
 	}
 
 	return {
