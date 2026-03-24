@@ -1,4 +1,5 @@
 export interface Property {
+	id: string;
 	name: string;
 	purshacePrice?: string;
 	purshaceDate?: Date;
