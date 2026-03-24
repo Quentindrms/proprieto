@@ -18,4 +18,13 @@ export class PropertyService {
 			},
 		});
 	}
+
+	async browseProperties(userId: string) {
+		return await prisma.property.findMany({
+			where: {
+				userId,
+				isDeleted: false,
+			},
+		});
+	}
 }

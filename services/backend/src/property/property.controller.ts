@@ -1,5 +1,5 @@
-import { Body, Controller, Post, Req, Res } from "@nestjs/common";
-import type { Request, Response } from "express";
+import { Body, Controller, Get, Post, Req, Res } from "@nestjs/common";
+import type { Request, Response, response } from "express";
 import type { CreatePropertyDto } from "types/DtoType";
 //biome-ignore lint/style/useImportType: required for NestJS DI
 import { PropertyService } from "./property.service";
@@ -9,15 +9,24 @@ export class PropertyController {
 	constructor(private readonly propertyService: PropertyService) {}
 
 	@Post("")
-	createProperty(
+	async createProperty(
 		@Req() request: Request,
 		@Res() response: Response,
 		@Body() body: CreatePropertyDto,
 	) {
 		const user = request.user;
 		if (!user) return response.status(401).send({});
-		const property = this.propertyService.create(body, user.id);
+		const property = await this.propertyService.create(body, user.id);
 		if (!property) return response.status(422).send({});
 		return response.status(200).send({ message: "success" });
+	}
+
+	@Get("browse")
+	async browseProperties(@Req() request: Request, @Res() response: Response) {
+		const user = request.user;
+		if (!user) return response.status(401).send({});
+		const properties = await this.propertyService.browseProperties(user.id);
+		console.log(properties);
+		return response.status(200).send(properties);
 	}
 }
