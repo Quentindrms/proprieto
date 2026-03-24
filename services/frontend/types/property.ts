@@ -1,8 +1,8 @@
 export interface Property {
 	id: string;
 	name: string;
-	purshacePrice?: string;
-	purshaceDate?: Date;
+	purchasePrice?: string;
+	purshaseDate?: Date;
 	sellPrice?: string;
 	sellDate?: Date;
 	isDeleted: boolean;

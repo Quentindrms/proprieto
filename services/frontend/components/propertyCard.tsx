@@ -30,14 +30,14 @@ export default function PropertyCard(props: PropertyCardProps) {
 			>
 				<div class="flex justify-between">
 					<Text components="p">Prix d'achat</Text>
-					<Text components="p">{props.property.purshacePrice}</Text>
+					<Text components="p">{props.property.purchasePrice}</Text>
 				</div>
 				<div class="flex justify-between">
 					<Text components="p">Date d'achat</Text>
 					<Text components="p">
-						{props.property.purshaceDate
-							? props.property.purshaceDate.toLocaleDateString()
-							: ""}
+						{props.property.purshaseDate
+							? new Date(props.property.purshaseDate).toLocaleDateString()
+							: "-"}
 					</Text>
 				</div>
 				<div class="flex justify-between">
@@ -48,8 +48,8 @@ export default function PropertyCard(props: PropertyCardProps) {
 					<Text components="p">Date de vente</Text>
 					<Text components="p">
 						{props.property.sellDate
-							? props.property.sellDate.toLocaleDateString()
-							: ""}
+							? new Date(props.property.sellDate).toLocaleDateString()
+							: "-"}
 					</Text>
 				</div>
 			</div>
