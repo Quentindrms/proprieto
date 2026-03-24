@@ -69,10 +69,6 @@ export default function Page() {
 					{(property) => <PropertyCard property={property} />}
 				</For>
 			</div>
-
-			<Button type="button" onClick={property.browseProperties}>
-				Click
-			</Button>
 		</div>
 	);
 }
