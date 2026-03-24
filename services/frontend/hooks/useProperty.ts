@@ -1,5 +1,6 @@
 import type { CreateProperty } from "@app/types/property";
 import { createSignal } from "solid-js";
+import { onCreate } from "./useProperty.telefunc";
 
 export function useProperty() {
 	const [createProperty, setCreateProperty] = createSignal<CreateProperty>({
@@ -20,7 +21,7 @@ export function useProperty() {
 	}
 
 	function create() {
-		console.log(createProperty());
+		onCreate(createProperty());
 	}
 
 	return {
