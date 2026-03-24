@@ -13,3 +13,13 @@ export async function onCreate(data: CreateProperty) {
 		console.trace(error);
 	}
 }
+
+export async function onBrowse() {
+	const authToken = getAuthTokenFromContext();
+	try {
+		const propertyService = new PropertyService(authToken);
+		return await propertyService.browseProperties();
+	} catch (error) {
+		console.trace(error);
+	}
+}

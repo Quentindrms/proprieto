@@ -5,4 +5,8 @@ export class PropertyService extends CoreService {
 	async createProperty(data: CreateProperty) {
 		return this.post<{ message: "success" }>("/property/", data);
 	}
+
+	async browseProperties() {
+		return this.get<{}>("/property/browse");
+	}
 }

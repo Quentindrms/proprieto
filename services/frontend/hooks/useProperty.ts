@@ -1,7 +1,7 @@
 import type { CreateProperty } from "@app/types/property";
 import { createSignal } from "solid-js";
 import toast from "solid-toast";
-import { onCreate } from "./useProperty.telefunc";
+import { onBrowse, onCreate } from "./useProperty.telefunc";
 
 export function useProperty() {
 	const [createProperty, setCreateProperty] = createSignal<CreateProperty>({
@@ -30,9 +30,16 @@ export function useProperty() {
 		toast.success("Propriété créee");
 	}
 
+	async function browseProperties() {
+		const response = await onBrowse();
+		console.log(response);
+		return response;
+	}
+
 	return {
 		createProperty,
 		handleCreateInput,
 		create,
+		browseProperties,
 	};
 }
