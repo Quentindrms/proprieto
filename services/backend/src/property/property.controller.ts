@@ -15,9 +15,7 @@ export class PropertyController {
 		@Body() body: CreatePropertyDto,
 	) {
 		const user = request.user;
-		console.log(user);
 		if (!user) return response.status(401).send({});
-		console.log(user.email);
-		return response.status(200).send({ message: user.address });
+		const property = this.propertyService.create(body, user.id);
 	}
 }

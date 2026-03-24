@@ -1,4 +1,21 @@
+import { prisma } from "@libs/DatabaseClient";
 import { Injectable } from "@nestjs/common";
+import type { User } from "@prisma/client";
+import type { CreatePropertyDto } from "types/DtoType";
 
 @Injectable()
-export class PropertyService {}
+export class PropertyService {
+	async create(property: CreatePropertyDto, userId: string) {
+		return await prisma.property.create({
+			data: {
+				name: property.name,
+				purchasePrice: Number(property.purshacePrice),
+				purshaseDate: property.purshaceDate
+					? new Date(property.purshaceDate)
+					: new Date(),
+				userId: userId,
+				isDeleted: false,
+			},
+		});
+	}
+}
