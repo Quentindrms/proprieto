@@ -125,3 +125,23 @@ export function Select(props: SelectProps) {
 		</fieldset>
 	);
 }
+
+interface CheckBoxProps extends JSX.InputHTMLAttributes<HTMLInputElement> {
+	label: string;
+}
+
+export function CheckBox(props: CheckBoxProps) {
+	const [local, rest] = splitProps(props, ["label"]);
+
+	return (
+		<fieldset class="flex">
+			<Label label={local.label} required={rest.required} for={rest.name} />
+			<input
+				type="checkbox"
+				class="bg-primary rounded-md p-1"
+				id={rest.name}
+				{...rest}
+			/>
+		</fieldset>
+	);
+}
