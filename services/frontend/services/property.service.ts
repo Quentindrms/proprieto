@@ -17,4 +17,8 @@ export class PropertyService extends CoreService {
 	async updateProperty(data: PropertyUpdateType) {
 		return this.put<{ message: string }>("/property/", data);
 	}
+
+	async deleteProperty(propertyId: string) {
+		return this.delete<{ message: string }>(`/property/delete/${propertyId}`);
+	}
 }

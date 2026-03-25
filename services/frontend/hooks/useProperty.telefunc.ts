@@ -35,3 +35,13 @@ export async function onUpdate(data: PropertyUpdateType) {
 		console.trace(error);
 	}
 }
+
+export async function onDelete(propertyId: string) {
+	const authToken = getAuthTokenFromContext();
+	try {
+		const propertyService = new PropertyService(authToken);
+		return await propertyService.deleteProperty(propertyId);
+	} catch (error) {
+		console.trace(error);
+	}
+}

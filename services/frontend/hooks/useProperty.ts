@@ -7,7 +7,7 @@ import { createSignal } from "solid-js";
 import toast from "solid-toast";
 import { reload } from "vike/client/router";
 import type { ZodSafeParseError } from "zod";
-import { onBrowse, onCreate, onUpdate } from "./useProperty.telefunc";
+import { onBrowse, onCreate, onDelete, onUpdate } from "./useProperty.telefunc";
 
 export function useProperty() {
 	const [createProperty, setCreateProperty] =
@@ -73,6 +73,17 @@ export function useProperty() {
 		await reload();
 	}
 
+	async function remove(propertyId: string) {
+		console.log(propertyId);
+		const response = await onDelete(propertyId);
+		if (response?.message !== "success") {
+			toast.error("Une erreur est survenue lors de la suppression");
+			return;
+		}
+		toast.success("Propriété supprimée");
+		await reload();
+	}
+
 	function validateData() {
 		const validation = PropertyCreationSchema.safeParse(createProperty());
 		if (!validation.success) {
@@ -95,6 +106,7 @@ export function useProperty() {
 		handleUpdateInput,
 		create,
 		update,
+		remove,
 		browseProperties,
 		formError,
 		setUpdateProperty,
