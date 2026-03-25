@@ -1,6 +1,11 @@
 import type { Outcome } from "@app/types/outcome";
-import type { OutcomeCreationType, OutcomeUpdateType } from "@schemas/outcome";
+import {
+	OutcomeCreationSchema,
+	type OutcomeCreationType,
+	type OutcomeUpdateType,
+} from "@schemas/outcome";
 import { createSignal } from "solid-js";
+import type { ZodSafeParseError } from "zod";
 
 export function useOutcome() {
 	const [createOutcome, setCreateOutcome] = createSignal<OutcomeCreationType>({
@@ -24,6 +29,9 @@ export function useOutcome() {
 		frequency: "month",
 	});
 
+	const [formError, setFormError] =
+		createSignal<ZodSafeParseError<OutcomeCreationType | OutcomeUpdateType>>();
+
 	function handleCreateInput(key: keyof OutcomeCreationType) {
 		return (event: InputEvent) => {
 			const target = event.target as HTMLInputElement;
@@ -45,7 +53,12 @@ export function useOutcome() {
 	}
 
 	function create() {
-		console.log(createOutcome());
+		const validate = OutcomeCreationSchema.safeParse(createOutcome());
+		if (!validate.success) {
+			setFormError(validate);
+			return;
+		}
+		setFormError(undefined);
 	}
 
 	function update() {
@@ -57,5 +70,6 @@ export function useOutcome() {
 		update,
 		handleCreateInput,
 		handleUpdateInput,
+		formError,
 	};
 }
