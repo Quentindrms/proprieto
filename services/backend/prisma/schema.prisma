@@ -88,7 +88,7 @@ model Property {
   id            String    @id @unique @default(uuid()) @map("id_property") @db.Uuid
   name          String    @db.VarChar(120)
   purchasePrice Int?      @map("purchase_price") @db.Integer()
-  purchaseDate  DateTime? @map("purchase_date")
+  purshaseDate  DateTime? @map("purchase_date")
   sellPrice     Int?      @map("sell_price") @db.Integer()
   sellDate      DateTime? @map("sell_date")
   isDeleted     Boolean   @map("is_deleted")
