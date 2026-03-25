@@ -15,11 +15,15 @@ const isRecuringSchema = z.boolean(
 
 const isPaidSchema = z.boolean("Le statut payé doit être de type vrai ou faux");
 
-const issueDateSchema = z.coerce.date("Le format de la date est invalide");
+const issueDateSchema = z.coerce
+	.date("Le format de la date est invalide")
+	.optional();
 
-const paidOnSchema = z.coerce.date("La format de la date est invalide");
+const paidOnSchema = z.coerce
+	.date("La format de la date est invalide")
+	.optional();
 
-const frequencySchema = z.enum(["none", "week", "month", "year"]);
+const frequencySchema = z.enum(["none", "week", "month", "year"]).optional();
 
 export const OutcomeCreationSchema = z.object({
 	name: nameSchema,
