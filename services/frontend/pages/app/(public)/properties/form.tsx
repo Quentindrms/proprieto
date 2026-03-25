@@ -17,13 +17,13 @@ export default function CreatePropertyForm() {
 				label="Prix d'acquisition"
 				type="text"
 				name="purshacePrice"
-				onInput={property.handleCreateInput("purshacePrice")}
+				onInput={property.handleCreateInput("purchasePrice")}
 			/>
 			<TextField
 				label="Date d'acquisition"
 				type="date"
 				name="purshaceDate"
-				onInput={property.handleCreateInput("purshaceDate")}
+				onInput={property.handleCreateInput("purchaseDate")}
 			/>
 			<Select
 				label="Type de bien"
