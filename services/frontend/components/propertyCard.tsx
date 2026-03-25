@@ -1,4 +1,3 @@
-import type { PropertyCreationType } from "@schemas/property";
 import type { Property } from "../types/property";
 import { Badge } from "./badge";
 import { Button } from "./button";
