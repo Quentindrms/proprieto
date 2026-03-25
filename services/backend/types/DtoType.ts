@@ -14,3 +14,13 @@ export interface CreatePropertyDto {
 	isActive: boolean;
 	type: string;
 }
+
+export interface UpdatePropertyDto {
+	id: string;
+	name: string;
+	purchasePrice?: number;
+	purchaseDate?: Date;
+	sellPrice?: number;
+	sellDate?: Date;
+	type: string;
+}
