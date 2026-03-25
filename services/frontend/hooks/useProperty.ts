@@ -4,6 +4,7 @@ import {
 } from "@schemas/property";
 import { createSignal } from "solid-js";
 import toast from "solid-toast";
+import { reload } from "vike/client/router";
 import type { ZodSafeParseError } from "zod";
 import { onBrowse, onCreate } from "./useProperty.telefunc";
 
@@ -41,6 +42,7 @@ export function useProperty() {
 			return;
 		}
 		toast.success("Propriété créee");
+		await reload();
 	}
 
 	function validateData() {
