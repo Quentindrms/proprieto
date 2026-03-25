@@ -1,6 +1,5 @@
 import { prisma } from "@libs/DatabaseClient";
 import { Injectable } from "@nestjs/common";
-import type { User } from "@prisma/client";
 import type { CreatePropertyDto } from "types/DtoType";
 
 @Injectable()
@@ -9,9 +8,9 @@ export class PropertyService {
 		return await prisma.property.create({
 			data: {
 				name: property.name,
-				purchasePrice: Number(property.purshacePrice),
-				purshaseDate: property.purshaceDate
-					? new Date(property.purshaceDate)
+				purchasePrice: Number(property.purchasePrice),
+				purchaseDate: property.purchaseDate
+					? new Date(property.purchaseDate)
 					: new Date(),
 				userId: userId,
 				isDeleted: false,
