@@ -7,10 +7,7 @@ import PropertyCard from "@components/propertyCard";
 import SearchField from "@components/searchField";
 import { useModal } from "@hooks/useModal";
 import { useProperty } from "@hooks/useProperty";
-import type {
-	PropertyCreationType,
-	PropertyUpdateType,
-} from "@schemas/property";
+import type { PropertyUpdateType } from "@schemas/property";
 import { createSignal, For } from "solid-js";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
@@ -22,10 +19,12 @@ export default function Page() {
 
 	const [propertyToEdit, setPropertyToEdit] =
 		createSignal<PropertyUpdateType | null>(null);
+	const [propertyToDelete, setPropertyToDelete] = createSignal<string>("");
 
 	const createModal = useModal(350);
 	const updateModal = useModal(350);
-	const property = useProperty();
+
+	const removeProperty = useProperty().remove;
 
 	return (
 		<div class="w-dvw">
@@ -101,6 +100,7 @@ export default function Page() {
 								});
 								updateModal.open();
 							}}
+							onDelete={() => removeProperty(property.id)}
 						/>
 					)}
 				</For>
