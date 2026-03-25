@@ -1,9 +1,11 @@
-import type { CreateProperty } from "@app/types/property";
+import type {
+	PropertyCreationType,
+	PropertyUpdateType,
+} from "@schemas/property";
 import { PropertyService } from "@services/property.service";
 import { getAuthTokenFromContext } from "@utils/telefunc";
-import toast from "solid-toast";
 
-export async function onCreate(data: CreateProperty) {
+export async function onCreate(data: PropertyCreationType) {
 	const authToken = getAuthTokenFromContext();
 
 	try {
@@ -19,6 +21,16 @@ export async function onBrowse() {
 	try {
 		const propertyService = new PropertyService(authToken);
 		return await propertyService.browseProperties();
+	} catch (error) {
+		console.trace(error);
+	}
+}
+
+export async function onUpdate(data: PropertyUpdateType) {
+	const authToken = getAuthTokenFromContext();
+	try {
+		const propertyService = new PropertyService(authToken);
+		return await propertyService.updateProperty(data);
 	} catch (error) {
 		console.trace(error);
 	}

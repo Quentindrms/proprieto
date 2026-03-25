@@ -7,7 +7,7 @@ import { createSignal } from "solid-js";
 import toast from "solid-toast";
 import { reload } from "vike/client/router";
 import type { ZodSafeParseError } from "zod";
-import { onBrowse, onCreate } from "./useProperty.telefunc";
+import { onBrowse, onCreate, onUpdate } from "./useProperty.telefunc";
 
 export function useProperty() {
 	const [createProperty, setCreateProperty] =
@@ -64,7 +64,13 @@ export function useProperty() {
 	}
 
 	async function update() {
-		console.log(updateProperty());
+		const response = await onUpdate(updateProperty());
+		if (response?.message !== "success") {
+			toast.error("Une erreur est survenue lors de la mise à jour");
+			return;
+		}
+		toast.success("Propriété mise à jour");
+		await reload();
 	}
 
 	function validateData() {
