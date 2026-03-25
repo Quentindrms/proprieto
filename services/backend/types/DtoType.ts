@@ -30,7 +30,7 @@ export interface CreateOutcomeDto {
 	amount: number;
 	isRecuring: boolean;
 	isPaid: boolean;
-	issueDate?: Date;
+	issueDate: Date;
 	paidOn?: Date;
 	frequency: string;
 }
