@@ -34,9 +34,13 @@ export class PropertyService {
 			},
 			data: {
 				name: property.name,
-				purchasePrice: property.purchasePrice,
+				purchasePrice:
+					property.purchasePrice != null
+						? Number(property.purchasePrice)
+						: undefined,
 				purchaseDate: property.purchaseDate,
-				sellPrice: property.sellPrice,
+				sellPrice:
+					property.sellPrice != null ? Number(property.sellPrice) : undefined,
 				sellDate: property.sellDate,
 			},
 		});
