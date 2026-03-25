@@ -11,10 +11,10 @@ export const sellDateSchema = z.date("Le format de la date est invalide");
 
 export const PropertyCreationSchema = z.object({
 	name: nameSchema,
-	purshasePrice: purchasePriceSchema,
+	purchasePrice: purchasePriceSchema,
 	purchaseDate: purchaseDateSchema,
 	sellPrice: sellpriceSchema,
-	sellDateSchema: sellDateSchema,
+	sellDate: sellDateSchema,
 });
 
 export type PropertyCreationType = z.infer<typeof PropertyCreationSchema>;
