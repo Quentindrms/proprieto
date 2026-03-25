@@ -1,6 +1,7 @@
 import {
 	PropertyCreationSchema,
 	type PropertyCreationType,
+	PropertyUpdateSchema,
 	type PropertyUpdateType,
 } from "@schemas/property";
 import { createSignal } from "solid-js";
@@ -26,7 +27,9 @@ export function useProperty() {
 		sellPrice: 0,
 	});
 	const [formError, setFormError] =
-		createSignal<ZodSafeParseError<PropertyCreationType>>();
+		createSignal<
+			ZodSafeParseError<PropertyCreationType | PropertyUpdateType>
+		>();
 
 	function handleCreateInput(field: keyof PropertyCreationType) {
 		return (event: InputEvent) => {
@@ -64,6 +67,12 @@ export function useProperty() {
 	}
 
 	async function update() {
+		const validation = PropertyUpdateSchema.safeParse(updateProperty());
+		if (!validation.success) {
+			setFormError(validation);
+			return;
+		}
+		setFormError(undefined);
 		const response = await onUpdate(updateProperty());
 		if (response?.message !== "success") {
 			toast.error("Une erreur est survenue lors de la mise à jour");
@@ -74,7 +83,6 @@ export function useProperty() {
 	}
 
 	async function remove(propertyId: string) {
-		console.log(propertyId);
 		const response = await onDelete(propertyId);
 		if (response?.message !== "success") {
 			toast.error("Une erreur est survenue lors de la suppression");
