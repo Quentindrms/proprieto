@@ -6,7 +6,7 @@ import Text from "./text";
 
 interface PropertyCardProps {
 	property: Property;
-	onDelete?: () => void;
+	onDelete?: (propertyId: string) => void;
 	onEdit?: (property: Property) => void;
 }
 
@@ -66,7 +66,11 @@ export default function PropertyCard(props: PropertyCardProps) {
 				>
 					Modifier
 				</Button>
-				<Button type="button" color="red" onClick={props.onDelete}>
+				<Button
+					type="button"
+					color="red"
+					onClick={() => props.onDelete?.(props.property.id)}
+				>
 					Supprimer
 				</Button>
 			</div>
