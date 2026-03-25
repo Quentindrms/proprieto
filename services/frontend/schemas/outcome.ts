@@ -19,7 +19,7 @@ const issueDateSchema = z.coerce.date("Le format de la date est invalide");
 
 const paidOnSchema = z.coerce.date("La format de la date est invalide");
 
-const frequencySchema = z.enum(["week", "month", "year"]);
+const frequencySchema = z.enum(["none", "week", "month", "year"]);
 
 export const OutcomeCreationSchema = z.object({
 	name: nameSchema,

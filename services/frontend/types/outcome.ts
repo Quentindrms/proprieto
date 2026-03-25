@@ -1,4 +1,4 @@
-type OutcomeFrequency = "week" | "month" | "year";
+type OutcomeFrequency = "none" | "week" | "month" | "year";
 
 export interface Outcome {
 	id: string;
