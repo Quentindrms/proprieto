@@ -24,3 +24,13 @@ export interface UpdatePropertyDto {
 	sellDate?: Date;
 	type: string;
 }
+
+export interface CreateOutcomeDto {
+	name: string;
+	amount: number;
+	isRecuring: boolean;
+	isPaid: boolean;
+	issueDate?: Date;
+	paidOn?: Date;
+	frequency: string;
+}
