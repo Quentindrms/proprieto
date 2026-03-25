@@ -7,7 +7,10 @@ import PropertyCard from "@components/propertyCard";
 import SearchField from "@components/searchField";
 import { useModal } from "@hooks/useModal";
 import { useProperty } from "@hooks/useProperty";
-import type { PropertyCreationType } from "@schemas/property";
+import type {
+	PropertyCreationType,
+	PropertyUpdateType,
+} from "@schemas/property";
 import { createSignal, For } from "solid-js";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
@@ -18,7 +21,7 @@ export default function Page() {
 	const data = useData<Data>();
 
 	const [propertyToEdit, setPropertyToEdit] =
-		createSignal<PropertyCreationType | null>(null);
+		createSignal<PropertyUpdateType | null>(null);
 
 	const createModal = useModal(350);
 	const updateModal = useModal(350);
@@ -87,6 +90,7 @@ export default function Page() {
 							property={property}
 							onEdit={(p) => {
 								setPropertyToEdit({
+									id: p.id,
 									name: p.name,
 									purchasePrice: p.purchasePrice ? Number(p.purchasePrice) : 0,
 									purchaseDate: p.purchaseDate

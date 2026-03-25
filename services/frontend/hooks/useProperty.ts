@@ -1,6 +1,7 @@
 import {
 	PropertyCreationSchema,
 	type PropertyCreationType,
+	type PropertyUpdateType,
 } from "@schemas/property";
 import { createSignal } from "solid-js";
 import toast from "solid-toast";
@@ -17,6 +18,13 @@ export function useProperty() {
 			sellDate: new Date(),
 			sellPrice: 0,
 		});
+	const [updateProperty, setUpdateProperty] = createSignal<PropertyUpdateType>({
+		id: "",
+		name: "",
+		purchasePrice: 0,
+		purchaseDate: new Date(),
+		sellPrice: 0,
+	});
 	const [formError, setFormError] =
 		createSignal<ZodSafeParseError<PropertyCreationType>>();
 
@@ -28,6 +36,16 @@ export function useProperty() {
 				[field]: target.value,
 			}));
 			console.log(createProperty());
+		};
+	}
+
+	function handleUpdateInput(field: keyof PropertyUpdateType) {
+		return (event: InputEvent) => {
+			const target = event.target as HTMLInputElement;
+			setUpdateProperty((prev) => ({
+				...prev,
+				[field]: target.value,
+			}));
 		};
 	}
 
@@ -45,7 +63,9 @@ export function useProperty() {
 		await reload();
 	}
 
-	async function update() {}
+	async function update() {
+		console.log(updateProperty());
+	}
 
 	function validateData() {
 		const validation = PropertyCreationSchema.safeParse(createProperty());
@@ -66,9 +86,11 @@ export function useProperty() {
 	return {
 		createProperty,
 		handleCreateInput,
+		handleUpdateInput,
 		create,
 		update,
 		browseProperties,
 		formError,
+		setUpdateProperty,
 	};
 }
