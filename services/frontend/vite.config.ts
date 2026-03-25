@@ -15,7 +15,6 @@ export default defineConfig({
 			"@hooks": fileURLToPath(new URL("hooks/", import.meta.url)),
 			"@services": fileURLToPath(new URL("services/", import.meta.url)),
 			"@utils": fileURLToPath(new URL("utils/", import.meta.url)),
-			"@schemas": fileURLToPath(new URL("schemas/", import.meta.url)),
 		},
 	},
 });
