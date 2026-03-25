@@ -1,3 +1,4 @@
+import type { PropertyCreationType } from "@schemas/property";
 import type { Property } from "../types/property";
 import { Badge } from "./badge";
 import { Button } from "./button";
@@ -6,7 +7,7 @@ import Text from "./text";
 interface PropertyCardProps {
 	property: Property;
 	onDelete?: () => void;
-	onEdit?: () => void;
+	onEdit?: (property: Property) => void;
 }
 
 export default function PropertyCard(props: PropertyCardProps) {
@@ -37,8 +38,8 @@ export default function PropertyCard(props: PropertyCardProps) {
 				<div class="flex justify-between">
 					<Text components="p">Date d'achat</Text>
 					<Text components="p">
-						{props.property.purshaseDate
-							? new Date(props.property.purshaseDate).toLocaleDateString()
+						{props.property.purchaseDate
+							? new Date(props.property.purchaseDate).toLocaleDateString()
 							: "-"}
 					</Text>
 				</div>
@@ -58,7 +59,11 @@ export default function PropertyCard(props: PropertyCardProps) {
 				</div>
 			</div>
 			<div id="footer" class="flex justify-between p-2">
-				<Button type="button" color="blue" onClick={props.onEdit}>
+				<Button
+					type="button"
+					color="blue"
+					onClick={() => props.onEdit?.(props.property)}
+				>
 					Modifier
 				</Button>
 				<Button type="button" color="red" onClick={props.onDelete}>
