@@ -5,7 +5,10 @@ import {
 	type OutcomeUpdateType,
 } from "@schemas/outcome";
 import { createSignal } from "solid-js";
+import toast from "solid-toast";
+import { reload } from "vike/client/router";
 import type { ZodSafeParseError } from "zod";
+import { onCreate } from "./useOutcome.telefunc";
 
 export function useOutcome() {
 	const [createOutcome, setCreateOutcome] = createSignal<OutcomeCreationType>({
@@ -52,13 +55,20 @@ export function useOutcome() {
 		};
 	}
 
-	function create() {
+	async function create() {
 		const validate = OutcomeCreationSchema.safeParse(createOutcome());
 		if (!validate.success) {
 			setFormError(validate);
 			return;
 		}
 		setFormError(undefined);
+		const response = await onCreate(createOutcome());
+		if (response.message !== "success") {
+			toast.error("Une erreur est survenue lors de la  création de la dépense");
+			return;
+		}
+		toast.success("Dépense crée");
+		await reload();
 	}
 
 	function update() {
