@@ -86,7 +86,7 @@ export function TextField(props: TextFieldProps) {
 	return (
 		<fieldset class="flex flex-col">
 			<Label label={local.label} required={rest.required} for={rest.name} />
-			<input class="bg-primary rounded-md m-2" id={rest.name} {...rest} />
+			<input class="bg-primary rounded-md p-1" id={rest.name} {...rest} />
 		</fieldset>
 	);
 }
@@ -109,7 +109,7 @@ export function Select(props: SelectProps) {
 		<fieldset class="flex flex-col">
 			<Label label={local.label} required={rest.required} />
 
-			<select class="bg-primary" id={rest.name} {...rest}>
+			<select class="bg-primary rounded-md p-1" id={rest.name} {...rest}>
 				<option value="" disabled selected>
 					- {local.labelOptions} -
 				</option>
