@@ -45,6 +45,8 @@ export function useProperty() {
 		await reload();
 	}
 
+	async function update() {}
+
 	function validateData() {
 		const validation = PropertyCreationSchema.safeParse(createProperty());
 		if (!validation.success) {
@@ -65,6 +67,7 @@ export function useProperty() {
 		createProperty,
 		handleCreateInput,
 		create,
+		update,
 		browseProperties,
 		formError,
 	};
