@@ -30,7 +30,9 @@ export default function PropertyCard(props: PropertyCardProps) {
 			>
 				<div class="flex justify-between">
 					<Text components="p">Prix d'achat</Text>
-					<Text components="p">{props.property.purchasePrice}</Text>
+					<Text components="p">
+						{props.property.purchasePrice ? props.property.purchasePrice : "-"}
+					</Text>
 				</div>
 				<div class="flex justify-between">
 					<Text components="p">Date d'achat</Text>
@@ -42,7 +44,9 @@ export default function PropertyCard(props: PropertyCardProps) {
 				</div>
 				<div class="flex justify-between">
 					<Text components="p">Prix de vente</Text>
-					<Text components="p">{props.property.sellPrice}</Text>
+					<Text components="p">
+						{props.property.sellPrice ? props.property.sellPrice : "-"}
+					</Text>
 				</div>
 				<div class="flex justify-between">
 					<Text components="p">Date de vente</Text>
