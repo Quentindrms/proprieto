@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+export const idSchema = z.string();
+
 export const nameSchema = z
 	.string()
 	.min(10, "Le nom d'une propriété doit contenir au moins 10 caractères")
@@ -23,4 +25,14 @@ export const PropertyCreationSchema = z.object({
 	sellDate: sellDateSchema,
 });
 
+export const PropertyUpdateSchema = z.object({
+	id: idSchema,
+	name: nameSchema,
+	purchasePrice: purchasePriceSchema,
+	purchaseDate: purchaseDateSchema,
+	sellPrice: sellpriceSchema,
+	sellDate: sellDateSchema,
+});
+
 export type PropertyCreationType = z.infer<typeof PropertyCreationSchema>;
+export type PropertyUpdateType = z.infer<typeof PropertyUpdateSchema>;
