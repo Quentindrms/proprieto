@@ -1,6 +1,6 @@
 import { prisma } from "@libs/DatabaseClient";
 import { Injectable } from "@nestjs/common";
-import type { CreatePropertyDto } from "types/DtoType";
+import type { CreatePropertyDto, UpdatePropertyDto } from "types/DtoType";
 
 @Injectable()
 export class PropertyService {
@@ -23,6 +23,21 @@ export class PropertyService {
 			where: {
 				userId,
 				isDeleted: false,
+			},
+		});
+	}
+
+	async updateProperty(property: UpdatePropertyDto) {
+		return await prisma.property.update({
+			where: {
+				id: property.id,
+			},
+			data: {
+				name: property.name,
+				purchasePrice: property.purchasePrice,
+				purchaseDate: property.purchaseDate,
+				sellPrice: property.sellPrice,
+				sellDate: property.sellDate,
 			},
 		});
 	}
