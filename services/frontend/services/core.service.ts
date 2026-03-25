@@ -68,7 +68,7 @@ export class CoreService {
 
 	protected async delete<T = never>(endpoint: string): Promise<T> {
 		const response = await this.handleFetch(endpoint, {
-			method: "POST",
+			method: "DELETE",
 			headers: { "Content-Type": "application/json" },
 		});
 		return this.handleJsonResponse<T>(response);
@@ -79,7 +79,7 @@ export class CoreService {
 		body?: K,
 	): Promise<T> {
 		const response = await this.handleFetch(endpoint, {
-			method: "POST",
+			method: "PATCH",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(body),
 		});
