@@ -25,7 +25,8 @@
       "@assets/*":["assets/*"],
       "@hooks/*":["hooks/*"],
       "@services/*":["services/*"],
-      "@utils/*":["utils/*"]
+      "@utils/*":["utils/*"],
+      "@schemas/*":["schemas/*"]
 
     }
   },
