@@ -51,7 +51,7 @@ export default function Page() {
 				>
 					<ModalHeader>
 						<Heading components="h1" size="medium">
-							Ajouter une propriété
+							Modifier une propriété
 						</Heading>
 					</ModalHeader>
 					<ModalBody>
@@ -62,7 +62,7 @@ export default function Page() {
 				<Heading components="h1" size="large" color="white">
 					Mes propriétés
 				</Heading>
-				<Button type="button" icons="add" onClick={updateModal.open}>
+				<Button type="button" icons="add" onClick={createModal.open}>
 					Créer une nouvelle propriété
 				</Button>
 			</div>
