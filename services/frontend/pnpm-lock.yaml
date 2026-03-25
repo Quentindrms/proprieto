@@ -47,6 +47,9 @@ importers:
       vike-solid:
         specifier: ^0.8.1
         version: 0.8.1(solid-js@1.9.11)(vike@0.4.255(vite@7.3.1(@types/node@20.19.35)(jiti@2.6.1)(lightningcss@1.31.1)))(vite-plugin-solid@2.11.10(solid-js@1.9.11)(vite@7.3.1(@types/node@20.19.35)(jiti@2.6.1)(lightningcss@1.31.1)))
+      zod:
+        specifier: ^4.3.6
+        version: 4.3.6
     devDependencies:
       '@tailwindcss/vite':
         specifier: ^4.2.1
