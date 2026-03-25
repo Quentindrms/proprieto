@@ -1,16 +1,19 @@
-import type { CreateProperty } from "@app/types/property";
+import type { PropertyCreationType } from "@schemas/property";
 import { createSignal } from "solid-js";
 import toast from "solid-toast";
 import { onBrowse, onCreate } from "./useProperty.telefunc";
 
 export function useProperty() {
-	const [createProperty, setCreateProperty] = createSignal<CreateProperty>({
-		name: "",
-		isActive: false,
-		type: "",
-	});
+	const [createProperty, setCreateProperty] =
+		createSignal<PropertyCreationType>({
+			name: "",
+			purchasePrice: 0,
+			purchaseDate: new Date(),
+			sellDate: new Date(),
+			sellPrice: 0,
+		});
 
-	function handleCreateInput(field: keyof CreateProperty) {
+	function handleCreateInput(field: keyof PropertyCreationType) {
 		return (event: InputEvent) => {
 			const target = event.target as HTMLInputElement;
 			setCreateProperty((prev) => ({
