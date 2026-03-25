@@ -1,5 +1,15 @@
-import { Body, Controller, Get, Post, Put, Req, Res } from "@nestjs/common";
-import type { Request, Response, response } from "express";
+import {
+	Body,
+	Controller,
+	Delete,
+	Get,
+	Param,
+	Post,
+	Put,
+	Req,
+	Res,
+} from "@nestjs/common";
+import type { Request, Response } from "express";
 import type { CreatePropertyDto, UpdatePropertyDto } from "types/DtoType";
 //biome-ignore lint/style/useImportType: required for NestJS DI
 import { PropertyService } from "./property.service";
@@ -40,6 +50,19 @@ export class PropertyController {
 		if (!user) return response.status(401).send({});
 		const update = await this.propertyService.updateProperty(body);
 		if (!update) return response.status(404).send({});
+		return response.status(200).send({ message: "success" });
+	}
+
+	@Delete("/delete/:propertyId")
+	async deleteProperty(
+		@Req() request: Request,
+		@Res() response: Response,
+		@Param("propertyId") propertyId: string,
+	) {
+		const user = request.user;
+		if (!user) response.status(401).send({});
+		const deleted = await this.propertyService.deleteProperty(propertyId);
+		if (!deleted) return response.status(404).send({});
 		return response.status(200).send({ message: "success" });
 	}
 }

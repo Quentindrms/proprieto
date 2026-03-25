@@ -41,4 +41,15 @@ export class PropertyService {
 			},
 		});
 	}
+
+	async deleteProperty(id: string) {
+		return await prisma.property.update({
+			where: {
+				id,
+			},
+			data: {
+				isDeleted: true,
+			},
+		});
+	}
 }
