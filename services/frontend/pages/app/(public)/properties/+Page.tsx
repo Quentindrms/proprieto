@@ -7,24 +7,30 @@ import PropertyCard from "@components/propertyCard";
 import SearchField from "@components/searchField";
 import { useModal } from "@hooks/useModal";
 import { useProperty } from "@hooks/useProperty";
-import { For } from "solid-js";
+import type { PropertyCreationType } from "@schemas/property";
+import { createSignal, For } from "solid-js";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
 import CreatePropertyForm from "./form";
+import UpdatePropertyForm from "./updateForm";
 
 export default function Page() {
 	const data = useData<Data>();
 
-	const modal = useModal(1500);
+	const [propertyToEdit, setPropertyToEdit] =
+		createSignal<PropertyCreationType | null>(null);
+
+	const createModal = useModal(350);
+	const updateModal = useModal(350);
 	const property = useProperty();
 
 	return (
 		<div class="w-dvw">
 			<div class="flex justify-between p-2">
 				<Modal
-					close={modal.close}
-					isClosing={modal.isClosing}
-					isOpened={modal.isOpened}
+					close={createModal.close}
+					isClosing={createModal.isClosing}
+					isOpened={createModal.isOpened}
 				>
 					<ModalHeader>
 						<Heading components="h1" size="medium">
@@ -35,10 +41,26 @@ export default function Page() {
 						<CreatePropertyForm />
 					</ModalBody>
 				</Modal>
+
+				<Modal
+					close={updateModal.close}
+					isClosing={updateModal.isClosing}
+					isOpened={updateModal.isOpened}
+				>
+					<ModalHeader>
+						<Heading components="h1" size="medium">
+							Ajouter une propriété
+						</Heading>
+					</ModalHeader>
+					<ModalBody>
+						<UpdatePropertyForm property={propertyToEdit()} />
+					</ModalBody>
+				</Modal>
+
 				<Heading components="h1" size="large" color="white">
 					Mes propriétés
 				</Heading>
-				<Button type="button" icons="add" onClick={modal.open}>
+				<Button type="button" icons="add" onClick={updateModal.open}>
 					Créer une nouvelle propriété
 				</Button>
 			</div>
@@ -60,7 +82,23 @@ export default function Page() {
 
 			<div class="p-4 grid grid-cols-3 gap-4">
 				<For each={data.properties}>
-					{(property) => <PropertyCard property={property} />}
+					{(property) => (
+						<PropertyCard
+							property={property}
+							onEdit={(p) => {
+								setPropertyToEdit({
+									name: p.name,
+									purchasePrice: p.purchasePrice ? Number(p.purchasePrice) : 0,
+									purchaseDate: p.purchaseDate
+										? new Date(p.purchaseDate)
+										: new Date(),
+									sellPrice: p.sellPrice ? Number(p.sellPrice) : undefined,
+									sellDate: p.sellDate ? new Date(p.sellDate) : undefined,
+								});
+								updateModal.open();
+							}}
+						/>
+					)}
 				</For>
 			</div>
 		</div>
