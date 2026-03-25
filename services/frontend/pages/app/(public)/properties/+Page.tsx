@@ -18,18 +18,6 @@ export default function Page() {
 	const modal = useModal(1500);
 	const property = useProperty();
 
-	const testProperty: Property = {
-		id: "1",
-		name: "Ma propriété",
-		purshacePrice: "100 000",
-		purshaceDate: new Date(),
-		sellPrice: "0",
-		sellDate: new Date(),
-		isDeleted: false,
-		isActive: true,
-		type: "Appartement",
-	};
-
 	return (
 		<div class="w-dvw">
 			<div class="flex justify-between p-2">
@@ -54,12 +42,18 @@ export default function Page() {
 					Créer une nouvelle propriété
 				</Button>
 			</div>
+
 			<StatCardWrapper>
-				<StatCard title="" value="0" legend="Propriétés au total" />
+				<StatCard
+					title=""
+					value={String(data.properties.length)}
+					legend="Propriétés au total"
+				/>
 				<StatCard title="" value="0" legend="Actives" />
 				<StatCard title="" value="0" legend="En location" />
 				<StatCard title="" value="0" legend="Vendues" />
 			</StatCardWrapper>
+
 			<div class="p-4">
 				<SearchField name="searchfield" placeholder="Recherchez..." />
 			</div>
