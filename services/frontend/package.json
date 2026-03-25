@@ -18,7 +18,8 @@
     "telefunc": "^0.2.19",
     "vike": "^0.4.253",
     "vike-photon": "^0.1.24",
-    "vike-solid": "^0.8.1"
+    "vike-solid": "^0.8.1",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.2.1",
