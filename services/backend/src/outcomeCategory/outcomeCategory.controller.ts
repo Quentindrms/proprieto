@@ -1,8 +1,9 @@
 import { Controller, Get, Req, Res } from "@nestjs/common";
 import type { Request, Response } from "express";
-import type { OutcomeCategoryService } from "./outcomeCategory.service";
+//biome-ignore lint/style/useImportType: required for NestJS DI
+import { OutcomeCategoryService } from "./outcomeCategory.service";
 
-@Controller()
+@Controller("outcome-category")
 export class OutcomeCategoryController {
 	constructor(
 		private readonly outcomeCategoryService: OutcomeCategoryService,

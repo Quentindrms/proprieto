@@ -12,7 +12,7 @@ import { OutcomeCategoryService } from "./outcomeCategory.service";
 	controllers: [OutcomeCategoryController],
 	providers: [OutcomeCategoryService],
 })
-export class PropertyModule implements NestModule {
+export class OutcomeCategoryModule implements NestModule {
 	configure(consumer: MiddlewareConsumer) {
 		consumer
 			.apply(IsAuthenticatedMiddleware)
