@@ -3,6 +3,6 @@ import { CoreService } from "./core.service";
 
 export class ProviderService extends CoreService {
 	async create(provider: CreateProviderType) {
-		return this.post<{ message: string }>("/providers/", provider);
+		return this.post<{ message: string }>("/provider/create", provider);
 	}
 }

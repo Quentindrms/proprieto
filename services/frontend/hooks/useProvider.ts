@@ -5,6 +5,7 @@ import {
 } from "@schemas/provider";
 import { createSignal } from "solid-js";
 import type { ZodSafeParseError } from "zod";
+import { onCreate } from "./useProvider.telefunc";
 
 export function useProvider() {
 	const [createProvider, setCreateProvider] = createSignal<CreateProviderType>({
@@ -13,7 +14,6 @@ export function useProvider() {
 		address: "",
 		email: "",
 		phone: "",
-		userId: "",
 	});
 
 	const [updateProvider, setUpdateProvider] = createSignal<UpdateProviderType>({
@@ -57,6 +57,7 @@ export function useProvider() {
 			setFormError(validate);
 			return;
 		}
+		onCreate(createProvider());
 	}
 
 	return {
