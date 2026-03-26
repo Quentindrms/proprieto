@@ -4,7 +4,6 @@ import Heading from "@components/heading";
 import { Modal, ModalBody, ModalHeader } from "@components/modal";
 import PageNamer from "@components/pageNamer";
 import SearchField from "@components/searchField";
-import Text from "@components/text";
 import { useModal } from "@hooks/useModal";
 import CreateOutcomeForm from "./createForm";
 

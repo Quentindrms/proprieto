@@ -3,9 +3,19 @@ import { CheckBox, Form, Select, TextField } from "@components/form";
 import Text from "@components/text";
 import { useOutcome } from "@hooks/useOutcome";
 import { createSignal, Show } from "solid-js";
+import { useData } from "vike-solid/useData";
 import { z } from "zod";
+import type { Data } from "./+data";
 
 export default function CreateOutcomeForm() {
+	const data = useData<Data>();
+
+	const propertiesList = data.properties.map((property) => ({
+		value: property.id,
+		label: property.name,
+		disabled: false,
+	}));
+
 	const outcome = useOutcome();
 
 	const [isRecuring, setIsRecuring] = createSignal<boolean>(false);
@@ -34,6 +44,12 @@ export default function CreateOutcomeForm() {
 				type="number"
 				name="amount"
 				onInput={outcome.handleCreateInput("amount")}
+			/>
+
+			<Select
+				label="Propriété concernée"
+				labelOptions="Sélectionner une proprieté"
+				options={propertiesList}
 			/>
 
 			{outcome.formError() && (
