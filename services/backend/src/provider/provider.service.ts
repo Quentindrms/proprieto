@@ -16,4 +16,12 @@ export class ProviderService {
 			},
 		});
 	}
+
+	async browse(userId) {
+		return await prisma.providers.findMany({
+			where: {
+				userId,
+			},
+		});
+	}
 }
