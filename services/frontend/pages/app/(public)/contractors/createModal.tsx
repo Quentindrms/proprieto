@@ -1,6 +1,7 @@
 import Heading from "@components/heading";
 import { Modal, ModalBody, ModalHeader } from "@components/modal";
 import type { Accessor } from "solid-js";
+import CreateForm from "./createForm";
 
 interface CreateModalProps {
 	isOpened: Accessor<boolean>;
@@ -20,7 +21,9 @@ export default function CreateModal(props: CreateModalProps) {
 					Ajouter un créancier
 				</Heading>
 			</ModalHeader>
-			<ModalBody></ModalBody>
+			<ModalBody>
+				<CreateForm />
+			</ModalBody>
 		</Modal>
 	);
 }
