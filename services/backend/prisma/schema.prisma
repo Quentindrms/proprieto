@@ -106,14 +106,14 @@ model Property {
 }
 
 model Outcome {
-  id          String   @id @unique @default(uuid()) @map("id_outcome") @db.Uuid
-  name        String   @db.VarChar(150)
-  amount      Int      @db.Integer()
-  isReccuring Boolean  @map("is_reccuring")
-  isPaid      Boolean  @map("is_paid")
-  issueDate   DateTime @map("issue_date")
-  paidOn      DateTime @map("paid_on")
-  frequency   String   @db.VarChar(50)
+  id          String    @id @unique @default(uuid()) @map("id_outcome") @db.Uuid
+  name        String    @db.VarChar(150)
+  amount      Int       @db.Integer()
+  isReccuring Boolean   @map("is_reccuring")
+  isPaid      Boolean   @map("is_paid")
+  issueDate   DateTime  @map("issue_date")
+  paidOn      DateTime? @map("paid_on")
+  frequency   String    @db.VarChar(50)
 
   propertyId        String @db.Uuid
   outcomeCategoryId String @db.Uuid
