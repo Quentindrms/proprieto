@@ -50,6 +50,7 @@ export default function CreateOutcomeForm() {
 				label="Propriété concernée"
 				labelOptions="Sélectionner une proprieté"
 				options={propertiesList}
+				onInput={outcome.handleCreateInput("propertyId")}
 			/>
 
 			{outcome.formError() && (

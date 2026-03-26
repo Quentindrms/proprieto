@@ -19,6 +19,7 @@ export function useOutcome() {
 		issueDate: new Date(),
 		paidOn: new Date(),
 		frequency: "month",
+		propertyId: "",
 	});
 
 	const [updateOutcome, setUpdateOutcome] = createSignal<OutcomeUpdateType>({
@@ -30,6 +31,7 @@ export function useOutcome() {
 		issueDate: new Date(),
 		paidOn: new Date(),
 		frequency: "month",
+		propertyId: "",
 	});
 
 	const [formError, setFormError] =
@@ -57,6 +59,7 @@ export function useOutcome() {
 
 	async function create() {
 		const validate = OutcomeCreationSchema.safeParse(createOutcome());
+		console.log(createOutcome());
 		if (!validate.success) {
 			setFormError(validate);
 			return;
