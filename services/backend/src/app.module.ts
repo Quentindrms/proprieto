@@ -6,6 +6,7 @@ import { ClientModule } from "./client/client.module";
 import { ContractModule } from "./contract/contract.module";
 import { IncomeModule } from "./income/income.module";
 import { OutcomeModule } from "./outcome/outcome.module";
+import { OutcomeCategoryModule } from "./outcomeCategory/outcomeCategory.module";
 import { PropertyModule } from "./property/property.module";
 import { ProviderModule } from "./provider/provider.module";
 import { UserModule } from "./user/user.module";
@@ -20,6 +21,7 @@ import { UserModule } from "./user/user.module";
 		PropertyModule,
 		ProviderModule,
 		UserModule,
+		OutcomeCategoryModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],
