@@ -21,6 +21,7 @@ export function useOutcome() {
 		frequency: "month",
 		propertyId: "",
 		categoryId: "",
+		providerId: "",
 	});
 
 	const [updateOutcome, setUpdateOutcome] = createSignal<OutcomeUpdateType>({
@@ -34,6 +35,7 @@ export function useOutcome() {
 		frequency: "month",
 		propertyId: "",
 		categoryId: "",
+		providerId: "",
 	});
 
 	const [formError, setFormError] =
