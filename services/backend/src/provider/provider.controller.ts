@@ -22,11 +22,7 @@ export class ProviderController {
 	}
 
 	@Get("browse")
-	async browseprovider(
-		@Req() request: Request,
-		@Res() response: Response,
-		@Body() body: CreateProviderDto,
-	) {
+	async browseprovider(@Req() request: Request, @Res() response: Response) {
 		const user = request.user;
 		if (!user) return response.status(401).send({});
 		const providers = await this.providerService.browse(user.id);
