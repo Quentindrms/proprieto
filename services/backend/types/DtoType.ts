@@ -34,4 +34,5 @@ export interface CreateOutcomeDto {
 	paidOn?: Date;
 	frequency: string;
 	propertyId: string;
+	categoryId: string;
 }

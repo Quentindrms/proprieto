@@ -15,7 +15,7 @@ export class OutcomeService {
 				paidOn: outcome.paidOn ? new Date(outcome.paidOn) : null,
 				frequency: outcome.frequency,
 				propertyId: outcome.propertyId,
-				outcomeCategoryId: "",
+				outcomeCategoryId: outcome.categoryId,
 				providersId: "",
 
 				/** TODO : Implements propertyId, outcomeCategoryId, providersId */
