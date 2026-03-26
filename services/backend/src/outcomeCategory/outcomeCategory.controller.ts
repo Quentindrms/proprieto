@@ -14,6 +14,6 @@ export class OutcomeCategoryController {
 		const user = request.user;
 		if (!user) return response.status(401).send({});
 		const categories = await this.outcomeCategoryService.browseCategory();
-		return response.status(200).send({ categories });
+		return response.status(200).send(categories);
 	}
 }
