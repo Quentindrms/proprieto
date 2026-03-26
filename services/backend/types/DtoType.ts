@@ -36,3 +36,11 @@ export interface CreateOutcomeDto {
 	propertyId: string;
 	categoryId: string;
 }
+
+export interface CreateProviderDto {
+	name: string;
+	firstName: string;
+	email: string;
+	address: string;
+	phone: string;
+}
