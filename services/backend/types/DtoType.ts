@@ -33,4 +33,5 @@ export interface CreateOutcomeDto {
 	issueDate: Date;
 	paidOn?: Date;
 	frequency: string;
+	propertyId: string;
 }
