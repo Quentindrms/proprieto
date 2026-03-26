@@ -20,6 +20,7 @@ export function useOutcome() {
 		paidOn: new Date(),
 		frequency: "month",
 		propertyId: "",
+		categoryId: "",
 	});
 
 	const [updateOutcome, setUpdateOutcome] = createSignal<OutcomeUpdateType>({
@@ -32,6 +33,7 @@ export function useOutcome() {
 		paidOn: new Date(),
 		frequency: "month",
 		propertyId: "",
+		categoryId: "",
 	});
 
 	const [formError, setFormError] =
