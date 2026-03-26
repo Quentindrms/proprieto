@@ -8,7 +8,7 @@ export class OutcomeService {
 		return await prisma.outcome.create({
 			data: {
 				name: outcome.name,
-				amount: outcome.amount,
+				amount: Number(outcome.amount),
 				isReccuring: outcome.isRecuring,
 				isPaid: outcome.isPaid,
 				issueDate: new Date(outcome.issueDate),
@@ -17,6 +17,7 @@ export class OutcomeService {
 				propertyId: "",
 				outcomeCategoryId: "",
 				providersId: "",
+				
 				/** TODO : Implements propertyId, outcomeCategoryId, providersId */
 			},
 		});
