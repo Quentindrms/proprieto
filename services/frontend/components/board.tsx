@@ -7,13 +7,13 @@ import Text from "./text";
 
 export interface BoardProps {
 	name: string;
-	cells: string[];
+	cells: string[][];
 	columns: string[];
 }
 
 export default function Board(props: BoardProps) {
 	return (
-		<div class="flex flex-col w-3xl bg-background-surface border border-background-border rounded-xl">
+		<div class="flex flex-col w-6xl bg-background-surface border border-background-border rounded-xl">
 			<div
 				id="header"
 				class="flex justify-between border-b border-background-border p-2"
@@ -29,7 +29,7 @@ export default function Board(props: BoardProps) {
 						<tr class="border-b border-background-border w-full">
 							<For each={props.columns}>
 								{(column) => (
-									<th class="text-left p-4">
+									<th class="text-center p-4 align-middle">
 										<Text components="p">{column}</Text>
 									</th>
 								)}
@@ -40,18 +40,26 @@ export default function Board(props: BoardProps) {
 						<Show
 							when={props.columns.length > 0}
 							fallback={
-								<tr class="">
+								<tr>
 									<td colspan={99999} class="p-4 text-center">
 										<Text components="p">Aucune donnée</Text>
 									</td>
 								</tr>
 							}
 						>
-							<tr class="flex flex-col gap-2">
-								<For each={props.cells}>
-									{(cell) => <td class="text-primary font-sans">{cell}</td>}
-								</For>
-							</tr>
+							<For each={props.cells}>
+								{(row) => (
+									<tr>
+										<For each={row}>
+											{(cell) => (
+												<td class="text-primary font-sans text-center align-middle">
+													{cell}
+												</td>
+											)}
+										</For>
+									</tr>
+								)}
+							</For>
 						</Show>
 					</tbody>
 				</table>
