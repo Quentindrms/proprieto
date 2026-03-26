@@ -34,7 +34,6 @@ export const CreateProviderSchema = z.object({
 	email: emailSchema,
 	address: adressSchema,
 	phone: phoneSchema,
-	userId: userIdSchema,
 });
 
 export const UpdateProviderSchema = z.object({
