@@ -1,7 +1,6 @@
-import { AuthService } from "@services/auth.service";
 import { getUserFromPageContext, setAuthCookie } from "@utils/cookie";
-import { navigate } from "vike/client/router";
-import { PageContext, type PageContextServer } from "vike/types";
+import { redirect } from "vike/abort";
+import type { PageContextServer } from "vike/types";
 
 export async function onCreatePageContext(pageContext: PageContextServer) {
 	try {
@@ -12,9 +11,8 @@ export async function onCreatePageContext(pageContext: PageContextServer) {
 		pageContext.user = user;
 		pageContext.isAuthenticated = Boolean(user);
 	} catch {
-		const authService = new AuthService();
+		/** TODO : IMPLEMENTS LOGOUT AND INVALIDE COOKIE DELETION */
 		pageContext.user = undefined;
-		navigate("/auth/login");
-		throw Error("User not logged");
+		throw redirect("/auth/login/");
 	}
 }

@@ -1,4 +1,9 @@
-import { Module } from "@nestjs/common";
+import {
+	type MiddlewareConsumer,
+	Module,
+	type NestModule,
+} from "@nestjs/common";
+import { IsAuthenticatedMiddleware } from "middleware/is-authenticated.middleware";
 import { OutcomeController } from "./outcome.controller";
 import { OutcomeService } from "./outcome.service";
 
@@ -7,4 +12,8 @@ import { OutcomeService } from "./outcome.service";
 	controllers: [OutcomeController],
 	providers: [OutcomeService],
 })
-export class OutcomeModule {}
+export class OutcomeModule implements NestModule {
+	configure(consumer: MiddlewareConsumer) {
+		consumer.apply(IsAuthenticatedMiddleware).forRoutes(OutcomeController);
+	}
+}
