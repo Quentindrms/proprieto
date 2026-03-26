@@ -25,6 +25,8 @@ const paidOnSchema = z.coerce
 
 const frequencySchema = z.enum(["none", "week", "month", "year"]).optional();
 
+const propertyIdSchema = z.string("Le format de l'identifiant est incorrect");
+
 export const OutcomeCreationSchema = z.object({
 	name: nameSchema,
 	amount: amountSchema,
@@ -33,6 +35,7 @@ export const OutcomeCreationSchema = z.object({
 	issueDate: issueDateSchema,
 	paidOn: paidOnSchema,
 	frequency: frequencySchema,
+	propertyId: propertyIdSchema,
 });
 
 export const OutcomeUpdateSchema = z.object({
@@ -44,6 +47,7 @@ export const OutcomeUpdateSchema = z.object({
 	issueDate: issueDateSchema,
 	paidOn: paidOnSchema,
 	frequency: frequencySchema,
+	propertyId: propertyIdSchema,
 });
 
 export type OutcomeCreationType = z.infer<typeof OutcomeCreationSchema>;
