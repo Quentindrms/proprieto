@@ -9,6 +9,7 @@ export async function data(pageContext: PageContextServer) {
 
 	const providerService = new ProviderService(cookies.auth);
 	const providers = await providerService.browse();
+	console.log(providers);
 
 	return { providers };
 }
