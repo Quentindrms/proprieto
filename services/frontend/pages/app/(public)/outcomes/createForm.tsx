@@ -103,7 +103,7 @@ export default function CreateOutcomeForm() {
 				label="Créancier"
 				labelOptions="Sélectionner un créancier"
 				options={providersList}
-				onInput={outcome.handleCreateInput("propertyId")}
+				onInput={outcome.handleCreateInput("providerId")}
 			/>
 
 			<CheckBox
