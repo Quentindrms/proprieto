@@ -23,6 +23,7 @@ const adressSchema = z
 
 const phoneSchema = z
 	.string()
+	.min(10, "Le téléphone doit contenir au moins 10 caractères")
 	.max(20, "Le téléphone ne peut pas contenir plus de 20 caractères");
 
 const userIdSchema = z.string("Identifiant utilisateur invalide");
