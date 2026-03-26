@@ -16,6 +16,12 @@ export default function CreateOutcomeForm() {
 		disabled: false,
 	}));
 
+	const categoryList = data.categories.map((category) => ({
+		value: category.id,
+		label: category.name,
+		disabled: false,
+	}));
+
 	const outcome = useOutcome();
 
 	const [isRecuring, setIsRecuring] = createSignal<boolean>(false);
@@ -46,6 +52,15 @@ export default function CreateOutcomeForm() {
 				onInput={outcome.handleCreateInput("amount")}
 			/>
 
+			{outcome.formError() && (
+				<Text class="text-red-500">
+					{
+						z.treeifyError(outcome.formError()!.error).properties?.amount
+							?.errors[0]
+					}
+				</Text>
+			)}
+
 			<Select
 				label="Propriété concernée"
 				labelOptions="Sélectionner une proprieté"
@@ -56,7 +71,23 @@ export default function CreateOutcomeForm() {
 			{outcome.formError() && (
 				<Text class="text-red-500">
 					{
-						z.treeifyError(outcome.formError()!.error).properties?.amount
+						z.treeifyError(outcome.formError()!.error).properties?.propertyId
+							?.errors[0]
+					}
+				</Text>
+			)}
+
+			<Select
+				label="Catégorie de dépense"
+				labelOptions="Sélectionner une catégorie"
+				options={categoryList}
+				onInput={outcome.handleCreateInput("categoryId")}
+			/>
+
+			{outcome.formError() && (
+				<Text class="text-red-500">
+					{
+						z.treeifyError(outcome.formError()!.error).properties?.categoryId
 							?.errors[0]
 					}
 				</Text>

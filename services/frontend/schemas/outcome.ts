@@ -27,6 +27,8 @@ const frequencySchema = z.enum(["none", "week", "month", "year"]).optional();
 
 const propertyIdSchema = z.string("Le format de l'identifiant est incorrect");
 
+const categoryIdSchema = z.string("Le format de catégorie est incorrect");
+
 export const OutcomeCreationSchema = z.object({
 	name: nameSchema,
 	amount: amountSchema,
@@ -36,6 +38,7 @@ export const OutcomeCreationSchema = z.object({
 	paidOn: paidOnSchema,
 	frequency: frequencySchema,
 	propertyId: propertyIdSchema,
+	categoryId: categoryIdSchema,
 });
 
 export const OutcomeUpdateSchema = z.object({
@@ -48,6 +51,7 @@ export const OutcomeUpdateSchema = z.object({
 	paidOn: paidOnSchema,
 	frequency: frequencySchema,
 	propertyId: propertyIdSchema,
+	categoryId: categoryIdSchema,
 });
 
 export type OutcomeCreationType = z.infer<typeof OutcomeCreationSchema>;
