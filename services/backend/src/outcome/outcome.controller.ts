@@ -14,6 +14,7 @@ export class OutcomeController {
 		@Res() response: Response,
 		@Body() body: CreateOutcomeDto,
 	) {
+		console.log(body);
 		const user = request.user;
 		if (!user) return response.status(401).send({});
 		const outcome = this.outcomeService.createOutcome(body);

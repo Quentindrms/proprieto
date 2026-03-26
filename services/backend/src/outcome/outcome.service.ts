@@ -14,10 +14,10 @@ export class OutcomeService {
 				issueDate: new Date(outcome.issueDate),
 				paidOn: outcome.paidOn ? new Date(outcome.paidOn) : null,
 				frequency: outcome.frequency,
-				propertyId: "",
+				propertyId: outcome.propertyId,
 				outcomeCategoryId: "",
 				providersId: "",
-				
+
 				/** TODO : Implements propertyId, outcomeCategoryId, providersId */
 			},
 		});
