@@ -1,4 +1,4 @@
-import { email, z } from "zod";
+import { z } from "zod";
 
 const idSchema = z.string("Identifiant créancier invalide");
 
@@ -33,6 +33,7 @@ export const CreateProviderSchema = z.object({
 	email: emailSchema,
 	address: adressSchema,
 	phone: phoneSchema,
+	userId: userIdSchema,
 });
 
 export const UpdateProviderSchema = z.object({
@@ -42,6 +43,7 @@ export const UpdateProviderSchema = z.object({
 	email: emailSchema,
 	address: adressSchema,
 	phone: phoneSchema,
+	userId: userIdSchema,
 });
 
 export type CreateProviderType = z.infer<typeof CreateProviderSchema>;
