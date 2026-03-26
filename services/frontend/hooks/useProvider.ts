@@ -4,6 +4,7 @@ import {
 	type UpdateProviderType,
 } from "@schemas/provider";
 import { createSignal } from "solid-js";
+import toast from "solid-toast";
 import type { ZodSafeParseError } from "zod";
 import { onCreate } from "./useProvider.telefunc";
 
@@ -49,7 +50,7 @@ export function useProvider() {
 		};
 	}
 
-	function create() {
+	async function create() {
 		console.log(createProvider());
 		const validate = CreateProviderSchema.safeParse(createProvider());
 		console.log(validate);
@@ -57,7 +58,12 @@ export function useProvider() {
 			setFormError(validate);
 			return;
 		}
-		onCreate(createProvider());
+		const response = await onCreate(createProvider());
+		if (response?.message !== "success") {
+			toast.error("Une erreur est survenue lors de la création");
+			return;
+		}
+		toast.success("Créancier crée avec succès");
 	}
 
 	return {
