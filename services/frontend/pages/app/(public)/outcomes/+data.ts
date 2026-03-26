@@ -1,5 +1,6 @@
 import { OutcomeCategoryService } from "@services/outcomeCategory.service";
 import { PropertyService } from "@services/property.service";
+import { ProviderService } from "@services/provider.service";
 import { getCookiesFromPageContext } from "@utils/cookie";
 import type { PageContextServer } from "vike/types";
 
@@ -10,8 +11,11 @@ export async function data(pageContext: PageContextServer) {
 
 	const propertyService = new PropertyService(cookies.auth);
 	const outcomeCategoryService = new OutcomeCategoryService(cookies.auth);
+	const providerService = new ProviderService(cookies.auth);
+
 	const properties = await propertyService.browseProperties();
 	const categories = await outcomeCategoryService.browseCategory();
+	const providers = await providerService.browse();
 
-	return { properties, categories };
+	return { properties, categories, providers };
 }
