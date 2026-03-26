@@ -8,6 +8,6 @@ export class ProviderService extends CoreService {
 	}
 
 	async browse() {
-		return this.get<ProviderType[]>("provider/browse");
+		return this.get<ProviderType[]>("/provider/browse");
 	}
 }
