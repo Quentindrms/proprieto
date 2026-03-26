@@ -1,6 +1,6 @@
 import { prisma } from "@libs/DatabaseClient";
 import { Injectable } from "@nestjs/common";
-import type { CreateOutcomeDto } from "@types/DtoType";
+import type { CreateOutcomeDto } from "types/DtoType";
 
 @Injectable()
 export class OutcomeService {
@@ -13,7 +13,11 @@ export class OutcomeService {
 				isPaid: outcome.isPaid,
 				issueDate: new Date(outcome.issueDate),
 				paidOn: outcome.paidOn ? new Date(outcome.paidOn) : null,
-				/** TODO : implémenter propertyId, outcomeCategoryId, providersId */
+				frequency: outcome.frequency,
+				propertyId: "",
+				outcomeCategoryId: "",
+				providersId: "",
+				/** TODO : Implements propertyId, outcomeCategoryId, providersId */
 			},
 		});
 	}
