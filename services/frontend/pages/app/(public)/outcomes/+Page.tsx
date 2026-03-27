@@ -5,10 +5,39 @@ import { Modal, ModalBody, ModalHeader } from "@components/modal";
 import PageNamer from "@components/pageNamer";
 import SearchField from "@components/searchField";
 import { useModal } from "@hooks/useModal";
+import { useData } from "vike-solid/useData";
+import type { Data } from "./+data";
 import CreateOutcomeForm from "./createForm";
 
 export default function Page() {
+	const data = useData<Data>();
 	const createOutcomeModal = useModal(350);
+
+	const outcomesList = data.outcomes.map((outcome) => [
+		outcome.name,
+		String(outcome.amount),
+		new Date(outcome.issueDate).toLocaleDateString("fr-FR"),
+		outcome.isRecuring ? "Oui" : "Non",
+		outcome.isPaid ? "Oui" : "Non",
+		outcome.paidOn
+			? new Date(outcome.paidOn).toLocaleDateString("fr-FR")
+			: "En attente de paiement",
+		outcome.frequency,
+		`${outcome.provider.name} ${outcome.provider.firstName}`,
+		outcome.property.name,
+	]);
+
+	const outcomesColls = [
+		"Nom",
+		"Montant",
+		"Date d'émission",
+		"Réccurent",
+		"Réglé",
+		"Date de paiement",
+		"Fréquence",
+		"Prestataires",
+		"Propriété",
+	];
 
 	return (
 		<div class="h-dvh w-dvw flex flex-col">
@@ -42,7 +71,11 @@ export default function Page() {
 				<SearchField name="searchbar" placeholder="Effectuer une recherche" />
 			</div>
 			<div class="p-5 flex justify-around">
-				<Board cells={[]} columns={[]} name="Contrats"></Board>
+				<Board
+					cells={outcomesList}
+					columns={outcomesColls}
+					name="Contrats"
+				></Board>
 				<BasicCard title="Dépenses par catégorie" />
 			</div>
 		</div>
