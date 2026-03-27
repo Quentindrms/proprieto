@@ -21,11 +21,11 @@ export class ClientController {
 		return response.status(200).send({ message: "success" });
 	}
 
-	@Get("")
+	@Get("browse")
 	async browse(@Req() request: Request, @Res() response: Response) {
 		const user = request.user;
 		if (!user) return response.status(401).send({});
 		const client = await this.clientService.browseClient(user.id);
-		return response.status(200).send({ client });
+		return response.status(200).send(client);
 	}
 }
