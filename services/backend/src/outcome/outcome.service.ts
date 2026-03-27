@@ -9,7 +9,7 @@ export class OutcomeService {
 			data: {
 				name: outcome.name,
 				amount: Number(outcome.amount),
-				isReccuring: outcome.isRecurring,
+				isRecurring: outcome.isRecurring,
 				isPaid: outcome.isPaid,
 				issueDate: new Date(outcome.issueDate),
 				paidOn: outcome.paidOn ? new Date(outcome.paidOn) : null,
@@ -33,7 +33,7 @@ export class OutcomeService {
 			select: {
 				name: true,
 				amount: true,
-				isReccuring: true,
+				isRecurring: true,
 				isPaid: true,
 				issueDate: true,
 				paidOn: true,
