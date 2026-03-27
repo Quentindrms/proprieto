@@ -23,6 +23,8 @@ model User {
   password  String  @db.VarChar(250)
 
   property Property[]
+  client   Client[]
+  provider Providers[]
 
   @@map("user")
 }
@@ -45,8 +47,12 @@ model Client {
   address   String @db.VarChar(250)
   phone     String @db.VarChar(20)
 
+  userId String @db.Uuid
+
   income   Income[]
   contract Contract[]
+
+  user User @relation(fields: [userId], references: [id])
 
   @@map("client")
 }
@@ -59,6 +65,9 @@ model Providers {
   address   String @db.VarChar(250)
   phone     String @db.VarChar(20)
 
+  userId String @db.Uuid
+
+  user    User      @relation(fields: [userId], references: [id])
   outcome Outcome[]
 
   @@map("providers")
@@ -117,11 +126,11 @@ model Outcome {
 
   propertyId        String @db.Uuid
   outcomeCategoryId String @db.Uuid
-  providersId       String @db.Uuid
+  providerId        String @db.Uuid
 
   property        Property        @relation(fields: [propertyId], references: [id])
   outcomeCategory OutcomeCategory @relation(fields: [outcomeCategoryId], references: [id])
-  providers       Providers       @relation(fields: [providersId], references: [id])
+  providers       Providers       @relation(fields: [providerId], references: [id])
 
   @@map("outcome")
 }

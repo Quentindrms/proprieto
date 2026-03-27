@@ -22,6 +22,12 @@ export default function CreateOutcomeForm() {
 		disabled: false,
 	}));
 
+	const providersList = data.providers.map((provider) => ({
+		value: provider.id,
+		label: `${provider.firstName} ${provider.name}`,
+		disabled: false,
+	}));
+
 	const outcome = useOutcome();
 
 	const [isRecuring, setIsRecuring] = createSignal<boolean>(false);
@@ -92,6 +98,13 @@ export default function CreateOutcomeForm() {
 					}
 				</Text>
 			)}
+
+			<Select
+				label="Créancier"
+				labelOptions="Sélectionner un créancier"
+				options={providersList}
+				onInput={outcome.handleCreateInput("providerId")}
+			/>
 
 			<CheckBox
 				label="Réccurence"

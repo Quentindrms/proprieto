@@ -33,6 +33,15 @@ export interface CreateOutcomeDto {
 	issueDate: Date;
 	paidOn?: Date;
 	frequency: string;
+	providerId: string;
 	propertyId: string;
 	categoryId: string;
+}
+
+export interface CreateProviderDto {
+	name: string;
+	firstName: string;
+	email: string;
+	address: string;
+	phone: string;
 }

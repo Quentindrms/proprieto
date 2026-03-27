@@ -38,7 +38,6 @@ export function useProperty() {
 				...prev,
 				[field]: target.value,
 			}));
-			console.log(createProperty());
 		};
 	}
 

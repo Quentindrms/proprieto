@@ -29,6 +29,8 @@ const propertyIdSchema = z.string("Le format de l'identifiant est incorrect");
 
 const categoryIdSchema = z.string("Le format de catégorie est incorrect");
 
+const providerIdSchema = z.string("Identifiant créancier incorrect");
+
 export const OutcomeCreationSchema = z.object({
 	name: nameSchema,
 	amount: amountSchema,
@@ -39,6 +41,7 @@ export const OutcomeCreationSchema = z.object({
 	frequency: frequencySchema,
 	propertyId: propertyIdSchema,
 	categoryId: categoryIdSchema,
+	providerId: providerIdSchema,
 });
 
 export const OutcomeUpdateSchema = z.object({
@@ -52,6 +55,7 @@ export const OutcomeUpdateSchema = z.object({
 	frequency: frequencySchema,
 	propertyId: propertyIdSchema,
 	categoryId: categoryIdSchema,
+	providerId: providerIdSchema,
 });
 
 export type OutcomeCreationType = z.infer<typeof OutcomeCreationSchema>;

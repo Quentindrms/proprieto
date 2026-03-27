@@ -16,7 +16,7 @@ export class OutcomeService {
 				frequency: outcome.frequency,
 				propertyId: outcome.propertyId,
 				outcomeCategoryId: outcome.categoryId,
-				providersId: "",
+				providerId: outcome.providerId,
 
 				/** TODO : Implements propertyId, outcomeCategoryId, providersId */
 			},

@@ -18,7 +18,7 @@ export class OutcomeController {
 		const user = request.user;
 		if (!user) return response.status(401).send({});
 		const outcome = this.outcomeService.createOutcome(body);
-		if (!outcome) return response.status(422).send({});
+		if (!outcome) return response.status(403).send({});
 		return response.status(200).send({ message: "success" });
 	}
 }
