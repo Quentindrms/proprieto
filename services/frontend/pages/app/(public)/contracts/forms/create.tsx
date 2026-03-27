@@ -1,9 +1,24 @@
 import { Button } from "@components/button";
 import { Form, Select, TextField } from "@components/form";
 import { useContract } from "@hooks/useContract";
+import { useData } from "vike-solid/useData";
+import type { Data } from "../+data";
 
 export default function CreateForm() {
 	const contract = useContract();
+	const data = useData<Data>();
+
+	const propertiesList = data.properties.map((property) => ({
+		value: property.id,
+		label: property.name,
+		disabled: false,
+	}));
+
+	const clientsList = data.clients.map((client) => ({
+		value: client.id,
+		label: `${client.firstName} ${client.name}`,
+		disabled: false,
+	}));
 
 	return (
 		<Form callback={contract.create}>
@@ -28,13 +43,15 @@ export default function CreateForm() {
 			<Select
 				label="Propriété louée"
 				labelOptions="Sélectionner une propriété"
-				options={[]}
+				options={propertiesList}
+				onInput={contract.handleCreateInput("property")}
 			/>
 
 			<Select
 				label="Client concerné"
 				labelOptions="Sélectionner un client"
-				options={[]}
+				options={clientsList}
+				onInput={contract.handleCreateInput("clientId")}
 			/>
 
 			<div class="flex justify-center p-4">
