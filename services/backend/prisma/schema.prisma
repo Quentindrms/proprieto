@@ -118,7 +118,7 @@ model Outcome {
   id          String    @id @unique @default(uuid()) @map("id_outcome") @db.Uuid
   name        String    @db.VarChar(150)
   amount      Int       @db.Integer()
-  isReccuring Boolean   @map("is_reccuring")
+  isRecurring Boolean   @default(false) @map("is_recurring")
   isPaid      Boolean   @map("is_paid")
   issueDate   DateTime  @map("issue_date")
   paidOn      DateTime? @map("paid_on")
@@ -139,7 +139,7 @@ model Income {
   id          String   @id @unique @default(uuid()) @map("id_income") @db.Uuid
   name        String   @db.VarChar(150)
   amount      Int      @db.Integer()
-  isReccuring Boolean  @map("is_reccuring")
+  isRecurring Boolean  @default(false) @map("is_recurring")
   isPaid      Boolean  @map("is_paid")
   issueDate   DateTime @map("issue_date")
   paidOn      DateTime @map("paid_on")
