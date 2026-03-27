@@ -50,6 +50,7 @@ export function useContract() {
 	}
 
 	async function create() {
+		console.log(createContract());
 		const validate = CreateContractSchema.safeParse(createContract());
 		if (!validate.success) {
 			setFormError(validate);
