@@ -83,8 +83,6 @@ export function ModalHeader(props: ModalHeaderProps) {
 interface ModalBodyProps extends JSX.HTMLAttributes<HTMLDivElement> {}
 
 export function ModalBody(props: ModalBodyProps) {
-	const modal = useContext(ModalContext);
-
 	return (
 		<div
 			{...props}
