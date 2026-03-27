@@ -33,6 +33,7 @@ export interface CreateOutcomeDto {
 	issueDate: Date;
 	paidOn?: Date;
 	frequency: string;
+	providerId: string;
 	propertyId: string;
 	categoryId: string;
 }
