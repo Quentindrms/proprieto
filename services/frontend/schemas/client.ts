@@ -39,7 +39,7 @@ export const UpdateClientSchema = z.object({
 	firstName: firstNameSchema,
 	email: emailSchema,
 	address: addressSchema,
-	phoneSchema: phoneSchema,
+	phone: phoneSchema,
 });
 
 export type CreateClientType = z.infer<typeof CreateClientSchema>;
