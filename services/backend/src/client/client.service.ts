@@ -16,4 +16,12 @@ export class ClientService {
 			},
 		});
 	}
+
+	async browseClient(userId: string) {
+		return await prisma.client.findMany({
+			where: {
+				userId,
+			},
+		});
+	}
 }
