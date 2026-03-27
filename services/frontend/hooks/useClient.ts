@@ -39,7 +39,7 @@ export function useClient() {
 	}
 
 	function create() {
-		console.log(createClient);
+		console.log(createClient());
 	}
 
 	return {
