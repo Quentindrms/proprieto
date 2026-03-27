@@ -106,6 +106,13 @@ export default function CreateOutcomeForm() {
 				onInput={outcome.handleCreateInput("providerId")}
 			/>
 
+			<TextField
+				label="Date d'émission"
+				type="date"
+				name="issueDate"
+				onInput={outcome.handleCreateInput("issueDate")}
+			/>
+
 			<CheckBox
 				label="Réccurence"
 				name="isRecuring"
@@ -165,7 +172,7 @@ export default function CreateOutcomeForm() {
 					label="Date de paiement"
 					type="date"
 					name="paidOn"
-					onInput={outcome.handleCreateInput("issueDate")}
+					onInput={outcome.handleCreateInput("paidOn")}
 				/>
 			</Show>
 
