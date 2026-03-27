@@ -13,9 +13,9 @@ export async function data(pageContext: PageContextServer) {
 	const propertyService = new PropertyService(cookies.auth);
 	const clientService = new ClientService(cookies.auth);
 
-	const contract = contractService.browse();
-	const properties = propertyService.browseProperties();
-	const clients = clientService.browse();
+	const contract = await contractService.browse();
+	const properties = await propertyService.browseProperties();
+	const clients = await clientService.browse();
 
 	return { contract, properties, clients };
 }
