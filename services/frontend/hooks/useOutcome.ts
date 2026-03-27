@@ -17,7 +17,7 @@ export function useOutcome() {
 		isRecuring: false,
 		isPaid: false,
 		issueDate: new Date(),
-		paidOn: new Date(),
+		paidOn: undefined,
 		frequency: "month",
 		propertyId: "",
 		categoryId: "",
