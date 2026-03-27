@@ -14,6 +14,7 @@ export class ContractController {
 		@Res() response: Response,
 		@Body() body: CreateContractDto,
 	) {
+		console.log(body);
 		const user = request.user;
 		if (!user) return response.status(401).send({});
 		const contract = this.contractService.create(body);
@@ -21,7 +22,7 @@ export class ContractController {
 		return response.status(200).send({ message: "success" });
 	}
 
-	@Get("/browse")
+	@Get("browse")
 	browseContract(@Req() request: Request, @Res() response: Response) {
 		const user = request.user;
 		if (!user) return response.status(401).send({});
