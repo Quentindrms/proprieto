@@ -1,4 +1,18 @@
+import { prisma } from "@libs/DatabaseClient";
 import { Injectable } from "@nestjs/common";
+import type { CreateContractDto } from "types/DtoType";
 
 @Injectable()
-export class ContractService {}
+export class ContractService {
+	async create(contract: CreateContractDto) {
+		return await prisma.contract.create({
+			data: {
+				startDate: contract.startDate,
+				endDate: contract.endDate,
+				lease: Number(contract.lease),
+				clientId: contract.clientId,
+				propertyId: contract.propertyId,
+			},
+		});
+	}
+}
