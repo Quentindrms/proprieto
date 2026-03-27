@@ -3,6 +3,6 @@ export type Client = {
 	name: string;
 	firstName: string;
 	email: string;
-	adress: string;
+	address: string;
 	phone: string;
 };

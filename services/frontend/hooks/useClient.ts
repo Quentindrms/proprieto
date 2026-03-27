@@ -5,6 +5,7 @@ import {
 } from "@schemas/client";
 import { createSignal } from "solid-js";
 import toast from "solid-toast";
+import { reload } from "vike/client/router";
 import type { ZodSafeParseError } from "zod";
 import { onCreate } from "./useClient.telefunc";
 
@@ -60,6 +61,7 @@ export function useClient() {
 			toast.error("Une erreur est survenue lors de la création du client");
 		}
 		toast.success("Client crée avec succès");
+		await reload();
 	}
 
 	return {
