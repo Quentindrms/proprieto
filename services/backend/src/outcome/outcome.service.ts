@@ -22,4 +22,36 @@ export class OutcomeService {
 			},
 		});
 	}
+
+	async browseOutcome(userId: string) {
+		return await prisma.outcome.findMany({
+			where: {
+				property: {
+					userId,
+				},
+			},
+			select: {
+				name: true,
+				amount: true,
+				isReccuring: true,
+				isPaid: true,
+				issueDate: true,
+				paidOn: true,
+				frequency: true,
+				property: {
+					select: {
+						id: true,
+						name: true,
+					},
+				},
+				providers: {
+					select: {
+						id: true,
+						firstName: true,
+						name: true,
+					},
+				},
+			},
+		});
+	}
 }
