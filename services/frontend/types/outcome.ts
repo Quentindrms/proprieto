@@ -9,4 +9,13 @@ export interface Outcome {
 	issueDate: Date;
 	paidOn: Date;
 	frequency: OutcomeFrequency;
+	property: {
+		id: string;
+		name: string;
+	};
+	providers: {
+		id: boolean;
+		firstName: string;
+		name: string;
+	};
 }

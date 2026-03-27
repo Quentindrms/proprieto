@@ -44,7 +44,7 @@ export class OutcomeService {
 						name: true,
 					},
 				},
-				providers: {
+				provider: {
 					select: {
 						id: true,
 						firstName: true,
