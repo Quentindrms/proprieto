@@ -67,7 +67,12 @@ export default function Page() {
 			/>
 			<StatCardWrapper>
 				<StatCard legend="" value="0" accentColor="blue" title="Ce mois" />
-				<StatCard legend="" value="0" accentColor="blue" title="Cette année" />
+				<StatCard
+					legend=""
+					value={outcomeCounter.currentYear}
+					accentColor="blue"
+					title="Cette année"
+				/>
 				<StatCard
 					legend=""
 					value={outcomeCounter.reccuring}

@@ -92,11 +92,28 @@ export function useOutcome() {
 		);
 		return String(reccuringList.length);
 	}
+	/**
+	 * Filter outcomes, map the amount and return a sum of outcomes on the year
+	 * @param outcomeList
+	 * @returns
+	 */
+	function countCurrentYear(outcomeList: Outcome[]) {
+		return outcomeList
+			.filter(
+				(outcome) =>
+					new Date(outcome.issueDate).getFullYear() ===
+					new Date().getFullYear(),
+			)
+			.map((outcome) => outcome.amount)
+			.reduce((sum, amount) => sum + amount, 0)
+			.toString();
+	}
 
 	function outcomeCounter(outcomesList: Outcome[]) {
 		return {
 			unPaid: countUnpaid(outcomesList),
 			reccuring: countReccuring(outcomesList),
+			currentYear: countCurrentYear(outcomesList),
 		};
 	}
 
