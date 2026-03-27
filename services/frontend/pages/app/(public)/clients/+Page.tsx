@@ -1,9 +1,15 @@
 import { StatCard, StatCardWrapper } from "@components/cards";
+import ClientCard from "@components/clientCard";
 import PageNamer from "@components/pageNamer";
 import { useModal } from "@hooks/useModal";
+import { For } from "solid-js";
+import { useData } from "vike-solid/useData";
+import type { Data } from "./+data";
 import CreateModal from "./modals/create";
 
 export default function Page() {
+	const data = useData<Data>();
+
 	const createModal = useModal(350);
 
 	return (
@@ -28,7 +34,13 @@ export default function Page() {
 				<StatCard legend="Sans contrat" value="0" title="" />
 			</StatCardWrapper>
 
-			<div class="grid grid-cols-3 gap-2"></div>
+			<div class="grid grid-cols-3 gap-2">
+				<For each={data.client}>
+					{(client) => (
+						<ClientCard client={client} onDelete={() => {}} onEdit={() => {}} />
+					)}
+				</For>
+			</div>
 		</div>
 	);
 }
