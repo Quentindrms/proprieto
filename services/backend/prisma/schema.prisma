@@ -126,11 +126,11 @@ model Outcome {
 
   propertyId        String @db.Uuid
   outcomeCategoryId String @db.Uuid
-  providersId       String @db.Uuid
+  providerId        String @db.Uuid
 
   property        Property        @relation(fields: [propertyId], references: [id])
   outcomeCategory OutcomeCategory @relation(fields: [outcomeCategoryId], references: [id])
-  providers       Providers       @relation(fields: [providersId], references: [id])
+  providers       Providers       @relation(fields: [providerId], references: [id])
 
   @@map("outcome")
 }
