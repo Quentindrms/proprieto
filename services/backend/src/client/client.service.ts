@@ -11,7 +11,7 @@ export class ClientService {
 				firstName: client.firstName,
 				email: client.email,
 				address: client.address,
-				phone: client.name,
+				phone: client.phone,
 				userId,
 			},
 		});
