@@ -1,15 +1,25 @@
 import { StatCard, StatCardWrapper } from "@components/cards";
-import ClientCard from "@components/clientCard";
 import PageNamer from "@components/pageNamer";
+import { useModal } from "@hooks/useModal";
+import CreateModal from "./modals/create";
 
 export default function Page() {
+	const createModal = useModal(350);
+
 	return (
 		<div class="w-dvw">
 			<PageNamer
 				pageName="Mes clients"
 				buttonText="Ajouter un client"
-				onClick={() => {}}
+				onClick={createModal.open}
 			/>
+
+			<CreateModal
+				close={createModal.close}
+				isClosing={createModal.isClosing}
+				isOpened={createModal.isOpened}
+			/>
+
 			<StatCardWrapper>
 				<StatCard legend="Clients totaux" value="0" title="" />
 
@@ -18,44 +28,7 @@ export default function Page() {
 				<StatCard legend="Sans contrat" value="0" title="" />
 			</StatCardWrapper>
 
-			<div class="grid grid-cols-3 gap-2">
-				<ClientCard
-					client={{
-						adress: "13 rue des écoles 69000 LYON",
-						email: "email@email.fr",
-						name: "PRÉNOM",
-						phone: "0600741537",
-						surname: "NOM DE FAMILLE",
-					}}
-				/>
-				<ClientCard
-					client={{
-						adress: "13 rue des écoles 69000 LYON",
-						email: "email@email.fr",
-						name: "PRÉNOM",
-						phone: "0600741537",
-						surname: "NOM DE FAMILLE",
-					}}
-				/>
-				<ClientCard
-					client={{
-						adress: "13 rue des écoles 69000 LYON",
-						email: "email@email.fr",
-						name: "PRÉNOM",
-						phone: "0600741537",
-						surname: "NOM DE FAMILLE",
-					}}
-				/>
-				<ClientCard
-					client={{
-						adress: "13 rue des écoles 69000 LYON",
-						email: "email@email.fr",
-						name: "PRÉNOM",
-						phone: "0600741537",
-						surname: "NOM DE FAMILLE",
-					}}
-				/>
-			</div>
+			<div class="grid grid-cols-3 gap-2"></div>
 		</div>
 	);
 }
