@@ -31,7 +31,7 @@ const CreateClientSchema = z.object({
 	firstName: firstNameSchema,
 	email: emailSchema,
 	address: addressSchema,
-	phoneSchema: phoneSchema,
+	phone: phoneSchema,
 });
 
 const UpdateClientSchema = z.object({

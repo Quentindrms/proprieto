@@ -7,14 +7,14 @@ export function useClient() {
 		firstName: "",
 		email: "",
 		address: "",
-		phoneSchema: "",
+		phone: "",
 	});
 
 	const [updateClient, setUpdateClient] = createSignal<CreateClientType>({
 		name: "",
 		firstName: "",
 		address: "",
-		phoneSchema: "",
+		phone: "",
 		email: "",
 	});
 
