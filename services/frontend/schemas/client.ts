@@ -40,6 +40,7 @@ export const UpdateClientSchema = z.object({
 	email: emailSchema,
 	address: addressSchema,
 	phone: phoneSchema,
+	id: idSchema,
 });
 
 export type CreateClientType = z.infer<typeof CreateClientSchema>;
