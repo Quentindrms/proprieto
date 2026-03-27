@@ -88,7 +88,7 @@ export function useOutcome() {
 
 	function countReccuring(outcomeList: Outcome[]) {
 		const reccuringList = outcomeList.filter(
-			(outcome) => outcome.isRecuring === true,
+			(outcome) => outcome.isRecurring === true,
 		);
 		return String(reccuringList.length);
 	}
