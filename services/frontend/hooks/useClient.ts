@@ -5,6 +5,7 @@ import {
 } from "@schemas/client";
 import { createSignal } from "solid-js";
 import type { ZodSafeParseError } from "zod";
+import { onCreate } from "./useClient.telefunc";
 
 export function useClient() {
 	const [createClient, setCreateClient] = createSignal<CreateClientType>({
@@ -46,11 +47,14 @@ export function useClient() {
 		};
 	}
 
-	function create() {
+	async function create() {
 		const validate = CreateClientSchema.safeParse(createClient());
 		if (!validate.success) {
 			setFormError(validate);
 			return;
+		}
+		const response = await onCreate(createClient());
+		if (response?.message !== "success") {
 		}
 	}
 
