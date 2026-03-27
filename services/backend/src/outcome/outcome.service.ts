@@ -9,7 +9,7 @@ export class OutcomeService {
 			data: {
 				name: outcome.name,
 				amount: Number(outcome.amount),
-				isReccuring: outcome.isRecuring,
+				isReccuring: outcome.isRecurring,
 				isPaid: outcome.isPaid,
 				issueDate: new Date(outcome.issueDate),
 				paidOn: outcome.paidOn ? new Date(outcome.paidOn) : null,
