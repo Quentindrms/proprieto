@@ -106,11 +106,18 @@ export default function CreateOutcomeForm() {
 				onInput={outcome.handleCreateInput("providerId")}
 			/>
 
+			<TextField
+				label="Date d'émission"
+				type="date"
+				name="issueDate"
+				onInput={outcome.handleCreateInput("issueDate")}
+			/>
+
 			<CheckBox
 				label="Réccurence"
 				name="isRecuring"
-				onInput={() => {
-					outcome.handleCreateInput("isRecuring");
+				onInput={(event: InputEvent) => {
+					outcome.handleCreateInput("isRecurring")(event);
 					setIsRecuring(!isRecuring());
 				}}
 			/>
@@ -118,7 +125,7 @@ export default function CreateOutcomeForm() {
 			{outcome.formError() && (
 				<Text class="text-red-500">
 					{
-						z.treeifyError(outcome.formError()!.error).properties?.isRecuring
+						z.treeifyError(outcome.formError()!.error).properties?.isRecurring
 							?.errors[0]
 					}
 				</Text>
@@ -145,8 +152,8 @@ export default function CreateOutcomeForm() {
 			<CheckBox
 				label="Payé"
 				name="isPaid"
-				onInput={() => {
-					outcome.handleCreateInput("isPaid");
+				onInput={(event: InputEvent) => {
+					outcome.handleCreateInput("isPaid")(event);
 					setIsPaid(!isPaid());
 				}}
 			/>
@@ -165,7 +172,7 @@ export default function CreateOutcomeForm() {
 					label="Date de paiement"
 					type="date"
 					name="paidOn"
-					onInput={outcome.handleCreateInput("issueDate")}
+					onInput={outcome.handleCreateInput("paidOn")}
 				/>
 			</Show>
 

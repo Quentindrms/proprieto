@@ -28,7 +28,7 @@ export interface UpdatePropertyDto {
 export interface CreateOutcomeDto {
 	name: string;
 	amount: number;
-	isRecuring: boolean;
+	isRecurring: boolean;
 	isPaid: boolean;
 	issueDate: Date;
 	paidOn?: Date;

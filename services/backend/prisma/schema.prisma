@@ -24,7 +24,7 @@ model User {
 
   property Property[]
   client   Client[]
-  provider Providers[]
+  provider Provider[]
 
   @@map("user")
 }
@@ -57,7 +57,7 @@ model Client {
   @@map("client")
 }
 
-model Providers {
+model Provider {
   id        String @id @unique @default(uuid()) @map("id_provider") @db.Uuid
   name      String @db.VarChar(120)
   firstName String @map("first_name") @db.VarChar(120)
@@ -70,7 +70,7 @@ model Providers {
   user    User      @relation(fields: [userId], references: [id])
   outcome Outcome[]
 
-  @@map("providers")
+  @@map("provider")
 }
 
 model OutcomeCategory {
@@ -118,7 +118,7 @@ model Outcome {
   id          String    @id @unique @default(uuid()) @map("id_outcome") @db.Uuid
   name        String    @db.VarChar(150)
   amount      Int       @db.Integer()
-  isReccuring Boolean   @map("is_reccuring")
+  isRecurring Boolean   @default(false) @map("is_recurring")
   isPaid      Boolean   @map("is_paid")
   issueDate   DateTime  @map("issue_date")
   paidOn      DateTime? @map("paid_on")
@@ -130,7 +130,7 @@ model Outcome {
 
   property        Property        @relation(fields: [propertyId], references: [id])
   outcomeCategory OutcomeCategory @relation(fields: [outcomeCategoryId], references: [id])
-  providers       Providers       @relation(fields: [providerId], references: [id])
+  provider        Provider        @relation(fields: [providerId], references: [id])
 
   @@map("outcome")
 }
@@ -139,7 +139,7 @@ model Income {
   id          String   @id @unique @default(uuid()) @map("id_income") @db.Uuid
   name        String   @db.VarChar(150)
   amount      Int      @db.Integer()
-  isReccuring Boolean  @map("is_reccuring")
+  isRecurring Boolean  @default(false) @map("is_recurring")
   isPaid      Boolean  @map("is_paid")
   issueDate   DateTime @map("issue_date")
   paidOn      DateTime @map("paid_on")

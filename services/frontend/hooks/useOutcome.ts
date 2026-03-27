@@ -14,10 +14,10 @@ export function useOutcome() {
 	const [createOutcome, setCreateOutcome] = createSignal<OutcomeCreationType>({
 		name: "",
 		amount: 0,
-		isRecuring: false,
+		isRecurring: false,
 		isPaid: false,
 		issueDate: new Date(),
-		paidOn: new Date(),
+		paidOn: undefined,
 		frequency: "month",
 		propertyId: "",
 		categoryId: "",
@@ -28,7 +28,7 @@ export function useOutcome() {
 		id: "",
 		name: "",
 		amount: 0,
-		isRecuring: false,
+		isRecurring: false,
 		isPaid: false,
 		issueDate: new Date(),
 		paidOn: new Date(),
@@ -48,6 +48,7 @@ export function useOutcome() {
 				...prev,
 				[key]: target.type === "checkbox" ? target.checked : target.value,
 			}));
+			console.log(createOutcome());
 		};
 	}
 
@@ -78,6 +79,59 @@ export function useOutcome() {
 		await reload();
 	}
 
+	function countUnpaid(outcomesList: Outcome[]) {
+		const unpaidList = outcomesList.filter(
+			(outcome) => outcome.isPaid === false,
+		);
+		return String(unpaidList.length);
+	}
+
+	function countReccuring(outcomeList: Outcome[]) {
+		const reccuringList = outcomeList.filter(
+			(outcome) => outcome.isRecurring === true,
+		);
+		return String(reccuringList.length);
+	}
+	/**
+	 * Filter outcomes, map the amount and return a sum of outcomes on the year
+	 * @param outcomeList
+	 * @returns
+	 */
+	function countCurrentYear(outcomeList: Outcome[]) {
+		return outcomeList
+			.filter(
+				(outcome) =>
+					new Date(outcome.issueDate).getFullYear() ===
+					new Date().getFullYear(),
+			)
+			.map((outcome) => outcome.amount)
+			.reduce((sum, amount) => sum + amount, 0)
+			.toString();
+	}
+
+	function countCurrentMonth(outcomeList: Outcome[]) {
+		const currentDate = new Date();
+		return outcomeList
+			.filter(
+				(outcome) =>
+					new Date(outcome.issueDate).getFullYear() ===
+						currentDate.getFullYear() &&
+					new Date(outcome.issueDate).getMonth() === currentDate.getMonth(),
+			)
+			.map((outcome) => outcome.amount)
+			.reduce((sum, amount) => sum + amount, 0)
+			.toString();
+	}
+
+	function outcomeCounter(outcomesList: Outcome[]) {
+		return {
+			unPaid: countUnpaid(outcomesList),
+			reccuring: countReccuring(outcomesList),
+			currentMonth: countCurrentMonth(outcomesList),
+			currentYear: countCurrentYear(outcomesList),
+		};
+	}
+
 	function update() {
 		console.log(updateOutcome());
 	}
@@ -88,5 +142,6 @@ export function useOutcome() {
 		handleCreateInput,
 		handleUpdateInput,
 		formError,
+		outcomeCounter,
 	};
 }

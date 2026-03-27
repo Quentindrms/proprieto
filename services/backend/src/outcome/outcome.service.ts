@@ -9,7 +9,7 @@ export class OutcomeService {
 			data: {
 				name: outcome.name,
 				amount: Number(outcome.amount),
-				isReccuring: outcome.isRecuring,
+				isRecurring: outcome.isRecurring,
 				isPaid: outcome.isPaid,
 				issueDate: new Date(outcome.issueDate),
 				paidOn: outcome.paidOn ? new Date(outcome.paidOn) : null,
@@ -19,6 +19,38 @@ export class OutcomeService {
 				providerId: outcome.providerId,
 
 				/** TODO : Implements propertyId, outcomeCategoryId, providersId */
+			},
+		});
+	}
+
+	async browseOutcome(userId: string) {
+		return await prisma.outcome.findMany({
+			where: {
+				property: {
+					userId,
+				},
+			},
+			select: {
+				name: true,
+				amount: true,
+				isRecurring: true,
+				isPaid: true,
+				issueDate: true,
+				paidOn: true,
+				frequency: true,
+				property: {
+					select: {
+						id: true,
+						name: true,
+					},
+				},
+				provider: {
+					select: {
+						id: true,
+						firstName: true,
+						name: true,
+					},
+				},
 			},
 		});
 	}

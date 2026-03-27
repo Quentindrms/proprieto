@@ -9,7 +9,7 @@ const nameSchema = z
 
 const amountSchema = z.coerce.number("Le montant doit être un nombre");
 
-const isRecuringSchema = z.boolean(
+const isRecurringSchema = z.boolean(
 	"La récurrence doit être un de type vrai ou faux",
 );
 
@@ -34,7 +34,7 @@ const providerIdSchema = z.string("Identifiant créancier incorrect");
 export const OutcomeCreationSchema = z.object({
 	name: nameSchema,
 	amount: amountSchema,
-	isRecuring: isRecuringSchema,
+	isRecurring: isRecurringSchema,
 	isPaid: isPaidSchema,
 	issueDate: issueDateSchema,
 	paidOn: paidOnSchema,
@@ -48,7 +48,7 @@ export const OutcomeUpdateSchema = z.object({
 	id: idSchema,
 	name: nameSchema,
 	amount: amountSchema,
-	isRecuring: isRecuringSchema,
+	isRecurring: isRecurringSchema,
 	isPaid: isPaidSchema,
 	issueDate: issueDateSchema,
 	paidOn: paidOnSchema,

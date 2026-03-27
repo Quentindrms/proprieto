@@ -5,13 +5,46 @@ import { Modal, ModalBody, ModalHeader } from "@components/modal";
 import PageNamer from "@components/pageNamer";
 import SearchField from "@components/searchField";
 import { useModal } from "@hooks/useModal";
+import { useOutcome } from "@hooks/useOutcome";
+import { useData } from "vike-solid/useData";
+import type { Data } from "./+data";
 import CreateOutcomeForm from "./createForm";
 
 export default function Page() {
+	const data = useData<Data>();
 	const createOutcomeModal = useModal(350);
+	const outcome = useOutcome();
+
+	const outcomeCounter = outcome.outcomeCounter(data.outcomes);
+
+	const outcomesList = data.outcomes.map((outcome) => [
+		outcome.name,
+		String(outcome.amount),
+		new Date(outcome.issueDate).toLocaleDateString("fr-FR"),
+		outcome.isRecurring ? "Oui" : "Non",
+		outcome.isPaid ? "Oui" : "Non",
+		outcome.paidOn
+			? new Date(outcome.paidOn).toLocaleDateString("fr-FR")
+			: "En attente de paiement",
+		outcome.frequency,
+		`${outcome.provider.name} ${outcome.provider.firstName}`,
+		outcome.property.name,
+	]);
+
+	const outcomesColls = [
+		"Nom",
+		"Montant",
+		"Date d'émission",
+		"Réccurent",
+		"Réglé",
+		"Date de paiement",
+		"Fréquence",
+		"Prestataires",
+		"Propriété",
+	];
 
 	return (
-		<div class="h-dvh w-dvw flex flex-col">
+		<div class="h-full w-dvw flex flex-col">
 			<Modal
 				close={createOutcomeModal.close}
 				isClosing={createOutcomeModal.isClosing}
@@ -19,7 +52,7 @@ export default function Page() {
 			>
 				<ModalHeader>
 					<Heading components="h1" size="medium">
-						Ajouter un revenu
+						Ajouter une dépense
 					</Heading>
 				</ModalHeader>
 				<ModalBody>
@@ -33,16 +66,40 @@ export default function Page() {
 				onClick={createOutcomeModal.open}
 			/>
 			<StatCardWrapper>
-				<StatCard legend="" value="0" accentColor="blue" title="Ce mois" />
-				<StatCard legend="" value="0" accentColor="blue" title="Cette année" />
-				<StatCard legend="" value="0" accentColor="blue" title="Récurrentes" />
-				<StatCard legend="" value="0" accentColor="blue" title="Non payées" />
+				<StatCard
+					legend=""
+					value={`${outcomeCounter.currentMonth} euros`}
+					accentColor="blue"
+					title="Ce mois"
+				/>
+				<StatCard
+					legend=""
+					value={`${outcomeCounter.currentYear} euros`}
+					accentColor="blue"
+					title="Cette année"
+				/>
+				<StatCard
+					legend=""
+					value={outcomeCounter.reccuring}
+					accentColor="blue"
+					title="Récurrentes"
+				/>
+				<StatCard
+					legend=""
+					value={outcomeCounter.unPaid}
+					accentColor="blue"
+					title="Non payées"
+				/>
 			</StatCardWrapper>
 			<div class="p-2">
 				<SearchField name="searchbar" placeholder="Effectuer une recherche" />
 			</div>
 			<div class="p-5 flex justify-around">
-				<Board cells={[]} columns={[]} name="Contrats"></Board>
+				<Board
+					cells={outcomesList}
+					columns={outcomesColls}
+					name="Contrats"
+				></Board>
 				<BasicCard title="Dépenses par catégorie" />
 			</div>
 		</div>
