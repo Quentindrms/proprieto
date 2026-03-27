@@ -4,10 +4,10 @@ import { CoreService } from "./core.service";
 
 export class ContractService extends CoreService {
 	create(contract: CreateContractType) {
-		return this.post<{ message: string }>("/contract/", contract);
+		return this.post<{ message: string }>("/contracts/", contract);
 	}
 
 	browse() {
-		return this.get<Contract[]>("/contract/browse");
+		return this.get<Contract[]>("/contracts/browse");
 	}
 }
