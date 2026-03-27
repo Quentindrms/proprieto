@@ -13,7 +13,7 @@ export interface Outcome {
 		id: string;
 		name: string;
 	};
-	providers: {
+	provider: {
 		id: boolean;
 		firstName: string;
 		name: string;
