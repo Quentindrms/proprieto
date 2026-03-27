@@ -26,7 +26,7 @@ const phoneSchema = z
 	.min(10, "Le téléphone doit contenir au moins 10 caractères")
 	.max(20, "Le téléphone ne peut pas contenir plus de 20 caractères");
 
-const CreateClientSchema = z.object({
+export const CreateClientSchema = z.object({
 	name: nameSchema,
 	firstName: firstNameSchema,
 	email: emailSchema,
@@ -34,7 +34,7 @@ const CreateClientSchema = z.object({
 	phone: phoneSchema,
 });
 
-const UpdateClientSchema = z.object({
+export const UpdateClientSchema = z.object({
 	name: nameSchema,
 	firstName: firstNameSchema,
 	email: emailSchema,
