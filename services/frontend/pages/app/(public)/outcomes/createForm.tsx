@@ -117,7 +117,7 @@ export default function CreateOutcomeForm() {
 				label="Réccurence"
 				name="isRecuring"
 				onInput={(event: InputEvent) => {
-					outcome.handleCreateInput("isRecuring")(event);
+					outcome.handleCreateInput("isRecurring")(event);
 					setIsRecuring(!isRecuring());
 				}}
 			/>
@@ -125,7 +125,7 @@ export default function CreateOutcomeForm() {
 			{outcome.formError() && (
 				<Text class="text-red-500">
 					{
-						z.treeifyError(outcome.formError()!.error).properties?.isRecuring
+						z.treeifyError(outcome.formError()!.error).properties?.isRecurring
 							?.errors[0]
 					}
 				</Text>

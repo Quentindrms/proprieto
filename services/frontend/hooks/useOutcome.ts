@@ -14,7 +14,7 @@ export function useOutcome() {
 	const [createOutcome, setCreateOutcome] = createSignal<OutcomeCreationType>({
 		name: "",
 		amount: 0,
-		isRecuring: false,
+		isRecurring: false,
 		isPaid: false,
 		issueDate: new Date(),
 		paidOn: undefined,
@@ -28,7 +28,7 @@ export function useOutcome() {
 		id: "",
 		name: "",
 		amount: 0,
-		isRecuring: false,
+		isRecurring: false,
 		isPaid: false,
 		issueDate: new Date(),
 		paidOn: new Date(),
@@ -86,9 +86,17 @@ export function useOutcome() {
 		return String(unpaidList.length);
 	}
 
+	function countReccuring(outcomeList: Outcome[]) {
+		const reccuringList = outcomeList.filter(
+			(outcome) => outcome.isRecuring === true,
+		);
+		return String(reccuringList.length);
+	}
+
 	function outcomeCounter(outcomesList: Outcome[]) {
 		return {
 			unPaid: countUnpaid(outcomesList),
+			reccuring: countReccuring(outcomesList),
 		};
 	}
 
