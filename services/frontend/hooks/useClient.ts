@@ -4,6 +4,7 @@ import {
 	type UpdateClientType,
 } from "@schemas/client";
 import { createSignal } from "solid-js";
+import toast from "solid-toast";
 import type { ZodSafeParseError } from "zod";
 import { onCreate } from "./useClient.telefunc";
 
@@ -53,9 +54,12 @@ export function useClient() {
 			setFormError(validate);
 			return;
 		}
+		setFormError(undefined);
 		const response = await onCreate(createClient());
 		if (response?.message !== "success") {
+			toast.error("Une erreur est survenue lors de la création du client");
 		}
+		toast.success("Client crée avec succès");
 	}
 
 	return {
