@@ -15,4 +15,14 @@ export class ContractService {
 			},
 		});
 	}
+
+	async browse(userId: string) {
+		return await prisma.contract.findMany({
+			where: {
+				client: {
+					userId,
+				},
+			},
+		});
+	}
 }
