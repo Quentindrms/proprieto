@@ -116,8 +116,8 @@ export default function CreateOutcomeForm() {
 			<CheckBox
 				label="Réccurence"
 				name="isRecuring"
-				onInput={() => {
-					outcome.handleCreateInput("isRecuring");
+				onInput={(event: InputEvent) => {
+					outcome.handleCreateInput("isRecuring")(event);
 					setIsRecuring(!isRecuring());
 				}}
 			/>
@@ -152,8 +152,8 @@ export default function CreateOutcomeForm() {
 			<CheckBox
 				label="Payé"
 				name="isPaid"
-				onInput={() => {
-					outcome.handleCreateInput("isPaid");
+				onInput={(event: InputEvent) => {
+					outcome.handleCreateInput("isPaid")(event);
 					setIsPaid(!isPaid());
 				}}
 			/>

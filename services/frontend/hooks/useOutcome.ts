@@ -48,6 +48,7 @@ export function useOutcome() {
 				...prev,
 				[key]: target.type === "checkbox" ? target.checked : target.value,
 			}));
+			console.log(createOutcome());
 		};
 	}
 
@@ -78,6 +79,19 @@ export function useOutcome() {
 		await reload();
 	}
 
+	function countUnpaid(outcomesList: Outcome[]) {
+		const unpaidList = outcomesList.filter(
+			(outcome) => outcome.isPaid === false,
+		);
+		return String(unpaidList.length);
+	}
+
+	function outcomeCounter(outcomesList: Outcome[]) {
+		return {
+			unPaid: countUnpaid(outcomesList),
+		};
+	}
+
 	function update() {
 		console.log(updateOutcome());
 	}
@@ -88,5 +102,6 @@ export function useOutcome() {
 		handleCreateInput,
 		handleUpdateInput,
 		formError,
+		outcomeCounter,
 	};
 }
