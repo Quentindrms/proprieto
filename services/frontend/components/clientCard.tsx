@@ -17,7 +17,7 @@ export default function ClientCard(props: ClientCardProps) {
 			>
 				<div class="flex gap-2">
 					<Text components="p">{props.client.name}</Text>
-					<Text components="p">{props.client.surname}</Text>
+					<Text components="p">{props.client.firstName}</Text>
 				</div>
 				<Badge color="green">Locataire</Badge>
 			</div>
@@ -27,7 +27,7 @@ export default function ClientCard(props: ClientCardProps) {
 			>
 				<Text components="p">{props.client.email}</Text>
 				<Text components="p">{props.client.phone}</Text>
-				<Text components="p">{props.client.adress}</Text>
+				<Text components="p">{props.client.address}</Text>
 			</div>
 			<div id="footer" class="flex justify-between p-2">
 				<Text components="p"> 0 contrat</Text>

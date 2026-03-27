@@ -1,7 +1,8 @@
 export type Client = {
+	id: string;
 	name: string;
-	surname: string;
+	firstName: string;
 	email: string;
-	adress: string;
+	address: string;
 	phone: string;
 };
