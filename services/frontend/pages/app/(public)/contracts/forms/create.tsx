@@ -44,7 +44,7 @@ export default function CreateForm() {
 				label="Propriété louée"
 				labelOptions="Sélectionner une propriété"
 				options={propertiesList}
-				onInput={contract.handleCreateInput("property")}
+				onInput={contract.handleCreateInput("propertyId")}
 			/>
 
 			<Select
