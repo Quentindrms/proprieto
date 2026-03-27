@@ -53,3 +53,11 @@ export interface CreateClientDto {
 	address: string;
 	phone: string;
 }
+
+export interface CreateContractDto {
+	startDate: string;
+	endDate: string;
+	lease: number;
+	propertyId: string;
+	clientId: string;
+}
