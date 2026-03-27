@@ -27,7 +27,11 @@ export default function Page() {
 			/>
 
 			<StatCardWrapper>
-				<StatCard legend="Clients totaux" value="0" title="" />
+				<StatCard
+					legend="Clients totaux"
+					value={String(data.client.length)}
+					title=""
+				/>
 
 				<StatCard legend="Avec contrat actif" value="0" title="" />
 
