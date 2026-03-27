@@ -109,10 +109,25 @@ export function useOutcome() {
 			.toString();
 	}
 
+	function countCurrentMonth(outcomeList: Outcome[]) {
+		const currentDate = new Date();
+		return outcomeList
+			.filter(
+				(outcome) =>
+					new Date(outcome.issueDate).getFullYear() ===
+						currentDate.getFullYear() &&
+					new Date(outcome.issueDate).getMonth() === currentDate.getMonth(),
+			)
+			.map((outcome) => outcome.amount)
+			.reduce((sum, amount) => sum + amount, 0)
+			.toString();
+	}
+
 	function outcomeCounter(outcomesList: Outcome[]) {
 		return {
 			unPaid: countUnpaid(outcomesList),
 			reccuring: countReccuring(outcomesList),
+			currentMonth: countCurrentMonth(outcomesList),
 			currentYear: countCurrentYear(outcomesList),
 		};
 	}

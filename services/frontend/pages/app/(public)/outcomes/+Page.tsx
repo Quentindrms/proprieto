@@ -66,10 +66,15 @@ export default function Page() {
 				onClick={createOutcomeModal.open}
 			/>
 			<StatCardWrapper>
-				<StatCard legend="" value="0" accentColor="blue" title="Ce mois" />
 				<StatCard
 					legend=""
-					value={outcomeCounter.currentYear}
+					value={`${outcomeCounter.currentMonth} euros`}
+					accentColor="blue"
+					title="Ce mois"
+				/>
+				<StatCard
+					legend=""
+					value={`${outcomeCounter.currentYear} euros`}
 					accentColor="blue"
 					title="Cette année"
 				/>
