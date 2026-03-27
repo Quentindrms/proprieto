@@ -3,6 +3,6 @@ import { CoreService } from "./core.service";
 
 export class ClientService extends CoreService {
 	create(client: CreateClientType) {
-		return this.post<{ message: "success" }>("/client/", client);
+		return this.post<{ message: string }>("/client/", client);
 	}
 }
