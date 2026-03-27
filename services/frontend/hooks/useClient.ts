@@ -1,5 +1,10 @@
-import type { CreateClientType, UpdateClientType } from "@schemas/client";
+import {
+	CreateClientSchema,
+	type CreateClientType,
+	type UpdateClientType,
+} from "@schemas/client";
 import { createSignal } from "solid-js";
+import type { ZodSafeParseError } from "zod";
 
 export function useClient() {
 	const [createClient, setCreateClient] = createSignal<CreateClientType>({
@@ -17,6 +22,9 @@ export function useClient() {
 		phone: "",
 		email: "",
 	});
+
+	const [formError, setFormError] =
+		createSignal<ZodSafeParseError<CreateClientType | UpdateClientType>>();
 
 	function handleCreate(field: keyof CreateClientType) {
 		return (event: InputEvent) => {
@@ -39,12 +47,17 @@ export function useClient() {
 	}
 
 	function create() {
-		console.log(createClient());
+		const validate = CreateClientSchema.safeParse(createClient());
+		if (!validate.success) {
+			setFormError(validate);
+			return;
+		}
 	}
 
 	return {
 		create,
 		handleCreate,
 		handleUpdateClient,
+		formError,
 	};
 }
