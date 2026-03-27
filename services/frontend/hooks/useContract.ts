@@ -14,7 +14,7 @@ export function useContract() {
 		endDate: new Date(),
 		clientId: "",
 		lease: 0,
-		property: "",
+		propertyId: "",
 	});
 
 	const [updateContract, setUpdateContract] = createSignal<UpdateContractType>({
@@ -22,7 +22,7 @@ export function useContract() {
 		endDate: new Date(),
 		clientId: "",
 		lease: 0,
-		property: "",
+		propertyId: "",
 		id: "",
 	});
 
@@ -50,7 +50,6 @@ export function useContract() {
 	}
 
 	async function create() {
-		console.log(createContract());
 		const validate = CreateContractSchema.safeParse(createContract());
 		if (!validate.success) {
 			setFormError(validate);
