@@ -52,7 +52,7 @@ export default function Page() {
 			>
 				<ModalHeader>
 					<Heading components="h1" size="medium">
-						Ajouter un revenu
+						Ajouter une dépense
 					</Heading>
 				</ModalHeader>
 				<ModalBody>
