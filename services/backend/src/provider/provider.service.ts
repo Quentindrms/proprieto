@@ -5,7 +5,7 @@ import type { CreateProviderDto } from "types/DtoType";
 @Injectable()
 export class ProviderService {
 	async create(provider: CreateProviderDto, userId: string) {
-		return await prisma.providers.create({
+		return await prisma.provider.create({
 			data: {
 				name: provider.name,
 				firstName: provider.firstName,
@@ -18,7 +18,7 @@ export class ProviderService {
 	}
 
 	async browse(userId) {
-		return await prisma.providers.findMany({
+		return await prisma.provider.findMany({
 			where: {
 				userId,
 			},
