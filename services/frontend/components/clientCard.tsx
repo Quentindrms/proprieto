@@ -17,7 +17,7 @@ export default function ClientCard(props: ClientCardProps) {
 			>
 				<div class="flex gap-2">
 					<Text components="p">{props.client.name}</Text>
-					<Text components="p">{props.client.surname}</Text>
+					<Text components="p">{props.client.firstName}</Text>
 				</div>
 				<Badge color="green">Locataire</Badge>
 			</div>
