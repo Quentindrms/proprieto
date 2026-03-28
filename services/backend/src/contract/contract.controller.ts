@@ -23,10 +23,10 @@ export class ContractController {
 	}
 
 	@Get("browse")
-	browseContract(@Req() request: Request, @Res() response: Response) {
+	async browseContract(@Req() request: Request, @Res() response: Response) {
 		const user = request.user;
 		if (!user) return response.status(401).send({});
-		const contracts = this.contractService.browse(user.id);
+		const contracts = await this.contractService.browse(user.id);
 		return response.status(200).send(contracts);
 	}
 }

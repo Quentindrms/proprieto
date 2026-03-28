@@ -23,6 +23,10 @@ export class ContractService {
 					userId,
 				},
 			},
+			include: {
+				client: true,
+				property: true,
+			},
 		});
 	}
 }
