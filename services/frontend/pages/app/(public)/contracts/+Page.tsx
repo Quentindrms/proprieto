@@ -5,10 +5,23 @@ import PageNamer from "@components/pageNamer";
 import SearchField from "@components/searchField";
 import Text from "@components/text";
 import { useModal } from "@hooks/useModal";
+import { useData } from "vike-solid/useData";
+import type { Data } from "./+data";
 import CreateModal from "./modals/create";
 
 export default function Page() {
+	const data = useData<Data>();
+
 	const createModal = useModal(350);
+
+	const contractsList = data.contracts.map((contract) => [
+		new Date(contract.startDate).toLocaleDateString("fr-FR"),
+		new Date(contract.endDate).toLocaleDateString("fr-FR"),
+		`${contract.lease} euros`,
+		contract.property.name,
+	]);
+
+	const columns = ["Date de début", "Date de fin", "Loyer", "Propriété"];
 
 	return (
 		<div class="w-dvw h-dvh">
@@ -33,7 +46,7 @@ export default function Page() {
 			<div class="p-2">
 				<SearchField name="searchbar" placeholder="Effectuer une recherche" />
 			</div>
-			<Board columns={[]} cells={[]} name="Contrats"></Board>
+			<Board columns={columns} cells={contractsList} name="Contrats"></Board>
 		</div>
 	);
 }
