@@ -7,8 +7,8 @@ export class ContractService {
 	async create(contract: CreateContractDto) {
 		return await prisma.contract.create({
 			data: {
-				startDate: contract.startDate,
-				endDate: contract.endDate,
+				startDate: new Date(contract.startDate),
+				endDate: new Date(contract.endDate),
 				lease: Number(contract.lease),
 				clientId: contract.clientId,
 				propertyId: contract.propertyId,
