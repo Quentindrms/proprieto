@@ -38,10 +38,10 @@ export default function Page() {
 			/>
 
 			<StatCardWrapper>
-				<StatCard legend="Légend" value="0" title="Titre" accentColor="blue" />
-				<StatCard legend="Légend" value="0" title="Titre" accentColor="blue" />
-				<StatCard legend="Légend" value="0" title="Titre" accentColor="blue" />
-				<StatCard legend="Légend" value="0" title="Titre" accentColor="blue" />
+				<StatCard legend="Contrats actifs" value={String(data.properties.length)} title="Titre" accentColor="blue" />
+				<StatCard legend="Loyers mensuels" value="0" title="Titre" accentColor="blue" />
+				<StatCard legend="Expirent dans 6 mois" value="0" title="Titre" accentColor="blue" />
+				<StatCard legend="Archivés" value="0" title="Titre" accentColor="blue" />
 			</StatCardWrapper>
 			<div class="p-2">
 				<SearchField name="searchbar" placeholder="Effectuer une recherche" />
