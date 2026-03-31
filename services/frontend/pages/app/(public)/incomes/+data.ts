@@ -9,7 +9,7 @@ export async function data(pageContext: PageContextServer) {
 
 	const incomeCategoryService = new IncomeCategoryService(cookies.auth);
 
-	const incomes = await incomeCategoryService.browseCategories();
+	const income = await incomeCategoryService.browseCategories();
 
-	return { incomes };
+	return { income };
 }
