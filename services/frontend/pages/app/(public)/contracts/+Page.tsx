@@ -1,9 +1,8 @@
 import Board from "@components/board";
 import { StatCard, StatCardWrapper } from "@components/cards";
-import Heading from "@components/heading";
 import PageNamer from "@components/pageNamer";
 import SearchField from "@components/searchField";
-import Text from "@components/text";
+import { useContract } from "@hooks/useContract";
 import { useModal } from "@hooks/useModal";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
@@ -13,6 +12,8 @@ export default function Page() {
 	const data = useData<Data>();
 
 	const createModal = useModal(350);
+	const contract = useContract();
+	const stats = contract.getStats(data.contracts);
 
 	const contractsList = data.contracts.map((contract) => [
 		new Date(contract.startDate).toLocaleDateString("fr-FR"),
@@ -38,10 +39,30 @@ export default function Page() {
 			/>
 
 			<StatCardWrapper>
-				<StatCard legend="Contrats actifs" value={String(data.properties.length)} title="Titre" accentColor="blue" />
-				<StatCard legend="Loyers mensuels" value="0" title="Titre" accentColor="blue" />
-				<StatCard legend="Expirent dans 6 mois" value="0" title="Titre" accentColor="blue" />
-				<StatCard legend="Archivés" value="0" title="Titre" accentColor="blue" />
+				<StatCard
+					legend="Contrats actifs"
+					value={String(data.properties.length)}
+					title="Titre"
+					accentColor="blue"
+				/>
+				<StatCard
+					legend="Loyers mensuels"
+					value={String(stats.monthlyLease)}
+					title="Titre"
+					accentColor="blue"
+				/>
+				<StatCard
+					legend="Expirent dans 6 mois"
+					value="0"
+					title="Titre"
+					accentColor="blue"
+				/>
+				<StatCard
+					legend="Archivés"
+					value="0"
+					title="Titre"
+					accentColor="blue"
+				/>
 			</StatCardWrapper>
 			<div class="p-2">
 				<SearchField name="searchbar" placeholder="Effectuer une recherche" />
