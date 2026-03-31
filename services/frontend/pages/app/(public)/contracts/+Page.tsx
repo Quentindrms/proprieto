@@ -46,7 +46,7 @@ export default function Page() {
 					accentColor="blue"
 				/>
 				<StatCard
-					legend="Loyers mensuels"
+					legend={""}
 					value={String(stats.monthlyLease)}
 					title="Titre"
 					accentColor="blue"
