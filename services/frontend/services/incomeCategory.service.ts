@@ -1,7 +1,8 @@
+import type { IncomeCategory } from "@app/types/incomeCategory";
 import { CoreService } from "./core.service";
 
 export class IncomeCategoryService extends CoreService {
-	browseCategories() {
-		return this.get("/income-category/browse");
+	async browseCategories() {
+		return await this.get<IncomeCategory[]>("/income-category/browse");
 	}
 }
