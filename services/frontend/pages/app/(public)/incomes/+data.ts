@@ -10,6 +10,6 @@ export async function data(pageContext: PageContextServer) {
 	const incomeCategoryService = new IncomeCategoryService(cookies.auth);
 
 	const income = await incomeCategoryService.browseCategories();
-
+	console.log(income);
 	return { income };
 }
