@@ -11,7 +11,8 @@ export class IncomeCategoryController {
 	async browse(@Req() request: Request, @Res() response: Response) {
 		const user = request.user;
 		if (!user) return response.status(401).send({});
-		const categories = this.incomeCategoryService.browseCategories();
+		const categories = await this.incomeCategoryService.browseCategories();
+		console.log(categories);
 		return response.status(200).send(categories);
 	}
 }
