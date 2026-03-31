@@ -1,3 +1,4 @@
+import type { Contract } from "@app/types/contract";
 import {
 	CreateContractSchema,
 	type CreateContractType,
@@ -64,10 +65,43 @@ export function useContract() {
 		toast.success("Contrat crée avec succès");
 	}
 
+	function getMonthlyLease(contractsList: Contract[]) {
+		const now = new Date();
+		const currentYear = now.getFullYear();
+		const currentMonth = now.getMonth();
+		const monthStart = new Date(currentYear, currentMonth, 1);
+		const monthEnd = new Date(
+			currentYear,
+			currentMonth + 1,
+			0,
+			23,
+			59,
+			59,
+			999,
+		);
+		const totalLoans = contractsList
+			.filter((contract) => {
+				const start = new Date(contract.startDate);
+				const end = new Date(contract.endDate);
+				return start <= monthEnd && end >= monthStart;
+			})
+			.map((contract) => contract.lease)
+			.reduce((sum, lease) => sum + lease, 0);
+		console.log(`Total loans : ${totalLoans}`);
+		return totalLoans;
+	}
+
+	function getStats(contractsList: Contract[]) {
+		return {
+			monthlyLease: getMonthlyLease(contractsList),
+		};
+	}
+
 	return {
 		create,
 		handleCreateInput,
 		handleUpdateInput,
 		formError,
+		getStats,
 	};
 }
