@@ -52,8 +52,8 @@ export default function Page() {
 					accentColor="blue"
 				/>
 				<StatCard
-					legend="Expirent dans 6 mois"
-					value="0"
+					legend="Expirent dans 6 mois ou moins"
+					value={String(stats.endSoon)}
 					title="Titre"
 					accentColor="blue"
 				/>

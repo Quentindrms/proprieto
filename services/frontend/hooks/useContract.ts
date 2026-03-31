@@ -91,9 +91,21 @@ export function useContract() {
 		return totalLoans;
 	}
 
+	function getEndSoon(contractsList: Contract[]) {
+		const now = new Date();
+		const sixMonthsLater = new Date();
+		sixMonthsLater.setMonth(now.getMonth() + 6);
+
+		return contractsList.filter((contract) => {
+			const endDate = new Date(contract.endDate);
+			return endDate >= now && endDate <= sixMonthsLater;
+		}).length;
+	}
+
 	function getStats(contractsList: Contract[]) {
 		return {
 			monthlyLease: getMonthlyLease(contractsList),
+			endSoon: getEndSoon(contractsList),
 		};
 	}
 
