@@ -1,6 +1,7 @@
 import { Controller, Get, Req, Res } from "@nestjs/common";
 import type { Request, Response } from "express";
-import type { IncomeCategoryService } from "./incomeCategory.service";
+//biome-ignore lint/style/useImportType: required for NestJS DI
+import { IncomeCategoryService } from "./incomeCategory.service";
 
 @Controller("income-category")
 export class IncomeCategoryController {
