@@ -20,6 +20,7 @@ async function incomeCategory() {
 			{ name: "Caution", slug: "guarantee" },
 			{ name: "Remboursement", slug: "repayment" },
 		],
+		skipDuplicates: true,
 	});
 }
 
