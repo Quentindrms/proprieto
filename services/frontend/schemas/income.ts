@@ -25,7 +25,7 @@ const paidOnSchema = z.coerce.date(
 	"La date de paiement doit être une date valide",
 );
 
-const frequencySchema = z.enum([]);
+const frequencySchema = z.string("");
 
 const propertyIdSchema = z.uuid("Identifiant propriété invalide");
 
