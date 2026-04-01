@@ -12,3 +12,95 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model EntityType {
+  id   String @id @unique @default(uuid()) @map("id_entity_type")
+  slug String @db.VarChar(75)
+  name String @db.VarChar(75)
+
+  @@map("entity_types")
+}
+
+model Categories {
+  id    String @id @unique @default(uuid()) @map("id_category")
+  slug  String @db.VarChar(100)
+  label String @db.VarChar(100)
+  type  String @db.VarChar(100)
+
+  @@map("categories")
+}
+
+model Directories {
+  id        String @id @unique @default(uuid()) @map("id_directory")
+  name      String @db.VarChar(120)
+  firstName String @map("first_name") @db.VarChar(120)
+  email     String @db.VarChar(250)
+  phone     String @db.VarChar(20)
+  address   String @db.VarChar(250)
+
+  @@map("directories")
+}
+
+model Users {
+  id       String @unique @default(uuid()) @map("id_user")
+  role     String @db.VarChar(100)
+  status   String @db.VarChar(50)
+  password String @db.VarChar(150)
+}
+
+model Properties {
+  id            String    @unique @default(uuid()) @map("id_property")
+  name          String    @db.VarChar(150)
+  purchasePrice Int       @map("purchase_price") @db.Integer()
+  purchaseDate  DateTime  @map("purchase_date")
+  sellPrice     Int?      @map("sell_price") @db.Integer()
+  sellDate      DateTime? @map("sell_date")
+  isDeleted     Boolean   @default(false) @map("is_deleted")
+
+  @@map("properties")
+}
+
+model Clients {
+  id     String @unique @default(uuid()) @map("id_client")
+  status String @db.VarChar(50)
+
+  @@map("clients")
+}
+
+model Providers {
+  id     String @unique @default(uuid()) @map("id_provider")
+  status String @db.VarChar(50)
+
+  @@map("providers")
+}
+
+model Contracts {
+  id        String   @unique @default(uuid()) @map("id_contract")
+  startDate DateTime @map("start_date")
+  endDate   DateTime @map("end_date")
+  lease     Int      @db.Integer()
+
+  @@map("contracts")
+}
+
+model Incomes {
+  id          String   @unique @default(uuid()) @map("id_income")
+  name        String   @db.VarChar(75)
+  amount      Int      @db.Integer()
+  isRecurring Boolean  @map("is_recurring") @db.Boolean()
+  isPaid      Boolean  @db.Boolean()
+  issueDate   DateTime @db.Date()
+  paidOn      DateTime @db.Date()
+  frequency   String   @db.VarChar(50)
+}
+
+model Outcomes {
+  id          String   @unique @default(uuid()) @map("id_outcome")
+  name        String   @db.VarChar(75)
+  amount      Int      @db.Integer()
+  isRecurring Boolean  @map("is_recurring") @db.Boolean()
+  isPaid      Boolean  @db.Boolean()
+  issueDate   DateTime @db.Date()
+  paidOn      DateTime @db.Date()
+  frequency   String   @db.VarChar(50)
+}
