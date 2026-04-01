@@ -61,3 +61,17 @@ export interface CreateContractDto {
 	propertyId: string;
 	clientId: string;
 }
+
+export interface CreateIncomeDto {
+	name: string;
+	amount: number;
+	isReccuring: boolean;
+	isPaid: boolean;
+	issueDate: Date;
+	paidOn: Date;
+	frequency: string;
+	propertyId: string;
+	incomeCategoryId: string;
+	contractId: string;
+	clientId: string;
+}

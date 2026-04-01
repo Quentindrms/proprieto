@@ -1,4 +1,9 @@
-import { Module } from "@nestjs/common";
+import {
+	type MiddlewareConsumer,
+	Module,
+	type NestModule,
+} from "@nestjs/common";
+import { IsAuthenticatedMiddleware } from "middleware/is-authenticated.middleware";
 import { IncomeController } from "./income.controller";
 import { IncomeService } from "./income.service";
 
@@ -7,4 +12,8 @@ import { IncomeService } from "./income.service";
 	controllers: [IncomeController],
 	providers: [IncomeService],
 })
-export class IncomeModule {}
+export class IncomeModule implements NestModule {
+	configure(consumer: MiddlewareConsumer) {
+		consumer.apply(IsAuthenticatedMiddleware).forRoutes(IncomeController);
+	}
+}

@@ -13,6 +13,18 @@ async function outcomeCategory() {
 	});
 }
 
+async function incomeCategory() {
+	await prisma.incomeCategory.createMany({
+		data: [
+			{ name: "Loyer", slug: "loan" },
+			{ name: "Caution", slug: "guarantee" },
+			{ name: "Remboursement", slug: "repayment" },
+		],
+		skipDuplicates: true,
+	});
+}
+
 export async function seed() {
 	await outcomeCategory();
+	await incomeCategory();
 }
