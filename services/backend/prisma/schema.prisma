@@ -18,6 +18,8 @@ model EntityType {
   slug String @db.VarChar(75)
   name String @db.VarChar(75)
 
+  properties Properties[]
+
   @@map("entity_types")
 }
 
@@ -38,6 +40,10 @@ model Directories {
   phone     String @db.VarChar(20)
   address   String @db.VarChar(250)
 
+  userId String
+
+  user Users @relation(fields: [id], references: [id])
+
   @@map("directories")
 }
 
@@ -46,6 +52,9 @@ model Users {
   role     String @db.VarChar(100)
   status   String @db.VarChar(50)
   password String @db.VarChar(150)
+
+  properties Properties[]
+  directory  Directories?
 }
 
 model Properties {
@@ -56,6 +65,12 @@ model Properties {
   sellPrice     Int?      @map("sell_price") @db.Integer()
   sellDate      DateTime? @map("sell_date")
   isDeleted     Boolean   @default(false) @map("is_deleted")
+
+  entityId   String
+  propertyId String
+
+  categorie EntityType @relation(fields: [entityId], references: [id])
+  user      Users      @relation(fields: [propertyId], references: [id])
 
   @@map("properties")
 }
