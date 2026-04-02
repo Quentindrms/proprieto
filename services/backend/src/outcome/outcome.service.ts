@@ -5,7 +5,7 @@ import type { CreateOutcomeDto } from "types/DtoType";
 @Injectable()
 export class OutcomeService {
 	async createOutcome(outcome: CreateOutcomeDto) {
-		return await prisma.outcome.create({
+		return await prisma.outcomes.create({
 			data: {
 				name: outcome.name,
 				amount: Number(outcome.amount),
@@ -15,7 +15,7 @@ export class OutcomeService {
 				paidOn: outcome.paidOn ? new Date(outcome.paidOn) : null,
 				frequency: outcome.frequency,
 				propertyId: outcome.propertyId,
-				outcomeCategoryId: outcome.categoryId,
+				categoryId: outcome.categoryId,
 				providerId: outcome.providerId,
 
 				/** TODO : Implements propertyId, outcomeCategoryId, providersId */
@@ -24,7 +24,7 @@ export class OutcomeService {
 	}
 
 	async browseOutcome(userId: string) {
-		return await prisma.outcome.findMany({
+		return await prisma.outcomes.findMany({
 			where: {
 				property: {
 					userId,
@@ -47,8 +47,7 @@ export class OutcomeService {
 				provider: {
 					select: {
 						id: true,
-						firstName: true,
-						name: true,
+						directories: true,
 					},
 				},
 			},
