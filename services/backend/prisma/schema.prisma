@@ -24,10 +24,11 @@ model PropertyTypes {
 }
 
 model Categories {
-  id    String @id @unique @default(uuid()) @map("id_category")
-  slug  String @db.VarChar(100)
-  label String @db.VarChar(100)
-  type  String @db.VarChar(100)
+  id       String     @id @unique @default(uuid()) @map("id_category")
+  slug     String     @db.VarChar(100)
+  label    String     @db.VarChar(100)
+  type     String     @db.VarChar(100)
+  outcomes Outcomes[]
 
   @@map("categories")
 }
@@ -40,23 +41,25 @@ model Directories {
   phone     String @db.VarChar(20)
   address   String @db.VarChar(250)
 
-  userId String
-
-  user      Users       @relation(fields: [id], references: [id])
   clients   Clients[]
   providers Providers[]
+  users     Users[]
 
   @@map("directories")
 }
 
 model Users {
-  id       String @unique @default(uuid()) @map("id_user")
+  id       String @id @unique @default(uuid()) @map("id_user")
   role     String @db.VarChar(100)
   status   String @db.VarChar(50)
   password String @db.VarChar(150)
 
+  directoriesId String      @unique
+  directory     Directories @relation(fields: [directoriesId], references: [id])
+
   properties Properties[]
-  directory  Directories?
+
+  @@map("users")
 }
 
 model Properties {
@@ -73,6 +76,8 @@ model Properties {
 
   categorie PropertyTypes @relation(fields: [entityId], references: [id])
   user      Users         @relation(fields: [userId], references: [id])
+  outcomes  Outcomes[]
+  incomes   Incomes[]
 
   @@map("properties")
 }
@@ -92,8 +97,9 @@ model Providers {
   id     String @unique @default(uuid()) @map("id_provider")
   status String @db.VarChar(50)
 
-  directories   Directories? @relation(fields: [directoriesId], references: [id])
-  directoriesId String?
+  directories   Directories @relation(fields: [directoriesId], references: [id])
+  directoriesId String
+  outcomes      Outcomes[]
 
   @@map("providers")
 }
@@ -104,8 +110,11 @@ model Contracts {
   endDate   DateTime @map("end_date")
   lease     Int      @db.Integer()
 
-  clientId  Clients @relation(fields: [clientsId], references: [id])
   clientsId String
+
+  incomes Incomes[]
+
+  clientId Clients @relation(fields: [clientsId], references: [id])
 
   @@map("contracts")
 }
@@ -119,6 +128,12 @@ model Incomes {
   issueDate   DateTime @db.Date()
   paidOn      DateTime @db.Date()
   frequency   String   @db.VarChar(50)
+
+  contractsId  String
+  propertiesId String
+
+  contracts Contracts  @relation(fields: [contractsId], references: [id])
+  property  Properties @relation(fields: [propertiesId], references: [id])
 }
 
 model Outcomes {
@@ -130,4 +145,12 @@ model Outcomes {
   issueDate   DateTime @db.Date()
   paidOn      DateTime @db.Date()
   frequency   String   @db.VarChar(50)
+
+  propertiesId String
+  providersId  String
+  categoriesId String
+
+  property Properties @relation(fields: [propertiesId], references: [id])
+  provider Providers  @relation(fields: [providersId], references: [id])
+  category Categories @relation(fields: [categoriesId], references: [id])
 }
