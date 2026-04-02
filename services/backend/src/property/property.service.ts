@@ -24,6 +24,17 @@ export class PropertyService {
 			where: {
 				userId: userId,
 			},
+			select: {
+				id: true,
+				name: true,
+				purchasePrice: true,
+				purchaseDate: true,
+				sellPrice: true,
+				sellDate: true,
+				isDeleted: false,
+				propertyType: true,
+				userId: true,
+			},
 		});
 	}
 
