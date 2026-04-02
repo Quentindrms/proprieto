@@ -14,7 +14,7 @@ export class PropertyService {
 					: new Date(),
 				userId: userId,
 				isDeleted: false,
-				typeId: property.typeId,
+				typeId: property.type,
 			},
 		});
 	}
