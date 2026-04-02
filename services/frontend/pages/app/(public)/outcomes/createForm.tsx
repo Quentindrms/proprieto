@@ -18,7 +18,7 @@ export default function CreateOutcomeForm() {
 
 	const categoryList = data.categories.map((category) => ({
 		value: category.id,
-		label: category.name,
+		label: category.label,
 		disabled: false,
 	}));
 
