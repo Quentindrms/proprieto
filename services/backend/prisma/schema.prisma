@@ -134,15 +134,15 @@ model Incomes {
   paidOn      DateTime? @db.Date()
   frequency   String    @db.VarChar(50)
 
-  contractId   String
-  propertyId   String
-  categoriesId String
-  clientId     String
+  contractId String
+  propertyId String
+  categoryId String
+  clientId   String
 
-  contract   Contracts  @relation(fields: [contractId], references: [id])
-  property   Properties @relation(fields: [propertyId], references: [id])
-  categories Categories @relation(fields: [categoriesId], references: [id])
-  client     Clients    @relation(fields: [clientId], references: [id])
+  contract Contracts  @relation(fields: [contractId], references: [id])
+  property Properties @relation(fields: [propertyId], references: [id])
+  category Categories @relation(fields: [categoryId], references: [id])
+  client   Clients    @relation(fields: [clientId], references: [id])
 
   @@map("incomes")
 }
@@ -157,13 +157,13 @@ model Outcomes {
   paidOn      DateTime? @db.Date()
   frequency   String    @db.VarChar(50)
 
-  propertiesId String
-  providersId  String
-  categoriesId String
+  propertyId String
+  providerId String
+  categoryId String
 
-  property Properties @relation(fields: [propertiesId], references: [id])
-  provider Providers  @relation(fields: [providersId], references: [id])
-  category Categories @relation(fields: [categoriesId], references: [id])
+  property Properties @relation(fields: [propertyId], references: [id])
+  provider Providers  @relation(fields: [providerId], references: [id])
+  category Categories @relation(fields: [categoryId], references: [id])
 
   @@map("outcomes")
 }
