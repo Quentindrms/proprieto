@@ -1,5 +1,6 @@
 import { prisma } from "@libs/DatabaseClient";
 import { Injectable } from "@nestjs/common";
+import type { Users } from "@prisma/client";
 import argon2 from "argon2";
 import jwt from "jsonwebtoken";
 import { JwtService } from "services/jwt.service";
@@ -56,9 +57,9 @@ export class AuthService extends JwtService {
 		return await this.createJWT(userId);
 	}
 
-	async verify(token: string): Promise<{ user: User }> {
+	async verify(token: string): Promise<{ user: Users }> {
 		const { userId } = await this.verifyJWT(token);
-		const user = await prisma.user.findFirst({
+		const user = await prisma.users.findFirst({
 			where: {
 				AND: [{ id: userId }],
 			},
