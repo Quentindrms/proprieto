@@ -13,14 +13,10 @@ export class ClientService {
 				address: client.address,
 				phone: client.phone,
 				type: "client",
+				userId,
 				clients: {
 					create: {
 						status: "active",
-					},
-				},
-				users: {
-					connect: {
-						id: userId,
 					},
 				},
 			},
@@ -30,12 +26,8 @@ export class ClientService {
 	async browseClient(userId: string) {
 		return await prisma.directories.findMany({
 			where: {
+				userId,
 				type: "client",
-				users: {
-					some: {
-						id: userId,
-					},
-				},
 			},
 		});
 	}
