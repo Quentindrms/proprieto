@@ -25,7 +25,7 @@ export class ProviderController {
 	async browseprovider(@Req() request: Request, @Res() response: Response) {
 		const user = request.user;
 		if (!user) return response.status(401).send({});
-		const providers = await this.providerService.browse(user.directoriesId);
+		const providers = await this.providerService.browse(user.id);
 		console.log(providers);
 		return response.status(200).send(providers);
 	}
