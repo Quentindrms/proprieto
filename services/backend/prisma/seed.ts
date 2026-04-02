@@ -24,7 +24,20 @@ async function incomeCategory() {
 	});
 }
 
+async function propertyType() {
+	await prisma.propertyTypes.createMany({
+		data: [
+			{ name: "Appartement", slug: "apartment" },
+			{ name: "Maison", slug: "house" },
+			{ name: "Bureau", slug: "office" },
+			{ name: "Garage", slug: "garage" },
+		],
+		skipDuplicates: true,
+	});
+}
+
 export async function seed() {
 	await outcomeCategory();
 	await incomeCategory();
+	await propertyType();
 }
