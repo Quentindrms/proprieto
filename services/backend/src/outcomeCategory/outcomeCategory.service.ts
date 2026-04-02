@@ -4,6 +4,10 @@ import { Injectable } from "@nestjs/common";
 @Injectable()
 export class OutcomeCategoryService {
 	async browseCategory() {
-		return await prisma.outcomeCategory.findMany();
+		return await prisma.categories.findMany({
+			where: {
+				type: "outcome",
+			},
+		});
 	}
 }
