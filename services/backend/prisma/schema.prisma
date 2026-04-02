@@ -55,12 +55,11 @@ model Users {
   status   String @db.VarChar(50)
   password String @db.VarChar(150)
 
-  directoriesId String @unique
+  directoriesId String
 
   properties Properties[]
   contracts  Contracts[]
-
-  directory Directories @relation(fields: [directoriesId], references: [id])
+  directory  Directories  @relation(fields: [directoriesId], references: [id])
 
   @@map("users")
 }
@@ -133,20 +132,20 @@ model Incomes {
   paidOn      DateTime? @db.Date()
   frequency   String    @db.VarChar(50)
 
+  propertyId String
   contractId String
   categoryId String
-  propertyId String
 
+  property Properties @relation(fields: [propertyId], references: [id])
   contract Contracts  @relation(fields: [contractId], references: [id])
   category Categories @relation(fields: [categoryId], references: [id])
-  property Properties @relation(fields: [propertyId], references: [id])
 
   @@map("incomes")
 }
 
 model Outcomes {
   id          String    @id @unique @default(uuid()) @map("id_outcome")
-  name        String    @db.VarChar(75)
+  name        String    @db.VarChar(150)
   amount      Int       @db.Integer()
   isRecurring Boolean   @map("is_recurring") @db.Boolean()
   isPaid      Boolean   @db.Boolean()
