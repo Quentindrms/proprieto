@@ -22,17 +22,7 @@ export class PropertyService {
 	async browseProperties(userId: string) {
 		return await prisma.properties.findMany({
 			where: {
-				userId,
-				isDeleted: false,
-			},
-			select: {
-				id: true,
-				name: true,
-				purchasePrice: true,
-				purchaseDate: true,
-				sellPrice: true,
-				sellDate: true,
-				propertyType: true,
+				userId: userId,
 			},
 		});
 	}
