@@ -42,7 +42,9 @@ model Directories {
 
   userId String
 
-  user Users @relation(fields: [id], references: [id])
+  user      Users       @relation(fields: [id], references: [id])
+  clients   Clients[]
+  providers Providers[]
 
   @@map("directories")
 }
@@ -66,11 +68,11 @@ model Properties {
   sellDate      DateTime? @map("sell_date")
   isDeleted     Boolean   @default(false) @map("is_deleted")
 
-  entityId   String
-  propertyId String
+  entityId String
+  userId   String
 
   categorie PropertyTypes @relation(fields: [entityId], references: [id])
-  user      Users         @relation(fields: [propertyId], references: [id])
+  user      Users         @relation(fields: [userId], references: [id])
 
   @@map("properties")
 }
@@ -79,12 +81,19 @@ model Clients {
   id     String @unique @default(uuid()) @map("id_client")
   status String @db.VarChar(50)
 
+  idDirectory   Directories @relation(fields: [directoriesId], references: [id])
+  directoriesId String
+  contracts     Contracts[]
+
   @@map("clients")
 }
 
 model Providers {
   id     String @unique @default(uuid()) @map("id_provider")
   status String @db.VarChar(50)
+
+  directories   Directories? @relation(fields: [directoriesId], references: [id])
+  directoriesId String?
 
   @@map("providers")
 }
@@ -94,6 +103,9 @@ model Contracts {
   startDate DateTime @map("start_date")
   endDate   DateTime @map("end_date")
   lease     Int      @db.Integer()
+
+  clientId  Clients @relation(fields: [clientsId], references: [id])
+  clientsId String
 
   @@map("contracts")
 }
