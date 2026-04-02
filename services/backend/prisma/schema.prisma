@@ -55,10 +55,12 @@ model Users {
   status   String @db.VarChar(50)
   password String @db.VarChar(150)
 
-  directoriesId String      @unique
-  directory     Directories @relation(fields: [directoriesId], references: [id])
+  directoriesId String @unique
 
   properties Properties[]
+  contracts  Contracts[]
+
+  directory Directories @relation(fields: [directoriesId], references: [id])
 
   @@map("users")
 }
@@ -112,9 +114,11 @@ model Contracts {
   lease     Int      @db.Integer()
 
   clientId String
+  userId   String
 
   incomes Incomes[]
   client  Clients   @relation(fields: [clientId], references: [id])
+  user    Users     @relation(fields: [userId], references: [id])
 
   @@map("contracts")
 }
