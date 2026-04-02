@@ -37,7 +37,9 @@ export class AuthService extends JwtService {
 		const user = await prisma.users.findFirst({
 			where: {
 				directory: {
-					email: loginDetails.email,
+					some: {
+						email: loginDetails.email,
+					},
 				},
 			},
 		});
