@@ -10,14 +10,20 @@ import type { CreateAccountDto } from "types/DtoType";
 export class AuthService extends JwtService {
 	async register(account: CreateAccountDto) {
 		try {
-			const user = await prisma.user.create({
+			await prisma.directories.create({
 				data: {
-					name: account.name,
 					firstName: account.firstName,
-					address: account.address,
+					name: account.name,
 					email: account.email,
+					address: account.address,
 					phone: account.phone,
-					password: await argon2.hash(account.password),
+					users: {
+						create: {
+							password: await argon2.hash(account.password),
+							role: "owner",
+							status: "active",
+						},
+					},
 				},
 			});
 			return true;
