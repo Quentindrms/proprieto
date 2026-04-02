@@ -18,6 +18,11 @@ export class ClientService {
 						status: "active",
 					},
 				},
+				users: {
+					connect: {
+						id: userId,
+					},
+				},
 			},
 		});
 	}
@@ -25,6 +30,7 @@ export class ClientService {
 	async browseClient(userId: string) {
 		return await prisma.directories.findMany({
 			where: {
+				type: "client",
 				users: {
 					some: {
 						id: userId,
