@@ -13,7 +13,7 @@ datasource db {
   provider = "postgresql"
 }
 
-model EntityType {
+model PropertyTypes {
   id   String @id @unique @default(uuid()) @map("id_entity_type")
   slug String @db.VarChar(75)
   name String @db.VarChar(75)
@@ -69,8 +69,8 @@ model Properties {
   entityId   String
   propertyId String
 
-  categorie EntityType @relation(fields: [entityId], references: [id])
-  user      Users      @relation(fields: [propertyId], references: [id])
+  categorie PropertyTypes @relation(fields: [entityId], references: [id])
+  user      Users         @relation(fields: [propertyId], references: [id])
 
   @@map("properties")
 }
