@@ -5,7 +5,7 @@ import type { CreateContractDto } from "types/DtoType";
 @Injectable()
 export class ContractService {
 	async create(contract: CreateContractDto) {
-		return await prisma.contract.create({
+		return await prisma.contracts.create({
 			data: {
 				startDate: new Date(contract.startDate),
 				endDate: new Date(contract.endDate),
@@ -17,15 +17,11 @@ export class ContractService {
 	}
 
 	async browse(userId: string) {
-		return await prisma.contract.findMany({
+		return await prisma.contracts.findMany({
 			where: {
-				client: {
+				property: {
 					userId,
 				},
-			},
-			include: {
-				client: true,
-				property: true,
 			},
 		});
 	}
