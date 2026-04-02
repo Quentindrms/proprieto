@@ -13,14 +13,10 @@ export class ProviderService {
 				name: provider.name,
 				phone: provider.phone,
 				type: "provider",
+				userId,
 				providers: {
 					create: {
 						status: "active",
-					},
-				},
-				users: {
-					connect: {
-						id: userId,
 					},
 				},
 			},
