@@ -134,6 +134,8 @@ model Incomes {
 
   contracts Contracts  @relation(fields: [contractsId], references: [id])
   property  Properties @relation(fields: [propertiesId], references: [id])
+
+  @@map("incomes")
 }
 
 model Outcomes {
@@ -153,4 +155,6 @@ model Outcomes {
   property Properties @relation(fields: [propertiesId], references: [id])
   provider Providers  @relation(fields: [providersId], references: [id])
   category Categories @relation(fields: [categoriesId], references: [id])
+
+  @@map("outcomes")
 }
