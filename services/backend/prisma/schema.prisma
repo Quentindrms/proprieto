@@ -72,14 +72,13 @@ model Properties {
   sellDate      DateTime? @map("sell_date")
   isDeleted     Boolean   @default(false) @map("is_deleted")
 
-  categoryId String
-  userId     String
+  typeId String
+  userId String
 
-  categorie PropertyTypes @relation(fields: [categoryId], references: [id])
-  user      Users         @relation(fields: [userId], references: [id])
-  outcomes  Outcomes[]
-  incomes   Incomes[]
-  contracts Contracts[]
+  propertyType PropertyTypes @relation(fields: [typeId], references: [id])
+  user         Users         @relation(fields: [userId], references: [id])
+  outcomes     Outcomes[]
+  incomes      Incomes[]
 
   @@map("properties")
 }
@@ -91,7 +90,6 @@ model Clients {
   directoriesId String
   idDirectory   Directories @relation(fields: [directoriesId], references: [id])
   contracts     Contracts[]
-  incomes       Incomes[]
 
   @@map("clients")
 }
@@ -113,13 +111,10 @@ model Contracts {
   endDate   DateTime @map("end_date")
   lease     Int      @db.Integer()
 
-  clientId   String
-  propertyId String
+  clientId String
 
   incomes Incomes[]
-
-  client   Clients    @relation(fields: [clientId], references: [id])
-  property Properties @relation(fields: [propertyId], references: [id])
+  client  Clients   @relation(fields: [clientId], references: [id])
 
   @@map("contracts")
 }
@@ -135,14 +130,12 @@ model Incomes {
   frequency   String    @db.VarChar(50)
 
   contractId String
-  propertyId String
   categoryId String
-  clientId   String
+  propertyId String
 
   contract Contracts  @relation(fields: [contractId], references: [id])
-  property Properties @relation(fields: [propertyId], references: [id])
   category Categories @relation(fields: [categoryId], references: [id])
-  client   Clients    @relation(fields: [clientId], references: [id])
+  property Properties @relation(fields: [propertyId], references: [id])
 
   @@map("incomes")
 }
