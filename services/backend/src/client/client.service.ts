@@ -12,6 +12,7 @@ export class ClientService {
 				email: client.email,
 				address: client.address,
 				phone: client.phone,
+				type: "client",
 				clients: {
 					create: {
 						status: "active",
