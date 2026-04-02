@@ -7,5 +7,11 @@ export interface Property {
 	sellDate?: Date;
 	isDeleted: boolean;
 	isActive: boolean;
-	type: string;
+	type: PropertyType;
+}
+
+export interface PropertyType {
+	id: string;
+	slug: string;
+	name: string;
 }
