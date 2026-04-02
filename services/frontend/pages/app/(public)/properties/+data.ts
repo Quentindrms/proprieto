@@ -8,7 +8,8 @@ export async function data(pageContext: PageContextServer) {
 	const cookies = getCookiesFromPageContext(pageContext);
 
 	const propertyService = new PropertyService(cookies.auth);
+	const propertyTypes = await propertyService.browsePropertyType();
 	const properties = await propertyService.browseProperties();
 
-	return { properties };
+	return { properties, propertyTypes };
 }
