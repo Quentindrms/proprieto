@@ -25,6 +25,15 @@ export class PropertyService {
 				userId,
 				isDeleted: false,
 			},
+			select: {
+				id: true,
+				name: true,
+				purchasePrice: true,
+				purchaseDate: true,
+				sellPrice: true,
+				sellDate: true,
+				propertyType: true,
+			},
 		});
 	}
 
