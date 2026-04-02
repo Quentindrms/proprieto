@@ -7,7 +7,7 @@ export interface Property {
 	sellDate?: Date;
 	isDeleted: boolean;
 	isActive: boolean;
-	type: PropertyType;
+	propertyType: PropertyType;
 }
 
 export interface PropertyType {
