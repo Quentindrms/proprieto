@@ -29,6 +29,7 @@ model Categories {
   label    String     @db.VarChar(100)
   type     String     @db.VarChar(100)
   outcomes Outcomes[]
+  incomes  Incomes[]
 
   @@map("categories")
 }
@@ -131,9 +132,11 @@ model Incomes {
 
   contractsId  String
   propertiesId String
+  categoriesId String
 
-  contracts Contracts  @relation(fields: [contractsId], references: [id])
-  property  Properties @relation(fields: [propertiesId], references: [id])
+  contracts  Contracts  @relation(fields: [contractsId], references: [id])
+  property   Properties @relation(fields: [propertiesId], references: [id])
+  categories Categories @relation(fields: [categoriesId], references: [id])
 
   @@map("incomes")
 }
