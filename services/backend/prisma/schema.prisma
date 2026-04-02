@@ -43,9 +43,12 @@ model Directories {
   address   String @db.VarChar(250)
   type      String @db.VarChar(50)
 
+  userId String
+
+  user Users @relation(fields: [userId], references: [id])
+
   clients   Clients[]
   providers Providers[]
-  users     Users[]
 
   @@map("directories")
 }
@@ -56,11 +59,9 @@ model Users {
   status   String @db.VarChar(50)
   password String @db.VarChar(150)
 
-  directoriesId String
-
   properties Properties[]
   contracts  Contracts[]
-  directory  Directories  @relation(fields: [directoriesId], references: [id])
+  directory  Directories[]
 
   @@map("users")
 }
