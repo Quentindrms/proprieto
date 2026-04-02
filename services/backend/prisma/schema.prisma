@@ -41,6 +41,7 @@ model Directories {
   email     String @db.VarChar(250)
   phone     String @db.VarChar(20)
   address   String @db.VarChar(250)
+  type      String @db.VarChar(50)
 
   clients   Clients[]
   providers Providers[]
