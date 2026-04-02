@@ -1,13 +1,13 @@
 import { prisma } from "../libs/DatabaseClient";
 
 async function outcomeCategory() {
-	await prisma.outcomeCategory.createMany({
+	await prisma.categories.createMany({
 		data: [
-			{ name: "Assurance", slug: "insurance" },
-			{ name: "Travaux", slug: "work" },
-			{ name: "Emprunt", slug: "loan" },
-			{ name: "Eau", slug: "water" },
-			{ name: "Électricité", slug: "electricity" },
+			{ label: "Assurance", slug: "insurance", type: "outcome" },
+			{ label: "Travaux", slug: "work", type: "outcome" },
+			{ label: "Emprunt", slug: "loan", type: "outcome" },
+			{ label: "Eau", slug: "water", type: "outcome" },
+			{ label: "Électricité", slug: "electricity", type: "outcome" },
 		],
 		skipDuplicates: true,
 	});
