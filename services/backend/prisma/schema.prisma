@@ -125,21 +125,21 @@ model Contracts {
 }
 
 model Incomes {
-  id          String   @id @unique @default(uuid()) @map("id_income")
-  name        String   @db.VarChar(75)
-  amount      Int      @db.Integer()
-  isRecurring Boolean  @map("is_recurring") @db.Boolean()
-  isPaid      Boolean  @db.Boolean()
-  issueDate   DateTime @db.Date()
-  paidOn      DateTime @db.Date()
-  frequency   String   @db.VarChar(50)
+  id          String    @id @unique @default(uuid()) @map("id_income")
+  name        String    @db.VarChar(75)
+  amount      Int       @db.Integer()
+  isRecurring Boolean   @map("is_recurring") @db.Boolean()
+  isPaid      Boolean   @db.Boolean()
+  issueDate   DateTime  @db.Date()
+  paidOn      DateTime? @db.Date()
+  frequency   String    @db.VarChar(50)
 
-  contractId   String?
+  contractId   String
   propertyId   String
   categoriesId String
   clientId     String
 
-  contract   Contracts? @relation(fields: [contractId], references: [id])
+  contract   Contracts  @relation(fields: [contractId], references: [id])
   property   Properties @relation(fields: [propertyId], references: [id])
   categories Categories @relation(fields: [categoriesId], references: [id])
   client     Clients    @relation(fields: [clientId], references: [id])
@@ -148,14 +148,14 @@ model Incomes {
 }
 
 model Outcomes {
-  id          String   @id @unique @default(uuid()) @map("id_outcome")
-  name        String   @db.VarChar(75)
-  amount      Int      @db.Integer()
-  isRecurring Boolean  @map("is_recurring") @db.Boolean()
-  isPaid      Boolean  @db.Boolean()
-  issueDate   DateTime @db.Date()
-  paidOn      DateTime @db.Date()
-  frequency   String   @db.VarChar(50)
+  id          String    @id @unique @default(uuid()) @map("id_outcome")
+  name        String    @db.VarChar(75)
+  amount      Int       @db.Integer()
+  isRecurring Boolean   @map("is_recurring") @db.Boolean()
+  isPaid      Boolean   @db.Boolean()
+  issueDate   DateTime  @db.Date()
+  paidOn      DateTime? @db.Date()
+  frequency   String    @db.VarChar(50)
 
   propertiesId String
   providersId  String
