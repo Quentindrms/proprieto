@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { property, z } from "zod";
 
 export const idSchema = z.string();
 
@@ -17,12 +17,15 @@ export const sellDateSchema = z
 	.date("Le format de la date est invalide")
 	.optional();
 
+export const propertyTypeSchema = z.uuid("Type de propriété invalide");
+
 export const PropertyCreationSchema = z.object({
 	name: nameSchema,
 	purchasePrice: purchasePriceSchema,
 	purchaseDate: purchaseDateSchema,
 	sellPrice: sellpriceSchema,
 	sellDate: sellDateSchema,
+	type: propertyTypeSchema,
 });
 
 export const PropertyUpdateSchema = z.object({
@@ -32,6 +35,7 @@ export const PropertyUpdateSchema = z.object({
 	purchaseDate: purchaseDateSchema,
 	sellPrice: sellpriceSchema,
 	sellDate: sellDateSchema,
+	type: propertyTypeSchema,
 });
 
 export type PropertyCreationType = z.infer<typeof PropertyCreationSchema>;

@@ -29,7 +29,7 @@ export class ProviderService {
 	}
 
 	async browse(userId) {
-		return await prisma.users.findFirst({
+		return await prisma.users.findMany({
 			where: {
 				id: userId,
 			},

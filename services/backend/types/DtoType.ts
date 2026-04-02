@@ -13,7 +13,6 @@ export interface CreatePropertyDto {
 	purchaseDate?: Date;
 	isActive: boolean;
 	type: string;
-	typeId: string;
 }
 
 export interface UpdatePropertyDto {

@@ -14,7 +14,7 @@ export class PropertyService {
 					: new Date(),
 				userId: userId,
 				isDeleted: false,
-				typeId: property.typeId,
+				typeId: property.type,
 			},
 		});
 	}
@@ -24,6 +24,15 @@ export class PropertyService {
 			where: {
 				userId,
 				isDeleted: false,
+			},
+			select: {
+				id: true,
+				name: true,
+				purchasePrice: true,
+				purchaseDate: true,
+				sellPrice: true,
+				sellDate: true,
+				propertyType: true,
 			},
 		});
 	}
@@ -56,5 +65,9 @@ export class PropertyService {
 				isDeleted: true,
 			},
 		});
+	}
+
+	async browseType() {
+		return await prisma.propertyTypes.findMany({});
 	}
 }
