@@ -9,7 +9,7 @@ export default function () {
 
     const income = UseIncome();
     const incomeCategory = data.income.map(
-        (income) => ({ label: income.name, value: income.id, disabled: false }),
+        (income) => ({ label: income.label, value: income.id, disabled: false }),
     );
 
     return (
