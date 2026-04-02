@@ -57,4 +57,8 @@ export class PropertyService {
 			},
 		});
 	}
+
+	async browseType() {
+		return await prisma.propertyTypes.findMany({});
+	}
 }

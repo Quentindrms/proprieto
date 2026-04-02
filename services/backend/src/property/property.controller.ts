@@ -65,4 +65,15 @@ export class PropertyController {
 		if (!deleted) return response.status(404).send({});
 		return response.status(200).send({ message: "success" });
 	}
+
+	@Get("types")
+	async browsePropertyTypes(
+		@Req() request: Request,
+		@Res() response: Response,
+	) {
+		const user = request.user;
+		if (!user) return response.status(401).send({});
+		const property = await this.propertyService.browseType();
+		return response.status(200).send(property);
+	}
 }
