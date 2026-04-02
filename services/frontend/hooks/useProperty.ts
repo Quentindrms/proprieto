@@ -18,6 +18,7 @@ export function useProperty() {
 			purchaseDate: new Date(),
 			sellDate: new Date(),
 			sellPrice: 0,
+			type: "",
 		});
 	const [updateProperty, setUpdateProperty] = createSignal<PropertyUpdateType>({
 		id: "",
@@ -25,6 +26,7 @@ export function useProperty() {
 		purchasePrice: 0,
 		purchaseDate: new Date(),
 		sellPrice: 0,
+		type: "",
 	});
 	const [formError, setFormError] =
 		createSignal<

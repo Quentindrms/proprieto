@@ -1,10 +1,22 @@
 import { Button } from "@components/button";
 import { Form, Select, TextField } from "@components/form";
 import { useProperty } from "@hooks/useProperty";
+import { useData } from "vike-solid/useData";
 import z from "zod";
+import type { Data } from "./+data";
 
 export default function CreatePropertyForm() {
 	const property = useProperty();
+	const data = useData<Data>();
+
+	const propertyTypes = data.propertyTypes.map((type) => ({
+		value: type.id,
+		label: type.name,
+		disabled: false,
+	}));
+
+	console.log(`Property type lengh ${propertyTypes.length}`)
+	console.log(`Data property type lengh ${data.propertyTypes.length}`)
 
 	return (
 		<Form callback={property.create}>
@@ -56,7 +68,8 @@ export default function CreatePropertyForm() {
 			<Select
 				label="Type de bien"
 				labelOptions="Sélectionner un type de bien"
-				options={[]}
+				options={propertyTypes}
+				onInput={property.handleCreateInput("type")}
 			/>
 			<div class="flex justify-center p-2">
 				<Button type="submit">Créer une nouvelle propriété</Button>
