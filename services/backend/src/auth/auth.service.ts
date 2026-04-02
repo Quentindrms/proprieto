@@ -1,6 +1,5 @@
 import { prisma } from "@libs/DatabaseClient";
 import { Injectable } from "@nestjs/common";
-import type { User } from "@prisma/client";
 import argon2 from "argon2";
 import jwt from "jsonwebtoken";
 import { JwtService } from "services/jwt.service";
@@ -34,11 +33,14 @@ export class AuthService extends JwtService {
 	}
 
 	async login(loginDetails: { email: string; password: string }) {
-		const user = await prisma.user.findFirst({
+		const user = await prisma.users.findFirst({
 			where: {
-				email: loginDetails.email,
+				directory: {
+					email: loginDetails.email,
+				},
 			},
 		});
+
 		if (!user) throw Error("Utilisateur inexistant");
 		try {
 			if (!(await argon2.verify(user.password, loginDetails.password)))
