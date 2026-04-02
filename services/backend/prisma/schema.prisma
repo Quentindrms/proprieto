@@ -111,11 +111,11 @@ model Contracts {
   endDate   DateTime @map("end_date")
   lease     Int      @db.Integer()
 
-  clientsId String
+  clientId String
 
   incomes Incomes[]
 
-  clientId Clients @relation(fields: [clientsId], references: [id])
+  client Clients @relation(fields: [clientId], references: [id])
 
   @@map("contracts")
 }
