@@ -7,12 +7,17 @@ export class ProviderService {
 	async create(provider: CreateProviderDto, userId: string) {
 		return await prisma.directories.create({
 			data: {
-				name: provider.name,
-				firstName: provider.firstName,
-				email: provider.email,
-				phone: provider.phone,
 				address: provider.address,
+				email: provider.email,
+				firstName: provider.firstName,
+				name: provider.name,
+				phone: provider.phone,
 				type: "provider",
+				providers: {
+					create: {
+						status: "active",
+					},
+				},
 				users: {
 					connect: {
 						id: userId,
@@ -22,21 +27,14 @@ export class ProviderService {
 		});
 	}
 
-	async browse(userId) {
-		return await prisma.users.findMany({
+	async browse(directoryId: string) {
+		return await prisma.directories.findMany({
 			where: {
-				id: userId,
+				type: "provider",
+				id: directoryId,
 			},
-			select: {
-				directory: {
-					select: {
-						providers: {
-							where: {
-								status: "active",
-							},
-						},
-					},
-				},
+			include: {
+				providers: true,
 			},
 		});
 	}
