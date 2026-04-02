@@ -12,12 +12,13 @@ export class IncomeService {
 				isRecurring: income.isReccuring,
 				isPaid: income.isPaid,
 				issueDate: new Date(income.issueDate),
-				paidOn: new Date(income.paidOn),
+				paidOn: income.paidOn ? new Date(income.paidOn) : undefined,
 				frequency: income.frequency,
 
 				propertyId: income.propertyId,
-				categoriesId: income.incomeCategoryId,
+				categoryId: income.incomeCategoryId,
 				clientId: income.clientId,
+				contractId: income.contractId,
 			},
 		});
 	}
