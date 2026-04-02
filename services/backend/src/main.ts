@@ -1,12 +1,12 @@
 import { NestFactory } from "@nestjs/core";
-import type { User } from "@prisma/client";
+import type { Users } from "@prisma/client";
 import { seed } from "prisma/seed";
 import { AppModule } from "./app.module";
 
 declare global {
 	namespace Express {
 		interface Request {
-			user?: User;
+			user?: Users;
 		}
 	}
 }

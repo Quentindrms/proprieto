@@ -1,24 +1,36 @@
 import { prisma } from "../libs/DatabaseClient";
 
 async function outcomeCategory() {
-	await prisma.outcomeCategory.createMany({
+	await prisma.categories.createMany({
 		data: [
-			{ name: "Assurance", slug: "insurance" },
-			{ name: "Travaux", slug: "work" },
-			{ name: "Emprunt", slug: "loan" },
-			{ name: "Eau", slug: "water" },
-			{ name: "Électricité", slug: "electricity" },
+			{ label: "Assurance", slug: "insurance", type: "outcome" },
+			{ label: "Travaux", slug: "work", type: "outcome" },
+			{ label: "Emprunt", slug: "loan", type: "outcome" },
+			{ label: "Eau", slug: "water", type: "outcome" },
+			{ label: "Électricité", slug: "electricity", type: "outcome" },
 		],
 		skipDuplicates: true,
 	});
 }
 
 async function incomeCategory() {
-	await prisma.incomeCategory.createMany({
+	await prisma.categories.createMany({
 		data: [
-			{ name: "Loyer", slug: "loan" },
-			{ name: "Caution", slug: "guarantee" },
-			{ name: "Remboursement", slug: "repayment" },
+			{ label: "Loyer", slug: "loan", type: "incpme" },
+			{ label: "Caution", slug: "guarantee", type: "income" },
+			{ label: "Remboursement", slug: "repayment", type: "income" },
+		],
+		skipDuplicates: true,
+	});
+}
+
+async function propertyType() {
+	await prisma.propertyTypes.createMany({
+		data: [
+			{ name: "Appartement", slug: "apartment" },
+			{ name: "Maison", slug: "house" },
+			{ name: "Bureau", slug: "office" },
+			{ name: "Garage", slug: "garage" },
 		],
 		skipDuplicates: true,
 	});
@@ -27,4 +39,5 @@ async function incomeCategory() {
 export async function seed() {
 	await outcomeCategory();
 	await incomeCategory();
+	await propertyType();
 }

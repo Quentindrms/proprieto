@@ -5,19 +5,19 @@ import type { CreateIncomeDto } from "types/DtoType";
 @Injectable()
 export class IncomeService {
 	async create(income: CreateIncomeDto) {
-		return await prisma.income.create({
+		return await prisma.incomes.create({
 			data: {
 				name: income.name,
 				amount: Number(income.amount),
 				isRecurring: income.isReccuring,
 				isPaid: income.isPaid,
 				issueDate: new Date(income.issueDate),
-				paidOn: new Date(income.paidOn),
+				paidOn: income.paidOn ? new Date(income.paidOn) : undefined,
 				frequency: income.frequency,
 
 				propertyId: income.propertyId,
-				incomeCategoryId: income.incomeCategoryId,
-				clientId: income.clientId,
+				categoryId: income.incomeCategoryId,
+				contractId: income.contractId,
 			},
 		});
 	}

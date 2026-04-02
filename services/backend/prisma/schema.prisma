@@ -13,163 +13,154 @@ datasource db {
   provider = "postgresql"
 }
 
-model User {
-  id        String  @id @unique @default(uuid()) @map("id_user") @db.Uuid
-  name      String  @db.VarChar(120)
-  firstName String  @map("first_name") @db.VarChar(120)
-  address   String  @db.VarChar(250)
-  email     String  @unique @db.VarChar(254)
-  phone     String? @unique @db.VarChar(20)
-  password  String  @db.VarChar(250)
+model PropertyTypes {
+  id   String @id @unique @default(uuid()) @map("id_entity_type")
+  slug String @db.VarChar(75)
+  name String @db.VarChar(75)
 
-  property Property[]
-  client   Client[]
-  provider Provider[]
+  properties Properties[]
 
-  @@map("user")
+  @@map("entity_types")
 }
 
-model PropertyType {
-  id   String @id @unique @default(uuid()) @map("id_property") @db.Uuid
-  slug String @unique @db.VarChar(150)
-  name String @db.VarChar(150)
+model Categories {
+  id       String     @id @unique @default(uuid()) @map("id_category")
+  slug     String     @db.VarChar(100)
+  label    String     @db.VarChar(100)
+  type     String     @db.VarChar(100)
+  outcomes Outcomes[]
+  incomes  Incomes[]
 
-  property Property[]
-
-  @@map("property_type")
+  @@map("categories")
 }
 
-model Client {
-  id        String @id @unique @default(uuid()) @map("id_client") @db.Uuid
+model Directories {
+  id        String @id @unique @default(uuid()) @map("id_directory")
   name      String @db.VarChar(120)
   firstName String @map("first_name") @db.VarChar(120)
-  email     String @db.VarChar(254)
-  address   String @db.VarChar(250)
+  email     String @db.VarChar(250)
   phone     String @db.VarChar(20)
-
-  userId String @db.Uuid
-
-  income   Income[]
-  contract Contract[]
-
-  user User @relation(fields: [userId], references: [id])
-
-  @@map("client")
-}
-
-model Provider {
-  id        String @id @unique @default(uuid()) @map("id_provider") @db.Uuid
-  name      String @db.VarChar(120)
-  firstName String @map("first_name") @db.VarChar(120)
-  email     String @db.VarChar(254)
   address   String @db.VarChar(250)
-  phone     String @db.VarChar(20)
 
-  userId String @db.Uuid
+  clients   Clients[]
+  providers Providers[]
+  users     Users[]
 
-  user    User      @relation(fields: [userId], references: [id])
-  outcome Outcome[]
-
-  @@map("provider")
+  @@map("directories")
 }
 
-model OutcomeCategory {
-  id   String @id @unique @default(uuid()) @map("id_outcome_category") @db.Uuid
-  slug String @unique @db.VarChar(150)
-  name String @db.VarChar(150)
+model Users {
+  id       String @id @unique @default(uuid()) @map("id_user")
+  role     String @db.VarChar(100)
+  status   String @db.VarChar(50)
+  password String @db.VarChar(150)
 
-  outcome Outcome[]
+  directoriesId String @unique
 
-  @@map("outcome_category")
+  properties Properties[]
+  contracts  Contracts[]
+
+  directory Directories @relation(fields: [directoriesId], references: [id])
+
+  @@map("users")
 }
 
-model IncomeCategory {
-  id   String @id @unique @default(uuid()) @map("id_income_category") @db.Uuid
-  slug String @unique @db.VarChar(150)
-  name String @db.VarChar(150)
-
-  income Income[]
-
-  @@map("income_category")
-}
-
-model Property {
-  id            String    @id @unique @default(uuid()) @map("id_property") @db.Uuid
-  name          String    @db.VarChar(120)
-  purchasePrice Int?      @map("purchase_price") @db.Integer()
-  purchaseDate  DateTime? @map("purchase_date")
+model Properties {
+  id            String    @id @unique @default(uuid()) @map("id_property")
+  name          String    @db.VarChar(150)
+  purchasePrice Int       @map("purchase_price") @db.Integer()
+  purchaseDate  DateTime  @map("purchase_date")
   sellPrice     Int?      @map("sell_price") @db.Integer()
   sellDate      DateTime? @map("sell_date")
-  isDeleted     Boolean   @map("is_deleted")
+  isDeleted     Boolean   @default(false) @map("is_deleted")
 
-  userId         String     @db.Uuid
-  propertyTypeId String?    @db.Uuid
-  income         Income[]
-  outcome        Outcome[]
-  contract       Contract[]
+  typeId String
+  userId String
 
-  user         User          @relation(fields: [userId], references: [id])
-  propertyType PropertyType? @relation(fields: [propertyTypeId], references: [id])
+  propertyType PropertyTypes @relation(fields: [typeId], references: [id])
+  user         Users         @relation(fields: [userId], references: [id])
+  outcomes     Outcomes[]
+  incomes      Incomes[]
 
-  @@map("property")
+  @@map("properties")
 }
 
-model Outcome {
-  id          String    @id @unique @default(uuid()) @map("id_outcome") @db.Uuid
-  name        String    @db.VarChar(150)
+model Clients {
+  id     String @id @unique @default(uuid()) @map("id_client")
+  status String @db.VarChar(50)
+
+  directoriesId String
+  idDirectory   Directories @relation(fields: [directoriesId], references: [id])
+  contracts     Contracts[]
+
+  @@map("clients")
+}
+
+model Providers {
+  id     String @id @unique @default(uuid()) @map("id_provider")
+  status String @db.VarChar(50)
+
+  directories   Directories @relation(fields: [directoriesId], references: [id])
+  directoriesId String
+  outcomes      Outcomes[]
+
+  @@map("providers")
+}
+
+model Contracts {
+  id        String   @id @unique @default(uuid()) @map("id_contract")
+  startDate DateTime @map("start_date")
+  endDate   DateTime @map("end_date")
+  lease     Int      @db.Integer()
+
+  clientId String
+  userId   String
+
+  incomes Incomes[]
+  client  Clients   @relation(fields: [clientId], references: [id])
+  user    Users     @relation(fields: [userId], references: [id])
+
+  @@map("contracts")
+}
+
+model Incomes {
+  id          String    @id @unique @default(uuid()) @map("id_income")
+  name        String    @db.VarChar(75)
   amount      Int       @db.Integer()
-  isRecurring Boolean   @default(false) @map("is_recurring")
-  isPaid      Boolean   @map("is_paid")
-  issueDate   DateTime  @map("issue_date")
-  paidOn      DateTime? @map("paid_on")
+  isRecurring Boolean   @map("is_recurring") @db.Boolean()
+  isPaid      Boolean   @db.Boolean()
+  issueDate   DateTime  @db.Date()
+  paidOn      DateTime? @db.Date()
   frequency   String    @db.VarChar(50)
 
-  propertyId        String @db.Uuid
-  outcomeCategoryId String @db.Uuid
-  providerId        String @db.Uuid
+  contractId String
+  categoryId String
+  propertyId String
 
-  property        Property        @relation(fields: [propertyId], references: [id])
-  outcomeCategory OutcomeCategory @relation(fields: [outcomeCategoryId], references: [id])
-  provider        Provider        @relation(fields: [providerId], references: [id])
+  contract Contracts  @relation(fields: [contractId], references: [id])
+  category Categories @relation(fields: [categoryId], references: [id])
+  property Properties @relation(fields: [propertyId], references: [id])
 
-  @@map("outcome")
+  @@map("incomes")
 }
 
-model Income {
-  id          String   @id @unique @default(uuid()) @map("id_income") @db.Uuid
-  name        String   @db.VarChar(150)
-  amount      Int      @db.Integer()
-  isRecurring Boolean  @default(false) @map("is_recurring")
-  isPaid      Boolean  @map("is_paid")
-  issueDate   DateTime @map("issue_date")
-  paidOn      DateTime @map("paid_on")
-  frequency   String   @db.VarChar(50)
+model Outcomes {
+  id          String    @id @unique @default(uuid()) @map("id_outcome")
+  name        String    @db.VarChar(75)
+  amount      Int       @db.Integer()
+  isRecurring Boolean   @map("is_recurring") @db.Boolean()
+  isPaid      Boolean   @db.Boolean()
+  issueDate   DateTime  @db.Date()
+  paidOn      DateTime? @db.Date()
+  frequency   String    @db.VarChar(50)
 
-  propertyId       String  @db.Uuid
-  incomeCategoryId String  @db.Uuid
-  contractId       String? @db.Uuid
-  clientId         String  @db.Uuid
+  propertyId String
+  providerId String
+  categoryId String
 
-  property       Property       @relation(fields: [propertyId], references: [id])
-  incomeCategory IncomeCategory @relation(fields: [incomeCategoryId], references: [id])
-  contract       Contract?      @relation(fields: [contractId], references: [id])
-  client         Client         @relation(fields: [clientId], references: [id])
+  property Properties @relation(fields: [propertyId], references: [id])
+  provider Providers  @relation(fields: [providerId], references: [id])
+  category Categories @relation(fields: [categoryId], references: [id])
 
-  @@map("income")
-}
-
-model Contract {
-  id        String    @id @unique @default(uuid()) @map("id_contract") @db.Uuid
-  startDate DateTime  @map("start_date")
-  endDate   DateTime? @map("end_date")
-  lease     Int       @db.Integer()
-
-  propertyId String   @db.Uuid
-  clientId   String   @db.Uuid
-  income     Income[]
-
-  property Property @relation(fields: [propertyId], references: [id])
-  client   Client   @relation(fields: [clientId], references: [id])
-
-  @@map("contract")
+  @@map("outcomes")
 }

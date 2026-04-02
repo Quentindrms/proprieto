@@ -4,6 +4,10 @@ import { Injectable } from "@nestjs/common";
 @Injectable()
 export class IncomeCategoryService {
 	async browseCategories() {
-		return await prisma.incomeCategory.findMany();
+		return await prisma.categories.findMany({
+			where: {
+				type: "income",
+			},
+		});
 	}
 }

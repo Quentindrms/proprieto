@@ -4,28 +4,22 @@ import type { CreateContractDto } from "types/DtoType";
 
 @Injectable()
 export class ContractService {
-	async create(contract: CreateContractDto) {
-		return await prisma.contract.create({
+	async create(contract: CreateContractDto, userId: string) {
+		return await prisma.contracts.create({
 			data: {
 				startDate: new Date(contract.startDate),
 				endDate: new Date(contract.endDate),
 				lease: Number(contract.lease),
 				clientId: contract.clientId,
-				propertyId: contract.propertyId,
+				userId,
 			},
 		});
 	}
 
 	async browse(userId: string) {
-		return await prisma.contract.findMany({
+		return await prisma.contracts.findMany({
 			where: {
-				client: {
-					userId,
-				},
-			},
-			include: {
-				client: true,
-				property: true,
+				userId,
 			},
 		});
 	}

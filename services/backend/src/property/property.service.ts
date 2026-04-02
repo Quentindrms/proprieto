@@ -5,7 +5,7 @@ import type { CreatePropertyDto, UpdatePropertyDto } from "types/DtoType";
 @Injectable()
 export class PropertyService {
 	async create(property: CreatePropertyDto, userId: string) {
-		return await prisma.property.create({
+		return await prisma.properties.create({
 			data: {
 				name: property.name,
 				purchasePrice: Number(property.purchasePrice),
@@ -14,12 +14,13 @@ export class PropertyService {
 					: new Date(),
 				userId: userId,
 				isDeleted: false,
+				typeId: property.typeId,
 			},
 		});
 	}
 
 	async browseProperties(userId: string) {
-		return await prisma.property.findMany({
+		return await prisma.properties.findMany({
 			where: {
 				userId,
 				isDeleted: false,
@@ -28,7 +29,7 @@ export class PropertyService {
 	}
 
 	async updateProperty(property: UpdatePropertyDto) {
-		return await prisma.property.update({
+		return await prisma.properties.update({
 			where: {
 				id: property.id,
 			},
@@ -47,7 +48,7 @@ export class PropertyService {
 	}
 
 	async deleteProperty(id: string) {
-		return await prisma.property.update({
+		return await prisma.properties.update({
 			where: {
 				id,
 			},

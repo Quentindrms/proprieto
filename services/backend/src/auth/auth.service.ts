@@ -1,8 +1,7 @@
 import { prisma } from "@libs/DatabaseClient";
 import { Injectable } from "@nestjs/common";
-import type { User } from "@prisma/client";
+import type { Users } from "@prisma/client";
 import argon2 from "argon2";
-import jwt from "jsonwebtoken";
 import { JwtService } from "services/jwt.service";
 import type { CreateAccountDto } from "types/DtoType";
 
@@ -10,14 +9,20 @@ import type { CreateAccountDto } from "types/DtoType";
 export class AuthService extends JwtService {
 	async register(account: CreateAccountDto) {
 		try {
-			const user = await prisma.user.create({
+			await prisma.directories.create({
 				data: {
-					name: account.name,
 					firstName: account.firstName,
-					address: account.address,
+					name: account.name,
 					email: account.email,
+					address: account.address,
 					phone: account.phone,
-					password: await argon2.hash(account.password),
+					users: {
+						create: {
+							password: await argon2.hash(account.password),
+							role: "owner",
+							status: "active",
+						},
+					},
 				},
 			});
 			return true;
@@ -28,11 +33,14 @@ export class AuthService extends JwtService {
 	}
 
 	async login(loginDetails: { email: string; password: string }) {
-		const user = await prisma.user.findFirst({
+		const user = await prisma.users.findFirst({
 			where: {
-				email: loginDetails.email,
+				directory: {
+					email: loginDetails.email,
+				},
 			},
 		});
+
 		if (!user) throw Error("Utilisateur inexistant");
 		try {
 			if (!(await argon2.verify(user.password, loginDetails.password)))
@@ -48,9 +56,9 @@ export class AuthService extends JwtService {
 		return await this.createJWT(userId);
 	}
 
-	async verify(token: string): Promise<{ user: User }> {
+	async verify(token: string): Promise<{ user: Users }> {
 		const { userId } = await this.verifyJWT(token);
-		const user = await prisma.user.findFirst({
+		const user = await prisma.users.findFirst({
 			where: {
 				AND: [{ id: userId }],
 			},

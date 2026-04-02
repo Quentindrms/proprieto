@@ -17,7 +17,7 @@ export class IsAuthenticatedMiddleware
 		const { userId } = await this.verifyJWT(bearerToken);
 		if (typeof userId !== "string") return response.status(401).send();
 
-		const user = await prisma.user.findFirst({
+		const user = await prisma.users.findFirst({
 			where: { id: userId },
 		});
 		if (!user) return response.status(401).send();
