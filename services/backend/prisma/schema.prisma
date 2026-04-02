@@ -72,10 +72,10 @@ model Properties {
   sellDate      DateTime? @map("sell_date")
   isDeleted     Boolean   @default(false) @map("is_deleted")
 
-  entityId String
-  userId   String
+  categoryId String
+  userId     String
 
-  categorie PropertyTypes @relation(fields: [entityId], references: [id])
+  categorie PropertyTypes @relation(fields: [categoryId], references: [id])
   user      Users         @relation(fields: [userId], references: [id])
   outcomes  Outcomes[]
   incomes   Incomes[]
