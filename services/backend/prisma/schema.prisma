@@ -64,7 +64,7 @@ model Users {
 }
 
 model Properties {
-  id            String    @unique @default(uuid()) @map("id_property")
+  id            String    @id @unique @default(uuid()) @map("id_property")
   name          String    @db.VarChar(150)
   purchasePrice Int       @map("purchase_price") @db.Integer()
   purchaseDate  DateTime  @map("purchase_date")
@@ -79,23 +79,25 @@ model Properties {
   user      Users         @relation(fields: [userId], references: [id])
   outcomes  Outcomes[]
   incomes   Incomes[]
+  contracts Contracts[]
 
   @@map("properties")
 }
 
 model Clients {
-  id     String @unique @default(uuid()) @map("id_client")
+  id     String @id @unique @default(uuid()) @map("id_client")
   status String @db.VarChar(50)
 
-  idDirectory   Directories @relation(fields: [directoriesId], references: [id])
   directoriesId String
+  idDirectory   Directories @relation(fields: [directoriesId], references: [id])
   contracts     Contracts[]
+  incomes       Incomes[]
 
   @@map("clients")
 }
 
 model Providers {
-  id     String @unique @default(uuid()) @map("id_provider")
+  id     String @id @unique @default(uuid()) @map("id_provider")
   status String @db.VarChar(50)
 
   directories   Directories @relation(fields: [directoriesId], references: [id])
@@ -106,22 +108,24 @@ model Providers {
 }
 
 model Contracts {
-  id        String   @unique @default(uuid()) @map("id_contract")
+  id        String   @id @unique @default(uuid()) @map("id_contract")
   startDate DateTime @map("start_date")
   endDate   DateTime @map("end_date")
   lease     Int      @db.Integer()
 
-  clientId String
+  clientId   String
+  propertyId String
 
   incomes Incomes[]
 
-  client Clients @relation(fields: [clientId], references: [id])
+  client   Clients    @relation(fields: [clientId], references: [id])
+  property Properties @relation(fields: [propertyId], references: [id])
 
   @@map("contracts")
 }
 
 model Incomes {
-  id          String   @unique @default(uuid()) @map("id_income")
+  id          String   @id @unique @default(uuid()) @map("id_income")
   name        String   @db.VarChar(75)
   amount      Int      @db.Integer()
   isRecurring Boolean  @map("is_recurring") @db.Boolean()
@@ -130,19 +134,21 @@ model Incomes {
   paidOn      DateTime @db.Date()
   frequency   String   @db.VarChar(50)
 
-  contractsId  String
-  propertiesId String
+  contractId   String?
+  propertyId   String
   categoriesId String
+  clientId     String
 
-  contracts  Contracts  @relation(fields: [contractsId], references: [id])
-  property   Properties @relation(fields: [propertiesId], references: [id])
+  contract   Contracts? @relation(fields: [contractId], references: [id])
+  property   Properties @relation(fields: [propertyId], references: [id])
   categories Categories @relation(fields: [categoriesId], references: [id])
+  client     Clients    @relation(fields: [clientId], references: [id])
 
   @@map("incomes")
 }
 
 model Outcomes {
-  id          String   @unique @default(uuid()) @map("id_outcome")
+  id          String   @id @unique @default(uuid()) @map("id_outcome")
   name        String   @db.VarChar(75)
   amount      Int      @db.Integer()
   isRecurring Boolean  @map("is_recurring") @db.Boolean()
