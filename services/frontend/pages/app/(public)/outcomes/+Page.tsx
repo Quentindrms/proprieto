@@ -44,7 +44,7 @@ export default function Page() {
 	];
 
 	return (
-		<div class="h-full w-dvw flex flex-col">
+		<div class="h-full w-full flex flex-col">
 			<Modal
 				close={createOutcomeModal.close}
 				isClosing={createOutcomeModal.isClosing}
