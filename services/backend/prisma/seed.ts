@@ -14,11 +14,11 @@ async function outcomeCategory() {
 }
 
 async function incomeCategory() {
-	await prisma.incomeCategory.createMany({
+	await prisma.categories.createMany({
 		data: [
-			{ name: "Loyer", slug: "loan" },
-			{ name: "Caution", slug: "guarantee" },
-			{ name: "Remboursement", slug: "repayment" },
+			{ label: "Loyer", slug: "loan", type: "incpme" },
+			{ label: "Caution", slug: "guarantee", type: "income" },
+			{ label: "Remboursement", slug: "repayment", type: "income" },
 		],
 		skipDuplicates: true,
 	});
