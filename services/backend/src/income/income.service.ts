@@ -17,7 +17,6 @@ export class IncomeService {
 
 				propertyId: income.propertyId,
 				categoryId: income.incomeCategoryId,
-				clientId: income.clientId,
 				contractId: income.contractId,
 			},
 		});
