@@ -1,4 +1,4 @@
-import type { Property } from "@app/types/property";
+import type { Property, PropertyType } from "@app/types/property";
 import type {
 	PropertyCreationType,
 	PropertyUpdateType,
@@ -20,5 +20,9 @@ export class PropertyService extends CoreService {
 
 	async deleteProperty(propertyId: string) {
 		return this.delete<{ message: string }>(`/property/delete/${propertyId}`);
+	}
+
+	async browsePropertyType() {
+		return this.get<PropertyType[]>("/property/types");
 	}
 }
