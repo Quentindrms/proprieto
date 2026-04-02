@@ -16,6 +16,7 @@ export class AuthService extends JwtService {
 					email: account.email,
 					address: account.address,
 					phone: account.phone,
+					type: "user",
 					users: {
 						create: {
 							password: await argon2.hash(account.password),
