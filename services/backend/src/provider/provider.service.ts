@@ -23,14 +23,11 @@ export class ProviderService {
 		});
 	}
 
-	async browse(directoryId: string) {
+	async browse(userId: string) {
 		return await prisma.directories.findMany({
 			where: {
 				type: "provider",
-				id: directoryId,
-			},
-			include: {
-				providers: true,
+				userId,
 			},
 		});
 	}
