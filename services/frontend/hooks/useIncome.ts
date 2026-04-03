@@ -1,3 +1,4 @@
+import type { IncomeType } from "@app/types/income";
 import {
 	IncomeCreationSchema,
 	type IncomeCreationType,
@@ -70,10 +71,25 @@ export function UseIncome() {
 		toast.success("Dépense crée");
 	}
 
+	function listIncomes(incomes: IncomeType[]) {
+		return incomes.map((income) => [
+			income.name,
+			String(income.amount),
+			income.isPaid ? "Payé" : "En attente de paiement",
+			new Date(income.issueDate).toLocaleDateString("fr-FR"),
+		]);
+	}
+
+	function listCols() {
+		return ["Nom", "Montant", "Statut", "Date d'émission"];
+	}
+
 	return {
 		handleCreateInput,
 		handleUpdateInput,
 		create,
 		formError,
+		listIncomes,
+		listCols,
 	};
 }
