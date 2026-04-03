@@ -12,11 +12,11 @@ export default function Page() {
 	const data = useData<Data>();
 
 	const cells = data.providers.map((provider) => [
-		provider.name,
-		provider.firstName,
-		provider.email,
-		provider.address,
-		provider.phone,
+		provider.directories.name,
+		provider.directories.firstName,
+		provider.directories.email,
+		provider.directories.address,
+		provider.directories.phone,
 	]);
 
 	return (
