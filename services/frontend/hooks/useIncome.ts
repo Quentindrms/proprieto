@@ -1,35 +1,40 @@
-import type { IncomeCreationType, IncomeUpdateType } from "@schemas/income";
+import type { IncomeType } from "@app/types/income";
+import {
+	IncomeCreationSchema,
+	type IncomeCreationType,
+	type IncomeUpdateType,
+} from "@schemas/income";
 import { createSignal } from "solid-js";
+import toast from "solid-toast";
+import type { ZodSafeParseError, ZodSafeParseResult } from "zod";
+import { onCreate } from "./useIncome.telefunc";
 
 export function UseIncome() {
 	const [createIncome, setCreateIncome] = createSignal<IncomeCreationType>({
 		name: "",
 		amount: 0,
-		isRecurring: false,
 		isPaid: false,
 		issueDate: new Date(),
-		paidOn: new Date(),
+		paidOn: undefined,
 		frequency: "",
-		propertyId: "",
 		incomeCategoryId: "",
 		contractId: "",
-		clientId: "",
 	});
 
 	const [updateIncome, setUpdateIncome] = createSignal<IncomeUpdateType>({
 		id: "",
 		name: "",
 		amount: 0,
-		isRecurring: false,
 		isPaid: false,
 		issueDate: new Date(),
-		paidOn: new Date(),
+		paidOn: undefined,
 		frequency: "",
-		propertyId: "",
 		incomeCategoryId: "",
 		contractId: "",
-		clientId: "",
 	});
+
+	const [formError, setFormError] =
+		createSignal<ZodSafeParseError<IncomeCreationType | IncomeUpdateType>>();
 
 	function handleCreateInput(field: keyof IncomeCreationType) {
 		return (event: InputEvent) => {
@@ -51,13 +56,98 @@ export function UseIncome() {
 		};
 	}
 
-	function create() {
-		console.log(createIncome());
+	async function create() {
+		const validate = IncomeCreationSchema.safeParse(createIncome());
+		if (!validate.success) {
+			setFormError(validate);
+			return;
+		}
+		setFormError(undefined);
+		const response = await onCreate(createIncome());
+		if (response?.message !== "success") {
+			toast.error("Une erreur est survenue lors de la création de la dépense");
+			return;
+		}
+		toast.success("Dépense crée");
+	}
+
+	function listIncomes(incomes: IncomeType[]) {
+		return incomes.map((income) => [
+			income.name,
+			String(income.amount),
+			income.isPaid ? "Payé" : "En attente de paiement",
+			new Date(income.issueDate).toLocaleDateString("fr-FR"),
+			income.paidOn
+				? new Date(income.paidOn).toLocaleDateString("fr-FR")
+				: " - ",
+		]);
+	}
+
+	function listCols() {
+		return ["Nom", "Montant", "Statut", "Date d'émission", "Date de paiement"];
+	}
+
+	function getMonthIncomes(incomes: IncomeType[]) {
+		const currentMonth = new Date();
+		const nextMonth = new Date(currentMonth);
+		currentMonth.setDate(1);
+		currentMonth.setHours(0, 0, 0, 0);
+		nextMonth.setMonth(currentMonth.getMonth() + 1);
+		nextMonth.setDate(1);
+		nextMonth.setHours(0, 0, 0, 0);
+
+		return incomes
+			.filter((income) => {
+				const incomeDate = new Date(income.paidOn).getTime();
+				return (
+					incomeDate >= currentMonth.getTime() &&
+					incomeDate < nextMonth.getTime()
+				);
+			})
+			.reduce((sum, income) => sum + income.amount, 0)
+			.toString();
+	}
+
+	function getYearIncomes(incomes: IncomeType[]) {
+		const now = new Date();
+		const currentYear = new Date(now.getFullYear(), 0, 1);
+		const nextYear = new Date(now.getFullYear() + 1, 0, 1);
+
+		return incomes
+			.filter((income) => {
+				const incomeDate = new Date(income.paidOn).getTime();
+				return (
+					incomeDate >= currentYear.getTime() && incomeDate < nextYear.getTime()
+				);
+			})
+			.reduce((sum, income) => sum + income.amount, 0)
+			.toString();
+	}
+
+	function getUnpaidCount(incomes: IncomeType[]) {
+		return incomes.filter((income) => !income.paidOn).length.toString();
+	}
+
+	function getRecurringCount(incomes: IncomeType[]) {
+		return incomes.filter((income) => income.frequency).length.toString();
+	}
+
+	function getStats(incomes: IncomeType[]) {
+		return {
+			monthStat: getMonthIncomes(incomes),
+			yearStat: getYearIncomes(incomes),
+			unpaidCount: getUnpaidCount(incomes),
+			recurringCount: getRecurringCount(incomes),
+		};
 	}
 
 	return {
 		handleCreateInput,
 		handleUpdateInput,
 		create,
+		formError,
+		listIncomes,
+		listCols,
+		getStats,
 	};
 }

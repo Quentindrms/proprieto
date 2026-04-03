@@ -3,12 +3,21 @@ import { StatCard, StatCardWrapper } from "@components/cards";
 import PageNamer from "@components/pageNamer";
 import SearchField from "@components/searchField";
 import Text from "@components/text";
+import { UseIncome } from "@hooks/useIncome";
 import { useModal } from "@hooks/useModal";
+import { useData } from "vike-solid/useData";
+import type { Data } from "./+data";
 import CreateModal from "./modal/createModal";
 
 export default function Page() {
 
 	const createModal = useModal(350);
+	const data = useData<Data>();
+	const income = UseIncome();
+
+	const incomesList = income.listIncomes(data.incomeList);
+	const colsList = income.listCols();
+	const stats = income.getStats(data.incomeList);
 
 	return (
 		<div class="flex flex-col w-dvw h-dvh">
@@ -25,17 +34,16 @@ export default function Page() {
 			/>
 
 			<StatCardWrapper>
-				<StatCard legend="" value="0" accentColor="blue" title="Ce mois" />
-				<StatCard legend="" value="0" accentColor="blue" title="Cette année" />
-				<StatCard legend="" value="0" accentColor="blue" title="Récurrents" />
-				<StatCard legend="" value="0" accentColor="blue" title="En attente" />
+				<StatCard legend="" value={stats.monthStat} accentColor="blue" title="Ce mois" />
+				<StatCard legend="" value={stats.yearStat} accentColor="blue" title="Cette année" />
+				<StatCard legend="" value={stats.recurringCount} accentColor="blue" title="Récurrents" />
+				<StatCard legend="" value={stats.unpaidCount} accentColor="blue" title="En attente" />
 			</StatCardWrapper>
 			<div class="p-2">
 				<SearchField name="searchbar" placeholder="Effectuer une recherche" />
 			</div>
 			<div class="p-5">
-				<Board columns={[]} cells={[]} name="Contrats">
-				</Board>
+				<Board columns={colsList} cells={incomesList} name="Contrats"></Board>
 			</div>
 		</div>
 	);
