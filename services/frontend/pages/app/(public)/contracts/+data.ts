@@ -17,7 +17,5 @@ export async function data(pageContext: PageContextServer) {
 	const properties = await propertyService.browseProperties();
 	const clients = await clientService.browse();
 
-	console.log(properties);
-
 	return { contracts, properties, clients };
 }
