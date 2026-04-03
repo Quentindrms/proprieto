@@ -127,7 +127,7 @@ model Incomes {
   id          String    @id @unique @default(uuid()) @map("id_income")
   name        String    @db.VarChar(75)
   amount      Int       @db.Integer()
-  isRecurring Boolean   @map("is_recurring") @db.Boolean()
+  isRecurring String?   @map("is_recurring") @db.VarChar(20)
   isPaid      Boolean   @db.Boolean()
   issueDate   DateTime  @db.Date()
   paidOn      DateTime? @db.Date()
