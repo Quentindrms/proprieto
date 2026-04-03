@@ -21,9 +21,9 @@ const issueDateSchema = z.coerce.date(
 	"La date d'émission doit être une date valide",
 );
 
-const paidOnSchema = z.coerce.date(
-	"La date de paiement doit être une date valide",
-);
+const paidOnSchema = z.coerce
+	.date("La date de paiement doit être une date valide")
+	.optional();
 
 const frequencySchema = z.string("").optional();
 

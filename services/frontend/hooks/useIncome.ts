@@ -15,7 +15,7 @@ export function UseIncome() {
 		amount: 0,
 		isPaid: false,
 		issueDate: new Date(),
-		paidOn: new Date(),
+		paidOn: undefined,
 		frequency: "",
 		incomeCategoryId: "",
 		contractId: "",
@@ -27,7 +27,7 @@ export function UseIncome() {
 		amount: 0,
 		isPaid: false,
 		issueDate: new Date(),
-		paidOn: new Date(),
+		paidOn: undefined,
 		frequency: "",
 		incomeCategoryId: "",
 		contractId: "",
@@ -77,11 +77,14 @@ export function UseIncome() {
 			String(income.amount),
 			income.isPaid ? "Payé" : "En attente de paiement",
 			new Date(income.issueDate).toLocaleDateString("fr-FR"),
+			income.paidOn
+				? new Date(income.paidOn).toLocaleDateString("fr-FR")
+				: " - ",
 		]);
 	}
 
 	function listCols() {
-		return ["Nom", "Montant", "Statut", "Date d'émission"];
+		return ["Nom", "Montant", "Statut", "Date d'émission", "Date de paiement"];
 	}
 
 	function getMonthIncomes(incomes: IncomeType[]) {
