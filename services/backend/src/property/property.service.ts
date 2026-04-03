@@ -20,7 +20,14 @@ export class PropertyService {
 	}
 
 	async browseProperties(userId: string) {
-		return await prisma.properties.findMany({});
+		return await prisma.properties.findMany({
+			where: {
+				userId,
+			},
+			include: {
+				propertyType: true,
+			},
+		});
 	}
 
 	async updateProperty(property: UpdatePropertyDto) {
