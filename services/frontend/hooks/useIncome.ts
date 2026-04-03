@@ -58,10 +58,8 @@ export function UseIncome() {
 	}
 
 	async function create() {
-		console.log(createIncome());
 		const validate = IncomeCreationSchema.safeParse(createIncome());
 		if (!validate.success) {
-			console.error(validate.error);
 			setFormError(validate);
 			return;
 		}

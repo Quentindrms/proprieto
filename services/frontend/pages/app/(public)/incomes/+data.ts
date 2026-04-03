@@ -15,7 +15,5 @@ export async function data(pageContext: PageContextServer) {
 	const income = await incomeCategoryService.browseCategories();
 	const contracts = await contractService.browse();
 
-	console.log(contracts);
-
 	return { income, contracts };
 }
