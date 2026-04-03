@@ -19,7 +19,7 @@ export function UseIncome() {
 		frequency: "",
 		propertyId: "",
 		incomeCategoryId: "",
-		clientId: "",
+		contractId: "",
 	});
 
 	const [updateIncome, setUpdateIncome] = createSignal<IncomeUpdateType>({
@@ -33,7 +33,7 @@ export function UseIncome() {
 		frequency: "",
 		propertyId: "",
 		incomeCategoryId: "",
-		clientId: "",
+		contractId: "",
 	});
 
 	const [formError, setFormError] =

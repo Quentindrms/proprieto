@@ -31,7 +31,7 @@ const propertyIdSchema = z.uuid("Identifiant propriété invalide");
 
 const incomeCategoryIdSchema = z.uuid("Identifiant catégorie invalide");
 
-const clientIdSchema = z.uuid("Identifiant client invalide");
+const contractIdSchema = z.uuid("Identifiant contrat invalide");
 
 export const IncomeCreationSchema = z.object({
 	name: nameSchema,
@@ -43,7 +43,7 @@ export const IncomeCreationSchema = z.object({
 	frequency: frequencySchema,
 	propertyId: propertyIdSchema,
 	incomeCategoryId: incomeCategoryIdSchema,
-	clientId: clientIdSchema,
+	contractId: contractIdSchema,
 });
 
 export const IncomeUpdateSchema = z.object({
@@ -57,7 +57,7 @@ export const IncomeUpdateSchema = z.object({
 	frequency: frequencySchema,
 	propertyId: propertyIdSchema,
 	incomeCategoryId: incomeCategoryIdSchema,
-	clientId: clientIdSchema,
+	contractId: contractIdSchema,
 });
 
 export type IncomeCreationType = z.infer<typeof IncomeCreationSchema>;
