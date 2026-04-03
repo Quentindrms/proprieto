@@ -1,3 +1,4 @@
+import { ContractService } from "@services/contract.service";
 import { IncomeCategoryService } from "@services/incomeCategory.service";
 import { PropertyService } from "@services/property.service";
 import { getCookiesFromPageContext } from "@utils/cookie";
@@ -10,8 +11,11 @@ export async function data(pageContext: PageContextServer) {
 
 	const incomeCategoryService = new IncomeCategoryService(cookies.auth);
 	const propertyService = new PropertyService(cookies.auth);
+	const contractService = new ContractService(cookies.auth);
 
 	const income = await incomeCategoryService.browseCategories();
 	const properties = await propertyService.browseProperties();
-	return { income, properties };
+	const contracts = await contractService.browse();
+
+	return { income, properties, contracts };
 }
