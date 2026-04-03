@@ -11,7 +11,7 @@ export default function () {
     const data = useData<Data>();
 
     const income = UseIncome();
-    const incomeCategory = data.income.map((income) => ({
+    const incomeCategory = data.incomeCategories.map((income) => ({
         label: income.label,
         value: income.id,
         disabled: false,
