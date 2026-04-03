@@ -1,6 +1,7 @@
 import { Button } from "@components/button";
 import { CheckBox, Form, Select, TextField } from "@components/form";
 import { UseIncome } from "@hooks/useIncome";
+import { recurrence } from "@utils/recurrence";
 import { useData } from "vike-solid/useData";
 import type { Data } from "../+data";
 
@@ -8,9 +9,16 @@ export default function () {
     const data = useData<Data>();
 
     const income = UseIncome();
-    const incomeCategory = data.income.map(
-        (income) => ({ label: income.label, value: income.id, disabled: false }),
-    );
+    const incomeCategory = data.income.map((income) => ({
+        label: income.label,
+        value: income.id,
+        disabled: false,
+    }));
+    const propertyList = data.properties.map((property) => ({
+        label: property.name,
+        value: property.id,
+        disabled: false,
+    }));
 
     return (
         <Form callback={income.create}>
@@ -33,9 +41,9 @@ export default function () {
             />
 
             <Select
-                label="Réccurence"
-                labelOptions="Sélectionner une réccurence"
-                options={[]}
+                label="Récurrence"
+                labelOptions="Sélectionner une récurrence"
+                options={recurrence}
                 onInput={income.handleCreateInput("isRecurring")}
             />
 
@@ -44,6 +52,13 @@ export default function () {
                 labelOptions="Sélectionner une catégorie"
                 options={incomeCategory}
                 onInput={income.handleCreateInput("incomeCategoryId")}
+            />
+
+            <Select
+                label="Propriété"
+                labelOptions="Sélectionner une propriété"
+                options={propertyList}
+                onInput={income.handleCreateInput("propertyId")}
             />
 
             <div class="flex justify-center p-4">
