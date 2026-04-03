@@ -14,8 +14,6 @@ export class IncomeService {
 				issueDate: new Date(income.issueDate),
 				paidOn: income.paidOn ? new Date(income.paidOn) : undefined,
 				frequency: income.frequency,
-
-				propertyId: income.propertyId,
 				categoryId: income.incomeCategoryId,
 				contractId: income.contractId,
 			},
