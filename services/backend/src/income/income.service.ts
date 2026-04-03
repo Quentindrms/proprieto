@@ -9,7 +9,6 @@ export class IncomeService {
 			data: {
 				name: income.name,
 				amount: Number(income.amount),
-				isRecurring: income.isReccuring,
 				isPaid: income.isPaid,
 				issueDate: new Date(income.issueDate),
 				paidOn: income.paidOn ? new Date(income.paidOn) : undefined,
