@@ -1,8 +1,10 @@
 import { Button } from "@components/button";
 import { CheckBox, Form, Select, TextField } from "@components/form";
+import Text from "@components/text";
 import { UseIncome } from "@hooks/useIncome";
 import { recurrence } from "@utils/recurrence";
 import { useData } from "vike-solid/useData";
+import { z } from "zod";
 import type { Data } from "../+data";
 
 export default function () {
@@ -24,21 +26,60 @@ export default function () {
         <Form callback={income.create}>
             <TextField label="Nom" onInput={income.handleCreateInput("name")} />
 
+            {income.formError() && (
+                <Text class="text-red-500">
+                    {
+                        z.treeifyError(income.formError()!.error).properties?.name
+                            ?.errors[0]
+                    }
+                </Text>
+            )}
+
             <TextField label="Montant" onInput={income.handleCreateInput("amount")} />
-
+            {income.formError() && (
+                <Text class="text-red-500">
+                    {
+                        z.treeifyError(income.formError()!.error).properties?.amount
+                            ?.errors[0]
+                    }
+                </Text>
+            )}
             <CheckBox label="Payé" onInput={income.handleCreateInput("isPaid")} />
-
+            {income.formError() && (
+                <Text class="text-red-500">
+                    {
+                        z.treeifyError(income.formError()!.error).properties?.isPaid
+                            ?.errors[0]
+                    }
+                </Text>
+            )}
             <TextField
                 label="Date d'émission"
                 type="date"
                 onInput={income.handleCreateInput("issueDate")}
             />
+            {income.formError() && (
+                <Text class="text-red-500">
+                    {
+                        z.treeifyError(income.formError()!.error).properties?.issueDate
+                            ?.errors[0]
+                    }
+                </Text>
+            )}
 
             <TextField
                 label="Date de paiement"
                 type="date"
                 onInput={income.handleCreateInput("isPaid")}
             />
+            {income.formError() && (
+                <Text class="text-red-500">
+                    {
+                        z.treeifyError(income.formError()!.error).properties?.paidOn
+                            ?.errors[0]
+                    }
+                </Text>
+            )}
 
             <Select
                 label="Récurrence"
@@ -46,6 +87,14 @@ export default function () {
                 options={recurrence}
                 onInput={income.handleCreateInput("isRecurring")}
             />
+            {income.formError() && (
+                <Text class="text-red-500">
+                    {
+                        z.treeifyError(income.formError()!.error).properties?.isRecurring
+                            ?.errors[0]
+                    }
+                </Text>
+            )}
 
             <Select
                 label="Catégorie"
@@ -53,6 +102,14 @@ export default function () {
                 options={incomeCategory}
                 onInput={income.handleCreateInput("incomeCategoryId")}
             />
+            {income.formError() && (
+                <Text class="text-red-500">
+                    {
+                        z.treeifyError(income.formError()!.error).properties?.incomeCategoryId
+                            ?.errors[0]
+                    }
+                </Text>
+            )}
 
             <Select
                 label="Propriété"
@@ -60,7 +117,14 @@ export default function () {
                 options={propertyList}
                 onInput={income.handleCreateInput("propertyId")}
             />
-
+            {income.formError() && (
+                <Text class="text-red-500">
+                    {
+                        z.treeifyError(income.formError()!.error).properties?.propertyId
+                            ?.errors[0]
+                    }
+                </Text>
+            )}
             <div class="flex justify-center p-4">
                 <Button type="submit">Ajouter une dépense</Button>
             </div>

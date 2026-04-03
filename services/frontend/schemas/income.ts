@@ -9,8 +9,8 @@ const nameSchema = z
 
 const amountSchema = z.coerce.number("Le montant doit être un nombre");
 
-const isRecurringSchema = z.boolean(
-	"La récurrence doit être de type true ou false",
+const isRecurringSchema = z.string(
+	"Une réccurence valide doit être sélectionnée",
 );
 
 const isPaidSchema = z.boolean(
@@ -31,11 +31,9 @@ const propertyIdSchema = z.uuid("Identifiant propriété invalide");
 
 const incomeCategoryIdSchema = z.uuid("Identifiant catégorie invalide");
 
-const contractIdSchema = z.uuid("Identifiant contrat invalide");
-
 const clientIdSchema = z.uuid("Identifiant client invalide");
 
-const IncomeCreationSchema = z.object({
+export const IncomeCreationSchema = z.object({
 	name: nameSchema,
 	amount: amountSchema,
 	isRecurring: isRecurringSchema,
@@ -45,11 +43,10 @@ const IncomeCreationSchema = z.object({
 	frequency: frequencySchema,
 	propertyId: propertyIdSchema,
 	incomeCategoryId: incomeCategoryIdSchema,
-	contractId: contractIdSchema,
 	clientId: clientIdSchema,
 });
 
-const IncomeUpdateSchema = z.object({
+export const IncomeUpdateSchema = z.object({
 	id: idSchema,
 	name: nameSchema,
 	amount: amountSchema,
@@ -60,7 +57,6 @@ const IncomeUpdateSchema = z.object({
 	frequency: frequencySchema,
 	propertyId: propertyIdSchema,
 	incomeCategoryId: incomeCategoryIdSchema,
-	contractId: contractIdSchema,
 	clientId: clientIdSchema,
 });
 
