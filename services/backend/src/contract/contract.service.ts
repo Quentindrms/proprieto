@@ -24,6 +24,7 @@ export class ContractService {
 				},
 			},
 			select: {
+				id: true,
 				startDate: true,
 				endDate: true,
 				lease: true,
