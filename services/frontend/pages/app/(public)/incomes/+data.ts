@@ -10,12 +10,12 @@ export async function data(pageContext: PageContextServer) {
 	const cookies = getCookiesFromPageContext(pageContext);
 
 	const incomeCategoryService = new IncomeCategoryService(cookies.auth);
-	const propertyService = new PropertyService(cookies.auth);
 	const contractService = new ContractService(cookies.auth);
 
 	const income = await incomeCategoryService.browseCategories();
-	const properties = await propertyService.browseProperties();
 	const contracts = await contractService.browse();
 
-	return { income, properties, contracts };
+	console.log(contracts);
+
+	return { income, contracts };
 }

@@ -16,14 +16,9 @@ export default function () {
         value: income.id,
         disabled: false,
     }));
-    const propertyList = data.properties.map((property) => ({
-        label: property.name,
-        value: property.id,
-        disabled: false,
-    }));
     const contractsList = data.contracts.map((contract) => ({
         label: contract.property.name,
-        value: contract.propertyId,
+        value: contract.id,
         disabled: false,
     }))
 
@@ -49,6 +44,21 @@ export default function () {
                     }
                 </Text>
             )}
+
+            <Select
+                label="Contrat associé"
+                labelOptions="Sélectionner un contrat"
+                options={contractsList}
+                onInput={income.handleCreateInput("contractId")}
+            />
+            {income.formError() && (
+                <Text class="text-red-500">
+                    {
+                        z.treeifyError(income.formError()!.error).properties?.contractId
+                            ?.errors[0]
+                    }
+                </Text>
+            )}
             <CheckBox label="Payé" onInput={income.handleCreateInput("isPaid")} />
             {income.formError() && (
                 <Text class="text-red-500">
@@ -58,6 +68,7 @@ export default function () {
                     }
                 </Text>
             )}
+
             <TextField
                 label="Date d'émission"
                 type="date"

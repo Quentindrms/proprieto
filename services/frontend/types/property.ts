@@ -8,6 +8,7 @@ export interface Property {
 	isDeleted: boolean;
 	isActive: boolean;
 	propertyType: PropertyType;
+	userId: string;
 }
 
 export interface PropertyType {
