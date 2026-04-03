@@ -1,3 +1,5 @@
+import type { ProviderType } from "./provider";
+
 type OutcomeFrequency = "none" | "week" | "month" | "year";
 
 export interface Outcome {
@@ -13,9 +15,5 @@ export interface Outcome {
 		id: string;
 		name: string;
 	};
-	provider: {
-		id: boolean;
-		firstName: string;
-		name: string;
-	};
+	provider: ProviderType;
 }

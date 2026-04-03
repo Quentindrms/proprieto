@@ -20,7 +20,7 @@ export default function Page() {
 	]);
 
 	return (
-		<div class="w-dvw h-dvh">
+		<div class="w-full h-dvh">
 			<PageNamer
 				pageName="Mes prestataires"
 				buttonText="Ajouter un prestataire"

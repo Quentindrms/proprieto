@@ -5,4 +5,9 @@ export type Client = {
 	email: string;
 	address: string;
 	phone: string;
+	clients: {
+		id: string;
+		status: string;
+		directoriesId: string;
+	}[];
 };

@@ -5,44 +5,34 @@ import type { CreateProviderDto } from "types/DtoType";
 @Injectable()
 export class ProviderService {
 	async create(provider: CreateProviderDto, userId: string) {
-		return await prisma.users.update({
-			where: {
-				id: userId,
-			},
+		return await prisma.directories.create({
 			data: {
-				directory: {
+				address: provider.address,
+				email: provider.email,
+				firstName: provider.firstName,
+				name: provider.name,
+				phone: provider.phone,
+				type: "provider",
+				userId,
+				providers: {
 					create: {
-						name: provider.name,
-						firstName: provider.firstName,
-						address: provider.address,
-						email: provider.email,
-						phone: provider.phone,
-						providers: {
-							create: {
-								status: "active",
-							},
-						},
+						status: "active",
 					},
 				},
 			},
 		});
 	}
 
-	async browse(userId) {
-		return await prisma.users.findMany({
+	async browse(userId: string) {
+		return await prisma.providers.findMany({
 			where: {
-				id: userId,
-			},
-			select: {
-				directory: {
-					select: {
-						providers: {
-							where: {
-								status: "active",
-							},
-						},
-					},
+				status: "active",
+				directories: {
+					userId,
 				},
+			},
+			include: {
+				directories: true,
 			},
 		});
 	}

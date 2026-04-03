@@ -41,10 +41,14 @@ model Directories {
   email     String @db.VarChar(250)
   phone     String @db.VarChar(20)
   address   String @db.VarChar(250)
+  type      String @db.VarChar(50)
+
+  userId String
+
+  user Users @relation(fields: [userId], references: [id])
 
   clients   Clients[]
   providers Providers[]
-  users     Users[]
 
   @@map("directories")
 }
@@ -55,12 +59,8 @@ model Users {
   status   String @db.VarChar(50)
   password String @db.VarChar(150)
 
-  directoriesId String @unique
-
   properties Properties[]
-  contracts  Contracts[]
-
-  directory Directories @relation(fields: [directoriesId], references: [id])
+  directory  Directories[]
 
   @@map("users")
 }
@@ -81,6 +81,7 @@ model Properties {
   user         Users         @relation(fields: [userId], references: [id])
   outcomes     Outcomes[]
   incomes      Incomes[]
+  contracts    Contracts[]
 
   @@map("properties")
 }
@@ -113,12 +114,12 @@ model Contracts {
   endDate   DateTime @map("end_date")
   lease     Int      @db.Integer()
 
-  clientId String
-  userId   String
+  clientId   String
+  propertyId String
 
-  incomes Incomes[]
-  client  Clients   @relation(fields: [clientId], references: [id])
-  user    Users     @relation(fields: [userId], references: [id])
+  incomes  Incomes[]
+  client   Clients    @relation(fields: [clientId], references: [id])
+  property Properties @relation(fields: [propertyId], references: [id])
 
   @@map("contracts")
 }
@@ -133,20 +134,20 @@ model Incomes {
   paidOn      DateTime? @db.Date()
   frequency   String    @db.VarChar(50)
 
+  propertyId String
   contractId String
   categoryId String
-  propertyId String
 
+  property Properties @relation(fields: [propertyId], references: [id])
   contract Contracts  @relation(fields: [contractId], references: [id])
   category Categories @relation(fields: [categoryId], references: [id])
-  property Properties @relation(fields: [propertyId], references: [id])
 
   @@map("incomes")
 }
 
 model Outcomes {
   id          String    @id @unique @default(uuid()) @map("id_outcome")
-  name        String    @db.VarChar(75)
+  name        String    @db.VarChar(150)
   amount      Int       @db.Integer()
   isRecurring Boolean   @map("is_recurring") @db.Boolean()
   isPaid      Boolean   @db.Boolean()

@@ -11,7 +11,7 @@ export class ContractService {
 				endDate: new Date(contract.endDate),
 				lease: Number(contract.lease),
 				clientId: contract.clientId,
-				userId,
+				propertyId: contract.propertyId,
 			},
 		});
 	}
@@ -19,7 +19,15 @@ export class ContractService {
 	async browse(userId: string) {
 		return await prisma.contracts.findMany({
 			where: {
-				userId,
+				property: {
+					userId: userId,
+				},
+			},
+			select: {
+				startDate: true,
+				endDate: true,
+				lease: true,
+				property: true,
 			},
 		});
 	}

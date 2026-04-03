@@ -12,6 +12,8 @@ export class ClientService {
 				email: client.email,
 				address: client.address,
 				phone: client.phone,
+				type: "client",
+				userId,
 				clients: {
 					create: {
 						status: "active",
@@ -24,11 +26,11 @@ export class ClientService {
 	async browseClient(userId: string) {
 		return await prisma.directories.findMany({
 			where: {
-				users: {
-					some: {
-						id: userId,
-					},
-				},
+				userId,
+				type: "client",
+			},
+			include: {
+				clients: true,
 			},
 		});
 	}
