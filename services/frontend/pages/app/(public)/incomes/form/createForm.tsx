@@ -3,6 +3,7 @@ import { CheckBox, Form, Select, TextField } from "@components/form";
 import Text from "@components/text";
 import { UseIncome } from "@hooks/useIncome";
 import { recurrence } from "@utils/recurrence";
+import { createSignal, Show } from "solid-js";
 import { useData } from "vike-solid/useData";
 import { z } from "zod";
 import type { Data } from "../+data";
@@ -20,7 +21,9 @@ export default function () {
         label: contract.property.name,
         value: contract.id,
         disabled: false,
-    }))
+    }));
+
+    const [isPaid, setIsPaid] = createSignal<boolean>(false);
 
     return (
         <Form callback={income.create}>
@@ -59,15 +62,7 @@ export default function () {
                     }
                 </Text>
             )}
-            <CheckBox label="Payé" onInput={income.handleCreateInput("isPaid")} />
-            {income.formError() && (
-                <Text class="text-red-500">
-                    {
-                        z.treeifyError(income.formError()!.error).properties?.isPaid
-                            ?.errors[0]
-                    }
-                </Text>
-            )}
+
 
             <TextField
                 label="Date d'émission"
@@ -83,19 +78,37 @@ export default function () {
                 </Text>
             )}
 
-            <TextField
-                label="Date de paiement"
-                type="date"
-                onInput={income.handleCreateInput("isPaid")}
+            <CheckBox
+                label="Payé"
+                onInput={() => {
+                    income.handleCreateInput("isPaid");
+                    setIsPaid(!isPaid())
+                }}
             />
             {income.formError() && (
                 <Text class="text-red-500">
                     {
-                        z.treeifyError(income.formError()!.error).properties?.paidOn
+                        z.treeifyError(income.formError()!.error).properties?.isPaid
                             ?.errors[0]
                     }
                 </Text>
             )}
+
+            <Show when={isPaid()}>
+                <TextField
+                    label="Date de paiement"
+                    type="date"
+                    onInput={income.handleCreateInput("isPaid")}
+                />
+                {income.formError() && (
+                    <Text class="text-red-500">
+                        {
+                            z.treeifyError(income.formError()!.error).properties?.paidOn
+                                ?.errors[0]
+                        }
+                    </Text>
+                )}
+            </Show>
 
             <Select
                 label="Récurrence"
@@ -121,8 +134,8 @@ export default function () {
             {income.formError() && (
                 <Text class="text-red-500">
                     {
-                        z.treeifyError(income.formError()!.error).properties?.incomeCategoryId
-                            ?.errors[0]
+                        z.treeifyError(income.formError()!.error).properties
+                            ?.incomeCategoryId?.errors[0]
                     }
                 </Text>
             )}
