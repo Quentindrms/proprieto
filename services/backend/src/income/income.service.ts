@@ -18,4 +18,16 @@ export class IncomeService {
 			},
 		});
 	}
+
+	async browse(userId: string) {
+		return await prisma.incomes.findMany({
+			where: {
+				contract: {
+					property: {
+						userId,
+					},
+				},
+			},
+		});
+	}
 }
