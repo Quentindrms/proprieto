@@ -27,8 +27,6 @@ const paidOnSchema = z.coerce.date(
 
 const frequencySchema = z.string("");
 
-const propertyIdSchema = z.uuid("Identifiant propriété invalide");
-
 const incomeCategoryIdSchema = z.uuid("Identifiant catégorie invalide");
 
 const contractIdSchema = z.uuid("Identifiant contrat invalide");
@@ -41,7 +39,6 @@ export const IncomeCreationSchema = z.object({
 	issueDate: issueDateSchema,
 	paidOn: paidOnSchema,
 	frequency: frequencySchema,
-	propertyId: propertyIdSchema,
 	incomeCategoryId: incomeCategoryIdSchema,
 	contractId: contractIdSchema,
 });
@@ -55,7 +52,6 @@ export const IncomeUpdateSchema = z.object({
 	issueDate: issueDateSchema,
 	paidOn: paidOnSchema,
 	frequency: frequencySchema,
-	propertyId: propertyIdSchema,
 	incomeCategoryId: incomeCategoryIdSchema,
 	contractId: contractIdSchema,
 });

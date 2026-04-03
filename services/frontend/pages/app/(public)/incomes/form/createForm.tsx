@@ -21,6 +21,11 @@ export default function () {
         value: property.id,
         disabled: false,
     }));
+    const contractsList = data.contracts.map((contract) => ({
+        label: contract.property.name,
+        value: contract.propertyId,
+        disabled: false,
+    }))
 
     return (
         <Form callback={income.create}>
@@ -106,21 +111,6 @@ export default function () {
                 <Text class="text-red-500">
                     {
                         z.treeifyError(income.formError()!.error).properties?.incomeCategoryId
-                            ?.errors[0]
-                    }
-                </Text>
-            )}
-
-            <Select
-                label="Propriété"
-                labelOptions="Sélectionner une propriété"
-                options={propertyList}
-                onInput={income.handleCreateInput("propertyId")}
-            />
-            {income.formError() && (
-                <Text class="text-red-500">
-                    {
-                        z.treeifyError(income.formError()!.error).properties?.propertyId
                             ?.errors[0]
                     }
                 </Text>

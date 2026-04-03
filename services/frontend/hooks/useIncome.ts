@@ -17,7 +17,6 @@ export function UseIncome() {
 		issueDate: new Date(),
 		paidOn: new Date(),
 		frequency: "",
-		propertyId: "",
 		incomeCategoryId: "",
 		contractId: "",
 	});
@@ -31,7 +30,6 @@ export function UseIncome() {
 		issueDate: new Date(),
 		paidOn: new Date(),
 		frequency: "",
-		propertyId: "",
 		incomeCategoryId: "",
 		contractId: "",
 	});
