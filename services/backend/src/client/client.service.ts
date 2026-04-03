@@ -29,6 +29,9 @@ export class ClientService {
 				userId,
 				type: "client",
 			},
+			include: {
+				clients: true,
+			},
 		});
 	}
 }
