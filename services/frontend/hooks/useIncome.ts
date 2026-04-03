@@ -105,9 +105,31 @@ export function UseIncome() {
 			.toString();
 	}
 
+	function getYearIncomes(incomes: IncomeType[]) {
+		const now = new Date();
+		const currentYear = new Date(now.getFullYear(), 0, 1);
+		const nextYear = new Date(now.getFullYear() + 1, 0, 1);
+
+		return incomes
+			.filter((income) => {
+				const incomeDate = new Date(income.paidOn).getTime();
+				return (
+					incomeDate >= currentYear.getTime() && incomeDate < nextYear.getTime()
+				);
+			})
+			.reduce((sum, income) => sum + income.amount, 0)
+			.toString();
+	}
+
+	function getUnpaidCount(incomes: IncomeType[]) {
+		return incomes.filter((income) => income.paidOn).length.toString();
+	}
+
 	function getStats(incomes: IncomeType[]) {
 		return {
 			monthStat: getMonthIncomes(incomes),
+			yearStat: getYearIncomes(incomes),
+			unpaidCount: getUnpaidCount(incomes),
 		};
 	}
 
