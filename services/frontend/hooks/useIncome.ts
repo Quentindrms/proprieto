@@ -12,7 +12,6 @@ export function UseIncome() {
 	const [createIncome, setCreateIncome] = createSignal<IncomeCreationType>({
 		name: "",
 		amount: 0,
-		isRecurring: "",
 		isPaid: false,
 		issueDate: new Date(),
 		paidOn: new Date(),
@@ -25,7 +24,6 @@ export function UseIncome() {
 		id: "",
 		name: "",
 		amount: 0,
-		isRecurring: "",
 		isPaid: false,
 		issueDate: new Date(),
 		paidOn: new Date(),

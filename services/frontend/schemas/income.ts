@@ -25,7 +25,7 @@ const paidOnSchema = z.coerce.date(
 	"La date de paiement doit être une date valide",
 );
 
-const frequencySchema = z.string("");
+const frequencySchema = z.string("").optional();
 
 const incomeCategoryIdSchema = z.uuid("Identifiant catégorie invalide");
 
@@ -34,7 +34,6 @@ const contractIdSchema = z.uuid("Identifiant contrat invalide");
 export const IncomeCreationSchema = z.object({
 	name: nameSchema,
 	amount: amountSchema,
-	isRecurring: isRecurringSchema,
 	isPaid: isPaidSchema,
 	issueDate: issueDateSchema,
 	paidOn: paidOnSchema,
@@ -47,7 +46,6 @@ export const IncomeUpdateSchema = z.object({
 	id: idSchema,
 	name: nameSchema,
 	amount: amountSchema,
-	isRecurring: isRecurringSchema,
 	isPaid: isPaidSchema,
 	issueDate: issueDateSchema,
 	paidOn: paidOnSchema,

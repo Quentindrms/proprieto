@@ -101,12 +101,12 @@ export default function () {
                 label="Récurrence"
                 labelOptions="Sélectionner une récurrence"
                 options={recurrence}
-                onInput={income.handleCreateInput("isRecurring")}
+                onInput={income.handleCreateInput("frequency")}
             />
             {income.formError() && (
                 <Text class="text-red-500">
                     {
-                        z.treeifyError(income.formError()!.error).properties?.isRecurring
+                        z.treeifyError(income.formError()!.error).properties?.frequency
                             ?.errors[0]
                     }
                 </Text>
