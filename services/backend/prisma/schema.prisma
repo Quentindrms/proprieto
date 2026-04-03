@@ -60,7 +60,6 @@ model Users {
   password String @db.VarChar(150)
 
   properties Properties[]
-  contracts  Contracts[]
   directory  Directories[]
 
   @@map("users")
@@ -82,6 +81,7 @@ model Properties {
   user         Users         @relation(fields: [userId], references: [id])
   outcomes     Outcomes[]
   incomes      Incomes[]
+  contracts    Contracts[]
 
   @@map("properties")
 }
@@ -114,12 +114,12 @@ model Contracts {
   endDate   DateTime @map("end_date")
   lease     Int      @db.Integer()
 
-  clientId String
-  userId   String
+  clientId   String
+  propertyId String
 
-  incomes Incomes[]
-  client  Clients   @relation(fields: [clientId], references: [id])
-  user    Users     @relation(fields: [userId], references: [id])
+  incomes  Incomes[]
+  client   Clients    @relation(fields: [clientId], references: [id])
+  property Properties @relation(fields: [propertyId], references: [id])
 
   @@map("contracts")
 }
