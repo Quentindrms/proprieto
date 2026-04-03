@@ -20,7 +20,5 @@ export async function data(pageContext: PageContextServer) {
 	const providers = await providerService.browse();
 	const outcomes = await outcomeService.browseOutcome();
 
-	console.log(providers);
-
 	return { properties, categories, providers, outcomes };
 }

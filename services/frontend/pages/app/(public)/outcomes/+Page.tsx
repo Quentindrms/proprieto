@@ -27,7 +27,7 @@ export default function Page() {
 			? new Date(outcome.paidOn).toLocaleDateString("fr-FR")
 			: "En attente de paiement",
 		outcome.frequency,
-		`${outcome.provider.name} ${outcome.provider.firstName}`,
+		`${outcome.provider.directories.name} ${outcome.provider.directories.firstName}`,
 		outcome.property.name,
 	]);
 
