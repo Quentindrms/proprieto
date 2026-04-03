@@ -36,7 +36,7 @@ export default function Page() {
 			<StatCardWrapper>
 				<StatCard legend="" value={stats.monthStat} accentColor="blue" title="Ce mois" />
 				<StatCard legend="" value={stats.yearStat} accentColor="blue" title="Cette année" />
-				<StatCard legend="" value="0" accentColor="blue" title="Récurrents" />
+				<StatCard legend="" value={stats.recurringCount} accentColor="blue" title="Récurrents" />
 				<StatCard legend="" value={stats.unpaidCount} accentColor="blue" title="En attente" />
 			</StatCardWrapper>
 			<div class="p-2">

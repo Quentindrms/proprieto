@@ -125,7 +125,11 @@ export function UseIncome() {
 	}
 
 	function getUnpaidCount(incomes: IncomeType[]) {
-		return incomes.filter((income) => income.paidOn).length.toString();
+		return incomes.filter((income) => !income.paidOn).length.toString();
+	}
+
+	function getRecurringCount(incomes: IncomeType[]) {
+		return incomes.filter((income) => income.frequency).length.toString();
 	}
 
 	function getStats(incomes: IncomeType[]) {
@@ -133,6 +137,7 @@ export function UseIncome() {
 			monthStat: getMonthIncomes(incomes),
 			yearStat: getYearIncomes(incomes),
 			unpaidCount: getUnpaidCount(incomes),
+			recurringCount: getRecurringCount(incomes),
 		};
 	}
 
