@@ -24,7 +24,7 @@ export default function CreateOutcomeForm() {
 
 	const providersList = data.providers.map((provider) => ({
 		value: provider.id,
-		label: `${provider.firstName} ${provider.name}`,
+		label: `${provider.directories.firstName} ${provider.directories.name}`,
 		disabled: false,
 	}));
 
