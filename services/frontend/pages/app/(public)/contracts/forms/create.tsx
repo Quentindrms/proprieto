@@ -15,7 +15,7 @@ export default function CreateForm() {
 	}));
 
 	const clientsList = data.clients.map((client) => ({
-		value: client.id,
+		value: client.clients[0].id,
 		label: `${client.firstName} ${client.name}`,
 		disabled: false,
 	}));
