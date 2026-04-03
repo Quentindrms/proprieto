@@ -23,7 +23,12 @@ export class ContractService {
 					userId: userId,
 				},
 			},
-			include: {},
+			select: {
+				startDate: true,
+				endDate: true,
+				lease: true,
+				property: true,
+			},
 		});
 	}
 }
