@@ -10,6 +10,5 @@ export async function data(pageContext: PageContextServer) {
 	const propertyService = new PropertyService(cookies.auth);
 	const propertyTypes = await propertyService.browsePropertyType();
 	const properties = await propertyService.browseProperties();
-	console.log(properties);
 	return { properties, propertyTypes };
 }
