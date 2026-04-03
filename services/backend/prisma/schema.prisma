@@ -80,7 +80,6 @@ model Properties {
   propertyType PropertyTypes @relation(fields: [typeId], references: [id])
   user         Users         @relation(fields: [userId], references: [id])
   outcomes     Outcomes[]
-  incomes      Incomes[]
   contracts    Contracts[]
 
   @@map("properties")
@@ -134,11 +133,9 @@ model Incomes {
   paidOn      DateTime? @db.Date()
   frequency   String    @db.VarChar(50)
 
-  propertyId String
   contractId String
   categoryId String
 
-  property Properties @relation(fields: [propertyId], references: [id])
   contract Contracts  @relation(fields: [contractId], references: [id])
   category Categories @relation(fields: [categoryId], references: [id])
 
