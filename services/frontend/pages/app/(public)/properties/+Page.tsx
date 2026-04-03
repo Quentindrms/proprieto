@@ -97,7 +97,7 @@ export default function Page() {
 										: new Date(),
 									sellPrice: p.sellPrice ? Number(p.sellPrice) : undefined,
 									sellDate: p.sellDate ? new Date(p.sellDate) : undefined,
-									type: '',
+									type: p.propertyType.name,
 								});
 								updateModal.open();
 							}}
