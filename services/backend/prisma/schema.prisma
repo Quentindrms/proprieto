@@ -124,14 +124,13 @@ model Contracts {
 }
 
 model Incomes {
-  id          String    @id @unique @default(uuid()) @map("id_income")
-  name        String    @db.VarChar(75)
-  amount      Int       @db.Integer()
-  isRecurring String?   @map("is_recurring") @db.VarChar(20)
-  isPaid      Boolean   @db.Boolean()
-  issueDate   DateTime  @db.Date()
-  paidOn      DateTime? @db.Date()
-  frequency   String    @db.VarChar(50)
+  id        String    @id @unique @default(uuid()) @map("id_income")
+  name      String    @db.VarChar(75)
+  amount    Int       @db.Integer()
+  isPaid    Boolean   @db.Boolean()
+  issueDate DateTime  @db.Date()
+  paidOn    DateTime? @db.Date()
+  frequency String?   @db.VarChar(50)
 
   contractId String
   categoryId String
