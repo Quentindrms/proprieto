@@ -18,7 +18,7 @@ export default function PropertyCard(props: PropertyCardProps) {
 			>
 				<div class="flex flex-col gap-1 border-b border-background-border">
 					<Text components="p">{props.property.name}</Text>
-					<Badge color="blue">{props.property.propertyType.name}</Badge>
+					<Badge color="blue">{props.property.propertyType?.name}</Badge>
 				</div>
 				<Badge color={props.property.isActive ? "green" : "red"}>
 					{props.property.isActive ? "Actif" : "Inactif"}
