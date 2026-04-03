@@ -10,13 +10,14 @@ import type { Data } from "./+data";
 import CreateModal from "./modal/createModal";
 
 export default function Page() {
+
 	const createModal = useModal(350);
 	const data = useData<Data>();
 	const income = UseIncome();
 
 	const incomesList = income.listIncomes(data.incomeList);
 	const colsList = income.listCols();
-	console.log(incomesList);
+	const stats = income.getStats(data.incomeList);
 
 	return (
 		<div class="flex flex-col w-dvw h-dvh">
@@ -33,7 +34,7 @@ export default function Page() {
 			/>
 
 			<StatCardWrapper>
-				<StatCard legend="" value="0" accentColor="blue" title="Ce mois" />
+				<StatCard legend="" value={stats.monthStat} accentColor="blue" title="Ce mois" />
 				<StatCard legend="" value="0" accentColor="blue" title="Cette année" />
 				<StatCard legend="" value="0" accentColor="blue" title="Récurrents" />
 				<StatCard legend="" value="0" accentColor="blue" title="En attente" />

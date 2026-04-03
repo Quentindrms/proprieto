@@ -84,6 +84,33 @@ export function UseIncome() {
 		return ["Nom", "Montant", "Statut", "Date d'émission"];
 	}
 
+	function getMonthIncomes(incomes: IncomeType[]) {
+		const currentMonth = new Date();
+		const nextMonth = new Date(currentMonth);
+		currentMonth.setDate(1);
+		currentMonth.setHours(0, 0, 0, 0);
+		nextMonth.setMonth(currentMonth.getMonth() + 1);
+		nextMonth.setDate(1);
+		nextMonth.setHours(0, 0, 0, 0);
+
+		return incomes
+			.filter((income) => {
+				const incomeDate = new Date(income.paidOn).getTime();
+				return (
+					incomeDate >= currentMonth.getTime() &&
+					incomeDate < nextMonth.getTime()
+				);
+			})
+			.reduce((sum, income) => sum + income.amount, 0)
+			.toString();
+	}
+
+	function getStats(incomes: IncomeType[]) {
+		return {
+			monthStat: getMonthIncomes(incomes),
+		};
+	}
+
 	return {
 		handleCreateInput,
 		handleUpdateInput,
@@ -91,5 +118,6 @@ export function UseIncome() {
 		formError,
 		listIncomes,
 		listCols,
+		getStats,
 	};
 }
