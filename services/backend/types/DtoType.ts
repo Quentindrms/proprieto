@@ -65,7 +65,7 @@ export interface CreateContractDto {
 export interface CreateIncomeDto {
 	name: string;
 	amount: number;
-	isReccuring: boolean;
+	isReccuring: string;
 	isPaid: boolean;
 	issueDate: Date;
 	paidOn: Date;
