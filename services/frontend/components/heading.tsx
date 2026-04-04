@@ -13,13 +13,13 @@ interface HeadingProps extends JSX.HTMLAttributes<HTMLHeadingElement> {
 export default function Heading(props: HeadingProps) {
 
     const sizeClasses: Record<TextSize, string> = {
-        "extra-small": "text-extra-small",
-        small: "text-small",
-        base: "text-base",
-        medium: "text-medium",
-        large: "text-large",
-        "extra-large": "text-extra-large",
-        big: "text-big",
+        "extra-small": "text-2xs",
+        small: "text-xs",
+        base: "text-md",
+        medium: "text-lg",
+        large: "text-xl",
+        "extra-large": "text-2xl",
+        big: "text-3xl",
     }
 
     const colorCLasses: Record<HeadingColor, string> = {
@@ -30,7 +30,7 @@ export default function Heading(props: HeadingProps) {
         white: "text-slate-500",
     }
 
-    const globalClasses = "font-extrabold"
+    const globalClasses = "font-base-extrabold"
 
     return (
         <Dynamic component={props.components} class={clsx([globalClasses, sizeClasses[props.size], props.color ? colorCLasses[props.color] : colorCLasses.black])}>
