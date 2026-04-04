@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { stat } from "fs";
+import { createMemo } from "solid-js";
 import Heading from "./heading";
 import Text from "./text";
 
@@ -12,8 +12,7 @@ interface CardRevenueProps {
 
 export function CardRevenue(props: CardRevenueProps) {
     const globalClasses =
-        "w-2xs border border-slate-marked background-base rounded-xl flex flex-col gap-1";
-
+        "p-2 w-2xs border-2 border-slate-marked background-base rounded-xl flex flex-col gap-1 shadow-xs shadow-background-muted";
     const colorText = getDynamicTextColor();
 
     function getDynamicTextColor() {
@@ -26,14 +25,44 @@ export function CardRevenue(props: CardRevenueProps) {
         else {
             return "text-action-green"
         }
-
     }
 
     return (
         <div class={clsx([globalClasses])}>
             <Heading components="h2" size="medium" color="gray">{props.title}</Heading>
-            <Text size="extra-large" bold class="pl-4">{props.stat}$</Text>
+            <p class="font-base-extrabold text-3xl">{props.stat}$</p>
             {props.comment && <Text size="small" class={clsx([colorText, "font-base-bold"])}>{props.comment}</Text>}
+        </div>
+    )
+}
+
+interface CardProgressionBarProps {
+    title: string;
+    value: number;
+    min?: number;
+    max?: number;
+}
+
+export function CardProgressionBar(props: CardProgressionBarProps) {
+    const globalClasses =
+        "p-2 w-2xs border-2 border-slate-marked background-base rounded-xl flex flex-col gap-1 shadow-xs shadow-background-muted";
+
+    const progress = createMemo(() => {
+        const min = props.min ?? 0;
+        const max = props.max ?? 100;
+        const clamped = Math.min(Math.max(props.value, min), max);
+        return ((clamped - min) / (max - min)) * 100;
+    });
+
+    return (
+        <div class={clsx([globalClasses])}>
+            <Heading components="h2" size="medium" color="gray">{props.title}</Heading>
+            <div class="border border-background-border rounded-full">
+                <div
+                    class="h-5 rounded-full bg-action-green"
+                    style={{ width: `${progress()}%` }}
+                ></div>
+            </div>
         </div>
     )
 }
