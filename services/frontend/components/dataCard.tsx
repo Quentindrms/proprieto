@@ -57,7 +57,7 @@ export function CardProgressionBar(props: CardProgressionBarProps) {
     return (
         <div class={clsx([globalClasses])}>
             <Heading components="h2" size="medium" color="gray">{props.title}</Heading>
-            <div class="border border-background-border rounded-full">
+            <div class="border border-slate-marked rounded-full bg-slate-marked">
                 <div
                     class="h-5 rounded-full bg-action-green"
                     style={{ width: `${progress()}%` }}
