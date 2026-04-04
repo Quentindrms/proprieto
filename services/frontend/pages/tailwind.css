@@ -1,23 +1,25 @@
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
 
+@layer base {
+	body {
+		font-family: "Manrope", sans-serif;
+	}
+}
+
 @utility font-extrabold {
-	font-family: "Manrope", sans-serif;
-	font-weight: 700;
+	font-weight: 800;
 }
 
 @utility font-bold {
-	font-family: "Manrope", sans-serif;
 	font-weight: 700;
 }
 
 @utility font-medium {
-	font-family: "Manrope", sans-serif;
 	font-weight: 500;
 }
 
 @utility font-regular {
-	font-family: "Manrope", sans-serif;
-	font-weight: 300;
+	font-weight: 400;
 }
 
 @theme {
