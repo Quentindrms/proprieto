@@ -9,13 +9,13 @@ interface BadgeProps {
 
 export function Badge(props: BadgeProps) {
     const colorClases: Record<BadgeColor, string> = {
-        green: "bg-badge-green",
-        red: "bg-badge-red",
-        blue: "bg-badge-blue",
-        gold: "bg-badge-gold",
+        success: "bg-action-green text-green-800",
+        error: "bg-action-red text-dark text-red-800",
+        primary: "bg-background-primary text-light",
+        warning: "bg-action-orange text-amber-800"
     };
 
-    const globalClasses = "text-small text-primary font-sans w-fit p-2 rounded-xl";
+    const globalClasses = "w-fit h-fit font-base-medium p-4 rounded-full";
 
     return (
         <div
