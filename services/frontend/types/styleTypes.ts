@@ -11,7 +11,13 @@ export type HeadingComponents = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 
 export type TextComponents = "p" | "span";
 
-export type HeadingColor = "green" | "red" | "blue" | "black" | "white";
+export type HeadingColor =
+	| "green"
+	| "red"
+	| "blue"
+	| "black"
+	| "white"
+	| "gray";
 
 export type AccentColor = "green" | "red" | "blue" | "black";
 
@@ -22,3 +28,5 @@ export type ActionButtonColor = "black" | "gray" | "outline";
 export type BadgeColor = "green" | "red" | "blue";
 
 export type ButtonIcons = "add" | "edit" | "delete";
+
+export type FontType = "extra-bold" | "bold" | "medium" | "regular";
