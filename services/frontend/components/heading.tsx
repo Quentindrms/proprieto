@@ -23,17 +23,17 @@ export default function Heading(props: HeadingProps) {
     }
 
     const colorCLasses: Record<HeadingColor, string> = {
-        green: "text-solid-green",
-        red: "text-solid-red",
-        blue: "text-solid-blue",
-        gold: "text-brand",
-        white: "text-primary",
+        green: "text-action-green",
+        red: "text-action-red",
+        blue: "text-action-blue",
+        black: "text-deep-neutral",
+        white: "text-slate-500",
     }
 
-    const globalClasses = "font-title font-bold p-1"
+    const globalClasses = "font-extrabold"
 
     return (
-        <Dynamic component={props.components} class={clsx([globalClasses, sizeClasses[props.size], props.color ? colorCLasses[props.color] : colorCLasses.gold])}>
+        <Dynamic component={props.components} class={clsx([globalClasses, sizeClasses[props.size], props.color ? colorCLasses[props.color] : colorCLasses.black])}>
             {props.children}
         </Dynamic>
     );
