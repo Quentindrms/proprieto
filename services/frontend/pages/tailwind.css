@@ -26,6 +26,7 @@
 @theme {
 	--color-background-primary: oklch(12.9% 0.042 264.695);
 	--color-background-base: oklch(98.4% 0.003 247.858);
+	--color-background-muted: oklch(55.4% 0.046 257.417);
 	--color-deep-neutral: oklch(20.8% 0.042 265.755);
 	--color-muted-text: oklch(55.4% 0.046 257.417);
 
@@ -37,4 +38,7 @@
 	--color-slate-subtle: oklch(98.4% 0.003 247.858);
 	--color-slate-marked: oklch(96.8% 0.007 247.896);
 	--color-slate-strong: oklch(92.9% 0.013 255.508);
+
+	--color-light: oklch(98.5% 0.002 247.839);
+	--color-dark: oklch(13% 0.028 261.692);
 }
