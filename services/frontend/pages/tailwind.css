@@ -33,4 +33,8 @@
 	--color-action-green: oklch(69.6% 0.17 162.48);
 	--color-action-orange: oklch(76.9% 0.188 70.08);
 	--color-action-red: oklch(64.5% 0.246 16.439);
+
+	--color-border-subtle: oklch(98.4% 0.003 247.858);
+	--color-border-marked: oklch(96.8% 0.007 247.896);
+	--color-border-strong: oklch(92.9% 0.013 255.508);
 }
