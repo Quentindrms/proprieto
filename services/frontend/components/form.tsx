@@ -13,7 +13,7 @@ import Text from "./text";
 const FormContext = createContext<{
 	setHasRequiredFields: Setter<boolean>;
 }>({
-	setHasRequiredFields: () => () => {},
+	setHasRequiredFields: () => () => { },
 });
 
 interface FormProps extends JSX.FormHTMLAttributes<HTMLFormElement> {
@@ -86,7 +86,7 @@ export function TextField(props: TextFieldProps) {
 	return (
 		<fieldset class="flex flex-col">
 			<Label label={local.label} required={rest.required} for={rest.name} />
-			<input class="bg-primary rounded-md p-1" id={rest.name} {...rest} />
+			<input class="bg-background-base border-slate-strong border rounded-md p-1 shadow-md shadow-slate-marked" id={rest.name} {...rest} />
 		</fieldset>
 	);
 }
