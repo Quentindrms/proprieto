@@ -1,45 +1,33 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&family=TASA+Orbiter:wght@400..800&display=swap");
-@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
+
+@utility font-extrabold {
+	font-family: "Manrope", sans-serif;
+	font-weight: 700;
+}
+
+@utility font-bold {
+	font-family: "Manrope", sans-serif;
+	font-weight: 700;
+}
+
+@utility font-medium {
+	font-family: "Manrope", sans-serif;
+	font-weight: 500;
+}
+
+@utility font-regular {
+	font-family: "Manrope", sans-serif;
+	font-weight: 300;
+}
 
 @theme {
-	--color-background-base: #0e0f13;
-	--color-background-surface: #16171e;
-	--color-background-elevated: #1e2029;
-	--color-background-border: #2a2c38;
+	--color-background-primary: oklch(12.9% 0.042 264.695);
+	--color-background-base: oklch(98.4% 0.003 247.858);
+	--color-deep-neutral: oklch(20.8% 0.042 265.755);
+	--color-muted-text: oklch(55.4% 0.046 257.417);
 
-	--color-primary: #f0ede6;
-	--color-text-muted: #7a7d8e;
-
-	--color-brand: #c9a84c;
-	--color-brand-light: #e8c97e;
-
-	--color-solid-green: #4caf7d;
-	--color-solid-red: #e05c5c;
-	--color-solid-blue: #5c8ee0;
-	--color-solid-gold: #c9a84c;
-	--color-solid-green-hover: #3d9668;
-	--color-solid-red-hover: #c94444;
-	--color-solid-blue-hover: #4a7acc;
-	--color-solid-gold-hover: #b0923e;
-
-	--color-badge-green: rgba(76, 175, 125, 0.75);
-	--color-badge-red: rgba(224, 92, 92, 0.75);
-	--color-badge-blue: rgba(92, 142, 224, 0.75);
-	--color-badge-gold: rgba(201, 168, 76, 0.75);
-
-	--color-success-subtle: rgba(76, 175, 125, 0.575);
-	--color-danger-subtle: rgba(224, 92, 92, 0.15);
-	--color-info-subtle: rgba(92, 142, 224, 0.15);
-	--color-brand-subtle: rgba(201, 168, 76, 0.15);
-
-	--font-title: "TASA Orbiter";
-	--font-sans: "Roboto Serif", sans-serif;
-
-	--text-extra-small: 0.6rem;
-	--text-small: 0.8rem;
-	--text-base: 1rem;
-	--text-medium: 1.5rem;
-	--text-large: 1.75rem;
-	--text-extra-large: 2rem;
-	--text-big: 2rem;
+	--color-action-blue: oklch(62.3% 0.214 259.815);
+	--color-action-red: oklch(69.6% 0.17 162.48);
+	--color-action-orange: oklch(76.9% 0.188 70.08);
+	--color-action-red: oklch(64.5% 0.246 16.439);
 }
