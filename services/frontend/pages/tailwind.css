@@ -1,5 +1,5 @@
-@import "tailwindcss";
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
+@import "tailwindcss";
 
 @layer base {
 	body {
@@ -7,19 +7,19 @@
 	}
 }
 
-@utility font-extrabold {
+@utility font-base-extrabold {
 	font-weight: 800;
 }
 
-@utility font-bold {
+@utility font-base-bold {
 	font-weight: 700;
 }
 
-@utility font-medium {
+@utility font-base-medium {
 	font-weight: 500;
 }
 
-@utility font-regular {
+@utility font-base-regular {
 	font-weight: 400;
 }
 
