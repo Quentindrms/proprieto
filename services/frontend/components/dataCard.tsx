@@ -66,3 +66,22 @@ export function CardProgressionBar(props: CardProgressionBarProps) {
         </div>
     )
 }
+
+interface CardTicketProps {
+    title: string,
+    value: string,
+    urgent: string,
+}
+
+export function CardTicket(props: CardTicketProps) {
+    const globalClasses =
+        "p-2 w-2xs border-2 border-slate-marked background-base rounded-xl flex flex-col gap-1 shadow-xs shadow-background-muted";
+    return (
+        <div class={clsx([globalClasses])}>
+            <Heading components="h2" size="medium" color="gray">{props.title}</Heading>
+            <p class="font-base-extrabold text-3xl">{props.value}</p>
+            <Text size="small" class={clsx(["font-base-bold"])}>{props.urgent} demande urgente</Text>
+        </div>
+    )
+}
+
