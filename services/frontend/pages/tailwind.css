@@ -1,3 +1,4 @@
+@import "tailwindcss";
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
 
 @layer base {
@@ -29,7 +30,7 @@
 	--color-muted-text: oklch(55.4% 0.046 257.417);
 
 	--color-action-blue: oklch(62.3% 0.214 259.815);
-	--color-action-red: oklch(69.6% 0.17 162.48);
+	--color-action-green: oklch(69.6% 0.17 162.48);
 	--color-action-orange: oklch(76.9% 0.188 70.08);
 	--color-action-red: oklch(64.5% 0.246 16.439);
 }
