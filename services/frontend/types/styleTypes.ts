@@ -17,6 +17,8 @@ export type AccentColor = "green" | "red" | "blue" | "black";
 
 export type ButtonColor = "green" | "red" | "blue";
 
+export type ActionButtonColor = "black" | "gray" | "outline";
+
 export type BadgeColor = "green" | "red" | "blue";
 
 export type ButtonIcons = "add" | "edit" | "delete";
