@@ -35,7 +35,7 @@ interface ClientListProps {
 }
 export function ClientList(props: ClientListProps) {
 	return (
-		<div class="flex gap-2 items-center w-md">
+		<div class="flex gap-2 items-center w-md bg-background-base p-2">
 			<FiUser size={45} />
 			<div class="flex flex-col p-2">
 				<Heading
