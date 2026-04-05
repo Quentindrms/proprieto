@@ -18,9 +18,9 @@ export function Button(props: ButtonProps) {
 	const [local, rest] = splitProps(props, ["color", "icons", "children"]);
 
 	const colorClases: Record<ButtonColor, string> = {
-		green: "bg-action-green hover:bg-solid-action-hover",
-		red: "bg-action-red hover:bg-solid-action-hover",
-		blue: "bg-action-blue hover:bg-solid-action-hover",
+		green: "bg-action-green hover:bg-action-green/90",
+		red: "bg-action-red hover:bg-action-red/90",
+		blue: "bg-action-blue hover:bg-action-blue/90",
 	};
 
 	const IconClasses: Record<string, () => JSX.Element> = {
@@ -30,7 +30,7 @@ export function Button(props: ButtonProps) {
 	};
 
 	const globalClasses =
-		"w-fit h-fit rounded-xl p-3 font-primary text-light";
+		"w-fit h-fit rounded-xl pr-5 pl-5 p-2 font-primary text-light";
 
 	const flexClasses = "flex gap-5 items-center";
 	return (
@@ -59,12 +59,12 @@ export function ActionButton(props: ActionButtonProps) {
 	const [local, rest] = splitProps(props, ["color"])
 
 	const colorClases: Record<ActionButtonColor, string> = {
-		black: "bg-background-primary text-light",
-		gray: "bg-background-muted text-dark",
-		outline: "bg-background-base border border-slate-strong text-dark"
+		black: "bg-background-primary hover:bg-background-primary/90 text-light",
+		gray: "bg-background-muted hover:bg-background-muted/90 text-dark/50",
+		outline: "bg-background-base/90 border border-slate-marked text-dark "
 	};
 
-	const globalClasses = "rounded-xl w-fit h-fit p-3";
+	const globalClasses = "rounded-xl pl-5 pr-5 p-2 font-base-bold shadow-xs shadow-background-primary";
 
 	return (
 		<button {...rest} type="button" class={clsx([colorClases, globalClasses, local.color ? colorClases[local.color] : colorClases["black"]])}>
