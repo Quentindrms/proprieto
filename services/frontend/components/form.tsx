@@ -62,7 +62,7 @@ interface LabelProps extends JSX.LabelHTMLAttributes<HTMLLabelElement> {
 
 export function Label(props: LabelProps) {
 	return (
-		<label class="text-primary p-2" for={props.for}>
+		<label class="font-base-bold p-1" for={props.for}>
 			{props.label}
 			{props.required && <span class="">*</span>}
 		</label>
@@ -71,6 +71,7 @@ export function Label(props: LabelProps) {
 
 interface TextFieldProps extends JSX.InputHTMLAttributes<HTMLInputElement> {
 	label: string;
+	type?: "date" | "email" | "tel" | "password" | "number"
 }
 
 export function TextField(props: TextFieldProps) {
@@ -86,7 +87,7 @@ export function TextField(props: TextFieldProps) {
 	return (
 		<fieldset class="flex flex-col">
 			<Label label={local.label} required={rest.required} for={rest.name} />
-			<input class="bg-background-base border-slate-strong border rounded-md p-1 shadow-md shadow-slate-marked" id={rest.name} {...rest} />
+			<input type={props.type ? props.type : "text"} class="bg-background-base border-slate-strong border rounded-md p-1 shadow-md shadow-slate-marked focus:outline-none focus:ring-2 focus:ring-action-green" id={rest.name} {...rest} />
 		</fieldset>
 	);
 }
@@ -109,8 +110,8 @@ export function Select(props: SelectProps) {
 		<fieldset class="flex flex-col">
 			<Label label={local.label} required={rest.required} />
 
-			<select class="bg-primary rounded-md p-1" id={rest.name} {...rest}>
-				<option value="" disabled selected>
+			<select class="bg-background-base rounded-md p-2 border border-slate-strong font-base-bold shadow-md shadow-slate-marked focus:outline-none focus:ring-2 focus:ring-action-green" id={rest.name} {...rest}>
+				<option class="font-base-medium" value="" disabled selected>
 					- {local.labelOptions} -
 				</option>
 
@@ -144,4 +145,24 @@ export function CheckBox(props: CheckBoxProps) {
 			/>
 		</fieldset>
 	);
+}
+
+interface ToggleSwitchProps extends JSX.InputHTMLAttributes<HTMLInputElement> {
+	label: string,
+}
+
+export function ToggleSwitch(props: ToggleSwitchProps) {
+	const [local, rest] = splitProps(props, ["label"]);
+
+	const toggleAppearance = "w-16 h-10 flex shrink-0 items-center ml-4 p-1 rounded-full bg-slate-200 rounded-full";
+	const afterAppearance = "after:w-8 after:h-8 after:bg-white after:rounded-full after:shadow-md"
+	const peerAppearance = "peer-checked:bg-action-green after:duration-300 peer-checked:after:translate-x-6";
+
+	return (
+		<label class="font-base-bold p-1">
+			{props.label}
+			<input {...local} type="checkbox" class="appearance-none peer" />
+			<span class={clsx([toggleAppearance, afterAppearance, peerAppearance])}></span>
+		</label>
+	)
 }
