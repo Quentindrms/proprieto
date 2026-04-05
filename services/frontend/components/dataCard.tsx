@@ -12,7 +12,7 @@ interface CardRevenueProps {
 
 export function CardRevenue(props: CardRevenueProps) {
     const globalClasses =
-        "p-2 w-2xs border-2 border-slate-marked background-base rounded-xl flex flex-col gap-1 shadow-xs shadow-background-muted";
+        "p-2 w-2xs border-2 border-slate-marked background-base rounded-xl flex flex-col gap-1 shadow-xs shadow-background-muted bg-background-base";
     const colorText = getDynamicTextColor();
 
     function getDynamicTextColor() {
