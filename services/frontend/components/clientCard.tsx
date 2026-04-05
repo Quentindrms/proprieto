@@ -1,6 +1,7 @@
 import { FiMail, FiPhone, FiUser } from "solid-icons/fi";
 import type { Client } from "../types/client";
 import { Badge } from "./badge";
+import { ActionButton } from "./button";
 import Heading from "./heading";
 import Text from "./text";
 
@@ -10,7 +11,22 @@ interface ClientCardProps {
 	onEdit?: () => void;
 }
 
-export function ClientCard(props: ClientCardProps) { }
+export function ClientCard(props: ClientCardProps) {
+	return (
+		<div class="w-lg flex flex-col p-4 bg-background-base rounded-xl">
+			<div class="flex flex-col justify-center items-center gap-2">
+				<FiUser size={90} />
+				<Heading
+					components="h3"
+					size="large"
+					fontClasses="bold"
+				>{`${props.client.firstName} ${props.client.name}`}</Heading>
+			</div>
+			<span class="h-1 w-full bg-background-muted/10 rounded-full"></span>
+			<ActionButton color="black">Consulter le profil</ActionButton>
+		</div>
+	);
+}
 
 interface ClientListProps {
 	client: Client;
