@@ -13,7 +13,7 @@ interface ClientCardProps {
 
 export function ClientCard(props: ClientCardProps) {
 	return (
-		<div class="w-lg flex flex-col p-4 bg-background-base rounded-xl">
+		<div class="w-lg flex flex-col p-4 bg-background-base rounded-xl gap-4 shadow-xs shadow-background-muted">
 			<div class="flex flex-col justify-center items-center gap-2">
 				<FiUser size={90} />
 				<Heading
@@ -23,6 +23,17 @@ export function ClientCard(props: ClientCardProps) {
 				>{`${props.client.firstName} ${props.client.name}`}</Heading>
 			</div>
 			<span class="h-1 w-full bg-background-muted/10 rounded-full"></span>
+
+			<div class="flex flex-col gap-3">
+				<div class="flex items-center gap-3">
+					<FiMail size={18} class="shrink-0 text-text-muted" />
+					<Text class="">{props.client.email}</Text>
+				</div>
+				<div class="flex items-center gap-3">
+					<FiPhone size={18} class="shrink-0 text-text-muted" />
+					<Text class="">{props.client.phone}</Text>
+				</div>
+			</div>
 			<ActionButton color="black">Consulter le profil</ActionButton>
 		</div>
 	);
