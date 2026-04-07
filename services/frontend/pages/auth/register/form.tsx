@@ -1,14 +1,14 @@
 import { UserCreation } from "@app/types/user";
 import { Button } from "@components/button";
-import { TextField } from "@components/form";
+import { Form, TextField } from "@components/form";
 import { useAuth } from "@hooks/useAuth";
 
 export default function RegisterForm() {
 	const auth = useAuth();
 
 	return (
-		<form
-			class="flex flex-col gap-3 p-2 w-lg bg-background-surface border border-background-border rounded-xl shadow-md shadow-background-border"
+		<Form callback={() => auth.handleRegister}
+			class="flex flex-col gap-3 p-2 w-lg bg-background-surface rounded-xl shadow-md shadow-background-border"
 			onSubmit={auth.handleRegister}
 		>
 			<TextField label="Nom" onInput={auth.handleRegisterInputChange("name")} />
@@ -39,6 +39,6 @@ export default function RegisterForm() {
 			<div class="flex justify-center">
 				<Button type="submit">S'inscrire</Button>
 			</div>
-		</form>
+		</Form>
 	);
 }
