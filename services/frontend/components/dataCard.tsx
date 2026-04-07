@@ -39,13 +39,21 @@ export function CardRevenue(props: CardRevenueProps) {
 interface CardProgressionBarProps {
     title: string;
     value: number;
+    style: "light" | "dark";
     min?: number;
     max?: number;
 }
 
 export function CardProgressionBar(props: CardProgressionBarProps) {
     const globalClasses =
-        "p-2 w-2xs border-2 border-slate-marked background-base rounded-xl flex flex-col gap-1 shadow-xs shadow-background-muted";
+        "p-2 w-2xs rounded-xl flex flex-col gap-1 shadow-xs shadow-background-muted";
+
+    const styleClasse = (style: string): string => {
+        if (style === "light") {
+            return "bg-background-base text-muted-text"
+        }
+        return "bg-deep-neutral text-light"
+    }
 
     const progress = createMemo(() => {
         const min = props.min ?? 0;
@@ -55,8 +63,8 @@ export function CardProgressionBar(props: CardProgressionBarProps) {
     });
 
     return (
-        <div class={clsx([globalClasses])}>
-            <Heading components="h2" size="medium" color="gray">{props.title}</Heading>
+        <div class={clsx([globalClasses, styleClasse(props.style)])}>
+            <Heading components="h2" size="medium" color="white">{props.title}</Heading>
             <div class="border border-slate-marked rounded-full bg-slate-marked">
                 <div
                     class="h-5 rounded-full bg-action-green"

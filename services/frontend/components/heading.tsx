@@ -39,7 +39,7 @@ export default function Heading(props: HeadingProps) {
         red: "text-action-red",
         blue: "text-action-blue",
         black: "text-deep-neutral",
-        white: "text-slate-500",
+        white: "text-light",
         gray: "text-muted-text",
     };
 

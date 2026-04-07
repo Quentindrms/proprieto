@@ -64,7 +64,7 @@ export function ActionButton(props: ActionButtonProps) {
 		outline: "bg-background-base/90 border border-slate-marked text-dark "
 	};
 
-	const globalClasses = "rounded-xl pl-5 pr-5 p-2 font-base-bold shadow-xs shadow-background-primary";
+	const globalClasses = "rounded-xl pl-5 pr-5 p-2 font-base-bold shadow-xs shadow-background-primary w-fit";
 
 	return (
 		<button {...rest} type="button" class={clsx([colorClases, globalClasses, local.color ? colorClases[local.color] : colorClases["black"]])}>
