@@ -4,10 +4,10 @@ import { Toaster } from "solid-toast";
 
 export default function Layout(props: { children?: JSX.Element }) {
 	return (
-		<div class="min-h-dvh bg-background-base flex">
+		<div class="min-h-dvh min-w-full bg-background-base flex">
 			<Toaster position="top-right" />
 			<Navbar />
-			<main class="flex min-w-0">{props.children}</main>
+			<main class="flex w-full">{props.children}</main>
 		</div>
 	);
 }
