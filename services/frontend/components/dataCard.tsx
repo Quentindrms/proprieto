@@ -12,7 +12,7 @@ interface CardRevenueProps {
 
 export function CardRevenue(props: CardRevenueProps) {
     const globalClasses =
-        "p-2 w-2xs border-2 border-slate-marked background-base rounded-xl flex flex-col gap-1 shadow-xs shadow-background-muted bg-background-base";
+        "p-2 w-2xs border-2 border-slate-marked background-base rounded-xl flex flex-col justify-center gap-1 shadow-xs shadow-background-muted bg-background-base";
     const colorText = getDynamicTextColor();
 
     function getDynamicTextColor() {
@@ -40,13 +40,19 @@ interface CardProgressionBarProps {
     title: string;
     value: number;
     style: "light" | "dark";
+    size: "normal" | "large";
     min?: number;
     max?: number;
 }
 
 export function CardProgressionBar(props: CardProgressionBarProps) {
-    const globalClasses =
-        "p-2 w-2xs rounded-xl flex flex-col gap-1 shadow-xs shadow-background-muted";
+    const globalClasses = (size: string) => {
+        if (size === "normal") {
+            return "p-2 w-2xs rounded-xl flex flex-col justify-center gap-1 shadow-xs shadow-background-muted";
+        }
+        return "p-2 w-2xs h-[10rem] rounded-xl flex flex-col justify-center gap-1 shadow-xs shadow-background-muted";
+    }
+
 
     const styleClasse = (style: string): string => {
         if (style === "light") {
@@ -63,7 +69,7 @@ export function CardProgressionBar(props: CardProgressionBarProps) {
     });
 
     return (
-        <div class={clsx([globalClasses, styleClasse(props.style)])}>
+        <div class={clsx([globalClasses(props.size), styleClasse(props.style)])}>
             <Heading components="h2" size="medium" color="white">{props.title}</Heading>
             <div class="border border-slate-marked rounded-full bg-slate-marked">
                 <div
