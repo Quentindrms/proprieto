@@ -2,31 +2,48 @@ import {
     BsArrowDownRightCircleFill,
     BsArrowUpRightCircleFill,
 } from "solid-icons/bs";
+import { Badge } from "./badge";
 import Heading from "./heading";
 import Text from "./text";
 
-interface TransactionRowProps {
+export type TransactionType = "income" | "outcome";
+
+export interface TransactionRowData {
     name: string;
-    recipient: string;
-    amount: string;
-    income: boolean;
-    date: Date;
+    amount: number;
+    type: TransactionType;
+    isPaid: boolean;
 }
 
-export default function TransactionRow(props: TransactionRowProps) {
+export default function TransactionRow(props: TransactionRowData) {
+    const isIncome = () => props.type === "income";
+
     return (
-        <div class="flex gap-3 items-center p-2 bg-background-base w-md">
-            {props.income ? <BsArrowUpRightCircleFill class="m-2" size={35} color="var(--color-action-green)" /> : <BsArrowDownRightCircleFill class="m-2" size={35} color="var(--color-action-red)" />}
-            <div class="text-left p-2">
-                <Heading components="h3" size="medium">
-                    {props.name}
-                </Heading>
-                <Text size="large">{props.recipient}</Text>
-            </div>
-            <div class="p-1">
-                <Text size="large" >{props.income ? "+" : "-"}{props.amount}€</Text>
-                <Text size="small" >{new Date(props.date).toLocaleDateString("fr-FR")}</Text>
-            </div>
-        </div>
+        <tr class="last:border-0 hover:bg-background-secondary transition-colors">
+            <td class="px-4 py-3">
+                <div class="flex items-center gap-3">
+                    {isIncome()
+                        ? <BsArrowUpRightCircleFill size={28} color="var(--color-action-green)" />
+                        : <BsArrowDownRightCircleFill size={28} color="var(--color-action-red)" />
+                    }
+                    <Heading components="h3" size="medium">{props.name}</Heading>
+                </div>
+            </td>
+            <td class="px-4 py-3 text-right">
+                <Text size="large">
+                    {isIncome() ? "+" : "-"}{props.amount.toLocaleString("fr-FR", { style: "currency", currency: "EUR" })}
+                </Text>
+            </td>
+            <td class="px-4 py-3">
+                <Badge color={isIncome() ? "success" : "error"}>
+                    {isIncome() ? "Entrée" : "Sortie"}
+                </Badge>
+            </td>
+            <td class="px-4 py-3">
+                <Badge color={props.isPaid ? "success" : "warning"}>
+                    {props.isPaid ? "Payé" : "En attente"}
+                </Badge>
+            </td>
+        </tr>
     );
 }
