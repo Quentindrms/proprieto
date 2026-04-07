@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { createMemo } from "solid-js";
+import { createMemo, Show } from "solid-js";
 import Heading from "./heading";
 import Text from "./text";
 
@@ -70,7 +70,12 @@ export function CardProgressionBar(props: CardProgressionBarProps) {
 
     return (
         <div class={clsx([globalClasses(props.size), styleClasse(props.style)])}>
-            <Heading components="h2" size="medium" color="white">{props.title}</Heading>
+            <Show when={props.style === "light"}
+                fallback={<Heading components="h2" size="medium" color="white">{props.title}</Heading>}
+            >
+                <Heading components="h2" size="medium" color="black">{props.title}</Heading>
+            </Show>
+
             <div class="border border-slate-marked rounded-full bg-slate-marked">
                 <div
                     class="h-5 rounded-full bg-action-green"
