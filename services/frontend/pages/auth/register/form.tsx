@@ -36,7 +36,7 @@ export default function RegisterForm() {
 				type="password"
 				onInput={auth.handleRegisterInputChange("passwordValidation")}
 			/>
-			<div class="flex justify-center">
+			<div class="flex justify-center p-4">
 				<Button type="submit">S'inscrire</Button>
 			</div>
 		</Form>
