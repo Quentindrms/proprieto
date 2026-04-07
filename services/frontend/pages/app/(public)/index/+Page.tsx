@@ -17,7 +17,7 @@ export default function Page() {
 			<div class="flex gap-2">
 				<CardRevenue title="Revenu total" stat={1300} comment="10% de plus que le mois dernier" />
 				<CardRevenue title="Dépense totale" stat={1300} comment="10% de plus que le mois dernier" />
-				<CardProgressionBar title="Taux d'occupation" value={30} min={0} max={100} style="dark" />
+				<CardProgressionBar title="Taux d'occupation" value={30} min={0} max={100} style="dark" size="large" />
 			</div>
 		</div>
 	);
