@@ -1,15 +1,59 @@
+import type { Client } from "@app/types/client";
+import type { Property } from "@app/types/property";
+import type { ProviderType } from "@app/types/provider";
 import { Badge } from "@components/badge";
 import { ActionButton, Button } from "@components/button";
+import { ClientCard, ClientList } from "@components/clientCard";
 import {
     CardProgressionBar,
     CardRevenue,
     CardTicket,
 } from "@components/dataCard";
 import { Form, Select, TextField, ToggleSwitch } from "@components/form";
+import PropertyCard from "@components/propertyCard";
+import ProviderCard from "@components/providerCard";
 import TransactionRow from "@components/rows";
 import Heading from "../../../components/heading";
 
 export default function Page() {
+    const client: Client = {
+        name: "Dupont",
+        firstName: "Pierre",
+        address: "L'adresse de Pierre Dupont",
+        email: "pierredupont@email.fr",
+        phone: "0677134034",
+        id: "123",
+        clients: [],
+    };
+
+    const provider: ProviderType = {
+        id: "123",
+        directories: {
+            name: "Dupont",
+            firstName: "Pierre",
+            address: "L'adresse de Pierre Dupont",
+            email: "pierredupont@email.fr",
+            phone: "0677134034",
+            userId: "123",
+        },
+    };
+
+    const property: Property = {
+        id: "",
+        isActive: true,
+        isDeleted: false,
+        name: "Ma belle maison",
+        propertyType: {
+            id: "",
+            name: "",
+            slug: "",
+        },
+        userId: "",
+        purchaseDate: new Date(),
+        purchasePrice: "100000",
+        sellDate: undefined,
+        sellPrice: undefined,
+    };
     return (
         <div class="h-full w-full flex flex-col gap-2 p-5">
             <CardRevenue
@@ -20,7 +64,7 @@ export default function Page() {
             />
 
             <CardProgressionBar
-                value={50}
+                value={35}
                 max={100}
                 min={0}
                 title="Barre de progression"
@@ -70,7 +114,28 @@ export default function Page() {
                     name="Revenu"
                     recipient="Jean-Michel Dupont"
                     amount="1000"
+                    date={new Date()}
                 />
+                <TransactionRow
+                    income={false}
+                    name="Dépense"
+                    recipient="Jean-Michel Dupont"
+                    amount="1000"
+                    date={new Date()}
+                />
+            </div>
+
+            <div class="flex flex-row">
+                <div class="flex flex-col">
+                    <ClientList client={client} />
+                    <ClientList client={client} />
+                </div>
+
+                <ClientCard client={client} />
+            </div>
+
+            <div>
+                <PropertyCard property={property} />
             </div>
         </div>
     );
