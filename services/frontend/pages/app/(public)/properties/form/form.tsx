@@ -3,7 +3,7 @@ import { Form, Select, TextField } from "@components/form";
 import { useProperty } from "@hooks/useProperty";
 import { useData } from "vike-solid/useData";
 import z from "zod";
-import type { Data } from "./+data";
+import type { Data } from "../+data";
 
 export default function CreatePropertyForm() {
 	const property = useProperty();
@@ -22,7 +22,6 @@ export default function CreatePropertyForm() {
 		<Form callback={property.create}>
 			<TextField
 				label="Nom"
-				type="text"
 				name="name"
 				onInput={property.handleCreateInput("name")}
 			/>
@@ -37,7 +36,6 @@ export default function CreatePropertyForm() {
 
 			<TextField
 				label="Prix d'acquisition"
-				type="text"
 				name="purshacePrice"
 				onInput={property.handleCreateInput("purchasePrice")}
 			/>
