@@ -10,8 +10,8 @@ export default function Navbar() {
                 <Text size="small" class="text-muted-text font-base-regular">Gestionnaire de propriété</Text>
             </div>
             <div class="flex flex-col text-left">
-                <NavbarLink name="Portefeuille" value="/" />
-                <NavbarLink name="Propriété" value="/properties" />
+                <NavbarLink name="Portefeuille" value="/app" />
+                <NavbarLink name="Propriété" value="/app/properties" />
                 <NavbarLink name="Opérations" value="" />
                 <NavbarLink name="Finance" value="" />
                 <NavbarLink name="Paramètres" value="" />
