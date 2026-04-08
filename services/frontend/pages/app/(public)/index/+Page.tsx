@@ -26,7 +26,7 @@ export default function Page() {
 
 	return (
 		<div class="h-full w-full flex flex-col gap-5">
-			<div class="flex justify-around items-center justify-between p-2">
+			<div class="flex items-center justify-between p-2">
 				<div class="flex flex-col">
 					<Heading
 						components="h1"
