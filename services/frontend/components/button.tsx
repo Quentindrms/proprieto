@@ -4,8 +4,13 @@ import {
 	FaSolidPlus,
 	FaSolidRemove,
 } from "solid-icons/fa";
-import { type JSX, splitProps } from "solid-js";
-import type { ActionButtonColor, ButtonColor, ButtonIcons } from "../types/styleTypes";
+import { createSignal, For, type JSX, splitProps } from "solid-js";
+
+import type {
+	ActionButtonColor,
+	ButtonColor,
+	ButtonIcons,
+} from "../types/styleTypes";
 
 interface ButtonProps extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {
 	type: "submit" | "button" | "menu";
@@ -49,25 +54,84 @@ export function Button(props: ButtonProps) {
 	);
 }
 
-interface ActionButtonProps extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {
+interface ActionButtonProps
+	extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {
 	children: JSX.Element;
 	color?: ActionButtonColor;
 }
 
 export function ActionButton(props: ActionButtonProps) {
-
-	const [local, rest] = splitProps(props, ["color"])
+	const [local, rest] = splitProps(props, ["color"]);
 
 	const colorClases: Record<ActionButtonColor, string> = {
 		black: "bg-background-primary hover:bg-background-primary/90 text-light",
 		gray: "bg-background-muted hover:bg-background-muted/90 text-dark/50",
-		outline: "bg-background-base/90 border border-slate-marked text-dark "
+		outline: "bg-background-base/90 border border-slate-marked text-dark ",
 	};
 
-	const globalClasses = "rounded-xl pl-5 pr-5 p-2 font-base-bold shadow-xs shadow-background-primary w-fit cursor-pointer";
+	const globalClasses =
+		"rounded-xl pl-5 pr-5 p-2 font-base-bold shadow-xs shadow-background-primary w-fit cursor-pointer";
 
 	return (
-		<button {...rest} type="button" class={clsx([colorClases, globalClasses, local.color ? colorClases[local.color] : colorClases["black"]])}>
-			{props.children}</button>
-	)
+		<button
+			{...rest}
+			type="button"
+			class={clsx([
+				colorClases,
+				globalClasses,
+				local.color ? colorClases[local.color] : colorClases["black"],
+			])}
+		>
+			{props.children}
+		</button>
+	);
+}
+
+interface ButtonGroupOption<T extends string = string> {
+	label: string;
+	value: T;
+	onClick?: () => void;
+}
+
+interface ButtonGroupProps<T extends string = string> {
+	options: ButtonGroupOption<T>[];
+	defaultValue?: T;
+	value?: T;
+	onChange?: (value: T) => void;
+}
+
+export function ButtonGroup<T extends string = string>(
+	props: ButtonGroupProps<T>,
+) {
+	const [internalValue, setInternalValue] = createSignal<T>(
+		props.defaultValue ?? props.options[0]?.value,
+	);
+
+	const activeValue = () => props.value ?? internalValue();
+
+	function handleClick(option: ButtonGroupOption<T>) {
+		setInternalValue(() => option.value);
+		props.onChange?.(option.value);
+		option.onClick?.();
+	}
+	return (
+		<div class="flex gap-1 p-1 bg-slate-strong rounded-xl w-fit">
+			<For each={props.options}>
+				{(option) => (
+					<button
+						type="button"
+						onClick={() => handleClick(option)}
+						class={clsx(
+							"px-4 py-1.5 rounded-lg text-sm font-base-medium cursor-pointer transition-all duration-150",
+							activeValue() === option.value
+								? "bg-background-base text-dark shadow-xs shadow-dark/10 font-base-bold"
+								: "text-dark/50 hover:text-dark/80",
+						)}
+					>
+						{option.label}
+					</button>
+				)}
+			</For>
+		</div>
+	);
 }
