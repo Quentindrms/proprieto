@@ -5,7 +5,6 @@ import type { BadgeColor, ButtonColor } from "../types/styleTypes";
 interface BadgeProps {
     color: BadgeColor;
     children: JSX.Element;
-    onClick: () => void;
 }
 
 export function Badge(props: BadgeProps) {
