@@ -12,9 +12,10 @@ export default function Navbar() {
             <div class="flex flex-col text-left">
                 <NavbarLink name="Portefeuille" value="/app" />
                 <NavbarLink name="Propriété" value="/app/properties" />
-                <NavbarLink name="Opérations" value="" />
-                <NavbarLink name="Finance" value="" />
-                <NavbarLink name="Paramètres" value="" />
+                <NavbarLink name="Contrats" value="/app/contracts" />
+                <NavbarLink name="Clients" value="" />
+                <NavbarLink name="Prestataires" value="" />
+                <NavbarLink name="Finances" value="" />
             </div>
         </div>
     )
