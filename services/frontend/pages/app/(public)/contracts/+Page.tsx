@@ -1,6 +1,7 @@
 import { Badge } from "@components/badge";
 import Board from "@components/board";
 import { ActionButton, ButtonGroup } from "@components/button";
+import ContractExpireSoon from "@components/contract";
 import Heading from "@components/heading";
 import PageNamer from "@components/pageNamer";
 import SearchField from "@components/searchField";
@@ -51,14 +52,21 @@ export default function Page() {
 				/>
 			</div>
 
-			<div>
-				<div class="flex justify-between items-center w-md bg-background-base rounded-md">
+			<div class="flex flex-col w-2xl p-4">
+				<div class="flex justify-between items-center bg-background-base rounded-md">
 					<Heading components="h3" size="medium" fontClasses="bold">
 						Baux arrivant à terme (nombre)
 					</Heading>
 					<div>
 						<Badge color="warning">Action requise</Badge>
 					</div>
+				</div>
+				<div>
+					<ContractExpireSoon
+						clientName="Estelle Haubois"
+						contractName="Appartement Paris"
+						expireDate={new Date()}
+					/>
 				</div>
 			</div>
 		</div>
