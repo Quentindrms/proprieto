@@ -12,7 +12,7 @@ interface PropertyCardProps {
 
 export default function PropertyCard(props: PropertyCardProps) {
 	return (
-		<div class="w-md flex flex-col bg-background-base rounded-md shadow-md shadow-background-muted">
+		<div class="w-xs flex flex-col bg-background-base rounded-md shadow-md shadow-background-muted">
 			<div class="" id="headerImage">
 
 			</div>
@@ -23,7 +23,7 @@ export default function PropertyCard(props: PropertyCardProps) {
 			<div id="bodyCard" class="flex justify-between">
 				<div class="flex flex-col">
 					<Text size="medium">Date d'acquisition</Text>
-					<Text size="large">{props.property.purchaseDate?.toLocaleDateString("fr-FR")}</Text>
+					<Text size="large">{props.property.purchaseDate ? new Date(props.property.purchaseDate).toLocaleDateString("fr-FR") : "-"}</Text>
 				</div>
 				<div class="flex flex-col">
 					<Text size="medium">Plus value</Text>
