@@ -68,12 +68,14 @@ export default function Page() {
                 max={100}
                 min={0}
                 title="Barre de progression"
+                size="normal"
+                style="light"
             />
 
             <CardTicket title="Demandes ouvertes" urgent="0" value="0" />
 
             <div class="flex gap-3">
-                <Badge color="error">Erreur</Badge>
+                <Badge color="error" >Erreur</Badge>
                 <Badge color="success">Succès</Badge>
                 <Badge color="primary">Primaire</Badge>
                 <Badge color="warning">Warning</Badge>
@@ -110,18 +112,16 @@ export default function Page() {
 
             <div>
                 <TransactionRow
-                    income={true}
+                    type={"income"}
                     name="Revenu"
-                    recipient="Jean-Michel Dupont"
-                    amount="1000"
-                    date={new Date()}
+                    amount={1000}
+                    isPaid={true}
                 />
                 <TransactionRow
-                    income={false}
+                    type={"outcome"}
                     name="Dépense"
-                    recipient="Jean-Michel Dupont"
-                    amount="1000"
-                    date={new Date()}
+                    amount={1000}
+                    isPaid={false}
                 />
             </div>
 
