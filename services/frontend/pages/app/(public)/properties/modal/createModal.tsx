@@ -17,7 +17,7 @@ export default function CreateModal(props: CreateModalProps) {
             close={props.close}
         >
             <ModalHeader>
-                <Heading components="h3" size="medium">
+                <Heading class="p-2" components="h3" size="medium" fontClasses="bold">
                     Ajouter un bien
                 </Heading>
             </ModalHeader>
