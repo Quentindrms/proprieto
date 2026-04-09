@@ -47,3 +47,37 @@ export default function TransactionRow(props: TransactionRowData) {
         </tr>
     );
 }
+
+export interface ContractRowData {
+    clientName: string,
+    propertyName: string,
+    period: string,
+    loan: number,
+    status: string,
+}
+
+export function ContractRow(props: ContractRowData) {
+    return (
+        <tr class="last:border-0 hover:bg-background-secondary transition-colors">
+            <td class="px-4 py-3">
+                <Heading components="h3" size="medium">{props.clientName}</Heading>
+            </td>
+            <td class="px-4 py-3">
+                <Text size="medium">{props.propertyName}</Text>
+            </td>
+            <td class="px-4 py-3">
+                <Text size="medium">{props.period}</Text>
+            </td>
+            <td class="px-4 py-3 text-right">
+                <Text size="large">
+                    {props.loan.toLocaleString("fr-FR", { style: "currency", currency: "EUR" })}
+                </Text>
+            </td>
+            <td class="px-4 py-3">
+                <Badge color={props.status === "active" ? "success" : props.status === "expiring" ? "warning" : "error"}>
+                    {props.status === "active" ? "Actif" : props.status === "expiring" ? "Expire bientôt" : "Archivé"}
+                </Badge>
+            </td>
+        </tr>
+    )
+}
