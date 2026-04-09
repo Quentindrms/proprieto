@@ -13,7 +13,7 @@ interface ClientCardProps {
 
 export function ClientCard(props: ClientCardProps) {
 	return (
-		<div class="w-lg flex flex-col p-4 bg-background-base rounded-xl gap-4 shadow-xs shadow-background-muted">
+		<div class="w-xs flex flex-col p-4 bg-background-base rounded-xl gap-4 shadow-xs shadow-background-muted">
 			<div class="flex flex-col justify-center items-center gap-2">
 				<FiUser size={90} />
 				<Heading
@@ -34,7 +34,9 @@ export function ClientCard(props: ClientCardProps) {
 					<Text class="">{props.client.phone}</Text>
 				</div>
 			</div>
-			<ActionButton color="black">Consulter le profil</ActionButton>
+			<div class="flex justify-center">
+				<ActionButton color="black">Consulter le profil</ActionButton>
+			</div>
 		</div>
 	);
 }
