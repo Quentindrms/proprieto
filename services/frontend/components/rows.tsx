@@ -48,12 +48,14 @@ export default function TransactionRow(props: TransactionRowData) {
     );
 }
 
+export type ContractStatus = "active" | "expiring" | "expired";
+
 export interface ContractRowData {
     clientName: string,
     propertyName: string,
     period: string,
     loan: number,
-    status: string,
+    status: ContractStatus,
 }
 
 export function ContractRow(props: ContractRowData) {
@@ -75,7 +77,7 @@ export function ContractRow(props: ContractRowData) {
             </td>
             <td class="px-4 py-3">
                 <Badge color={props.status === "active" ? "success" : props.status === "expiring" ? "warning" : "error"}>
-                    {props.status === "active" ? "Actif" : props.status === "expiring" ? "Expire bientôt" : "Archivé"}
+                    {props.status === "active" ? "Actif" : props.status === "expiring" ? "Expire bientôt" : "Expiré"}
                 </Badge>
             </td>
         </tr>

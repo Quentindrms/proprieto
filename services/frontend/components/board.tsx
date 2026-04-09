@@ -1,18 +1,35 @@
 import { For } from "solid-js";
 import Heading from "./heading";
-import TransactionRow, { ContractRow, type ContractRowData, type TransactionRowData } from "./rows";
+import TransactionRow, { ContractRow, type ContractStatus, type TransactionRowData } from "./rows";
 
 interface BoardProps {
 	transactions: TransactionRowData[];
 }
 
+interface ContractBoardItem {
+	clientName: string;
+	propertyName: string;
+	startDate: Date | string;
+	endDate: Date | string;
+	loan: number;
+}
+
 interface ContractBoardProps {
-	contracts: ContractRowData[];
+	contracts: ContractBoardItem[];
+}
+
+function getContractStatus(endDate: Date | string): ContractStatus {
+	const now = new Date();
+	const end = new Date(endDate);
+	const daysUntilExpiry = (end.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
+	if (end < now) return "expired";
+	if (daysUntilExpiry <= 30) return "expiring";
+	return "active";
 }
 
 export function ContractBoard(props: ContractBoardProps) {
 	return (
-		<div class="w-full overflow-x-auto rounded-xl shadow-md bg-background-base shadow-muted-text">
+		<div class="w-7xl overflow-x-auto rounded-xl shadow-md bg-background-base shadow-muted-text">
 			<table class="w-full border-collapse">
 				<thead class="bg-background-secondary">
 					<tr>
@@ -35,7 +52,15 @@ export function ContractBoard(props: ContractBoardProps) {
 				</thead>
 				<tbody class="bg-background-base">
 					<For each={props.contracts}>
-						{(contract) => <ContractRow {...contract} />}
+						{(contract) => (
+							<ContractRow
+								clientName={contract.clientName}
+								propertyName={contract.propertyName}
+								period={`${new Date(contract.startDate).toLocaleDateString("fr-FR")} – ${new Date(contract.endDate).toLocaleDateString("fr-FR")}`}
+								loan={contract.loan}
+								status={getContractStatus(contract.endDate)}
+							/>
+						)}
 					</For>
 				</tbody>
 			</table>
