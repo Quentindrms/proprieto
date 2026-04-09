@@ -1,4 +1,4 @@
-import { createSignal, onMount } from "solid-js";
+import { createSignal, onMount, Show } from "solid-js";
 import type { ButtonIcons } from "../types/styleTypes";
 import { ActionButton, Button } from "./button";
 import Heading from "./heading";
@@ -7,9 +7,8 @@ import Text from "./text";
 interface PageNamerProps {
 	pageName: string;
 	subText: string,
-	buttonText: string;
+	buttonText?: string;
 	onClick: () => void;
-	buttonIcons?: ButtonIcons;
 }
 
 export default function PageNamer(props: PageNamerProps) {
@@ -21,9 +20,11 @@ export default function PageNamer(props: PageNamerProps) {
 				</Heading>
 				<Text size="extra-small" class="font-base-regular text-muted-text">{props.subText}</Text>
 			</div>
-			<ActionButton type="button" onClick={props.onClick}>
-				{props.buttonText}
-			</ActionButton>
+			<Show when={props.buttonText}>
+				<ActionButton type="button" onClick={props.onClick}>
+					{props.buttonText}
+				</ActionButton>
+			</Show>
 		</div>
 	);
 }
