@@ -114,6 +114,43 @@ export function ContractRow(props: ContractRowData) {
         </tr>
     );
 }
+
+export interface FluxRowData {
+    name: string;
+    category: string;
+    issueDate: string;
+    amount: string;
+    type: "outcome" | "income";
+}
+
+export function FluxRow(props: FluxRowData) {
+
+    return (
+        <tr class="last:border-0 hover:bg-background-secondary transition-colors">
+            <td class="px-4 py-3">
+                <Heading components="h3" size="medium">
+                    {props.name}
+                </Heading>
+            </td>
+            <td class="px-4 py-3">
+                <Text size="medium">{props.category}</Text>
+            </td>
+            <td class="px-4 py-3">
+                <Text size="medium">{props.issueDate}</Text>
+            </td>
+            <td class="px-4 py-3">
+                <Text size="medium">{props.amount}€</Text>
+            </td>
+            <td class="px-4 py-3">
+                <div class="flex gap-5">
+                    <FaSolidEdit size={25} color="var(--color-dark)" />
+                    <FaSolidTrashCan size={25} color="var(--color-action-red)" />
+                </div>
+            </td>
+        </tr>
+    )
+}
+
 export interface ContractorRowData {
     name: string;
     speciality: string;
