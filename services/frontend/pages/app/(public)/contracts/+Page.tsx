@@ -31,6 +31,9 @@ export default function Page() {
 
 	return (
 		<div class="w-full flex flex-col">
+
+			<CreateModal close={createModal.close} isClosing={createModal.isClosing} isOpened={createModal.isOpened} />
+
 			<div class="flex items-center justify-between p-2">
 				<div class="flex flex-col">
 					<Heading components="h1" size="extra-large" fontClasses="bold">
@@ -40,7 +43,7 @@ export default function Page() {
 						Supervisez l'ensemble de vos engagements locatifs
 					</Text>
 				</div>
-				<ActionButton>Ajouter un nouveau bail</ActionButton>
+				<ActionButton onClick={createModal.open}>Ajouter un nouveau bail</ActionButton>
 			</div>
 
 			<div>
