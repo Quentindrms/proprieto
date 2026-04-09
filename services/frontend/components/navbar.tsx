@@ -14,7 +14,7 @@ export default function Navbar() {
                 <NavbarLink name="Propriété" value="/app/properties" />
                 <NavbarLink name="Contrats" value="/app/contracts" />
                 <NavbarLink name="Clients" value="/app/clients" />
-                <NavbarLink name="Prestataires" value="" />
+                <NavbarLink name="Prestataires" value="/app/contractors" />
                 <NavbarLink name="Finances" value="" />
             </div>
         </div>
