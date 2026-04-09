@@ -13,7 +13,7 @@ export default function Navbar() {
                 <NavbarLink name="Portefeuille" value="/app" />
                 <NavbarLink name="Propriété" value="/app/properties" />
                 <NavbarLink name="Contrats" value="/app/contracts" />
-                <NavbarLink name="Clients" value="" />
+                <NavbarLink name="Clients" value="/app/clients" />
                 <NavbarLink name="Prestataires" value="" />
                 <NavbarLink name="Finances" value="" />
             </div>
