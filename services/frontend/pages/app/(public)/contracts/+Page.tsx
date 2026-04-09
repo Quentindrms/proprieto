@@ -21,13 +21,13 @@ export default function Page() {
 	const contractRows = data.contracts.map((contract) => ({
 		clientName: contract.clientId,
 		propertyName: contract.property.name,
-		period: `${new Date(contract.startDate).toLocaleDateString("fr-FR")} – ${new Date(contract.endDate).toLocaleDateString("fr-FR")}`,
+		startDate: contract.startDate,
+		endDate: contract.endDate,
 		loan: contract.lease,
-		status: "active",
 	}));
 
 	return (
-		<div class="w-full flex flex-col">
+		<div class="w-full flex flex-col gap-5">
 
 			<CreateModal close={createModal.close} isClosing={createModal.isClosing} isOpened={createModal.isOpened} />
 
