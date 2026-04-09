@@ -2,6 +2,7 @@ import { Badge } from "@components/badge";
 import Board from "@components/board";
 import { ActionButton, ButtonGroup } from "@components/button";
 import ContractExpireSoon from "@components/contract";
+import { CardRevenue } from "@components/dataCard";
 import Heading from "@components/heading";
 import PageNamer from "@components/pageNamer";
 import SearchField from "@components/searchField";
@@ -51,22 +52,37 @@ export default function Page() {
 					]}
 				/>
 			</div>
-
-			<div class="flex flex-col w-2xl p-4 gap-2 bg-background-base rounded-md">
-				<div class="flex justify-between items-center">
-					<Heading components="h3" size="medium" fontClasses="bold">
-						Baux arrivant à terme (nombre)
-					</Heading>
-					<div>
-						<Badge color="warning">Action requise</Badge>
+			<div class="flex gap-2">
+				<div class="flex flex-col w-2xl p-4 gap-2 bg-background-base rounded-md">
+					<div class="flex justify-between items-center">
+						<Heading components="h3" size="medium" fontClasses="bold">
+							Baux arrivant à terme (nombre)
+						</Heading>
+						<div>
+							<Badge color="warning">Action requise</Badge>
+						</div>
+					</div>
+					<div class="flex flex-col gap-4">
+						<ContractExpireSoon
+							clientName="Estelle Haubois"
+							contractName="Appartement Paris"
+							expireDate={new Date()}
+							onRenew={() => {
+								console.log("Renouvelement");
+							}}
+						/>
+						<ContractExpireSoon
+							clientName="Estelle Haubois"
+							contractName="Appartement Paris"
+							expireDate={new Date()}
+							onRenew={() => {
+								console.log("Renouvelement");
+							}}
+						/>
 					</div>
 				</div>
 				<div>
-					<ContractExpireSoon
-						clientName="Estelle Haubois"
-						contractName="Appartement Paris"
-						expireDate={new Date()}
-					/>
+					<CardRevenue stat={5500} title="Revenu de contrat" comment="+12%" />
 				</div>
 			</div>
 		</div>
