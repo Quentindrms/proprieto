@@ -1,11 +1,10 @@
 import { Badge } from "@components/badge";
 import { ContractBoard } from "@components/board";
-import { ActionButton, ButtonGroup } from "@components/button";
+import { ButtonGroup } from "@components/button";
 import ContractExpireSoon from "@components/contract";
 import { CardRevenue } from "@components/dataCard";
 import Heading from "@components/heading";
 import PageNamer from "@components/pageNamer";
-import Text from "@components/text";
 import { useContract } from "@hooks/useContract";
 import { useModal } from "@hooks/useModal";
 import { useData } from "vike-solid/useData";

@@ -1,6 +1,5 @@
 import PageNamer from "@components/pageNamer";
 import { useModal } from "@hooks/useModal";
-import { For } from "solid-js";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
 import CreateModal from "./modals/create";

@@ -1,10 +1,7 @@
 import type { Property } from "@app/types/property";
 import { ButtonBadge } from "@components/badge";
-import { ActionButton } from "@components/button";
-import Heading from "@components/heading";
 import PageNamer from "@components/pageNamer";
 import PropertyCard from "@components/propertyCard";
-import Text from "@components/text";
 import { useModal } from "@hooks/useModal";
 import { useProperty } from "@hooks/useProperty";
 import type { PropertyUpdateType } from "@schemas/property";

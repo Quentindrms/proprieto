@@ -1,11 +1,9 @@
 import type { Property } from "@app/types/property";
 import Board from "@components/board";
-import { ActionButton } from "@components/button";
 import { CardProgressionBar, CardRevenue } from "@components/dataCard";
 import Heading from "@components/heading";
 import PageNamer from "@components/pageNamer";
 import PropertyCard from "@components/propertyCard";
-import Text from "@components/text";
 
 export default function Page() {
 	const property: Property = {
