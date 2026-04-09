@@ -2,6 +2,7 @@ import {
     BsArrowDownRightCircleFill,
     BsArrowUpRightCircleFill,
 } from "solid-icons/bs";
+import { FaSolidEdit, FaSolidTrashCan } from "solid-icons/fa";
 import { Badge } from "./badge";
 import Heading from "./heading";
 import Text from "./text";
@@ -22,16 +23,29 @@ export default function TransactionRow(props: TransactionRowData) {
         <tr class="last:border-0 hover:bg-background-secondary transition-colors">
             <td class="px-4 py-3">
                 <div class="flex items-center gap-3">
-                    {isIncome()
-                        ? <BsArrowUpRightCircleFill size={28} color="var(--color-action-green)" />
-                        : <BsArrowDownRightCircleFill size={28} color="var(--color-action-red)" />
-                    }
-                    <Heading components="h3" size="medium">{props.name}</Heading>
+                    {isIncome() ? (
+                        <BsArrowUpRightCircleFill
+                            size={28}
+                            color="var(--color-action-green)"
+                        />
+                    ) : (
+                        <BsArrowDownRightCircleFill
+                            size={28}
+                            color="var(--color-action-red)"
+                        />
+                    )}
+                    <Heading components="h3" size="medium">
+                        {props.name}
+                    </Heading>
                 </div>
             </td>
             <td class="px-4 py-3 text-right">
                 <Text size="large">
-                    {isIncome() ? "+" : "-"}{props.amount.toLocaleString("fr-FR", { style: "currency", currency: "EUR" })}
+                    {isIncome() ? "+" : "-"}
+                    {props.amount.toLocaleString("fr-FR", {
+                        style: "currency",
+                        currency: "EUR",
+                    })}
                 </Text>
             </td>
             <td class="px-4 py-3">
@@ -51,18 +65,20 @@ export default function TransactionRow(props: TransactionRowData) {
 export type ContractStatus = "active" | "expiring" | "expired";
 
 export interface ContractRowData {
-    clientName: string,
-    propertyName: string,
-    period: string,
-    loan: number,
-    status: ContractStatus,
+    clientName: string;
+    propertyName: string;
+    period: string;
+    loan: number;
+    status: ContractStatus;
 }
 
 export function ContractRow(props: ContractRowData) {
     return (
         <tr class="last:border-0 hover:bg-background-secondary transition-colors">
             <td class="px-4 py-3">
-                <Heading components="h3" size="medium">{props.clientName}</Heading>
+                <Heading components="h3" size="medium">
+                    {props.clientName}
+                </Heading>
             </td>
             <td class="px-4 py-3">
                 <Text size="medium">{props.propertyName}</Text>
@@ -72,22 +88,37 @@ export function ContractRow(props: ContractRowData) {
             </td>
             <td class="px-4 py-3 text-right">
                 <Text size="large">
-                    {props.loan.toLocaleString("fr-FR", { style: "currency", currency: "EUR" })}
+                    {props.loan.toLocaleString("fr-FR", {
+                        style: "currency",
+                        currency: "EUR",
+                    })}
                 </Text>
             </td>
             <td class="px-4 py-3">
-                <Badge color={props.status === "active" ? "success" : props.status === "expiring" ? "warning" : "error"}>
-                    {props.status === "active" ? "Actif" : props.status === "expiring" ? "Expire bientôt" : "Expiré"}
+                <Badge
+                    color={
+                        props.status === "active"
+                            ? "success"
+                            : props.status === "expiring"
+                                ? "warning"
+                                : "error"
+                    }
+                >
+                    {props.status === "active"
+                        ? "Actif"
+                        : props.status === "expiring"
+                            ? "Expire bientôt"
+                            : "Expiré"}
                 </Badge>
             </td>
         </tr>
-    )
+    );
 }
 export interface ContractorRowData {
-    name: string,
-    speciality: string,
-    phone: string,
-    mail: string,
+    name: string;
+    speciality: string;
+    phone: string;
+    mail: string;
 }
 
 export function ContractorRow(props: ContractorRowData) {
@@ -99,9 +130,17 @@ export function ContractorRow(props: ContractorRowData) {
             <td class="px-4 py-3">
                 <Text size="medium">{props.speciality}</Text>
             </td>
-            <td class="px-4 py-3 flex flex-col">
-                <Text size="medium">{props.phone}</Text>
-                <Text size="medium">{props.mail}</Text>
+            <td class="px-4 py-3">
+                <div class="flex flex-col">
+                    <Text size="medium">{props.phone}</Text>
+                    <Text size="medium" class="italic text-muted-text">{props.mail}</Text>
+                </div>
+            </td>
+            <td class="px-4 py-3">
+                <div class="flex gap-5">
+                    <FaSolidEdit class="cursor-pointer" size={25} color="var(--color--dark)" />
+                    <FaSolidTrashCan class="cursor-pointer" size={25} color="var(--color-action-red)" />
+                </div>
             </td>
         </tr>
 
