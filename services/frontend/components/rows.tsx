@@ -83,3 +83,27 @@ export function ContractRow(props: ContractRowData) {
         </tr>
     )
 }
+export interface ContractorRowData {
+    name: string,
+    speciality: string,
+    phone: string,
+    mail: string,
+}
+
+export function ContractorRow(props: ContractorRowData) {
+    return (
+        <tr class="last:border-0 hover:bg-background-secondary transition-colors">
+            <td class="px-4 py-3">
+                <Heading components="h3" size="medium" fontClasses="bold">{props.name}</Heading>
+            </td>
+            <td class="px-4 py-3">
+                <Text size="medium">{props.speciality}</Text>
+            </td>
+            <td class="px-4 py-3 flex flex-col">
+                <Text size="medium">{props.phone}</Text>
+                <Text size="medium">{props.mail}</Text>
+            </td>
+        </tr>
+
+    )
+}

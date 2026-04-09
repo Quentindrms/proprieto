@@ -1,6 +1,6 @@
 import { For } from "solid-js";
 import Heading from "./heading";
-import TransactionRow, { ContractRow, type ContractStatus, type TransactionRowData } from "./rows";
+import TransactionRow, { ContractorRow, ContractRow, type ContractStatus, type TransactionRowData } from "./rows";
 
 interface BoardProps {
 	transactions: TransactionRowData[];
@@ -66,6 +66,53 @@ export function ContractBoard(props: ContractBoardProps) {
 			</table>
 		</div>
 	);
+}
+
+interface ContractorsBoardItem {
+	name: string;
+	speciality: string,
+	phone: string,
+	mail: string,
+}
+
+interface ContractorsBoardProps {
+	contractors: ContractorsBoardItem[]
+}
+
+export function ContractorsBoard(props: ContractorsBoardProps) {
+
+	return (
+		<div class="w-7xl overflow-x-auto rounded-xl shadow-md bg-background-base shadow-muted-text">
+			<table class="w-full border-collapse">
+				<thead class="bg-background-base shadow-muted-text">
+					<tr>
+						<th class="px-4 py-3 text-left">
+							<Heading components="h4" size="large">Prestataire</Heading>
+						</th>
+						<th class="px-4 py-3 text-left">
+							<Heading components="h4" size="large">Spécialité</Heading>
+						</th>
+						<th class="px-4 py-3 text-left">
+							<Heading components="h4" size="large">Contact</Heading>
+						</th>
+					</tr>
+				</thead>
+				<tbody class="bg-background-base">
+					<For each={props.contractors}>
+						{(contractor) => (
+							<ContractorRow
+								mail={contractor.mail}
+								name={contractor.name}
+								phone={contractor.phone}
+								speciality={contractor.speciality}
+							/>
+						)}
+					</For>
+				</tbody>
+			</table>
+		</div>
+	)
+
 }
 
 export default function Board(props: BoardProps) {
