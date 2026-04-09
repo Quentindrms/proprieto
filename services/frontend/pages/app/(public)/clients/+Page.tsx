@@ -1,5 +1,3 @@
-import { StatCard, StatCardWrapper } from "@components/cards";
-import ClientCard from "@components/clientCard";
 import PageNamer from "@components/pageNamer";
 import { useModal } from "@hooks/useModal";
 import { For } from "solid-js";
@@ -13,9 +11,10 @@ export default function Page() {
 	const createModal = useModal(350);
 
 	return (
-		<div class="w-dvw">
+		<div class="w-full">
 			<PageNamer
-				pageName="Mes clients"
+				pageName="Mes clients test"
+				subText="Gestion et suivie des résidents du parc immobilier"
 				buttonText="Ajouter un client"
 				onClick={createModal.open}
 			/>
@@ -26,24 +25,8 @@ export default function Page() {
 				isOpened={createModal.isOpened}
 			/>
 
-			<StatCardWrapper>
-				<StatCard
-					legend="Clients totaux"
-					value={String(data.client.length)}
-					title=""
-				/>
-
-				<StatCard legend="Avec contrat actif" value="0" title="" />
-
-				<StatCard legend="Sans contrat" value="0" title="" />
-			</StatCardWrapper>
-
 			<div class="grid grid-cols-3 gap-2">
-				<For each={data.client}>
-					{(client) => (
-						<ClientCard client={client} onDelete={() => {}} onEdit={() => {}} />
-					)}
-				</For>
+
 			</div>
 		</div>
 	);

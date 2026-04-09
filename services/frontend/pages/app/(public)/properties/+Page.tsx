@@ -2,6 +2,7 @@ import type { Property } from "@app/types/property";
 import { ButtonBadge } from "@components/badge";
 import { ActionButton } from "@components/button";
 import Heading from "@components/heading";
+import PageNamer from "@components/pageNamer";
 import PropertyCard from "@components/propertyCard";
 import Text from "@components/text";
 import { useModal } from "@hooks/useModal";
@@ -29,7 +30,7 @@ const fakeProperty: Property = {
 	sellPrice: undefined,
 };
 
-const fakeData = ["", "", "", "", "", "", "", ""]
+const fakeData = ["", "", "", "", "", "", "", ""];
 
 export default function Page() {
 	const data = useData<Data>();
@@ -46,17 +47,8 @@ export default function Page() {
 	return (
 		<div class="w-full h-full flex-col">
 			<CreateModal close={createModal.close} isClosing={createModal.isClosing} isOpened={createModal.isOpened} />
-			<div class="flex justify-between p-3">
-				<div class="flex flex-col">
-					<Heading components="h1" size="extra-large" fontClasses="bold">
-						Portefeuille immobilier
-					</Heading>
-					<Text size="extra-small" class="font-base-regular">
-						Gérer et suivez l'ensemble de votre portefeuille
-					</Text>
-				</div>
-				<ActionButton color="black" onClick={createModal.open}>Ajouter un bien</ActionButton>
-			</div>
+			<PageNamer buttonText="Ajouter un bien" onClick={createModal.open} pageName="Portfolio immobilier" subText="Gérez et suivez l'ensemble de votre parc immobilier" />
+
 			<div class="flex flex-row gap-4 p-4">
 				<ButtonBadge color="primary" onClick={() => { }}>Tous les biens (25)</ButtonBadge>
 				<ButtonBadge color="primary" onClick={() => { }}>Appartements</ButtonBadge>

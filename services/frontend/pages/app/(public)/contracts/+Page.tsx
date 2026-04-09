@@ -4,6 +4,7 @@ import { ActionButton, ButtonGroup } from "@components/button";
 import ContractExpireSoon from "@components/contract";
 import { CardRevenue } from "@components/dataCard";
 import Heading from "@components/heading";
+import PageNamer from "@components/pageNamer";
 import Text from "@components/text";
 import { useContract } from "@hooks/useContract";
 import { useModal } from "@hooks/useModal";
@@ -28,20 +29,18 @@ export default function Page() {
 
 	return (
 		<div class="w-full flex flex-col gap-5">
+			<CreateModal
+				close={createModal.close}
+				isClosing={createModal.isClosing}
+				isOpened={createModal.isOpened}
+			/>
 
-			<CreateModal close={createModal.close} isClosing={createModal.isClosing} isOpened={createModal.isOpened} />
-
-			<div class="flex items-center justify-between p-2">
-				<div class="flex flex-col">
-					<Heading components="h1" size="extra-large" fontClasses="bold">
-						Gestion des baux
-					</Heading>
-					<Text class="text-muted-text font-base-regular">
-						Supervisez l'ensemble de vos engagements locatifs
-					</Text>
-				</div>
-				<ActionButton onClick={createModal.open}>Ajouter un nouveau bail</ActionButton>
-			</div>
+			<PageNamer
+				onClick={createModal.open}
+				pageName="Gestion des baux"
+				subText="Supervisez l'ensemble de vos engagements locatifs"
+				buttonText="Ajouter un nouveau bail"
+			/>
 
 			<div>
 				<ButtonGroup
