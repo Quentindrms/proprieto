@@ -5,17 +5,18 @@ interface ContractExpireSoonProps {
     clientName: string,
     contractName: string,
     expireDate: Date,
+    onRenew: () => void,
 }
 
 export default function ContractExpireSoon(props: ContractExpireSoonProps) {
 
     return (
-        <div class="flex flex-row items-center justify-between bg-background-base rounded-xl">
+        <div class="flex flex-row items-center justify-between bg-background-muted/10 rounded-xl p-2">
             <div class="flex flex-col">
                 <Heading components="h2" size="medium">{props.clientName} - {props.contractName}</Heading>
                 <Text class="">Expire le {props.expireDate.toLocaleDateString("fr-FR")}</Text>
             </div>
-            <p>Prout</p>
+            <button type="button" class="font-base-bold underline cursor-pointer p-2" onClick={props.onRenew}>Renouveler</button>
         </div>
     )
 }
