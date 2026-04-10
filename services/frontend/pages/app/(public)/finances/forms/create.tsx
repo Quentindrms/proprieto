@@ -21,7 +21,7 @@ export function CreateOutcomeForm() {
         <Form callback={outcome.handleCreateOutcome}>
 
             <TextField
-                label="Nom de dieu"
+                label="Nom"
                 name="name"
                 onInput={outcome.handleInputOutcome("name")}
             />
@@ -217,22 +217,43 @@ export function CreateIncomeForm() {
                     }
                 </Text>
             )}
+            <div class="flex gap-2">
+                <div>
+                    <Select
+                        label="Contrat associé"
+                        labelOptions="Sélectionner un contrat"
+                        options={contractsList}
+                        onInput={income.handleInputIncome("contractId")}
+                    />
+                    {income.incomeErrors() && (
+                        <Text class="text-red-500">
+                            {
+                                z.treeifyError(income.incomeErrors()!.error).properties?.contractId
+                                    ?.errors[0]
+                            }
+                        </Text>
+                    )}
+                </div>
+                <Select
+                    label="Catégorie"
+                    labelOptions="Sélectionner une catégorie"
+                    options={incomeCategory}
+                    onInput={income.handleInputIncome("incomeCategoryId")}
+                />
+                {income.incomeErrors() && (
+                    <Text class="text-red-500">
+                        {
+                            z.treeifyError(income.incomeErrors()!.error).properties
+                                ?.incomeCategoryId?.errors[0]
+                        }
+                    </Text>
+                )}
+            </div>
 
-            <Select
-                label="Contrat associé"
-                labelOptions="Sélectionner un contrat"
-                options={contractsList}
-                onInput={income.handleInputIncome("contractId")}
+            <TextField
+                label="Débiteur"
+                onInput={income.handleInputIncome("issueDate")}
             />
-            {income.incomeErrors() && (
-                <Text class="text-red-500">
-                    {
-                        z.treeifyError(income.incomeErrors()!.error).properties?.contractId
-                            ?.errors[0]
-                    }
-                </Text>
-            )}
-
 
             <TextField
                 label="Date d'émission"
@@ -247,6 +268,35 @@ export function CreateIncomeForm() {
                     }
                 </Text>
             )}
+
+            <div class="flex gap-2">
+                <div class="flex flex-col">
+                    <ToggleSwitch
+                        label="Récurrent"
+                        onInput={() => {
+                            income.handleInputIncome("isRecurring");
+                            setIsRecuring(!isRecuring());
+                        }}
+                    />
+                </div>
+                <Show when={isRecuring()}>
+                    <Select
+                        label="Récurrence"
+                        labelOptions="Sélectionner une récurrence"
+                        options={recurrence}
+                        onInput={income.handleInputIncome("frequency")}
+                    />
+                    {income.incomeErrors() && (
+                        <Text class="text-red-500">
+                            {
+                                z.treeifyError(income.incomeErrors()!.error).properties?.frequency
+                                    ?.errors[0]
+                            }
+                        </Text>
+                    )}
+                </Show>
+            </div>
+
             <div class="flex gap-2">
                 <div class="flex flex-col">
                     <ToggleSwitch
@@ -282,48 +332,7 @@ export function CreateIncomeForm() {
                     )}
                 </Show>
             </div>
-            <div class="flex gap-2">
-                <div class="flex flex-col">
-                    <ToggleSwitch
-                        label="Récurrent"
-                        onInput={() => {
-                            income.handleInputIncome("isRecurring");
-                            setIsRecuring(!isRecuring());
-                        }}
-                    />
-                </div>
-                <Show when={isRecuring()}>
-                    <Select
-                        label="Récurrence"
-                        labelOptions="Sélectionner une récurrence"
-                        options={recurrence}
-                        onInput={income.handleInputIncome("frequency")}
-                    />
-                    {income.incomeErrors() && (
-                        <Text class="text-red-500">
-                            {
-                                z.treeifyError(income.incomeErrors()!.error).properties?.frequency
-                                    ?.errors[0]
-                            }
-                        </Text>
-                    )}
-                </Show>
-            </div>
 
-            <Select
-                label="Catégorie"
-                labelOptions="Sélectionner une catégorie"
-                options={incomeCategory}
-                onInput={income.handleInputIncome("incomeCategoryId")}
-            />
-            {income.incomeErrors() && (
-                <Text class="text-red-500">
-                    {
-                        z.treeifyError(income.incomeErrors()!.error).properties
-                            ?.incomeCategoryId?.errors[0]
-                    }
-                </Text>
-            )}
             <div class="flex justify-center p-4">
                 <Button type="submit">Ajouter un revenu</Button>
             </div>
