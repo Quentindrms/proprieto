@@ -1,25 +1,36 @@
 import { Button } from "@components/button";
-import { CheckBox, Form, Select, TextField, ToggleSwitch } from "@components/form";
+import {
+    CheckBox,
+    Form,
+    Select,
+    TextField,
+    ToggleSwitch,
+} from "@components/form";
 import Text from "@components/text";
 import { useFinance } from "@hooks/useFinance";
 import { createSignal, Show } from "solid-js";
+import { useData } from "vike-solid/useData";
 
 import { z } from "zod";
+import type { Data } from "../+data";
 
 export function CreateOutcomeForm() {
-
+    const data = useData<Data>();
     const [isRecuring, setIsRecuring] = createSignal<boolean>(false);
     const [isPaid, setIsPaid] = createSignal<boolean>(false);
 
-    const propertiesList = [{ value: "", label: "", disabled: false }]
-    const providersList = [{ value: "", label: "", disabled: false }]
-    const categoryList = [{ value: "", label: "", disabled: false }]
+    const propertiesList = [{ value: "", label: "", disabled: false }];
+    const providersList = [{ value: "", label: "", disabled: false }];
+    const categoryList = data.outcomeCategories.map((category) => ({
+        value: category.slug,
+        label: category.label,
+        disabled: false,
+    }));
 
     const outcome = useFinance();
 
     return (
         <Form callback={outcome.handleCreateOutcome}>
-
             <TextField
                 label="Nom"
                 name="name"
@@ -62,8 +73,8 @@ export function CreateOutcomeForm() {
                     {outcome.outcomeErrors() && (
                         <Text class="text-red-500">
                             {
-                                z.treeifyError(outcome.outcomeErrors()!.error).properties?.propertyId
-                                    ?.errors[0]
+                                z.treeifyError(outcome.outcomeErrors()!.error).properties
+                                    ?.propertyId?.errors[0]
                             }
                         </Text>
                     )}
@@ -79,12 +90,11 @@ export function CreateOutcomeForm() {
                 {outcome.outcomeErrors() && (
                     <Text class="text-red-500">
                         {
-                            z.treeifyError(outcome.outcomeErrors()!.error).properties?.categoryId
-                                ?.errors[0]
+                            z.treeifyError(outcome.outcomeErrors()!.error).properties
+                                ?.categoryId?.errors[0]
                         }
                     </Text>
                 )}
-
             </div>
 
             <Select
@@ -113,8 +123,8 @@ export function CreateOutcomeForm() {
                     {outcome.outcomeErrors() && (
                         <Text class="text-red-500">
                             {
-                                z.treeifyError(outcome.outcomeErrors()!.error).properties?.isRecurring
-                                    ?.errors[0]
+                                z.treeifyError(outcome.outcomeErrors()!.error).properties
+                                    ?.isRecurring?.errors[0]
                             }
                         </Text>
                     )}
@@ -130,8 +140,8 @@ export function CreateOutcomeForm() {
                     {outcome.outcomeErrors() && (
                         <Text class="text-red-500">
                             {
-                                z.treeifyError(outcome.outcomeErrors()!.error).properties?.frequency
-                                    ?.errors[0]
+                                z.treeifyError(outcome.outcomeErrors()!.error).properties
+                                    ?.frequency?.errors[0]
                             }
                         </Text>
                     )}
@@ -151,8 +161,8 @@ export function CreateOutcomeForm() {
                     {outcome.outcomeErrors() && (
                         <Text class="text-red-500">
                             {
-                                z.treeifyError(outcome.outcomeErrors()!.error).properties?.isPaid
-                                    ?.errors[0]
+                                z.treeifyError(outcome.outcomeErrors()!.error).properties
+                                    ?.isPaid?.errors[0]
                             }
                         </Text>
                     )}
@@ -184,14 +194,15 @@ export function CreateOutcomeForm() {
 }
 
 export function CreateIncomeForm() {
-
+    const data = useData<Data>();
     const [isPaid, setIsPaid] = createSignal<boolean>(false);
-    const [isRecuring, setIsRecuring] = createSignal<boolean>(false)
+    const [isRecuring, setIsRecuring] = createSignal<boolean>(false);
 
     const income = useFinance();
-    const incomeCategory = [{ label: "", value: "", disabled: false }]
-    const recurrence = [{ label: "", value: "", disabled: false }]
-    const contractsList = [{ label: "", value: "", disabled: false }]
+
+    const incomeCategory = data.incomeCategories.map((category) => ({ label: category.label, value: category.slug, disabled: false }));
+    const recurrence = [{ label: "", value: "", disabled: false }];
+    const contractsList = [{ label: "", value: "", disabled: false }];
 
     return (
         <Form callback={income.handleCreateIncome}>
@@ -226,8 +237,8 @@ export function CreateIncomeForm() {
                     {income.incomeErrors() && (
                         <Text class="text-red-500">
                             {
-                                z.treeifyError(income.incomeErrors()!.error).properties?.contractId
-                                    ?.errors[0]
+                                z.treeifyError(income.incomeErrors()!.error).properties
+                                    ?.contractId?.errors[0]
                             }
                         </Text>
                     )}
@@ -287,8 +298,8 @@ export function CreateIncomeForm() {
                     {income.incomeErrors() && (
                         <Text class="text-red-500">
                             {
-                                z.treeifyError(income.incomeErrors()!.error).properties?.frequency
-                                    ?.errors[0]
+                                z.treeifyError(income.incomeErrors()!.error).properties
+                                    ?.frequency?.errors[0]
                             }
                         </Text>
                     )}
@@ -301,7 +312,7 @@ export function CreateIncomeForm() {
                         label="Payé"
                         onInput={(event: InputEvent) => {
                             income.handleInputIncome("isPaid")(event);
-                            setIsPaid(!isPaid())
+                            setIsPaid(!isPaid());
                         }}
                     />
                     {income.incomeErrors() && (
