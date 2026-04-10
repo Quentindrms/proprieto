@@ -39,7 +39,7 @@ export function useFinance() {
 			const target = event.target as HTMLInputElement;
 			setCreateIncome((prev) => ({
 				...prev,
-				[field]: target.checked ? target.checked : target.value,
+				[field]: target.type === "checkbox" ? target.checked : target.value,
 			}));
 		};
 	}
@@ -49,7 +49,7 @@ export function useFinance() {
 			const target = event.target as HTMLInputElement;
 			setCreateOutcome((prev) => ({
 				...prev,
-				[field]: target.checked ? target.checked : target.value,
+				[field]: target.type === "checkbox" ? target.checked : target.value,
 			}));
 		};
 	}
@@ -59,7 +59,7 @@ export function useFinance() {
 	}
 
 	function handleCreateOutcome() {
-		console.log(createOutcome);
+		console.log(createOutcome());
 	}
 
 	return {
