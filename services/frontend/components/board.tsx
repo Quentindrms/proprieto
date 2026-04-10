@@ -1,4 +1,5 @@
-import { For } from "solid-js";
+import { createEffect, createSignal, For, Show } from "solid-js";
+import { ButtonGroup } from "./button";
 import Heading from "./heading";
 import TransactionRow, {
 	ContractorRow,
@@ -154,53 +155,89 @@ interface FluxBoardProps {
 }
 
 export function FluxBoard(props: FluxBoardProps) {
+
+	const [displayOutcomes, setDisplayOutcome] = createSignal<boolean>(false);
+
+	function sortFlux(flux: FluxBoardItem[]) {
+		const outcome = flux.filter((outcome) =>
+			outcome.type === "outcome");
+		const income = flux.filter((income) =>
+			income.type === "income");
+		return { income, outcome };
+	}
+
+	const flux = sortFlux(props.flux);
+	flux.income.forEach((income) => { console.log(income) })
+	flux.outcome.forEach((outcome) => { console.log(outcome) })
+
 	return (
-		<div class="w-7xl overflow-x-auto rounded-xl shadow-md bg-background-base shadow-muted-text">
-			<table class="w-full border-collapse">
-				<thead class="bg-background-base shadow-muted-text">
-					<tr>
-						<th class="px-4 py-3 text-left">
-							<Heading components="h4" size="large">
-								Nom
-							</Heading>
-						</th>
-						<th class="px-4 py-3 text-left">
-							<Heading components="h4" size="large">
-								Catégorie
-							</Heading>
-						</th>
-						<th class="px-4 py-3 text-left">
-							<Heading components="h4" size="large">
-								Date d'échéance
-							</Heading>
-						</th>
-						<th class="px-4 py-3 text-left">
-							<Heading components="h4" size="large">
-								Montant
-							</Heading>
-						</th>
-						<th class="px-4 py-3 text-left">
-							<Heading components="h4" size="large">
-								Actions
-							</Heading>
-						</th>
-					</tr>
-				</thead>
-				<tbody class="bg-background-base">
-					<For each={props.flux}>
-						{(flux) => (
-							<FluxRow
-								amount={flux.amount}
-								category={flux.category}
-								issueDate={flux.issueDate}
-								name={flux.name}
-								type={flux.type}
-							/>
-						)}
-					</For>
-				</tbody>
-			</table>
+		<div>
+			<ButtonGroup
+				options={[{ label: "Revenus", value: "income", onClick: () => setDisplayOutcome(false) }, { label: "Dépenses", value: "outcome", onClick: () => setDisplayOutcome(true) }]}
+			/>
+			<div class="w-7xl overflow-x-auto rounded-xl shadow-md bg-background-base shadow-muted-text">
+				<table class="w-full border-collapse">
+					<thead class="bg-background-base shadow-muted-text">
+						<tr>
+							<th class="px-4 py-3 text-left">
+								<Heading components="h4" size="large">
+									Nom
+								</Heading>
+							</th>
+							<th class="px-4 py-3 text-left">
+								<Heading components="h4" size="large">
+									Catégorie
+								</Heading>
+							</th>
+							<th class="px-4 py-3 text-left">
+								<Heading components="h4" size="large">
+									Date d'échéance
+								</Heading>
+							</th>
+							<th class="px-4 py-3 text-left">
+								<Heading components="h4" size="large">
+									Montant
+								</Heading>
+							</th>
+							<th class="px-4 py-3 text-left">
+								<Heading components="h4" size="large">
+									Actions
+								</Heading>
+							</th>
+						</tr>
+					</thead>
+					<tbody class="bg-background-base">
+						<Show when={!displayOutcomes()}>
+							<For each={flux.income}>
+								{(income) => (
+									<FluxRow
+										amount={income.amount}
+										category={income.category}
+										issueDate={income.issueDate}
+										name={income.name}
+										type={income.type}
+									/>
+								)}
+							</For>
+						</Show>
+						<Show when={displayOutcomes()}>
+							<For each={flux.outcome}>
+								{(outcome) => (
+									<FluxRow
+										amount={outcome.amount}
+										category={outcome.category}
+										issueDate={outcome.issueDate}
+										name={outcome.name}
+										type={outcome.type}
+									/>
+								)}
+							</For>
+						</Show>
+					</tbody>
+				</table>
+			</div>
 		</div>
+
 	);
 }
 
