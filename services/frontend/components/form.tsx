@@ -40,7 +40,7 @@ export function Form(props: FormProps) {
 				{...rest}
 				onSubmit={handleSubmit}
 				class={clsx(
-					"flex flex-col rounded-2xl w-xl bg-background-base p-4 shadow-xs shadow-background-muted",
+					"flex flex-col rounded-2xl w-xl bg-background-base p-4 shadow-xs shadow-background-muted gap-2",
 				)}
 			>
 				{hasRequiredFields() && (
@@ -151,8 +151,7 @@ interface ToggleSwitchProps extends JSX.InputHTMLAttributes<HTMLInputElement> {
 }
 
 export function ToggleSwitch(props: ToggleSwitchProps) {
-	const [local, rest] = splitProps(props, ["label"]);
-
+	const [_local, rest] = splitProps(props, ["label"]);
 	const toggleAppearance = "w-16 h-10 flex shrink-0 items-center ml-4 p-1 rounded-full bg-slate-200 rounded-full";
 	const afterAppearance = "after:w-8 after:h-8 after:bg-white after:rounded-full after:shadow-md"
 	const peerAppearance = "peer-checked:bg-action-green after:duration-300 peer-checked:after:translate-x-6";
@@ -160,7 +159,7 @@ export function ToggleSwitch(props: ToggleSwitchProps) {
 	return (
 		<label class="font-base-bold p-1">
 			{props.label}
-			<input {...local} type="checkbox" class="appearance-none peer" />
+			<input {...rest} type="checkbox" class="appearance-none peer" />
 			<span class={clsx([toggleAppearance, afterAppearance, peerAppearance])}></span>
 		</label>
 	)
