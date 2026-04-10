@@ -1,7 +1,12 @@
-import type { IncomeCreationType } from "@schemas/income";
-import type { OutcomeCreationType } from "@schemas/outcome";
+import { IncomeCreationSchema, type IncomeCreationType } from "@schemas/income";
+import {
+	OutcomeCreationSchema,
+	type OutcomeCreationType,
+} from "@schemas/outcome";
 import { createSignal } from "solid-js";
+import toast from "solid-toast";
 import type { ZodSafeParseError } from "zod";
+import { onCreateIncome, onCreateOutcome } from "./useFinance.telefunc";
 
 export function useFinance() {
 	const [createIncome, setCreateIncome] = createSignal<IncomeCreationType>({
@@ -54,12 +59,36 @@ export function useFinance() {
 		};
 	}
 
-	function handleCreateIncome() {
-		console.log(createIncome());
+	async function handleCreateIncome() {
+		const validate = IncomeCreationSchema.safeParse(createIncome());
+		if (!validate.success) {
+			setIncomeErrors(validate);
+			return;
+		}
+		setIncomeErrors(undefined);
+		const response = await onCreateIncome(createIncome());
+		if (response.message !== "success") {
+			toast.error("Une erreur est survenue lors de la création du revenu");
+			return;
+		}
+		toast.success("Revenu crée");
+		return;
 	}
 
-	function handleCreateOutcome() {
-		console.log(createOutcome());
+	async function handleCreateOutcome() {
+		const validate = OutcomeCreationSchema.safeParse(createOutcome());
+		if (!validate.success) {
+			setOutcomeErrors(validate);
+			return;
+		}
+		setOutcomeErrors(undefined);
+		const response = await onCreateOutcome(createOutcome());
+		if (response?.message !== "success") {
+			toast.error("Une erreur est survenue lors de la création de la dépense");
+			return;
+		}
+		toast.success("Dépense crée");
+		return;
 	}
 
 	return {
