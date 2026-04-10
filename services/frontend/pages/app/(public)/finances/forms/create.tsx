@@ -203,6 +203,9 @@ export function CreateOutcomeForm() {
     );
 }
 
+
+
+
 export function CreateIncomeForm() {
     const data = useData<Data>();
     const [isPaid, setIsPaid] = createSignal<boolean>(false);
@@ -215,7 +218,11 @@ export function CreateIncomeForm() {
         value: category.slug,
         disabled: false,
     }));
-    const contractsList = [{ label: "", value: "", disabled: false }];
+    const contractsList = data.contractList.map((contract) => ({
+        label: contract.property.name,
+        value: contract.id,
+        disabled: false,
+    }))
 
     return (
         <Form callback={income.handleCreateIncome}>
