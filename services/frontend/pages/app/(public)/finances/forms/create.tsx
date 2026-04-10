@@ -8,9 +8,9 @@ import {
 } from "@components/form";
 import Text from "@components/text";
 import { useFinance } from "@hooks/useFinance";
+import { recurrence } from "@utils/recurrence";
 import { createSignal, Show } from "solid-js";
 import { useData } from "vike-solid/useData";
-
 import { z } from "zod";
 import type { Data } from "../+data";
 
@@ -19,11 +19,21 @@ export function CreateOutcomeForm() {
     const [isRecuring, setIsRecuring] = createSignal<boolean>(false);
     const [isPaid, setIsPaid] = createSignal<boolean>(false);
 
-    const propertiesList = [{ value: "", label: "", disabled: false }];
-    const providersList = [{ value: "", label: "", disabled: false }];
+    const providersList = data.providers.map((provider) => ({
+        value: provider.id,
+        label: `${provider.directories.firstName} ${provider.directories.name}`,
+        disabled: false,
+    }));
+
     const categoryList = data.outcomeCategories.map((category) => ({
         value: category.slug,
         label: category.label,
+        disabled: false,
+    }));
+
+    const propertiesList = data.properties.map((property) => ({
+        value: property.id,
+        label: property.name,
         disabled: false,
     }));
 
@@ -133,7 +143,7 @@ export function CreateOutcomeForm() {
                     <Select
                         label="Fréquence de paiement"
                         labelOptions={"Indiquer une fréquence de paiement"}
-                        options={[]}
+                        options={recurrence}
                         onInput={outcome.handleInputOutcome("frequency")}
                     ></Select>
 
@@ -200,8 +210,11 @@ export function CreateIncomeForm() {
 
     const income = useFinance();
 
-    const incomeCategory = data.incomeCategories.map((category) => ({ label: category.label, value: category.slug, disabled: false }));
-    const recurrence = [{ label: "", value: "", disabled: false }];
+    const incomeCategory = data.incomeCategories.map((category) => ({
+        label: category.label,
+        value: category.slug,
+        disabled: false,
+    }));
     const contractsList = [{ label: "", value: "", disabled: false }];
 
     return (
