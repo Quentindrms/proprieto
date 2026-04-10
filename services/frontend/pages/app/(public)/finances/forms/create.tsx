@@ -104,11 +104,9 @@ export function CreateOutcomeForm() {
                 <div class="flex flex-col">
                     <ToggleSwitch
                         label="Réccurent"
-                        name="isRecuring"
-                        onChange={(event: Event) => {
-                            const checked = (event.target as HTMLInputElement).checked;
-                            console.log("toggle fired, checked:", checked);
-                            setIsRecuring(checked);
+                        onInput={(event: InputEvent) => {
+                            outcome.handleInputOutcome("isRecurring")(event);
+                            setIsRecuring(!isRecuring());
                         }}
                     />
 
@@ -273,8 +271,8 @@ export function CreateIncomeForm() {
                 <div class="flex flex-col">
                     <ToggleSwitch
                         label="Récurrent"
-                        onInput={() => {
-                            income.handleInputIncome("isRecurring");
+                        onInput={(event: InputEvent) => {
+                            income.handleInputIncome("isRecurring")(event);
                             setIsRecuring(!isRecuring());
                         }}
                     />
@@ -301,8 +299,8 @@ export function CreateIncomeForm() {
                 <div class="flex flex-col">
                     <ToggleSwitch
                         label="Payé"
-                        onInput={() => {
-                            income.handleInputIncome("isPaid");
+                        onInput={(event: InputEvent) => {
+                            income.handleInputIncome("isPaid")(event);
                             setIsPaid(!isPaid())
                         }}
                     />
