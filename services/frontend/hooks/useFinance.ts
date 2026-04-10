@@ -13,6 +13,7 @@ export function useFinance() {
 		frequency: "none",
 		paidOn: undefined,
 		issueDate: new Date(),
+		isRecurring: false,
 	});
 
 	const [createOutcome, setCreateOutcome] = createSignal<OutcomeCreationType>({

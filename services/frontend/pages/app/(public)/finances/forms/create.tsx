@@ -19,8 +19,9 @@ export function CreateOutcomeForm() {
 
     return (
         <Form callback={outcome.handleCreateOutcome}>
+
             <TextField
-                label="Nom"
+                label="Nom de dieu"
                 name="name"
                 onInput={outcome.handleInputOutcome("name")}
             />
@@ -178,7 +179,7 @@ export function CreateOutcomeForm() {
             )}
 
             <div class="flex justify-center p-2">
-                <Button type="submit">Créer une nouveau revenu</Button>
+                <Button type="submit">Ajouter une dépense</Button>
             </div>
         </Form>
     );
@@ -186,5 +187,146 @@ export function CreateOutcomeForm() {
 
 export function CreateIncomeForm() {
 
+    const [isPaid, setIsPaid] = createSignal<boolean>(false);
+    const [isRecuring, setIsRecuring] = createSignal<boolean>(false)
 
+    const income = useFinance();
+    const incomeCategory = [{ label: "", value: "", disabled: false }]
+    const recurrence = [{ label: "", value: "", disabled: false }]
+    const contractsList = [{ label: "", value: "", disabled: false }]
+
+    return (
+        <Form callback={income.handleCreateIncome}>
+            <TextField label="Nom" onInput={income.handleInputIncome("name")} />
+
+            {income.incomeErrors() && (
+                <Text class="text-red-500">
+                    {
+                        z.treeifyError(income.incomeErrors()!.error).properties?.name
+                            ?.errors[0]
+                    }
+                </Text>
+            )}
+
+            <TextField label="Montant" onInput={income.handleInputIncome("amount")} />
+            {income.incomeErrors() && (
+                <Text class="text-red-500">
+                    {
+                        z.treeifyError(income.incomeErrors()!.error).properties?.amount
+                            ?.errors[0]
+                    }
+                </Text>
+            )}
+
+            <Select
+                label="Contrat associé"
+                labelOptions="Sélectionner un contrat"
+                options={contractsList}
+                onInput={income.handleInputIncome("contractId")}
+            />
+            {income.incomeErrors() && (
+                <Text class="text-red-500">
+                    {
+                        z.treeifyError(income.incomeErrors()!.error).properties?.contractId
+                            ?.errors[0]
+                    }
+                </Text>
+            )}
+
+
+            <TextField
+                label="Date d'émission"
+                type="date"
+                onInput={income.handleInputIncome("issueDate")}
+            />
+            {income.incomeErrors() && (
+                <Text class="text-red-500">
+                    {
+                        z.treeifyError(income.incomeErrors()!.error).properties?.issueDate
+                            ?.errors[0]
+                    }
+                </Text>
+            )}
+            <div class="flex gap-2">
+                <div class="flex flex-col">
+                    <ToggleSwitch
+                        label="Payé"
+                        onInput={() => {
+                            income.handleInputIncome("isPaid");
+                            setIsPaid(!isPaid())
+                        }}
+                    />
+                    {income.incomeErrors() && (
+                        <Text class="text-red-500">
+                            {
+                                z.treeifyError(income.incomeErrors()!.error).properties?.isPaid
+                                    ?.errors[0]
+                            }
+                        </Text>
+                    )}
+                </div>
+
+                <Show when={isPaid()}>
+                    <TextField
+                        label="Date de paiement"
+                        type="date"
+                        onInput={income.handleInputIncome("isPaid")}
+                    />
+                    {income.incomeErrors() && (
+                        <Text class="text-red-500">
+                            {
+                                z.treeifyError(income.incomeErrors()!.error).properties?.paidOn
+                                    ?.errors[0]
+                            }
+                        </Text>
+                    )}
+                </Show>
+            </div>
+            <div class="flex gap-2">
+                <div class="flex flex-col">
+                    <ToggleSwitch
+                        label="Récurrent"
+                        onInput={() => {
+                            income.handleInputIncome("isRecurring");
+                            setIsRecuring(!isRecuring());
+                        }}
+                    />
+                </div>
+                <Show when={isRecuring()}>
+                    <Select
+                        label="Récurrence"
+                        labelOptions="Sélectionner une récurrence"
+                        options={recurrence}
+                        onInput={income.handleInputIncome("frequency")}
+                    />
+                    {income.incomeErrors() && (
+                        <Text class="text-red-500">
+                            {
+                                z.treeifyError(income.incomeErrors()!.error).properties?.frequency
+                                    ?.errors[0]
+                            }
+                        </Text>
+                    )}
+                </Show>
+            </div>
+
+            <Select
+                label="Catégorie"
+                labelOptions="Sélectionner une catégorie"
+                options={incomeCategory}
+                onInput={income.handleInputIncome("incomeCategoryId")}
+            />
+            {income.incomeErrors() && (
+                <Text class="text-red-500">
+                    {
+                        z.treeifyError(income.incomeErrors()!.error).properties
+                            ?.incomeCategoryId?.errors[0]
+                    }
+                </Text>
+            )}
+            <div class="flex justify-center p-4">
+                <Button type="submit">Ajouter un revenu</Button>
+            </div>
+        </Form>
+    );
 }
