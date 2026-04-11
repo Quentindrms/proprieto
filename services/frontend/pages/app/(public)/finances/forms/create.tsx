@@ -26,7 +26,7 @@ export function CreateOutcomeForm() {
     }));
 
     const categoryList = data.outcomeCategories.map((category) => ({
-        value: category.slug,
+        value: category.id,
         label: category.label,
         disabled: false,
     }));
