@@ -142,7 +142,7 @@ export function ContractorsBoard(props: ContractorsBoardProps) {
 	);
 }
 
-interface FluxBoardItem {
+export interface FluxBoardItem {
 	name: string;
 	category: string;
 	issueDate: string;
