@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { type JSX, splitProps } from "solid-js";
-import type { BadgeColor, ButtonColor } from "../types/styleTypes";
+import type { BadgeColor } from "../types/styleTypes";
 
 interface BadgeProps {
     color: BadgeColor;
@@ -45,10 +45,8 @@ export function ButtonBadge(props: ButtonBadgeProps) {
         "w-fit h-fit pl-4 pr-4 pb-2 pt-2 rounded-full shadow-xs shadow-background-muted";
 
     return (
-        <div class={clsx([globalClasses, colorClases[props.color]])}>
-            {props.children}
-        </div>
+        <button class={clsx([globalClasses, colorClases[local.color]])} {...rest}>
+            {local.children}
+        </button>
     );
-
-
 }
