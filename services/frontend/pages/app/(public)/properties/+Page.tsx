@@ -10,23 +10,6 @@ import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
 import CreateModal from "./modal/createModal";
 
-const fakeProperty: Property = {
-	id: "",
-	isActive: true,
-	isDeleted: false,
-	name: "Ma belle maison",
-	propertyType: {
-		id: "",
-		name: "",
-		slug: "",
-	},
-	userId: "",
-	purchaseDate: new Date(),
-	purchasePrice: "100000",
-	sellDate: undefined,
-	sellPrice: undefined,
-};
-
 const fakeData = ["", "", "", "", "", "", "", ""];
 
 export default function Page() {
@@ -41,22 +24,33 @@ export default function Page() {
 
 	const removeProperty = useProperty().remove;
 
+	const [filter, setFilter] = createSignal<"office" | "house" | "apartment" | "all">("all");
+
+	const properties = () => {
+		if (filter() === "all") return data.properties;
+		return data.properties.filter((p) => p.propertyType.slug === filter());
+	};
+
+	function sortProperties(type: "office" | "house" | "apartment" | "all") {
+		setFilter(type);
+	}
+
 	return (
 		<div class="w-full h-full flex-col">
 			<CreateModal close={createModal.close} isClosing={createModal.isClosing} isOpened={createModal.isOpened} />
 			<PageNamer buttonText="Ajouter un bien" onClick={createModal.open} pageName="Portfolio immobilier" subText="Gérez et suivez l'ensemble de votre parc immobilier" />
 
 			<div class="flex flex-row gap-4 p-4">
-				<ButtonBadge color="primary" onClick={() => { }}>Tous les biens (25)</ButtonBadge>
-				<ButtonBadge color="primary" onClick={() => { }}>Appartements</ButtonBadge>
-				<ButtonBadge color="primary" onClick={() => { }}>Maisons</ButtonBadge>
-				<ButtonBadge color="primary" onClick={() => { }}>Bureaux</ButtonBadge>
+				<ButtonBadge color="primary" onClick={() => sortProperties("all")}>Tous les biens ({properties().length})</ButtonBadge>
+				<ButtonBadge color="primary" onClick={() => sortProperties("apartment")}>Appartements</ButtonBadge>
+				<ButtonBadge color="primary" onClick={() => sortProperties("house")}>Maisons</ButtonBadge>
+				<ButtonBadge color="primary" onClick={() => sortProperties("office")}>Bureaux</ButtonBadge>
 			</div>
 
 			<div class="flex flex-wrap gap-x-4 gap-y-8">
-				<For each={fakeData.slice(0, 6)}>
+				<For each={properties().slice(0, 6)}>
 					{(property) => (
-						<PropertyCard property={fakeProperty} />
+						<PropertyCard property={property} />
 					)}
 				</For>
 			</div>
