@@ -4,6 +4,7 @@ import { ActionButton } from "@components/button";
 import Heading from "@components/heading";
 import { Modal, ModalBody, ModalHeader } from "@components/modal";
 import Text from "@components/text";
+import { useFinance } from "@hooks/useFinance";
 import { onDeleteFlux } from "@hooks/useFinance.telefunc";
 import clsx from "clsx";
 import type { Accessor } from "solid-js";
@@ -19,6 +20,9 @@ interface DetailsModalProps {
 export default function DetailsModal(props: DetailsModalProps) {
     const label = () => props.selected?.type === "income" ? "revenu" : "dépense";
     const issueDate = () => props.detail ? new Date(props.detail.issueDate).toLocaleDateString("fr-FR") : "";
+
+    const finances = useFinance();
+    const selected = props.selected;
 
     return (
         <Modal
@@ -41,7 +45,7 @@ export default function DetailsModal(props: DetailsModalProps) {
                 </Text>
                 <div class="flex gap-2 justify-between">
                     <ActionButton>Modifier</ActionButton>
-                    {props.selected ? <ActionButton onClick={() => props.selected && onDeleteFlux(props.selected.id, props.selected.type)}>Supprimer</ActionButton> : <ActionButton disabled>Supprimer</ActionButton>}
+                    {selected ? <ActionButton onClick={() => finances.handleDelete(selected.id, selected.type)}>Supprimer</ActionButton> : <ActionButton disabled>Supprimer</ActionButton>}
                 </div>
             </ModalBody>
         </Modal>
