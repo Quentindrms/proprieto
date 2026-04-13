@@ -63,6 +63,8 @@ export default function Page() {
         .filter((o) => isCurrentMonth(o.issueDate))
         .reduce((sum, o) => sum + o.amount, 0);
 
+    const monthProfit = totalMonthIncomes - totalMonthOutcomes;
+
     const flux = outcomes.concat(incomes);
 
     return (
@@ -98,6 +100,12 @@ export default function Page() {
                 <CardRevenue
                     stat={totalMonthOutcomes}
                     title="Dépense du mois"
+                    comment=""
+                    dynamic
+                />
+                <CardRevenue
+                    stat={monthProfit}
+                    title="Bénéfice du mois"
                     comment=""
                     dynamic
                 />
