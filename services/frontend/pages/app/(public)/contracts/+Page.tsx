@@ -7,6 +7,7 @@ import Heading from "@components/heading";
 import PageNamer from "@components/pageNamer";
 import { useContract } from "@hooks/useContract";
 import { useModal } from "@hooks/useModal";
+import { For } from "solid-js";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
 import CreateModal from "./modals/create";
@@ -61,22 +62,17 @@ export default function Page() {
 						</div>
 					</div>
 					<div class="flex flex-col gap-4">
-						<ContractExpireSoon
-							clientName="Estelle Haubois"
-							contractName="Appartement Paris"
-							expireDate={new Date()}
-							onRenew={() => {
-								console.log("Renouvelement");
-							}}
-						/>
-						<ContractExpireSoon
-							clientName="Estelle Haubois"
-							contractName="Appartement Paris"
-							expireDate={new Date()}
-							onRenew={() => {
-								console.log("Renouvelement");
-							}}
-						/>
+						<For each={stats.endSoon}>
+							{(contract) => (
+								<ContractExpireSoon
+									clientName={`Ajouter les noms clients`}
+									contractName={contract.property.name}
+									expireDate={contract.endDate}
+									onRenew={() => { }}
+								/>
+							)}
+						</For>
+						{stats.endSoon.length === 0 && <Heading components="h2" size="medium">Aucun contrat expirant prochainement</Heading>}
 					</div>
 				</div>
 				<div>
