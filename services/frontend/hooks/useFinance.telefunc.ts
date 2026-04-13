@@ -39,3 +39,18 @@ export async function onGetFluxDetails(id: string, type: "income" | "outcome") {
 		console.trace(error);
 	}
 }
+
+export async function onDeleteFlux(id: string, type: "income" | "outcome") {
+	const token = getAuthTokenFromContext();
+	try {
+		if (type === "income") {
+			const income = new IncomeService(token);
+			return income.deleteIncome(id);
+		} else if (type === "outcome") {
+			const outcome = new OutcomeService(token);
+			return outcome.deleteOutcome(id);
+		}
+	} catch (error) {
+		console.trace(error);
+	}
+}
