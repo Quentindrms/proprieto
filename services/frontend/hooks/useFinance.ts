@@ -7,7 +7,11 @@ import { createSignal } from "solid-js";
 import toast from "solid-toast";
 import { reload } from "vike/client/router";
 import type { ZodSafeParseError } from "zod";
-import { onCreateIncome, onCreateOutcome } from "./useFinance.telefunc";
+import {
+	onCreateIncome,
+	onCreateOutcome,
+	onDeleteFlux,
+} from "./useFinance.telefunc";
 
 export function useFinance() {
 	const [createIncome, setCreateIncome] = createSignal<IncomeCreationType>({
@@ -96,6 +100,18 @@ export function useFinance() {
 		return;
 	}
 
+	async function handleDelete(id: string, type: "income" | "outcome") {
+		const response = await onDeleteFlux(id, type);
+		if (response?.message !== "success") {
+			toast.error(
+				"Une erreur est survenue lors de la suppréssion de la ressource",
+			);
+			return;
+		}
+		toast.success("Ressource supprimée");
+		return;
+	}
+
 	return {
 		handleInputIncome,
 		handleInputOutcome,
@@ -103,5 +119,6 @@ export function useFinance() {
 		handleCreateOutcome,
 		outcomeErrors,
 		incomeErrors,
+		handleDelete,
 	};
 }
