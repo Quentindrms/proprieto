@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, Res } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Req, Res } from "@nestjs/common";
 import type { Request, Response } from "express";
 import type { CreateIncomeDto } from "types/DtoType";
 //biome-ignore lint/style/useImportType: required for NestJS DI
@@ -27,5 +27,19 @@ export class IncomeController {
 		if (!user) return response.status(401).send({});
 		const incomes = await this.incomeService.browse(user.id);
 		return response.status(200).send(incomes);
+	}
+
+	@Get("/:id")
+	async get(
+		@Req() request: Request,
+		@Res() response: Response,
+		@Param("id") incomeId: string,
+	) {
+		const user = request.user;
+		if (!user) return response.status(401).send({});
+		const income = await this.incomeService.get(incomeId);
+		if (!income) return response.status(404).send({});
+		console.log(income);
+		return response.status(200).send(income);
 	}
 }

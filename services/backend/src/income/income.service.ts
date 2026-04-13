@@ -30,4 +30,12 @@ export class IncomeService {
 			},
 		});
 	}
+
+	async get(incomeId: string) {
+		return await prisma.incomes.findFirst({
+			where: {
+				id: incomeId,
+			},
+		});
+	}
 }
