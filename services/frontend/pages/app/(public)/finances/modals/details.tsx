@@ -4,6 +4,7 @@ import { ActionButton } from "@components/button";
 import Heading from "@components/heading";
 import { Modal, ModalBody, ModalHeader } from "@components/modal";
 import Text from "@components/text";
+import clsx from "clsx";
 import type { Accessor } from "solid-js";
 
 interface DetailsModalProps {
@@ -33,7 +34,10 @@ export default function DetailsModal(props: DetailsModalProps) {
                 <Text>Intitulé : {props.detail?.name}</Text>
                 <Text>Montant : {props.detail?.amount} €</Text>
                 <Text>Date de mise en recouvrement : {issueDate()}</Text>
-                <Text>Statut : {props.detail?.isPaid ? "Payé" : "En attente"}</Text>
+                <Text>Statut :
+                    <Text components="span" class={clsx([props.detail?.isPaid ? "text-action-green" : "text-action-red"])}>{props.detail?.isPaid ? "Payé" : "En attente"}
+                    </Text>
+                </Text>
                 <div class="flex gap-2 justify-between">
                     <ActionButton>Modifier</ActionButton>
                     <ActionButton>Supprimer</ActionButton>
