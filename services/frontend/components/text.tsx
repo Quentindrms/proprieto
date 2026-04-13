@@ -11,16 +11,16 @@ interface TextProps extends JSX.HTMLAttributes<HTMLParagraphElement> {
 }
 
 export default function Text(props: TextProps) {
-	const globalClasses = "text-primary font-sans text-base";
+	const globalClasses = "font-base-medium";
 
 	const sizeClasses: Record<TextSize, string> = {
-		"extra-small": "text-extra-small",
-		small: "text-small",
-		base: "text-base",
-		medium: "text-medium",
-		large: "text-large",
-		"extra-large": "text-extra-large",
-		big: "text-big",
+		"extra-small": "text-2xs",
+		small: "text-xs",
+		base: "text-md",
+		medium: "text-lg",
+		large: "text-xl",
+		"extra-large": "text-2xl",
+		big: "text-3xl",
 	};
 
 	return (

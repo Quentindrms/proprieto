@@ -51,7 +51,7 @@ export default function CreateForm() {
 			{client.formError() && (
 				<Text class="text-red-500">
 					{
-						z.treeifyError(client.formError()!.error).properties?.phone
+						z.treeifyError(client.formError()!.error).properties?.address
 							?.errors[0]
 					}
 				</Text>

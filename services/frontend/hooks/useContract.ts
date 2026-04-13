@@ -100,7 +100,7 @@ export function useContract() {
 		return contractsList.filter((contract) => {
 			const endDate = new Date(contract.endDate);
 			return endDate >= now && endDate <= sixMonthsLater;
-		}).length;
+		});
 	}
 
 	function getStats(contractsList: Contract[]) {

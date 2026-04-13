@@ -4,8 +4,13 @@ import {
 	FaSolidPlus,
 	FaSolidRemove,
 } from "solid-icons/fa";
-import { type JSX, splitProps } from "solid-js";
-import type { ButtonColor, ButtonIcons } from "../types/styleTypes";
+import { createSignal, For, type JSX, splitProps } from "solid-js";
+
+import type {
+	ActionButtonColor,
+	ButtonColor,
+	ButtonIcons,
+} from "../types/styleTypes";
 
 interface ButtonProps extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {
 	type: "submit" | "button" | "menu";
@@ -18,10 +23,9 @@ export function Button(props: ButtonProps) {
 	const [local, rest] = splitProps(props, ["color", "icons", "children"]);
 
 	const colorClases: Record<ButtonColor, string> = {
-		green: "bg-solid-green hover:bg-solid-green-hover",
-		red: "bg-solid-red hover:bg-solid-red-hover",
-		blue: "bg-solid-blue hover:bg-solid-blue-hover",
-		gold: "bg-solid-gold hover:bg-solid-gold-hover",
+		green: "bg-action-green hover:bg-action-green/90",
+		red: "bg-action-red hover:bg-action-red/90",
+		blue: "bg-action-blue hover:bg-action-blue/90",
 	};
 
 	const IconClasses: Record<string, () => JSX.Element> = {
@@ -31,7 +35,7 @@ export function Button(props: ButtonProps) {
 	};
 
 	const globalClasses =
-		"w-fit h-fit rounded-xl p-2 text-primary font-bold font-title";
+		"w-fit h-fit rounded-xl pr-5 pl-5 p-2 font-primary text-light cursor-pointer";
 
 	const flexClasses = "flex gap-5 items-center";
 	return (
@@ -40,12 +44,94 @@ export function Button(props: ButtonProps) {
 			type={props.type}
 			class={clsx([
 				globalClasses,
-				local.color ? colorClases[local.color] : colorClases.gold,
+				local.color ? colorClases[local.color] : colorClases.green,
 				local.icons ? flexClasses : "",
 			])}
 		>
 			{local.icons && IconClasses[local.icons]?.()}
 			{local.children}
 		</button>
+	);
+}
+
+interface ActionButtonProps
+	extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {
+	children: JSX.Element;
+	color?: ActionButtonColor;
+}
+
+export function ActionButton(props: ActionButtonProps) {
+	const [local, rest] = splitProps(props, ["color"]);
+
+	const colorClases: Record<ActionButtonColor, string> = {
+		black: "bg-background-primary hover:bg-background-primary/90 text-light",
+		gray: "bg-background-muted hover:bg-background-muted/90 text-dark/50",
+		outline: "bg-background-base/90 border border-slate-marked text-dark ",
+	};
+
+	const globalClasses =
+		"rounded-xl pl-5 pr-5 p-2 font-base-bold shadow-xs shadow-background-primary w-fit cursor-pointer";
+
+	return (
+		<button
+			{...rest}
+			type="button"
+			class={clsx([
+				colorClases,
+				globalClasses,
+				local.color ? colorClases[local.color] : colorClases["black"],
+			])}
+		>
+			{props.children}
+		</button>
+	);
+}
+
+interface ButtonGroupOption<T extends string = string> {
+	label: string;
+	value: T;
+	onClick?: () => void;
+}
+
+interface ButtonGroupProps<T extends string = string> {
+	options: ButtonGroupOption<T>[];
+	defaultValue?: T;
+	value?: T;
+	onChange?: (value: T) => void;
+}
+
+export function ButtonGroup<T extends string = string>(
+	props: ButtonGroupProps<T>,
+) {
+	const [internalValue, setInternalValue] = createSignal<T>(
+		props.defaultValue ?? props.options[0]?.value,
+	);
+
+	const activeValue = () => props.value ?? internalValue();
+
+	function handleClick(option: ButtonGroupOption<T>) {
+		setInternalValue(() => option.value);
+		props.onChange?.(option.value);
+		option.onClick?.();
+	}
+	return (
+		<div class="flex gap-1 p-1 bg-slate-strong rounded-xl w-fit">
+			<For each={props.options}>
+				{(option) => (
+					<button
+						type="button"
+						onClick={() => handleClick(option)}
+						class={clsx(
+							"px-4 py-1.5 rounded-lg text-sm font-base-medium cursor-pointer transition-all duration-150",
+							activeValue() === option.value
+								? "bg-background-base text-dark shadow-xs shadow-dark/10 font-base-bold"
+								: "text-dark/50 hover:text-dark/80",
+						)}
+					>
+						{option.label}
+					</button>
+				)}
+			</For>
+		</div>
 	);
 }

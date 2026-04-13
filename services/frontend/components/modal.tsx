@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { FaSolidClose } from "solid-icons/fa";
 import {
 	type Accessor,
 	createContext,
@@ -15,7 +16,7 @@ interface ModalProps extends JSX.HTMLAttributes<HTMLDivElement> {
 }
 
 const ModalContext = createContext<{ close: () => void }>({
-	close: () => {},
+	close: () => { },
 });
 
 export function Modal(props: ModalProps) {
@@ -44,15 +45,15 @@ export function Modal(props: ModalProps) {
 				{...rest}
 				role="dialog"
 				onClick={handleClickOuter}
-				onKeyPress={() => {}}
+				onKeyPress={() => { }}
 				class={clsx(
-					"fixed flex justify-center items-center inset-0 z-50 bg-background-elevated/50 backdrop-blur-sm transition-opacity duration-300",
+					"fixed flex justify-center items-center inset-0 z-50 bg-background-base/10 backdrop-blur-sm transition-opacity duration-300",
 					{ "opacity-0 pointer-events-none": isClosed() },
 					{ "opacity-100": !isClosed() },
 					rest.class,
 				)}
 			>
-				<section class="bg-background-surface w-2xl flex flex-col border border-background-border rounded-xl p-2 gap-2">
+				<section class="bg-background-base w-2xl flex flex-col justify-center items-center rounded-xl p-5 gap-2">
 					{local.children}
 				</section>
 			</div>
@@ -60,7 +61,8 @@ export function Modal(props: ModalProps) {
 	);
 }
 
-interface ModalHeaderProps extends JSX.HTMLAttributes<HTMLDivElement> {}
+interface ModalHeaderProps extends JSX.HTMLAttributes<HTMLDivElement> {
+}
 
 export function ModalHeader(props: ModalHeaderProps) {
 	const modal = useContext(ModalContext);
@@ -68,26 +70,24 @@ export function ModalHeader(props: ModalHeaderProps) {
 	return (
 		<header
 			class={clsx(
-				"flex justify-between items-center border-b border-background-border",
+				"w-full flex justify-between items-center border-b border-background-muted",
 				props.class,
 			)}
 		>
 			{props.children}
-			<button type="button" onClick={modal.close} class="text-primary">
-				X
-			</button>
+			<FaSolidClose size={25} color="var(--color-background-dark)" onClick={modal.close} />
 		</header>
 	);
 }
 
-interface ModalBodyProps extends JSX.HTMLAttributes<HTMLDivElement> {}
+interface ModalBodyProps extends JSX.HTMLAttributes<HTMLDivElement> { }
 
 export function ModalBody(props: ModalBodyProps) {
 	return (
 		<div
 			{...props}
 			class={clsx(
-				"p-2 grow overflow-y-auto bg-background-surface rounded-b-md",
+				"p-2 grow overflow-y-auto bg-background-surface rounded-b-md flex  flex-col gap-4",
 			)}
 		>
 			{props.children}

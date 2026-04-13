@@ -1,21 +1,34 @@
-import { StatCard, StatCardWrapper } from "@components/cards";
-import ClientCard from "@components/clientCard";
+import type { Client } from "@app/types/client";
+import { ClientCard } from "@components/clientCard";
 import PageNamer from "@components/pageNamer";
 import { useModal } from "@hooks/useModal";
-import { For } from "solid-js";
+import { createSignal, For } from "solid-js";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
 import CreateModal from "./modals/create";
+import DetailsModal from "./modals/details";
 
 export default function Page() {
 	const data = useData<Data>();
 
 	const createModal = useModal(350);
+	const detailsModal = useModal(350);
+
+	const [clientDetails, setClientDetails] = createSignal<Client>({
+		address: "",
+		email: "",
+		firstName: "",
+		id: "",
+		name: "",
+		phone: "",
+		clients: [],
+	});
 
 	return (
-		<div class="w-dvw">
+		<div class="w-full flex flex-col gap-5">
 			<PageNamer
 				pageName="Mes clients"
+				subText="Gestion et suivie des résidents du parc immobilier"
 				buttonText="Ajouter un client"
 				onClick={createModal.open}
 			/>
@@ -26,24 +39,21 @@ export default function Page() {
 				isOpened={createModal.isOpened}
 			/>
 
-			<StatCardWrapper>
-				<StatCard
-					legend="Clients totaux"
-					value={String(data.client.length)}
-					title=""
-				/>
+			<DetailsModal
+				close={detailsModal.close}
+				isClosing={detailsModal.isClosing}
+				isOpened={detailsModal.isOpened}
+				client={clientDetails()}
+			/>
 
-				<StatCard legend="Avec contrat actif" value="0" title="" />
-
-				<StatCard legend="Sans contrat" value="0" title="" />
-			</StatCardWrapper>
-
-			<div class="grid grid-cols-3 gap-2">
-				<For each={data.client}>
-					{(client) => (
-						<ClientCard client={client} onDelete={() => {}} onEdit={() => {}} />
-					)}
-				</For>
+			<div class="flex justify-center">
+				<div class="grid grid-cols-[repeat(3,320px)] gap-4">
+					<For each={data.client}>
+						{(client) => (
+							<ClientCard client={client} onClick={() => { detailsModal.open(); setClientDetails(client) }} />
+						)}
+					</For>
+				</div>
 			</div>
 		</div>
 	);

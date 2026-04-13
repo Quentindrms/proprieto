@@ -1,9 +1,13 @@
-import Board from "@components/board";
-import { StatCard, StatCardWrapper } from "@components/cards";
+import { Badge } from "@components/badge";
+import { ContractBoard } from "@components/board";
+import { ButtonGroup } from "@components/button";
+import ContractExpireSoon from "@components/contract";
+import { CardRevenue } from "@components/dataCard";
+import Heading from "@components/heading";
 import PageNamer from "@components/pageNamer";
-import SearchField from "@components/searchField";
 import { useContract } from "@hooks/useContract";
 import { useModal } from "@hooks/useModal";
+import { For } from "solid-js";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
 import CreateModal from "./modals/create";
@@ -15,59 +19,67 @@ export default function Page() {
 	const contract = useContract();
 	const stats = contract.getStats(data.contracts);
 
-	const contractsList = data.contracts.map((contract) => [
-		new Date(contract.startDate).toLocaleDateString("fr-FR"),
-		new Date(contract.endDate).toLocaleDateString("fr-FR"),
-		`${contract.lease} euros`,
-		contract.property.name,
-	]);
-
-	const columns = ["Date de début", "Date de fin", "Loyer", "Propriété"];
+	const contractRows = data.contracts.map((contract) => ({
+		clientName: contract.clientId,
+		propertyName: contract.property.name,
+		startDate: contract.startDate,
+		endDate: contract.endDate,
+		loan: contract.lease,
+	}));
 
 	return (
-		<div class="w-dvw h-dvh">
-			<PageNamer
-				pageName="Mes contrats"
-				buttonText="Ajouter un contrat"
-				onClick={createModal.open}
-			/>
-
+		<div class="w-full flex flex-col gap-5">
 			<CreateModal
 				close={createModal.close}
 				isClosing={createModal.isClosing}
 				isOpened={createModal.isOpened}
 			/>
 
-			<StatCardWrapper>
-				<StatCard
-					legend="Contrats actifs"
-					value={String(data.properties.length)}
-					title="Titre"
-					accentColor="blue"
+			<PageNamer
+				onClick={createModal.open}
+				pageName="Gestion des baux"
+				subText="Supervisez l'ensemble de vos engagements locatifs"
+				buttonText="Ajouter un nouveau bail"
+			/>
+
+			<div>
+				<ButtonGroup
+					options={[
+						{ label: "Tous les baux", value: "all", onClick: () => { } },
+						{ label: "Actifs", value: "active", onClick: () => { } },
+						{ label: "Archivés", value: "archived", onClick: () => { } },
+					]}
 				/>
-				<StatCard
-					legend={""}
-					value={String(stats.monthlyLease)}
-					title="Titre"
-					accentColor="blue"
-				/>
-				<StatCard
-					legend="Expirent dans 6 mois ou moins"
-					value={String(stats.endSoon)}
-					title="Titre"
-					accentColor="blue"
-				/>
-				<StatCard
-					legend="Archivés"
-					value="0"
-					title="Titre"
-					accentColor="blue"
-				/>
-			</StatCardWrapper>
-			<div class="p-2">
-				<SearchField name="searchbar" placeholder="Effectuer une recherche" />
 			</div>
-			<Board columns={columns} cells={contractsList} name="Contrats"></Board>
+			<div class="flex gap-2">
+				<div class="flex flex-col w-2xl p-4 gap-2 bg-background-base rounded-md">
+					<div class="flex justify-between items-center">
+						<Heading components="h3" size="medium" fontClasses="bold">
+							Baux arrivant à terme (nombre)
+						</Heading>
+						<div>
+							<Badge color="warning">Action requise</Badge>
+						</div>
+					</div>
+					<div class="flex flex-col gap-4">
+						<For each={stats.endSoon}>
+							{(contract) => (
+								<ContractExpireSoon
+									clientName={`Ajouter les noms clients`}
+									contractName={contract.property.name}
+									expireDate={contract.endDate}
+									onRenew={() => { }}
+								/>
+							)}
+						</For>
+						{stats.endSoon.length === 0 && <Heading components="h2" size="medium">Aucun contrat expirant prochainement</Heading>}
+					</div>
+				</div>
+				<div>
+					<CardRevenue stat={5500} title="Revenu de contrat" comment="+12%" />
+				</div>
+			</div>
+			<ContractBoard contracts={contractRows} />
 		</div>
 	);
 }
