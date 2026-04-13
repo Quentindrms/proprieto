@@ -31,6 +31,7 @@ export class OutcomeService {
 				},
 			},
 			select: {
+				id: true,
 				name: true,
 				amount: true,
 				isRecurring: true,
@@ -49,6 +50,17 @@ export class OutcomeService {
 						id: true,
 						directories: true,
 					},
+				},
+			},
+		});
+	}
+
+	async getOutcome(outcomeId: string, userId: string) {
+		return await prisma.outcomes.findFirst({
+			where: {
+				id: outcomeId,
+				property: {
+					userId,
 				},
 			},
 		});
