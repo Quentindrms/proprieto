@@ -1,4 +1,4 @@
-import type { IncomeType } from "@app/types/income";
+import type { IncomeDetail, IncomeType } from "@app/types/income";
 import type { IncomeCreationType } from "@schemas/income";
 import { CoreService } from "./core.service";
 
@@ -12,6 +12,6 @@ export class IncomeService extends CoreService {
 	}
 
 	async getIncome(id: string) {
-		return this.get<IncomeType>(`/income/${id}`);
+		return this.get<IncomeDetail>(`/income/${id}`);
 	}
 }

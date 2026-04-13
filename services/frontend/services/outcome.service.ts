@@ -1,4 +1,4 @@
-import type { Outcome } from "@app/types/outcome";
+import type { Outcome, OutcomeDetail } from "@app/types/outcome";
 import type { OutcomeCreationType } from "@schemas/outcome";
 import { CoreService } from "./core.service";
 
@@ -12,6 +12,6 @@ export class OutcomeService extends CoreService {
 	}
 
 	async getOutcome(id: string) {
-		return await this.get<Outcome>(`/outcome/${id}`);
+		return await this.get<OutcomeDetail>(`/outcome/${id}`);
 	}
 }
