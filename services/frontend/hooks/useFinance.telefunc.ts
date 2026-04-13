@@ -1,3 +1,4 @@
+import { IncomeType } from "@app/types/income";
 import type { IncomeCreationType } from "@schemas/income";
 import type { OutcomeCreationType } from "@schemas/outcome";
 import { IncomeService } from "@services/income.service";
@@ -22,5 +23,20 @@ export async function onCreateIncome(income: IncomeCreationType) {
 	} catch (error) {
 		console.trace(error);
 		return { message: "error" };
+	}
+}
+
+export async function onGetFluxDetails(id: string, type: "income" | "outcome") {
+	const token = getAuthTokenFromContext();
+	try {
+		if (type === "income") {
+			const incomeService = new IncomeService(token);
+			return incomeService.getIncome(id);
+		} else if (type === "outcome") {
+			const outcomeService = new OutcomeService(token);
+			return outcomeService.getOutcome(id);
+		}
+	} catch (error) {
+		console.trace(error);
 	}
 }

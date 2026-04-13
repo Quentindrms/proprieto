@@ -10,4 +10,8 @@ export class IncomeService extends CoreService {
 	async browse() {
 		return this.get<IncomeType[]>("/income/browse");
 	}
+
+	async getIncome(id: string) {
+		return this.get<IncomeType>(`/income/${id}`);
+	}
 }

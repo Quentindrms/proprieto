@@ -10,4 +10,8 @@ export class OutcomeService extends CoreService {
 	async browseOutcome() {
 		return await this.get<Outcome[]>("/outcome/browse");
 	}
+
+	async getOutcome(id: string) {
+		return await this.get<Outcome>(`/outcome/${id}`);
+	}
 }
