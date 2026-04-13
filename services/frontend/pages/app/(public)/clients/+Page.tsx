@@ -1,7 +1,8 @@
+import type { Client } from "@app/types/client";
 import { ClientCard } from "@components/clientCard";
 import PageNamer from "@components/pageNamer";
 import { useModal } from "@hooks/useModal";
-import { For } from "solid-js";
+import { createSignal, For } from "solid-js";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
 import CreateModal from "./modals/create";
@@ -11,7 +12,17 @@ export default function Page() {
 	const data = useData<Data>();
 
 	const createModal = useModal(350);
-	const detailsModal = useModal(350)
+	const detailsModal = useModal(350);
+
+	const [clientDetails, setClientDetails] = createSignal<Client>({
+		address: "",
+		email: "",
+		firstName: "",
+		id: "",
+		name: "",
+		phone: "",
+		clients: [],
+	});
 
 	return (
 		<div class="w-full flex flex-col gap-5">
@@ -32,12 +43,15 @@ export default function Page() {
 				close={detailsModal.close}
 				isClosing={detailsModal.isClosing}
 				isOpened={detailsModal.isOpened}
+				client={clientDetails()}
 			/>
 
 			<div class="flex justify-center">
 				<div class="grid grid-cols-[repeat(3,320px)] gap-4">
 					<For each={data.client}>
-						{(client) => <ClientCard client={client} onClick={detailsModal.open} />}
+						{(client) => (
+							<ClientCard client={client} onClick={() => { detailsModal.open(); setClientDetails(client) }} />
+						)}
 					</For>
 				</div>
 			</div>
