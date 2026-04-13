@@ -121,12 +121,13 @@ export interface FluxRowData {
     issueDate: string;
     amount: string;
     type: "outcome" | "income";
+    onClick: (item: Omit<FluxRowData, "onClick">) => void;
 }
 
 export function FluxRow(props: FluxRowData) {
 
     return (
-        <tr class="last:border-0 hover:bg-background-secondary transition-colors">
+        <tr class="last:border-0 hover:bg-background-secondary transition-colors" onClick={() => props.onClick({ name: props.name, category: props.category, issueDate: props.issueDate, amount: props.amount, type: props.type })}>
             <td class="px-4 py-3">
                 <Heading components="h3" size="medium">
                     {props.name}

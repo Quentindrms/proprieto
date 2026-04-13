@@ -152,6 +152,7 @@ export interface FluxBoardItem {
 
 interface FluxBoardProps {
 	flux: FluxBoardItem[];
+	onClick: (item: FluxBoardItem) => void,
 }
 
 export function FluxBoard(props: FluxBoardProps) {
@@ -216,6 +217,7 @@ export function FluxBoard(props: FluxBoardProps) {
 										issueDate={income.issueDate}
 										name={income.name}
 										type={income.type}
+										onClick={(item) => props.onClick(item)}
 									/>
 								)}
 							</For>
@@ -229,6 +231,7 @@ export function FluxBoard(props: FluxBoardProps) {
 										issueDate={outcome.issueDate}
 										name={outcome.name}
 										type={outcome.type}
+										onClick={(item) => props.onClick(item)}
 									/>
 								)}
 							</For>
