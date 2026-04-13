@@ -74,7 +74,7 @@ export interface ContractRowData {
 
 export function ContractRow(props: ContractRowData) {
     return (
-        <tr class="last:border-0 hover:bg-background-secondary transition-colors">
+        <tr class="last:border-0 hover:bg-background-muted/10 transition-colors">
             <td class="px-4 py-3">
                 <Heading components="h3" size="medium">
                     {props.clientName}
