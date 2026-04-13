@@ -102,13 +102,20 @@ export function useFinance() {
 
 	async function handleDelete(id: string, type: "income" | "outcome") {
 		const response = await onDeleteFlux(id, type);
-		if (response?.message !== "success") {
+		if (!response) {
+			toast.error(
+				"Une erreur est survenue lors de la suppréssion de la ressource",
+			);
+			return;
+		}
+		if (response.message !== "success") {
 			toast.error(
 				"Une erreur est survenue lors de la suppréssion de la ressource",
 			);
 			return;
 		}
 		toast.success("Ressource supprimée");
+		await reload();
 		return;
 	}
 

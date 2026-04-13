@@ -45,12 +45,13 @@ export async function onDeleteFlux(id: string, type: "income" | "outcome") {
 	try {
 		if (type === "income") {
 			const income = new IncomeService(token);
-			return income.deleteIncome(id);
+			return await income.deleteIncome(id);
 		} else if (type === "outcome") {
 			const outcome = new OutcomeService(token);
-			return outcome.deleteOutcome(id);
+			return await outcome.deleteOutcome(id);
 		}
 	} catch (error) {
 		console.trace(error);
+		return { message: "error" };
 	}
 }

@@ -22,7 +22,12 @@ export default function DetailsModal(props: DetailsModalProps) {
     const issueDate = () => props.detail ? new Date(props.detail.issueDate).toLocaleDateString("fr-FR") : "";
 
     const finances = useFinance();
-    const selected = props.selected;
+    const selected = () => props.selected;
+
+    function handleDelete() {
+        const flux = selected();
+        if (flux) finances.handleDelete(flux.id, flux.type);
+    }
 
     return (
         <Modal
@@ -45,7 +50,7 @@ export default function DetailsModal(props: DetailsModalProps) {
                 </Text>
                 <div class="flex gap-2 justify-between">
                     <ActionButton>Modifier</ActionButton>
-                    {selected ? <ActionButton onClick={() => finances.handleDelete(selected.id, selected.type)}>Supprimer</ActionButton> : <ActionButton disabled>Supprimer</ActionButton>}
+                    {selected() ? <ActionButton onClick={handleDelete}>Supprimer</ActionButton> : <ActionButton disabled>Supprimer</ActionButton>}
                 </div>
             </ModalBody>
         </Modal>
