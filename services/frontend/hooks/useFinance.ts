@@ -5,6 +5,7 @@ import {
 } from "@schemas/outcome";
 import { createSignal } from "solid-js";
 import toast from "solid-toast";
+import { reload } from "vike/client/router";
 import type { ZodSafeParseError } from "zod";
 import { onCreateIncome, onCreateOutcome } from "./useFinance.telefunc";
 
@@ -61,6 +62,7 @@ export function useFinance() {
 
 	async function handleCreateIncome() {
 		const validate = IncomeCreationSchema.safeParse(createIncome());
+		console.log(createIncome());
 		if (!validate.success) {
 			setIncomeErrors(validate);
 			return;
@@ -72,11 +74,13 @@ export function useFinance() {
 			return;
 		}
 		toast.success("Revenu crée");
+		await reload();
 		return;
 	}
 
 	async function handleCreateOutcome() {
 		const validate = OutcomeCreationSchema.safeParse(createOutcome());
+		console.log(createOutcome());
 		if (!validate.success) {
 			setOutcomeErrors(validate);
 			return;
@@ -88,6 +92,7 @@ export function useFinance() {
 			return;
 		}
 		toast.success("Dépense crée");
+		await reload();
 		return;
 	}
 

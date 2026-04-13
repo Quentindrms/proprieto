@@ -215,7 +215,7 @@ export function CreateIncomeForm() {
 
     const incomeCategory = data.incomeCategories.map((category) => ({
         label: category.label,
-        value: category.slug,
+        value: category.id,
         disabled: false,
     }));
     const contractsList = data.contractList.map((contract) => ({
@@ -263,20 +263,22 @@ export function CreateIncomeForm() {
                         </Text>
                     )}
                 </div>
-                <Select
-                    label="Catégorie"
-                    labelOptions="Sélectionner une catégorie"
-                    options={incomeCategory}
-                    onInput={income.handleInputIncome("incomeCategoryId")}
-                />
-                {income.incomeErrors() && (
-                    <Text class="text-red-500">
-                        {
-                            z.treeifyError(income.incomeErrors()!.error).properties
-                                ?.incomeCategoryId?.errors[0]
-                        }
-                    </Text>
-                )}
+                <div class="flex flex-col">
+                    <Select
+                        label="Catégorie"
+                        labelOptions="Sélectionner une catégorie"
+                        options={incomeCategory}
+                        onInput={income.handleInputIncome("incomeCategoryId")}
+                    />
+                    {income.incomeErrors() && (
+                        <Text class="text-red-500">
+                            {
+                                z.treeifyError(income.incomeErrors()!.error).properties
+                                    ?.incomeCategoryId?.errors[0]
+                            }
+                        </Text>
+                    )}
+                </div>
             </div>
 
             <TextField
