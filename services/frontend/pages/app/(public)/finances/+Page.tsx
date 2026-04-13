@@ -2,12 +2,23 @@ import { FluxBoard, type FluxBoardItem } from "@components/board";
 import { CardRevenue } from "@components/dataCard";
 import PageNamer from "@components/pageNamer";
 import { useModal } from "@hooks/useModal";
+import { createSignal } from "solid-js";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
 import CreateModal from "./modals/createModal";
+import DetailsModal from "./modals/details";
 
 export default function Page() {
+    const [finances, setFinances] = createSignal<FluxBoardItem>({
+        amount: "0",
+        category: "",
+        issueDate: "",
+        name: "",
+        type: "outcome",
+    });
+
     const createModal = useModal(350);
+    const detailsModal = useModal(350);
     const data = useData<Data>();
 
     const incomes: FluxBoardItem[] = data.incomeList.map((income) => ({
@@ -23,13 +34,15 @@ export default function Page() {
         category: "",
         issueDate: new Date(outcome.issueDate).toLocaleDateString("fr-FR"),
         amount: String(outcome.amount),
-        type: "outcome"
-    }))
+        type: "outcome",
+    }));
 
     const now = new Date();
     const isCurrentMonth = (date: Date | string) => {
         const d = new Date(date);
-        return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+        return (
+            d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear()
+        );
     };
 
     const totalMonthIncomes = data.incomeList
@@ -50,6 +63,13 @@ export default function Page() {
                 isOpened={createModal.isOpened}
             />
 
+            <DetailsModal
+                close={detailsModal.close}
+                isClosing={detailsModal.isClosing}
+                finances={finances()}
+                isOpened={detailsModal.isOpened}
+            />
+
             <PageNamer
                 onClick={() => createModal.open()}
                 pageName="Flux financiers"
@@ -58,13 +78,21 @@ export default function Page() {
             />
 
             <div class="flex gap-4">
-                <CardRevenue stat={totalMonthIncomes} title="Revenu du mois" comment="" dynamic />
-                <CardRevenue stat={totalMonthOutcomes} title="Dépense du mois" comment="" dynamic />
+                <CardRevenue
+                    stat={totalMonthIncomes}
+                    title="Revenu du mois"
+                    comment=""
+                    dynamic
+                />
+                <CardRevenue
+                    stat={totalMonthOutcomes}
+                    title="Dépense du mois"
+                    comment=""
+                    dynamic
+                />
             </div>
 
-            <FluxBoard
-                flux={flux}
-            />
+            <FluxBoard flux={flux} onClick={(item) => { setFinances(item); detailsModal.open(); }} />
         </div>
     );
 }
