@@ -9,6 +9,7 @@ import { createSignal, For } from "solid-js";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
 import CreateModal from "./modal/createModal";
+import DetailsModal from "./modal/details";
 
 const fakeData = ["", "", "", "", "", "", "", ""];
 
@@ -19,8 +20,18 @@ export default function Page() {
 		createSignal<PropertyUpdateType | null>(null);
 	const [propertyToDelete, setPropertyToDelete] = createSignal<string>("");
 
+	const [propertyDetails, setPropertyDetails] = createSignal<Property>({
+		id: "",
+		isActive: false,
+		isDeleted: false,
+		name: "",
+		propertyType: { id: '', name: '', slug: '' },
+		userId: "",
+	});
+
 	const createModal = useModal(350);
 	const updateModal = useModal(350);
+	const detailsModal = useModal(350);
 
 	const removeProperty = useProperty().remove;
 
@@ -38,6 +49,8 @@ export default function Page() {
 	return (
 		<div class="w-full h-full flex-col">
 			<CreateModal close={createModal.close} isClosing={createModal.isClosing} isOpened={createModal.isOpened} />
+			<DetailsModal close={detailsModal.close} isClosing={detailsModal.isClosing} isOpened={detailsModal.isOpened} property={propertyDetails()} />
+
 			<PageNamer buttonText="Ajouter un bien" onClick={createModal.open} pageName="Portfolio immobilier" subText="Gérez et suivez l'ensemble de votre parc immobilier" />
 
 			<div class="flex flex-row gap-4 p-4">
@@ -50,7 +63,7 @@ export default function Page() {
 			<div class="flex flex-wrap gap-x-4 gap-y-8">
 				<For each={properties().slice(0, 6)}>
 					{(property) => (
-						<PropertyCard property={property} />
+						<PropertyCard property={property} onClick={() => { detailsModal.open(); setPropertyDetails(property) }} />
 					)}
 				</For>
 			</div>

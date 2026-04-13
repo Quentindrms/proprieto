@@ -8,11 +8,15 @@ interface PropertyCardProps {
 	property: Property;
 	onDelete?: (propertyId: string) => void;
 	onEdit?: (property: Property) => void;
+	onClick: () => void,
 }
 
 export default function PropertyCard(props: PropertyCardProps) {
 	return (
-		<div class="w-xs flex flex-col bg-background-base rounded-md shadow-md shadow-background-muted">
+		<button
+			type="button"
+			onClick={props.onClick}
+			class="w-xs flex flex-col bg-background-base rounded-md shadow-md shadow-background-muted text-left cursor-pointer">
 			<div class="" id="headerImage">
 
 			</div>
@@ -30,6 +34,6 @@ export default function PropertyCard(props: PropertyCardProps) {
 					<Text size="large">-</Text>
 				</div>
 			</div>
-		</div>
+		</button>
 	);
 }
