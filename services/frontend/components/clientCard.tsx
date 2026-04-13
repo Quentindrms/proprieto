@@ -7,6 +7,7 @@ import Text from "./text";
 
 interface ClientCardProps {
 	client: Client;
+	onClick: () => void;
 	onDelete?: () => void;
 	onEdit?: () => void;
 }
@@ -35,7 +36,7 @@ export function ClientCard(props: ClientCardProps) {
 				</div>
 			</div>
 			<div class="flex justify-center">
-				<ActionButton color="black">Consulter le profil</ActionButton>
+				<ActionButton color="black" onClick={props.onClick}>Consulter le profil</ActionButton>
 			</div>
 		</div>
 	);

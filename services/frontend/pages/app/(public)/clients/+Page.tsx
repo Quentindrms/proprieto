@@ -37,7 +37,7 @@ export default function Page() {
 			<div class="flex justify-center">
 				<div class="grid grid-cols-[repeat(3,320px)] gap-4">
 					<For each={data.client}>
-						{(client) => <ClientCard client={client} />}
+						{(client) => <ClientCard client={client} onClick={detailsModal.open} />}
 					</For>
 				</div>
 			</div>
