@@ -16,6 +16,6 @@ export class IncomeService extends CoreService {
 	}
 
 	async deleteIncome(id: string) {
-		return this.delete(`/income/${id}`);
+		return this.delete<{ message: string }>(`/income/${id}`);
 	}
 }

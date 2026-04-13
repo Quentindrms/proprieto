@@ -16,6 +16,6 @@ export class OutcomeService extends CoreService {
 	}
 
 	async deleteOutcome(id: string) {
-		return await this.delete(`/outcome/${id}`);
+		return await this.delete<{ message: string }>(`/outcome/${id}`);
 	}
 }
