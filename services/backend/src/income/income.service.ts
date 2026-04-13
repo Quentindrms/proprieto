@@ -22,6 +22,7 @@ export class IncomeService {
 	async browse(userId: string) {
 		return await prisma.incomes.findMany({
 			where: {
+				isDeleted: false,
 				contract: {
 					property: {
 						userId,
@@ -35,6 +36,17 @@ export class IncomeService {
 		return await prisma.incomes.findFirst({
 			where: {
 				id: incomeId,
+			},
+		});
+	}
+
+	async delete(incomeId: string) {
+		return await prisma.incomes.update({
+			where: {
+				id: incomeId,
+			},
+			data: {
+				isDeleted: true,
 			},
 		});
 	}

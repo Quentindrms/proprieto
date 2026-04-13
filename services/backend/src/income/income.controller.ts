@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Param, Post, Req, Res } from "@nestjs/common";
+import {
+	Body,
+	Controller,
+	Delete,
+	Get,
+	Param,
+	Post,
+	Req,
+	Res,
+} from "@nestjs/common";
 import type { Request, Response } from "express";
 import type { CreateIncomeDto } from "types/DtoType";
 //biome-ignore lint/style/useImportType: required for NestJS DI
@@ -39,7 +48,19 @@ export class IncomeController {
 		if (!user) return response.status(401).send({});
 		const income = await this.incomeService.get(incomeId);
 		if (!income) return response.status(404).send({});
-		console.log(income);
 		return response.status(200).send(income);
+	}
+
+	@Delete("/:id")
+	async delete(
+		@Req() request: Request,
+		@Res() response: Response,
+		@Param("id") incomeId: string,
+	) {
+		const user = request.user;
+		if (!user) return response.status(401).send({});
+		const deletedIncome = await this.incomeService.delete(incomeId);
+		if (!deletedIncome) return response.status(404).send({});
+		return response.status(200).send(deletedIncome);
 	}
 }
