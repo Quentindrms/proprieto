@@ -14,4 +14,8 @@ export class OutcomeService extends CoreService {
 	async getOutcome(id: string) {
 		return await this.get<OutcomeDetail>(`/outcome/${id}`);
 	}
+
+	async deleteOutcome(id: string) {
+		return await this.delete(`/outcome/${id}`);
+	}
 }
