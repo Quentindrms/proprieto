@@ -1,4 +1,3 @@
-import { IncomeType } from "@app/types/income";
 import type { IncomeCreationType } from "@schemas/income";
 import type { OutcomeCreationType } from "@schemas/outcome";
 import { IncomeService } from "@services/income.service";
