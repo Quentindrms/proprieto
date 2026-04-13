@@ -1,6 +1,9 @@
+import type { IncomeDetail } from "@app/types/income";
+import type { OutcomeDetail } from "@app/types/outcome";
 import { FluxBoard, type FluxBoardItem } from "@components/board";
 import { CardRevenue } from "@components/dataCard";
 import PageNamer from "@components/pageNamer";
+import { onGetFluxDetails } from "@hooks/useFinance.telefunc";
 import { useModal } from "@hooks/useModal";
 import { createSignal } from "solid-js";
 import { useData } from "vike-solid/useData";
@@ -9,19 +12,25 @@ import CreateModal from "./modals/createModal";
 import DetailsModal from "./modals/details";
 
 export default function Page() {
-    const [finances, setFinances] = createSignal<FluxBoardItem>({
-        amount: "0",
-        category: "",
-        issueDate: "",
-        name: "",
-        type: "outcome",
-    });
+    const [selected, setSelected] = createSignal<{
+        id: string;
+        type: "income" | "outcome";
+    } | null>(null);
+    const [detail, setDetail] = createSignal<IncomeDetail | OutcomeDetail | null>(null);
 
     const createModal = useModal(350);
     const detailsModal = useModal(350);
     const data = useData<Data>();
 
+    async function handleRowClick(item: FluxBoardItem) {
+        const result = await onGetFluxDetails(item.id, item.type);
+        setSelected({ id: item.id, type: item.type });
+        if (result) setDetail(result);
+        detailsModal.open();
+    }
+
     const incomes: FluxBoardItem[] = data.incomeList.map((income) => ({
+        id: income.id,
         name: income.name,
         category: income.incomeCategoryId,
         issueDate: new Date(income.issueDate).toLocaleDateString("fr-FR"),
@@ -30,6 +39,7 @@ export default function Page() {
     }));
 
     const outcomes: FluxBoardItem[] = data.outcomeList.map((outcome) => ({
+        id: outcome.id,
         name: outcome.name,
         category: "",
         issueDate: new Date(outcome.issueDate).toLocaleDateString("fr-FR"),
@@ -66,7 +76,8 @@ export default function Page() {
             <DetailsModal
                 close={detailsModal.close}
                 isClosing={detailsModal.isClosing}
-                finances={finances()}
+                detail={detail()}
+                selected={selected()}
                 isOpened={detailsModal.isOpened}
             />
 
@@ -92,7 +103,7 @@ export default function Page() {
                 />
             </div>
 
-            <FluxBoard flux={flux} onClick={(item) => { setFinances(item); detailsModal.open(); }} />
+            <FluxBoard flux={flux} onClick={handleRowClick} />
         </div>
     );
 }

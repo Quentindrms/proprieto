@@ -1,18 +1,23 @@
-import type { FluxBoardItem } from "@components/board";
+import type { IncomeDetail } from "@app/types/income";
+import type { OutcomeDetail } from "@app/types/outcome";
 import { ActionButton } from "@components/button";
 import Heading from "@components/heading";
 import { Modal, ModalBody, ModalHeader } from "@components/modal";
 import Text from "@components/text";
 import type { Accessor } from "solid-js";
 
-interface DetailsModal {
+interface DetailsModalProps {
     isClosing: Accessor<boolean>;
     isOpened: Accessor<boolean>;
     close: () => void;
-    finances: FluxBoardItem;
+    detail: IncomeDetail | OutcomeDetail | null;
+    selected: { id: string; type: "income" | "outcome" } | null;
 }
 
-export default function DetailsModal(props: DetailsModal) {
+export default function DetailsModal(props: DetailsModalProps) {
+    const label = () => props.selected?.type === "income" ? "revenu" : "dépense";
+    const issueDate = () => props.detail ? new Date(props.detail.issueDate).toLocaleDateString("fr-FR") : "";
+
     return (
         <Modal
             isClosing={props.isClosing}
@@ -21,15 +26,14 @@ export default function DetailsModal(props: DetailsModal) {
         >
             <ModalHeader>
                 <Heading class="" components="h2" size="medium" fontClasses="bold">
-                    Détails de votre {props.finances.type === "income" && "revenu" || props.finances.type === "outcome" && "dépense"} du {props.finances.issueDate}
+                    Détails de votre {label()} du {issueDate()}
                 </Heading>
             </ModalHeader>
             <ModalBody>
-                <Text>Intitulé : {props.finances.name}</Text>
-                <Text>Montant : {props.finances.amount} €</Text>
-                <Text>Catégorie : {props.finances.category}</Text>
-                <Text>Date de mise en recouvrement : {props.finances.issueDate}</Text>
-                <Text>Statut : !!!mettre le statut!!!</Text>
+                <Text>Intitulé : {props.detail?.name}</Text>
+                <Text>Montant : {props.detail?.amount} €</Text>
+                <Text>Date de mise en recouvrement : {issueDate()}</Text>
+                <Text>Statut : {props.detail?.isPaid ? "Payé" : "En attente"}</Text>
                 <div class="flex gap-2 justify-between">
                     <ActionButton>Modifier</ActionButton>
                     <ActionButton>Supprimer</ActionButton>
