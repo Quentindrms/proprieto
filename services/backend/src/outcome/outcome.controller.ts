@@ -63,7 +63,7 @@ export class OutcomeController {
 		const user = request.user;
 		if (!user) return response.status(401).send({});
 		const deletedOutcome = await this.outcomeService.delete(outcomeId);
-		if (!deletedOutcome) return response.status(404).send({});
-		return response.status(200).send(deletedOutcome);
+		if (!deletedOutcome) return response.status(404).send({ message: "error" });
+		return response.status(200).send({ message: "success" });
 	}
 }
