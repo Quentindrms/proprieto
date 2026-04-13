@@ -5,11 +5,13 @@ import { For } from "solid-js";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
 import CreateModal from "./modals/create";
+import DetailsModal from "./modals/details";
 
 export default function Page() {
 	const data = useData<Data>();
 
 	const createModal = useModal(350);
+	const detailsModal = useModal(350)
 
 	return (
 		<div class="w-full flex flex-col gap-5">
@@ -25,6 +27,13 @@ export default function Page() {
 				isClosing={createModal.isClosing}
 				isOpened={createModal.isOpened}
 			/>
+
+			<DetailsModal
+				close={detailsModal.close}
+				isClosing={detailsModal.isClosing}
+				isOpened={detailsModal.isOpened}
+			/>
+
 			<div class="flex justify-center">
 				<div class="grid grid-cols-[repeat(3,320px)] gap-4">
 					<For each={data.client}>
