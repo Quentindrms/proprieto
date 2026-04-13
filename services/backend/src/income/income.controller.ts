@@ -60,7 +60,7 @@ export class IncomeController {
 		const user = request.user;
 		if (!user) return response.status(401).send({});
 		const deletedIncome = await this.incomeService.delete(incomeId);
-		if (!deletedIncome) return response.status(404).send({});
-		return response.status(200).send(deletedIncome);
+		if (!deletedIncome) return response.status(404).send({ message: "error" });
+		return response.status(200).send({ message: "success" });
 	}
 }
