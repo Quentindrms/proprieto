@@ -28,6 +28,7 @@ export class OutcomeService {
 			where: {
 				property: {
 					userId,
+					isDeleted: false,
 				},
 			},
 			select: {
@@ -62,6 +63,17 @@ export class OutcomeService {
 				property: {
 					userId,
 				},
+			},
+		});
+	}
+
+	async delete(outcomeId: string) {
+		return await prisma.outcomes.update({
+			where: {
+				id: outcomeId,
+			},
+			data: {
+				isDeleted: true,
 			},
 		});
 	}

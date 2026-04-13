@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Param, Post, Req, Res } from "@nestjs/common";
+import {
+	Body,
+	Controller,
+	Delete,
+	Get,
+	Param,
+	Post,
+	Req,
+	Res,
+} from "@nestjs/common";
 import type { Request, Response } from "express";
 import type { CreateOutcomeDto } from "types/DtoType";
 //biome-ignore lint/style/useImportType: required for NestJS DI
@@ -43,5 +52,18 @@ export class OutcomeController {
 		if (!outcome) return response.status(404).send({});
 		console.log(`Outcome : ${outcome}`);
 		return response.status(200).send(outcome);
+	}
+
+	@Delete("/:id")
+	async delete(
+		@Param("id") outcomeId: string,
+		@Req() request: Request,
+		@Res() response: Response,
+	) {
+		const user = request.user;
+		if (!user) return response.status(401).send({});
+		const deletedOutcome = await this.outcomeService.delete(outcomeId);
+		if (!deletedOutcome) return response.status(404).send({});
+		return response.status(200).send(deletedOutcome);
 	}
 }
