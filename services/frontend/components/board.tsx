@@ -143,6 +143,7 @@ export function ContractorsBoard(props: ContractorsBoardProps) {
 }
 
 export interface FluxBoardItem {
+	id: string,
 	name: string;
 	category: string;
 	issueDate: string;
@@ -212,6 +213,7 @@ export function FluxBoard(props: FluxBoardProps) {
 							<For each={flux.income}>
 								{(income) => (
 									<FluxRow
+										id={income.id}
 										amount={income.amount}
 										category={income.category}
 										issueDate={income.issueDate}
@@ -226,6 +228,7 @@ export function FluxBoard(props: FluxBoardProps) {
 							<For each={flux.outcome}>
 								{(outcome) => (
 									<FluxRow
+										id={outcome.id}
 										amount={outcome.amount}
 										category={outcome.category}
 										issueDate={outcome.issueDate}

@@ -116,6 +116,7 @@ export function ContractRow(props: ContractRowData) {
 }
 
 export interface FluxRowData {
+    id: string;
     name: string;
     category: string;
     issueDate: string;
@@ -127,7 +128,7 @@ export interface FluxRowData {
 export function FluxRow(props: FluxRowData) {
 
     return (
-        <tr class="last:border-0 hover:bg-background-muted/10 transition-colors" onClick={() => props.onClick({ name: props.name, category: props.category, issueDate: props.issueDate, amount: props.amount, type: props.type })}>
+        <tr class="last:border-0 hover:bg-background-muted/10 transition-colors" onClick={() => props.onClick({ id: props.id, name: props.name, category: props.category, issueDate: props.issueDate, amount: props.amount, type: props.type })}>
             <td class="px-4 py-3">
                 <Heading components="h3" size="medium">
                     {props.name}
