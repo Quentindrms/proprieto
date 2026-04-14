@@ -143,12 +143,6 @@ export function FluxRow(props: FluxRowData) {
             <td class="px-4 py-3">
                 <Text size="medium">{props.amount}€</Text>
             </td>
-            <td class="px-4 py-3">
-                <div class="flex gap-5">
-                    <FaSolidEdit size={25} color="var(--color-dark)" />
-                    <FaSolidTrashCan size={25} color="var(--color-action-red)" />
-                </div>
-            </td>
         </tr>
     )
 }

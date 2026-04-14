@@ -201,11 +201,6 @@ export function FluxBoard(props: FluxBoardProps) {
 									Montant
 								</Heading>
 							</th>
-							<th class="px-4 py-3 text-left">
-								<Heading components="h4" size="large">
-									Actions
-								</Heading>
-							</th>
 						</tr>
 					</thead>
 					<tbody class="bg-background-base">
