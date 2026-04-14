@@ -1,5 +1,5 @@
-import type { IncomeCreationType } from "@schemas/income";
-import type { OutcomeCreationType } from "@schemas/outcome";
+import type { IncomeCreationType, IncomeUpdateType } from "@schemas/income";
+import type { OutcomeCreationType, OutcomeUpdateType } from "@schemas/outcome";
 import { IncomeService } from "@services/income.service";
 import { OutcomeService } from "@services/outcome.service";
 import { getAuthTokenFromContext } from "@utils/telefunc";
@@ -50,6 +50,28 @@ export async function onDeleteFlux(id: string, type: "income" | "outcome") {
 			const outcome = new OutcomeService(token);
 			return await outcome.deleteOutcome(id);
 		}
+	} catch (error) {
+		console.trace(error);
+		return { message: "error" };
+	}
+}
+
+export async function onEditIncome(income: IncomeUpdateType) {
+	const token = getAuthTokenFromContext();
+	try {
+		const incomeService = new IncomeService(token);
+		return await incomeService.updateIncome(income);
+	} catch (error) {
+		console.trace(error);
+		return { message: "error" };
+	}
+}
+
+export async function onEditOutcome(outcome: OutcomeUpdateType) {
+	const token = getAuthTokenFromContext();
+	try {
+		const incomeService = new OutcomeService(token);
+		return await incomeService.updateOutcome(outcome);
 	} catch (error) {
 		console.trace(error);
 		return { message: "error" };

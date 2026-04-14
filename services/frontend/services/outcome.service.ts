@@ -1,5 +1,5 @@
 import type { Outcome, OutcomeDetail } from "@app/types/outcome";
-import type { OutcomeCreationType } from "@schemas/outcome";
+import type { OutcomeCreationType, OutcomeUpdateType } from "@schemas/outcome";
 import { CoreService } from "./core.service";
 
 export class OutcomeService extends CoreService {
@@ -17,5 +17,9 @@ export class OutcomeService extends CoreService {
 
 	async deleteOutcome(id: string) {
 		return await this.delete<{ message: string }>(`/outcome/${id}`);
+	}
+
+	async updateOutcome(outcome: OutcomeUpdateType) {
+		return await this.put<{ message: string }>("/outcome/", outcome);
 	}
 }

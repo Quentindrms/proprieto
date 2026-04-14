@@ -1,11 +1,13 @@
 import {
 	IncomeCreationSchema,
 	type IncomeCreationType,
+	IncomeUpdateSchema,
 	type IncomeUpdateType,
 } from "@schemas/income";
 import {
 	OutcomeCreationSchema,
 	type OutcomeCreationType,
+	OutcomeUpdateSchema,
 	type OutcomeUpdateType,
 } from "@schemas/outcome";
 import { createContext, createSignal, useContext } from "solid-js";
@@ -16,6 +18,8 @@ import {
 	onCreateIncome,
 	onCreateOutcome,
 	onDeleteFlux,
+	onEditIncome,
+	onEditOutcome,
 } from "./useFinance.telefunc";
 
 export function useFinance() {
@@ -80,9 +84,9 @@ export function useFinance() {
 	 */
 
 	const [outcomeErrors, setOutcomeErrors] =
-		createSignal<ZodSafeParseError<OutcomeCreationType>>();
+		createSignal<ZodSafeParseError<OutcomeCreationType | OutcomeUpdateType>>();
 	const [incomeErrors, setIncomeErrors] =
-		createSignal<ZodSafeParseError<IncomeCreationType>>();
+		createSignal<ZodSafeParseError<IncomeCreationType | IncomeUpdateType>>();
 
 	/**
 	 * Handle input for creation
@@ -192,11 +196,39 @@ export function useFinance() {
 	}
 
 	async function handleEditOutcome() {
-		console.log(updateOutcome());
+		const validate = OutcomeUpdateSchema.safeParse(updateOutcome());
+		if (!validate.success) {
+			setOutcomeErrors(validate);
+			return;
+		}
+		setOutcomeErrors(undefined);
+		const response = await onEditOutcome(updateOutcome());
+		if (response.message !== "success") {
+			toast.error(
+				"Une erreur est survenue lors de la modification de la ressource",
+			);
+			return;
+		}
+		toast.success("Ressource modifiée");
+		return;
 	}
 
 	async function handleEditIncome() {
-		console.log(updateIncome());
+		const validate = IncomeUpdateSchema.safeParse(updateIncome());
+		if (!validate) {
+			setIncomeErrors(validate);
+			return;
+		}
+		setIncomeErrors(undefined);
+		const response = await onEditIncome(updateIncome());
+		if (response.message !== "success") {
+			toast.error(
+				"Une erreur est survenue lors de la modification de la ressource",
+			);
+			return;
+		}
+		toast.success("Ressource modifiée");
+		return;
 	}
 
 	return {
