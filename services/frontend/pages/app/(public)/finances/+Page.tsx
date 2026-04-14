@@ -15,7 +15,7 @@ export default function Page() {
     const [selected, setSelected] = createSignal<{
         id: string;
         type: "income" | "outcome";
-    } | null>(null);
+    }>({ id: "", type: "income" });
     const [detail, setDetail] = createSignal<IncomeDetail | OutcomeDetail | null>(null);
 
     const createModal = useModal(350);
