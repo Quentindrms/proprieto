@@ -44,10 +44,7 @@ export default function DetailsModal(props: DetailsModalProps) {
                 </Text>
                 <div class="flex gap-2 justify-between">
                     <ActionButton>Modifier</ActionButton>
-                    {props.selected
-                        ? <ActionButton onClick={() => finances.handleDelete(props.selected.id, props.selected.type)}>Supprimer</ActionButton>
-                        : <ActionButton disabled>Supprimer</ActionButton>
-                    }
+                    <ActionButton onClick={() => finances.handleDelete(props.selected.id, props.selected.type)}>Supprimer</ActionButton>
                 </div>
             </ModalBody>
         </Modal>
