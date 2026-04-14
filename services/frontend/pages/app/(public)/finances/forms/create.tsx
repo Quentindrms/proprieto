@@ -7,7 +7,7 @@ import {
     ToggleSwitch,
 } from "@components/form";
 import Text from "@components/text";
-import { useFinance } from "@hooks/useFinance";
+import { useFinance, useFinanceContext } from "@hooks/useFinance";
 import { recurrence } from "@utils/recurrence";
 import { createSignal, Show } from "solid-js";
 import { useData } from "vike-solid/useData";
@@ -37,7 +37,7 @@ export function CreateOutcomeForm() {
         disabled: false,
     }));
 
-    const outcome = useFinance();
+    const outcome = useFinanceContext();
 
     return (
         <Form callback={outcome.handleCreateOutcome}>
@@ -211,7 +211,7 @@ export function CreateIncomeForm() {
     const [isPaid, setIsPaid] = createSignal<boolean>(false);
     const [isRecuring, setIsRecuring] = createSignal<boolean>(false);
 
-    const income = useFinance();
+    const income = useFinanceContext();
 
     const incomeCategory = data.incomeCategories.map((category) => ({
         label: category.label,

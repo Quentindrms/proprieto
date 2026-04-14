@@ -95,7 +95,7 @@ export function useFinance() {
 	function handleInputIncome(field: keyof IncomeCreationType) {
 		return (event: InputEvent) => {
 			const target = event.target as HTMLInputElement;
-			setUpdateIncome((prev) => ({
+			setCreateIncome((prev) => ({
 				...prev,
 				[field]: target.type === "checkbox" ? target.checked : target.value,
 			}));
@@ -105,7 +105,7 @@ export function useFinance() {
 	function handleInputOutcome(field: keyof OutcomeCreationType) {
 		return (event: InputEvent) => {
 			const target = event.target as HTMLInputElement;
-			setUpdateOutcome((prev) => ({
+			setCreateOutcome((prev) => ({
 				...prev,
 				[field]: target.type === "checkbox" ? target.checked : target.value,
 			}));
