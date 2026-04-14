@@ -8,7 +8,7 @@ import {
 	type OutcomeCreationType,
 	type OutcomeUpdateType,
 } from "@schemas/outcome";
-import { createSignal } from "solid-js";
+import { createContext, createSignal, useContext } from "solid-js";
 import toast from "solid-toast";
 import { reload } from "vike/client/router";
 import type { ZodSafeParseError } from "zod";
@@ -19,6 +19,10 @@ import {
 } from "./useFinance.telefunc";
 
 export function useFinance() {
+	/**
+	 * Signals for reactivity
+	 */
+
 	const [createIncome, setCreateIncome] = createSignal<IncomeCreationType>({
 		name: "",
 		amount: 0,
@@ -71,10 +75,18 @@ export function useFinance() {
 		paidOn: undefined,
 	});
 
+	/**
+	 * Signal for forms error
+	 */
+
 	const [outcomeErrors, setOutcomeErrors] =
 		createSignal<ZodSafeParseError<OutcomeCreationType>>();
 	const [incomeErrors, setIncomeErrors] =
 		createSignal<ZodSafeParseError<IncomeCreationType>>();
+
+	/**
+	 * Handle input for creation
+	 */
 
 	function handleInputIncome(field: keyof IncomeCreationType) {
 		return (event: InputEvent) => {
@@ -96,6 +108,10 @@ export function useFinance() {
 		};
 	}
 
+	/**
+	 * Handle input for update
+	 */
+
 	function handleUpdateIncome(field: keyof IncomeUpdateType) {
 		return (event: InputEvent) => {
 			const target = event.target as HTMLInputElement;
@@ -115,6 +131,10 @@ export function useFinance() {
 			}));
 		};
 	}
+
+	/**
+	 * Handle submit event for creation/update/deletion
+	 */
 
 	async function handleCreateIncome() {
 		const validate = IncomeCreationSchema.safeParse(createIncome());
@@ -171,7 +191,11 @@ export function useFinance() {
 		return;
 	}
 
-	async function handleInputFormUpdate() {
+	async function handleEditOutcome() {
+		console.log(updateOutcome());
+	}
+
+	async function handleEditIncome() {
 		console.log(updateIncome());
 	}
 
@@ -182,7 +206,6 @@ export function useFinance() {
 		handleCreateOutcome,
 		handleUpdateIncome,
 		handleUpdateOutcome,
-		handleInputFormUpdate,
 		outcomeErrors,
 		incomeErrors,
 		handleDelete,
@@ -190,5 +213,15 @@ export function useFinance() {
 		setUpdateOutcome,
 		updateIncome,
 		updateOutcome,
+		handleEditIncome,
+		handleEditOutcome,
 	};
+}
+
+export const FinanceContext = createContext<ReturnType<typeof useFinance>>();
+
+export function useFinanceContext() {
+	const context = useContext(FinanceContext);
+	if (!context) throw new Error("Context absent");
+	return context;
 }
