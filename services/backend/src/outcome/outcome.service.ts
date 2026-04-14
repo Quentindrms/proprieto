@@ -26,9 +26,9 @@ export class OutcomeService {
 	async browseOutcome(userId: string) {
 		return await prisma.outcomes.findMany({
 			where: {
+				isDeleted: false,
 				property: {
 					userId,
-					isDeleted: false,
 				},
 			},
 			select: {
@@ -40,6 +40,7 @@ export class OutcomeService {
 				issueDate: true,
 				paidOn: true,
 				frequency: true,
+				isDeleted: true,
 				property: {
 					select: {
 						id: true,
