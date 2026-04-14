@@ -176,6 +176,8 @@ export function useFinance() {
 		handleInputOutcome,
 		handleCreateIncome,
 		handleCreateOutcome,
+		handleUpdateIncome,
+		handleUpdateOutcome,
 		outcomeErrors,
 		incomeErrors,
 		handleDelete,
