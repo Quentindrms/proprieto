@@ -1,7 +1,12 @@
-import { IncomeCreationSchema, type IncomeCreationType } from "@schemas/income";
+import {
+	IncomeCreationSchema,
+	type IncomeCreationType,
+	type IncomeUpdateType,
+} from "@schemas/income";
 import {
 	OutcomeCreationSchema,
 	type OutcomeCreationType,
+	type OutcomeUpdateType,
 } from "@schemas/outcome";
 import { createSignal } from "solid-js";
 import toast from "solid-toast";
@@ -39,6 +44,33 @@ export function useFinance() {
 		paidOn: undefined,
 	});
 
+	const [updateIncome, setUpdateIncome] = createSignal<IncomeUpdateType>({
+		id: "",
+		name: "",
+		amount: 0,
+		isPaid: false,
+		issueDate: new Date(),
+		incomeCategoryId: "",
+		contractId: "",
+		isRecurring: false,
+		paidOn: undefined,
+		frequency: undefined,
+	});
+
+	const [updateOutcome, setUpdateOutcome] = createSignal<OutcomeUpdateType>({
+		id: "",
+		name: "",
+		amount: 0,
+		isPaid: false,
+		isRecurring: false,
+		categoryId: "",
+		propertyId: "",
+		providerId: "",
+		frequency: "none",
+		issueDate: undefined,
+		paidOn: undefined,
+	});
+
 	const [outcomeErrors, setOutcomeErrors] =
 		createSignal<ZodSafeParseError<OutcomeCreationType>>();
 	const [incomeErrors, setIncomeErrors] =
@@ -58,6 +90,26 @@ export function useFinance() {
 		return (event: InputEvent) => {
 			const target = event.target as HTMLInputElement;
 			setCreateOutcome((prev) => ({
+				...prev,
+				[field]: target.type === "checkbox" ? target.checked : target.value,
+			}));
+		};
+	}
+
+	function handleUpdateIncome(field: keyof IncomeUpdateType) {
+		return (event: InputEvent) => {
+			const target = event.target as HTMLInputElement;
+			setUpdateIncome((prev) => ({
+				...prev,
+				[field]: target.type === "checkbox" ? target.checked : target.value,
+			}));
+		};
+	}
+
+	function handleUpdateOutcome(field: keyof OutcomeUpdateType) {
+		return (event: InputEvent) => {
+			const target = event.target as HTMLInputElement;
+			setUpdateOutcome((prev) => ({
 				...prev,
 				[field]: target.type === "checkbox" ? target.checked : target.value,
 			}));
