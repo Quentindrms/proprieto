@@ -79,7 +79,7 @@ export function useFinance() {
 	function handleInputIncome(field: keyof IncomeCreationType) {
 		return (event: InputEvent) => {
 			const target = event.target as HTMLInputElement;
-			setCreateIncome((prev) => ({
+			setUpdateIncome((prev) => ({
 				...prev,
 				[field]: target.type === "checkbox" ? target.checked : target.value,
 			}));
@@ -89,7 +89,7 @@ export function useFinance() {
 	function handleInputOutcome(field: keyof OutcomeCreationType) {
 		return (event: InputEvent) => {
 			const target = event.target as HTMLInputElement;
-			setCreateOutcome((prev) => ({
+			setUpdateOutcome((prev) => ({
 				...prev,
 				[field]: target.type === "checkbox" ? target.checked : target.value,
 			}));
@@ -171,6 +171,10 @@ export function useFinance() {
 		return;
 	}
 
+	async function handleInputFormUpdate() {
+		console.log(updateIncome());
+	}
+
 	return {
 		handleInputIncome,
 		handleInputOutcome,
@@ -178,8 +182,13 @@ export function useFinance() {
 		handleCreateOutcome,
 		handleUpdateIncome,
 		handleUpdateOutcome,
+		handleInputFormUpdate,
 		outcomeErrors,
 		incomeErrors,
 		handleDelete,
+		setUpdateIncome,
+		setUpdateOutcome,
+		updateIncome,
+		updateOutcome,
 	};
 }

@@ -5,7 +5,6 @@ import Heading from "@components/heading";
 import { Modal, ModalBody, ModalHeader } from "@components/modal";
 import Text from "@components/text";
 import { useFinance } from "@hooks/useFinance";
-import { onDeleteFlux } from "@hooks/useFinance.telefunc";
 import clsx from "clsx";
 import type { Accessor } from "solid-js";
 
@@ -13,6 +12,7 @@ interface DetailsModalProps {
     isClosing: Accessor<boolean>;
     isOpened: Accessor<boolean>;
     close: () => void;
+    edit: (detail: IncomeDetail | OutcomeDetail, type: "income" | "outcome") => void,
     detail: IncomeDetail | OutcomeDetail | null;
     selected: { id: string; type: "income" | "outcome" };
 }
@@ -43,7 +43,7 @@ export default function DetailsModal(props: DetailsModalProps) {
                     </Text>
                 </Text>
                 <div class="flex gap-2 justify-between">
-                    <ActionButton>Modifier</ActionButton>
+                    <ActionButton onClick={() => props.edit(props.detail!, props.selected.type)}>Modifier</ActionButton>
                     <ActionButton onClick={() => finances.handleDelete(props.selected.id, props.selected.type)}>Supprimer</ActionButton>
                 </div>
             </ModalBody>

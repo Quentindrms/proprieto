@@ -3,24 +3,33 @@ import type { OutcomeDetail } from "@app/types/outcome";
 import { FluxBoard, type FluxBoardItem } from "@components/board";
 import { CardRevenue } from "@components/dataCard";
 import PageNamer from "@components/pageNamer";
+import { useFinance } from "@hooks/useFinance";
 import { onGetFluxDetails } from "@hooks/useFinance.telefunc";
 import { useModal } from "@hooks/useModal";
+import type { IncomeUpdateType } from "@schemas/income";
+import type { OutcomeUpdateType } from "@schemas/outcome";
 import { createSignal } from "solid-js";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
 import CreateModal from "./modals/createModal";
 import DetailsModal from "./modals/details";
+import EditModal from "./modals/edit";
 
 export default function Page() {
     const [selected, setSelected] = createSignal<{
         id: string;
         type: "income" | "outcome";
     }>({ id: "", type: "income" });
-    const [detail, setDetail] = createSignal<IncomeDetail | OutcomeDetail | null>(null);
+    const [detail, setDetail] = createSignal<IncomeDetail | OutcomeDetail | null>(
+        null,
+    );
 
     const createModal = useModal(350);
     const detailsModal = useModal(350);
+    const editModal = useModal(350)
+
     const data = useData<Data>();
+    const finances = useFinance();
 
     async function handleRowClick(item: FluxBoardItem) {
         const result = await onGetFluxDetails(item.id, item.type);
@@ -67,6 +76,23 @@ export default function Page() {
 
     const flux = outcomes.concat(incomes);
 
+    function handleEdit(
+        detail: IncomeDetail | OutcomeDetail,
+        type: "income" | "outcome",
+    ) {
+        if (type === "income") {
+            finances.setUpdateIncome({ ...(detail as unknown as IncomeUpdateType) });
+            console.log(finances.updateIncome());
+            editModal.open();
+        } else {
+            finances.setUpdateOutcome({
+                ...(detail as unknown as OutcomeUpdateType),
+            });
+            console.log(finances.updateOutcome());
+            editModal.open();
+        }
+    }
+
     return (
         <div class="w-full flex flex-col gap-5">
             <CreateModal
@@ -81,6 +107,13 @@ export default function Page() {
                 detail={detail()}
                 selected={selected()}
                 isOpened={detailsModal.isOpened}
+                edit={handleEdit}
+            />
+
+            <EditModal
+                close={editModal.close}
+                isClosing={editModal.isClosing}
+                isOpened={editModal.isOpened}
             />
 
             <PageNamer
