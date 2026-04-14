@@ -133,6 +133,7 @@ export function EditOutcomeForm() {
                             outcome.handleInputOutcome("isRecurring")(event);
                             setIsRecuring(!isRecuring());
                         }}
+                        checked={outcome.updateOutcome().isRecurring}
                     />
 
                     {outcome.outcomeErrors() && (
@@ -171,6 +172,8 @@ export function EditOutcomeForm() {
                             outcome.handleInputOutcome("isPaid")(event);
                             setIsPaid(!isPaid());
                         }}
+                        checked={outcome.updateOutcome().isPaid}
+
                     />
 
                     {outcome.outcomeErrors() && (
@@ -189,6 +192,7 @@ export function EditOutcomeForm() {
                         type="date"
                         name="paidOn"
                         onInput={outcome.handleInputOutcome("paidOn")}
+                        value={outcome.updateOutcome().paidOn ? new Date(outcome.updateOutcome().paidOn ?? "").toISOString().split("T")[0] : ""}
                     />
                 </Show>
             </div>
@@ -230,8 +234,9 @@ export function EditIncomeForm() {
     }))
 
     return (
-        <Form callback={income.handleCreateIncome}>
-            <TextField label="Nom" onInput={income.handleInputIncome("name")} />
+        <Form callback={income.handleEditIncome}>
+            <TextField label="Nom" onInput={income.handleUpdateIncome("name")}
+                value={income.updateIncome().name} />
 
             {income.incomeErrors() && (
                 <Text class="text-red-500">
@@ -242,7 +247,7 @@ export function EditIncomeForm() {
                 </Text>
             )}
 
-            <TextField label="Montant" onInput={income.handleInputIncome("amount")} />
+            <TextField label="Montant" onInput={income.handleUpdateIncome("amount")} value={income.updateIncome().amount} />
             {income.incomeErrors() && (
                 <Text class="text-red-500">
                     {
@@ -257,7 +262,8 @@ export function EditIncomeForm() {
                         label="Contrat associé"
                         labelOptions="Sélectionner un contrat"
                         options={contractsList}
-                        onInput={income.handleInputIncome("contractId")}
+                        onInput={income.handleUpdateIncome("contractId")}
+                        value={income.updateIncome().contractId}
                     />
                     {income.incomeErrors() && (
                         <Text class="text-red-500">
@@ -273,7 +279,8 @@ export function EditIncomeForm() {
                         label="Catégorie"
                         labelOptions="Sélectionner une catégorie"
                         options={incomeCategory}
-                        onInput={income.handleInputIncome("incomeCategoryId")}
+                        onInput={income.handleUpdateIncome("incomeCategoryId")}
+                        value={income.updateIncome().incomeCategoryId}
                     />
                     {income.incomeErrors() && (
                         <Text class="text-red-500">
@@ -287,14 +294,17 @@ export function EditIncomeForm() {
             </div>
 
             <TextField
-                label="Débiteur"
-                onInput={income.handleInputIncome("issueDate")}
+                label="Débiteur ????"
+                onInput={income.handleUpdateIncome("issueDate")}
+
+                disabled
             />
 
             <TextField
                 label="Date d'émission"
                 type="date"
-                onInput={income.handleInputIncome("issueDate")}
+                onInput={income.handleUpdateIncome("issueDate")}
+                value={income.updateIncome().issueDate ? new Date(income.updateIncome().issueDate ?? "").toISOString().split("T")[0] : ""}
             />
             {income.incomeErrors() && (
                 <Text class="text-red-500">
@@ -310,9 +320,10 @@ export function EditIncomeForm() {
                     <ToggleSwitch
                         label="Récurrent"
                         onInput={(event: InputEvent) => {
-                            income.handleInputIncome("isRecurring")(event);
+                            income.handleUpdateIncome("isRecurring")(event);
                             setIsRecuring(!isRecuring());
                         }}
+                        checked={income.updateIncome().isRecurring}
                     />
                 </div>
                 <Show when={isRecuring()}>
@@ -320,7 +331,8 @@ export function EditIncomeForm() {
                         label="Récurrence"
                         labelOptions="Sélectionner une récurrence"
                         options={recurrence}
-                        onInput={income.handleInputIncome("frequency")}
+                        onInput={income.handleUpdateIncome("frequency")}
+                        value={income.updateIncome().frequency}
                     />
                     {income.incomeErrors() && (
                         <Text class="text-red-500">
@@ -338,9 +350,10 @@ export function EditIncomeForm() {
                     <ToggleSwitch
                         label="Payé"
                         onInput={(event: InputEvent) => {
-                            income.handleInputIncome("isPaid")(event);
+                            income.handleUpdateIncome("isPaid")(event);
                             setIsPaid(!isPaid());
                         }}
+                        checked={income.updateIncome().isPaid}
                     />
                     {income.incomeErrors() && (
                         <Text class="text-red-500">
@@ -356,7 +369,8 @@ export function EditIncomeForm() {
                     <TextField
                         label="Date de paiement"
                         type="date"
-                        onInput={income.handleInputIncome("isPaid")}
+                        onInput={income.handleUpdateIncome("isPaid")}
+                        value={income.updateIncome().paidOn ? new Date(income.updateIncome().paidOn ?? "").toISOString().split("T")[0] : ""}
                     />
                     {income.incomeErrors() && (
                         <Text class="text-red-500">
