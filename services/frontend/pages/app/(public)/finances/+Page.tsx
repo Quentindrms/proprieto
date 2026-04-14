@@ -3,7 +3,7 @@ import type { OutcomeDetail } from "@app/types/outcome";
 import { FluxBoard, type FluxBoardItem } from "@components/board";
 import { CardRevenue } from "@components/dataCard";
 import PageNamer from "@components/pageNamer";
-import { useFinance } from "@hooks/useFinance";
+import { FinanceContext, useFinance } from "@hooks/useFinance";
 import { onGetFluxDetails } from "@hooks/useFinance.telefunc";
 import { useModal } from "@hooks/useModal";
 import type { IncomeUpdateType } from "@schemas/income";
@@ -94,57 +94,59 @@ export default function Page() {
     }
 
     return (
-        <div class="w-full flex flex-col gap-5">
-            <CreateModal
-                close={createModal.close}
-                isClosing={createModal.isClosing}
-                isOpened={createModal.isOpened}
-            />
-
-            <DetailsModal
-                close={detailsModal.close}
-                isClosing={detailsModal.isClosing}
-                detail={detail()}
-                selected={selected()}
-                isOpened={detailsModal.isOpened}
-                edit={handleEdit}
-            />
-
-            <EditModal
-                close={editModal.close}
-                isClosing={editModal.isClosing}
-                isOpened={editModal.isOpened}
-            />
-
-            <PageNamer
-                onClick={() => createModal.open()}
-                pageName="Flux financiers"
-                subText="Gestion des revenus et des dépenses mensuels"
-                buttonText="Ajouter une transaction"
-            />
-
-            <div class="flex gap-4">
-                <CardRevenue
-                    stat={totalMonthIncomes}
-                    title="Revenu du mois"
-                    comment=""
-                    dynamic
+        <FinanceContext.Provider value={finances}>
+            <div class="w-full flex flex-col gap-5">
+                <CreateModal
+                    close={createModal.close}
+                    isClosing={createModal.isClosing}
+                    isOpened={createModal.isOpened}
                 />
-                <CardRevenue
-                    stat={totalMonthOutcomes}
-                    title="Dépense du mois"
-                    comment=""
-                    dynamic
+
+                <DetailsModal
+                    close={detailsModal.close}
+                    isClosing={detailsModal.isClosing}
+                    detail={detail()}
+                    selected={selected()}
+                    isOpened={detailsModal.isOpened}
+                    edit={handleEdit}
                 />
-                <CardRevenue
-                    stat={monthProfit}
-                    title="Bénéfice du mois"
-                    comment=""
-                    dynamic
+
+                <EditModal
+                    close={editModal.close}
+                    isClosing={editModal.isClosing}
+                    isOpened={editModal.isOpened}
                 />
+
+                <PageNamer
+                    onClick={() => createModal.open()}
+                    pageName="Flux financiers"
+                    subText="Gestion des revenus et des dépenses mensuels"
+                    buttonText="Ajouter une transaction"
+                />
+
+                <div class="flex gap-4">
+                    <CardRevenue
+                        stat={totalMonthIncomes}
+                        title="Revenu du mois"
+                        comment=""
+                        dynamic
+                    />
+                    <CardRevenue
+                        stat={totalMonthOutcomes}
+                        title="Dépense du mois"
+                        comment=""
+                        dynamic
+                    />
+                    <CardRevenue
+                        stat={monthProfit}
+                        title="Bénéfice du mois"
+                        comment=""
+                        dynamic
+                    />
+                </div>
+
+                <FluxBoard flux={flux} onClick={handleRowClick} />
             </div>
-
-            <FluxBoard flux={flux} onClick={handleRowClick} />
-        </div>
+        </FinanceContext.Provider>
     );
 }

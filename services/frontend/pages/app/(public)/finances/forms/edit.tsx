@@ -1,20 +1,19 @@
 import { Button } from "@components/button";
 import {
-    CheckBox,
     Form,
     Select,
     TextField,
     ToggleSwitch,
 } from "@components/form";
 import Text from "@components/text";
-import { useFinance } from "@hooks/useFinance";
+import { useFinanceContext } from "@hooks/useFinance";
 import { recurrence } from "@utils/recurrence";
 import { createSignal, Show } from "solid-js";
 import { useData } from "vike-solid/useData";
 import { z } from "zod";
 import type { Data } from "../+data";
 
-export function UpdateOutcomeForm() {
+export function EditOutcomeForm() {
     const data = useData<Data>();
     const [isRecuring, setIsRecuring] = createSignal<boolean>(false);
     const [isPaid, setIsPaid] = createSignal<boolean>(false);
@@ -37,14 +36,15 @@ export function UpdateOutcomeForm() {
         disabled: false,
     }));
 
-    const outcome = useFinance();
+    const outcome = useFinanceContext();
 
     return (
-        <Form callback={outcome.handleCreateOutcome}>
+        <Form callback={outcome.handleEditOutcome}>
             <TextField
                 label="Nom"
                 name="name"
-                onInput={outcome.handleInputOutcome("name")}
+                onInput={outcome.handleUpdateOutcome("name")}
+                value={outcome.updateOutcome().name}
             />
 
             {outcome.outcomeErrors() && (
@@ -61,6 +61,7 @@ export function UpdateOutcomeForm() {
                 type="number"
                 name="amount"
                 onInput={outcome.handleInputOutcome("amount")}
+                value={outcome.updateOutcome().amount}
             />
 
             {outcome.outcomeErrors() && (
@@ -78,6 +79,7 @@ export function UpdateOutcomeForm() {
                         labelOptions="Sélectionner une proprieté"
                         options={propertiesList}
                         onInput={outcome.handleInputOutcome("propertyId")}
+                        value={outcome.updateOutcome().propertyId}
                     />
 
                     {outcome.outcomeErrors() && (
@@ -95,6 +97,7 @@ export function UpdateOutcomeForm() {
                     labelOptions="Sélectionner une catégorie"
                     options={categoryList}
                     onInput={outcome.handleInputOutcome("categoryId")}
+                    value={outcome.updateOutcome().categoryId}
                 />
 
                 {outcome.outcomeErrors() && (
@@ -112,6 +115,7 @@ export function UpdateOutcomeForm() {
                 labelOptions="Sélectionner un créancier"
                 options={providersList}
                 onInput={outcome.handleInputOutcome("providerId")}
+                value={outcome.updateOutcome().providerId}
             />
 
             <TextField
@@ -119,6 +123,7 @@ export function UpdateOutcomeForm() {
                 type="date"
                 name="issueDate"
                 onInput={outcome.handleInputOutcome("issueDate")}
+                value={outcome.updateOutcome().issueDate ? new Date(outcome.updateOutcome().issueDate ?? "").toISOString().split("T")[0] : ""}
             />
             <div class="flex gap-5">
                 <div class="flex flex-col">
@@ -206,12 +211,12 @@ export function UpdateOutcomeForm() {
 
 
 
-export function UpdateIncomeForm() {
+export function EditIncomeForm() {
     const data = useData<Data>();
     const [isPaid, setIsPaid] = createSignal<boolean>(false);
     const [isRecuring, setIsRecuring] = createSignal<boolean>(false);
 
-    const income = useFinance();
+    const income = useFinanceContext();
 
     const incomeCategory = data.incomeCategories.map((category) => ({
         label: category.label,
