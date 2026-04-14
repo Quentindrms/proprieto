@@ -7,7 +7,7 @@ export default function RegisterForm() {
 	const auth = useAuth();
 
 	return (
-		<Form callback={() => auth.handleRegister}
+		<Form callback={auth.handleRegister}
 			class="flex flex-col gap-3 p-2 w-lg bg-background-surface rounded-xl shadow-md shadow-background-border"
 			onSubmit={auth.handleRegister}
 		>
