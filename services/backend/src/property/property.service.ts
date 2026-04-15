@@ -31,20 +31,14 @@ export class PropertyService {
 	}
 
 	async updateProperty(property: UpdatePropertyDto) {
+		const { id, ...data } = property;
+
 		return await prisma.properties.update({
 			where: {
-				id: property.id,
+				id,
 			},
 			data: {
-				name: property.name,
-				purchasePrice:
-					property.purchasePrice != null
-						? Number(property.purchasePrice)
-						: undefined,
-				purchaseDate: property.purchaseDate,
-				sellPrice:
-					property.sellPrice != null ? Number(property.sellPrice) : undefined,
-				sellDate: property.sellDate,
+				...data,
 			},
 		});
 	}
