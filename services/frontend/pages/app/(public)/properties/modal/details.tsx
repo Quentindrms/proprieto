@@ -1,7 +1,10 @@
 import type { Property } from "@app/types/property";
+import { ActionButton } from "@components/button";
 import Heading from "@components/heading";
-import { Modal, ModalHeader } from "@components/modal";
-import type { Accessor } from "solid-js";
+import { Modal, ModalBody, ModalHeader } from "@components/modal";
+import Text from "@components/text";
+import { type Accessor, Show } from "solid-js";
+import { property } from "zod";
 
 interface ModalProps {
     isClosing: Accessor<boolean>;
@@ -11,6 +14,9 @@ interface ModalProps {
 }
 
 export default function DetailsModal(props: ModalProps) {
+
+    console.log(property)
+
     return (
         <Modal
             close={props.close}
@@ -22,6 +28,31 @@ export default function DetailsModal(props: ModalProps) {
                     Détails de {props.property.name}
                 </Heading>
             </ModalHeader>
+            <ModalBody>
+                <Heading components="h4" size="large">
+                    {props.property.name}
+                </Heading>
+                <div class="flex gap-3">
+                    <Text>Date d'acquisition : {props.property.purchaseDate && new Date(props.property.purchaseDate).toLocaleDateString("fr-FR")}€</Text>
+                    <Text>Prix d'acquisition : {props.property.purchasePrice}€</Text>
+                </div>
+                <Show when={props.property.sellDate && props.property.sellPrice}>
+                    <div class="flex gap-3">
+                        <Text>
+                            Date de vente :
+                            {props.property.sellDate && new Date(props.property.sellDate).toLocaleDateString("fr-FR")}
+                        </Text>
+                        <Text>Prix de vente : {props.property.sellPrice}</Text>
+                    </div>
+                </Show>
+                <div>
+                    <Text>Catégorie : {props.property.propertyType.name}</Text>
+                </div>
+                <div class="flex justify-around">
+                    <ActionButton color="black">Modifier</ActionButton>
+                    <ActionButton color="black">Supprimer</ActionButton>
+                </div>
+            </ModalBody>
         </Modal>
     );
 }

@@ -4,7 +4,7 @@ import {
 	PropertyUpdateSchema,
 	type PropertyUpdateType,
 } from "@schemas/property";
-import { createSignal } from "solid-js";
+import { createContext, createSignal, useContext } from "solid-js";
 import toast from "solid-toast";
 import { reload } from "vike/client/router";
 import type { ZodSafeParseError } from "zod";
@@ -120,4 +120,12 @@ export function useProperty() {
 		formError,
 		setUpdateProperty,
 	};
+}
+
+export const PropertyContext = createContext<ReturnType<typeof useProperty>>();
+
+export function usePropertyContext() {
+	const context = useContext(PropertyContext);
+	if (!context) throw new Error("Context absent");
+	return context;
 }
