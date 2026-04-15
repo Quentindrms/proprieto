@@ -4,18 +4,16 @@ import Heading from "@components/heading";
 import { Modal, ModalBody, ModalHeader } from "@components/modal";
 import Text from "@components/text";
 import { type Accessor, Show } from "solid-js";
-import { property } from "zod";
 
 interface ModalProps {
     isClosing: Accessor<boolean>;
     isOpened: Accessor<boolean>;
     close: () => void;
     property: Property;
+    edit: (property: Property) => void;
 }
 
 export default function DetailsModal(props: ModalProps) {
-
-    console.log(property)
 
     return (
         <Modal
@@ -49,7 +47,7 @@ export default function DetailsModal(props: ModalProps) {
                     <Text>Catégorie : {props.property.propertyType.name}</Text>
                 </div>
                 <div class="flex justify-around">
-                    <ActionButton color="black" onClick={() => console.log("Implement me")}>Modifier</ActionButton>
+                    <ActionButton color="black" onClick={() => props.edit(props.property)}>Modifier</ActionButton>
                     <ActionButton color="black">Supprimer</ActionButton>
                 </div>
             </ModalBody>

@@ -52,6 +52,18 @@ export default function Page() {
 		setFilter(type);
 	}
 
+	function handleEdit(propertyToEdit: Property) {
+		property.setUpdateProperty({
+			id: propertyToEdit.id,
+			name: propertyToEdit.name,
+			purchasePrice: Number(propertyToEdit.purchasePrice ?? 0),
+			purchaseDate: propertyToEdit.purchaseDate ? new Date(propertyToEdit.purchaseDate) : new Date(),
+			sellPrice: Number(propertyToEdit.sellPrice ?? 0),
+			type: propertyToEdit.propertyType.id,
+		});
+		editModal.open();
+	}
+
 	return (
 		<PropertyContext.Provider value={property}>
 			<div class="w-full h-full flex-col">
@@ -65,6 +77,7 @@ export default function Page() {
 					isClosing={detailsModal.isClosing}
 					isOpened={detailsModal.isOpened}
 					property={propertyDetails()}
+					edit={handleEdit}
 				/>
 
 				<EditProperty
