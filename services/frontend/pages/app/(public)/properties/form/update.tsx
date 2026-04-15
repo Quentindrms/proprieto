@@ -21,7 +21,8 @@ export default function UpdateProperty() {
             <TextField
                 label="Nom"
                 name="name"
-                onInput={property.handleCreateInput("name")}
+                onInput={property.handleUpdateInput("name")}
+                value={property.updateProperty().name}
             />
             {property.formError() && (
                 <span class="text-red-500">
@@ -35,7 +36,8 @@ export default function UpdateProperty() {
             <TextField
                 label="Prix d'acquisition"
                 name="purshacePrice"
-                onInput={property.handleCreateInput("purchasePrice")}
+                onInput={property.handleUpdateInput("purchasePrice")}
+                value={property.updateProperty().purchasePrice}
             />
             {property.formError() && (
                 <span class="text-red-500">
@@ -50,7 +52,8 @@ export default function UpdateProperty() {
                 label="Date d'acquisition"
                 type="date"
                 name="purshaceDate"
-                onInput={property.handleCreateInput("purchaseDate")}
+                onInput={property.handleUpdateInput("purchaseDate")}
+                value={property.updateProperty().purchaseDate ? new Date(property.updateProperty().purchaseDate ?? "").toISOString().split("T")[0] : ""}
             />
             {property.formError() && (
                 <span class="text-red-500">
@@ -66,6 +69,7 @@ export default function UpdateProperty() {
                 labelOptions="Sélectionner un type de bien"
                 options={propertyTypes}
                 onInput={property.handleCreateInput("type")}
+                value={property.updateProperty().type}
             />
             <div class="flex justify-center p-2">
                 <Button type="submit">Créer une nouvelle propriété</Button>

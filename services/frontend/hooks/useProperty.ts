@@ -112,6 +112,7 @@ export function useProperty() {
 
 	return {
 		createProperty,
+		updateProperty,
 		handleCreateInput,
 		handleUpdateInput,
 		create,
