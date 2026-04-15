@@ -15,9 +15,6 @@ export default function CreatePropertyForm() {
 		disabled: false,
 	}));
 
-	console.log(`Property type lengh ${propertyTypes.length}`)
-	console.log(`Data property type lengh ${data.propertyTypes.length}`)
-
 	return (
 		<Form callback={property.create}>
 			<TextField
