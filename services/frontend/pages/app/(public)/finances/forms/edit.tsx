@@ -279,14 +279,14 @@ export function EditIncomeForm() {
                         label="Catégorie"
                         labelOptions="Sélectionner une catégorie"
                         options={incomeCategory}
-                        onInput={income.handleUpdateIncome("incomeCategoryId")}
-                        value={income.updateIncome().incomeCategoryId}
+                        onInput={income.handleUpdateIncome("categoryId")}
+                        value={income.updateIncome().categoryId}
                     />
                     {income.incomeErrors() && (
                         <Text class="text-red-500">
                             {
                                 z.treeifyError(income.incomeErrors()!.error).properties
-                                    ?.incomeCategoryId?.errors[0]
+                                    ?.categoryId?.errors[0]
                             }
                         </Text>
                     )}

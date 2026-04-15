@@ -23,6 +23,7 @@ export default function Page() {
     const [detail, setDetail] = createSignal<IncomeDetail | OutcomeDetail | null>(
         null,
     );
+    const [editType, setEditType] = createSignal<"income" | "outcome">("income")
 
     const createModal = useModal(350);
     const detailsModal = useModal(350);
@@ -80,6 +81,7 @@ export default function Page() {
         detail: IncomeDetail | OutcomeDetail,
         type: "income" | "outcome",
     ) {
+        setEditType(type)
         if (type === "income") {
             finances.setUpdateIncome({ ...(detail as unknown as IncomeUpdateType) });
             console.log(finances.updateIncome());
@@ -115,6 +117,7 @@ export default function Page() {
                     close={editModal.close}
                     isClosing={editModal.isClosing}
                     isOpened={editModal.isOpened}
+                    type={editType()}
                 />
 
                 <PageNamer
