@@ -268,13 +268,13 @@ export function CreateIncomeForm() {
                         label="Catégorie"
                         labelOptions="Sélectionner une catégorie"
                         options={incomeCategory}
-                        onInput={income.handleInputIncome("incomeCategoryId")}
+                        onInput={income.handleInputIncome("categoryId")}
                     />
                     {income.incomeErrors() && (
                         <Text class="text-red-500">
                             {
                                 z.treeifyError(income.incomeErrors()!.error).properties
-                                    ?.incomeCategoryId?.errors[0]
+                                    ?.categoryId?.errors[0]
                             }
                         </Text>
                     )}
