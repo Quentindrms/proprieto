@@ -75,3 +75,17 @@ export interface CreateIncomeDto {
 	contractId: string;
 	clientId: string;
 }
+
+export interface UpdateIncomeDto {
+	id: string;
+	amount: number;
+	isReccuring: string;
+	isPaid: boolean;
+	issueDate: Date;
+	paidOn: Date;
+	frequency: string;
+	propertyId: string;
+	incomeCategoryId: string;
+	contractId: string;
+	clientId: string;
+}
