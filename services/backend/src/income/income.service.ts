@@ -52,13 +52,16 @@ export class IncomeService {
 	}
 
 	async update(income: UpdateIncomeDto) {
-		const { id, ...data } = income;
+		const { id, amount, ...data } = income;
 
 		return await prisma.incomes.update({
 			where: {
 				id,
 			},
-			data,
+			data: {
+				...data,
+				amount: Number(amount),
+			},
 		});
 	}
 }
