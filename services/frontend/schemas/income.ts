@@ -38,7 +38,7 @@ export const IncomeCreationSchema = z.object({
 	issueDate: issueDateSchema,
 	paidOn: paidOnSchema,
 	frequency: frequencySchema,
-	incomeCategoryId: incomeCategoryIdSchema,
+	categoryId: incomeCategoryIdSchema,
 	contractId: contractIdSchema,
 	isRecurring: isRecurringSchema,
 });
@@ -51,7 +51,7 @@ export const IncomeUpdateSchema = z.object({
 	issueDate: issueDateSchema,
 	paidOn: paidOnSchema,
 	frequency: frequencySchema,
-	incomeCategoryId: incomeCategoryIdSchema,
+	categoryId: incomeCategoryIdSchema,
 	contractId: contractIdSchema,
 	isRecurring: isRecurringSchema,
 });

@@ -10,6 +10,7 @@ export type IncomeDetail = {
 	frequency: IncomeFrequency;
 	contractId: string;
 	categoryId: string;
+	isRecurring: boolean;
 };
 
 export type IncomeType = {
@@ -24,4 +25,5 @@ export type IncomeType = {
 	incomeCategoryId: string;
 	contractId: string;
 	clientId: string;
+	isRecurring: boolean;
 };

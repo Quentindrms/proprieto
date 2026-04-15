@@ -31,7 +31,7 @@ export function useFinance() {
 		name: "",
 		amount: 0,
 		contractId: "",
-		incomeCategoryId: "",
+		categoryId: "",
 		isPaid: false,
 		frequency: "none",
 		paidOn: undefined,
@@ -58,7 +58,7 @@ export function useFinance() {
 		amount: 0,
 		isPaid: false,
 		issueDate: new Date(),
-		incomeCategoryId: "",
+		categoryId: "",
 		contractId: "",
 		isRecurring: false,
 		paidOn: undefined,
@@ -214,6 +214,7 @@ export function useFinance() {
 	}
 
 	async function handleEditIncome() {
+		console.log("EDIT INCOME");
 		const validate = IncomeUpdateSchema.safeParse(updateIncome());
 		if (!validate) {
 			setIncomeErrors(validate);
