@@ -89,3 +89,17 @@ export interface UpdateIncomeDto {
 	contractId: string;
 	clientId: string;
 }
+
+export interface UpdateOutcomeDto {
+	id: string;
+	name: string;
+	amount: number;
+	isRecurring: boolean;
+	isPaid: boolean;
+	issueDate: Date;
+	paidOn?: Date;
+	frequency: string;
+	providerId: string;
+	propertyId: string;
+	categoryId: string;
+}

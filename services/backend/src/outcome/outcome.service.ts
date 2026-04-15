@@ -1,6 +1,6 @@
 import { prisma } from "@libs/DatabaseClient";
 import { Injectable } from "@nestjs/common";
-import type { CreateOutcomeDto } from "types/DtoType";
+import type { CreateOutcomeDto, UpdateOutcomeDto } from "types/DtoType";
 
 @Injectable()
 export class OutcomeService {
@@ -75,6 +75,19 @@ export class OutcomeService {
 			},
 			data: {
 				isDeleted: true,
+			},
+		});
+	}
+
+	async update(outcome: UpdateOutcomeDto) {
+		const { id, amount, ...data } = outcome;
+		return await prisma.outcomes.update({
+			where: {
+				id,
+			},
+			data: {
+				...data,
+				amount: Number(amount),
 			},
 		});
 	}
