@@ -49,7 +49,7 @@ export default function DetailsModal(props: ModalProps) {
                     <Text>Catégorie : {props.property.propertyType.name}</Text>
                 </div>
                 <div class="flex justify-around">
-                    <ActionButton color="black">Modifier</ActionButton>
+                    <ActionButton color="black" onClick={() => console.log("Implement me")}>Modifier</ActionButton>
                     <ActionButton color="black">Supprimer</ActionButton>
                 </div>
             </ModalBody>
