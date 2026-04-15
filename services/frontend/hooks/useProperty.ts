@@ -56,7 +56,7 @@ export function useProperty() {
 	async function create() {
 		const validate = validateData();
 		if (!validate.success) {
-			return validate.error;
+			setFormError(validate);
 		}
 		const response = await onCreate(createProperty());
 		if (response?.message !== "success") {
@@ -65,6 +65,7 @@ export function useProperty() {
 		}
 		toast.success("Propriété créee");
 		await reload();
+		return;
 	}
 
 	async function update() {
