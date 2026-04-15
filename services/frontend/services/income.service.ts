@@ -1,5 +1,5 @@
-import type { IncomeType } from "@app/types/income";
-import type { IncomeCreationType } from "@schemas/income";
+import type { IncomeDetail, IncomeType } from "@app/types/income";
+import type { IncomeCreationType, IncomeUpdateType } from "@schemas/income";
 import { CoreService } from "./core.service";
 
 export class IncomeService extends CoreService {
@@ -9,5 +9,17 @@ export class IncomeService extends CoreService {
 
 	async browse() {
 		return this.get<IncomeType[]>("/income/browse");
+	}
+
+	async getIncome(id: string) {
+		return this.get<IncomeDetail>(`/income/${id}`);
+	}
+
+	async deleteIncome(id: string) {
+		return this.delete<{ message: string }>(`/income/${id}`);
+	}
+
+	async updateIncome(income: IncomeUpdateType) {
+		return this.put<{ message: string }>(`/income/`, income);
 	}
 }

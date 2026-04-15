@@ -1,6 +1,6 @@
 import { prisma } from "@libs/DatabaseClient";
 import { Injectable } from "@nestjs/common";
-import type { CreateOutcomeDto } from "types/DtoType";
+import type { CreateOutcomeDto, UpdateOutcomeDto } from "types/DtoType";
 
 @Injectable()
 export class OutcomeService {
@@ -26,11 +26,13 @@ export class OutcomeService {
 	async browseOutcome(userId: string) {
 		return await prisma.outcomes.findMany({
 			where: {
+				isDeleted: false,
 				property: {
 					userId,
 				},
 			},
 			select: {
+				id: true,
 				name: true,
 				amount: true,
 				isRecurring: true,
@@ -38,6 +40,7 @@ export class OutcomeService {
 				issueDate: true,
 				paidOn: true,
 				frequency: true,
+				isDeleted: true,
 				property: {
 					select: {
 						id: true,
@@ -50,6 +53,41 @@ export class OutcomeService {
 						directories: true,
 					},
 				},
+			},
+		});
+	}
+
+	async getOutcome(outcomeId: string, userId: string) {
+		return await prisma.outcomes.findFirst({
+			where: {
+				id: outcomeId,
+				property: {
+					userId,
+				},
+			},
+		});
+	}
+
+	async delete(outcomeId: string) {
+		return await prisma.outcomes.update({
+			where: {
+				id: outcomeId,
+			},
+			data: {
+				isDeleted: true,
+			},
+		});
+	}
+
+	async update(outcome: UpdateOutcomeDto) {
+		const { id, amount, ...data } = outcome;
+		return await prisma.outcomes.update({
+			where: {
+				id,
+			},
+			data: {
+				...data,
+				amount: Number(amount),
 			},
 		});
 	}

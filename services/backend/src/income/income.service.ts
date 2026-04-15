@@ -1,6 +1,6 @@
 import { prisma } from "@libs/DatabaseClient";
 import { Injectable } from "@nestjs/common";
-import type { CreateIncomeDto } from "types/DtoType";
+import type { CreateIncomeDto, UpdateIncomeDto } from "types/DtoType";
 
 @Injectable()
 export class IncomeService {
@@ -22,11 +22,45 @@ export class IncomeService {
 	async browse(userId: string) {
 		return await prisma.incomes.findMany({
 			where: {
+				isDeleted: false,
 				contract: {
 					property: {
 						userId,
 					},
 				},
+			},
+		});
+	}
+
+	async get(incomeId: string) {
+		return await prisma.incomes.findFirst({
+			where: {
+				id: incomeId,
+			},
+		});
+	}
+
+	async delete(incomeId: string) {
+		return await prisma.incomes.update({
+			where: {
+				id: incomeId,
+			},
+			data: {
+				isDeleted: true,
+			},
+		});
+	}
+
+	async update(income: UpdateIncomeDto) {
+		const { id, amount, ...data } = income;
+
+		return await prisma.incomes.update({
+			where: {
+				id,
+			},
+			data: {
+				...data,
+				amount: Number(amount),
 			},
 		});
 	}

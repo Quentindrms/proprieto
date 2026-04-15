@@ -143,6 +143,7 @@ export function ContractorsBoard(props: ContractorsBoardProps) {
 }
 
 export interface FluxBoardItem {
+	id: string,
 	name: string;
 	category: string;
 	issueDate: string;
@@ -152,6 +153,7 @@ export interface FluxBoardItem {
 
 interface FluxBoardProps {
 	flux: FluxBoardItem[];
+	onClick: (item: FluxBoardItem) => void,
 }
 
 export function FluxBoard(props: FluxBoardProps) {
@@ -199,11 +201,6 @@ export function FluxBoard(props: FluxBoardProps) {
 									Montant
 								</Heading>
 							</th>
-							<th class="px-4 py-3 text-left">
-								<Heading components="h4" size="large">
-									Actions
-								</Heading>
-							</th>
 						</tr>
 					</thead>
 					<tbody class="bg-background-base">
@@ -211,11 +208,13 @@ export function FluxBoard(props: FluxBoardProps) {
 							<For each={flux.income}>
 								{(income) => (
 									<FluxRow
+										id={income.id}
 										amount={income.amount}
 										category={income.category}
 										issueDate={income.issueDate}
 										name={income.name}
 										type={income.type}
+										onClick={(item) => props.onClick(item)}
 									/>
 								)}
 							</For>
@@ -224,11 +223,13 @@ export function FluxBoard(props: FluxBoardProps) {
 							<For each={flux.outcome}>
 								{(outcome) => (
 									<FluxRow
+										id={outcome.id}
 										amount={outcome.amount}
 										category={outcome.category}
 										issueDate={outcome.issueDate}
 										name={outcome.name}
 										type={outcome.type}
+										onClick={(item) => props.onClick(item)}
 									/>
 								)}
 							</For>

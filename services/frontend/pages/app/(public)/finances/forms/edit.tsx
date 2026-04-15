@@ -1,20 +1,19 @@
 import { Button } from "@components/button";
 import {
-    CheckBox,
     Form,
     Select,
     TextField,
     ToggleSwitch,
 } from "@components/form";
 import Text from "@components/text";
-import { useFinance, useFinanceContext } from "@hooks/useFinance";
+import { useFinanceContext } from "@hooks/useFinance";
 import { recurrence } from "@utils/recurrence";
 import { createSignal, Show } from "solid-js";
 import { useData } from "vike-solid/useData";
 import { z } from "zod";
 import type { Data } from "../+data";
 
-export function CreateOutcomeForm() {
+export function EditOutcomeForm() {
     const data = useData<Data>();
     const [isRecuring, setIsRecuring] = createSignal<boolean>(false);
     const [isPaid, setIsPaid] = createSignal<boolean>(false);
@@ -40,11 +39,12 @@ export function CreateOutcomeForm() {
     const outcome = useFinanceContext();
 
     return (
-        <Form callback={outcome.handleCreateOutcome}>
+        <Form callback={outcome.handleEditOutcome}>
             <TextField
                 label="Nom"
                 name="name"
-                onInput={outcome.handleInputOutcome("name")}
+                onInput={outcome.handleUpdateOutcome("name")}
+                value={outcome.updateOutcome().name}
             />
 
             {outcome.outcomeErrors() && (
@@ -61,6 +61,7 @@ export function CreateOutcomeForm() {
                 type="number"
                 name="amount"
                 onInput={outcome.handleInputOutcome("amount")}
+                value={outcome.updateOutcome().amount}
             />
 
             {outcome.outcomeErrors() && (
@@ -78,6 +79,7 @@ export function CreateOutcomeForm() {
                         labelOptions="Sélectionner une proprieté"
                         options={propertiesList}
                         onInput={outcome.handleInputOutcome("propertyId")}
+                        value={outcome.updateOutcome().propertyId}
                     />
 
                     {outcome.outcomeErrors() && (
@@ -95,6 +97,7 @@ export function CreateOutcomeForm() {
                     labelOptions="Sélectionner une catégorie"
                     options={categoryList}
                     onInput={outcome.handleInputOutcome("categoryId")}
+                    value={outcome.updateOutcome().categoryId}
                 />
 
                 {outcome.outcomeErrors() && (
@@ -112,6 +115,7 @@ export function CreateOutcomeForm() {
                 labelOptions="Sélectionner un créancier"
                 options={providersList}
                 onInput={outcome.handleInputOutcome("providerId")}
+                value={outcome.updateOutcome().providerId}
             />
 
             <TextField
@@ -119,6 +123,7 @@ export function CreateOutcomeForm() {
                 type="date"
                 name="issueDate"
                 onInput={outcome.handleInputOutcome("issueDate")}
+                value={outcome.updateOutcome().issueDate ? new Date(outcome.updateOutcome().issueDate ?? "").toISOString().split("T")[0] : ""}
             />
             <div class="flex gap-5">
                 <div class="flex flex-col">
@@ -128,6 +133,7 @@ export function CreateOutcomeForm() {
                             outcome.handleInputOutcome("isRecurring")(event);
                             setIsRecuring(!isRecuring());
                         }}
+                        checked={outcome.updateOutcome().isRecurring}
                     />
 
                     {outcome.outcomeErrors() && (
@@ -166,6 +172,8 @@ export function CreateOutcomeForm() {
                             outcome.handleInputOutcome("isPaid")(event);
                             setIsPaid(!isPaid());
                         }}
+                        checked={outcome.updateOutcome().isPaid}
+
                     />
 
                     {outcome.outcomeErrors() && (
@@ -184,6 +192,7 @@ export function CreateOutcomeForm() {
                         type="date"
                         name="paidOn"
                         onInput={outcome.handleInputOutcome("paidOn")}
+                        value={outcome.updateOutcome().paidOn ? new Date(outcome.updateOutcome().paidOn ?? "").toISOString().split("T")[0] : ""}
                     />
                 </Show>
             </div>
@@ -206,7 +215,7 @@ export function CreateOutcomeForm() {
 
 
 
-export function CreateIncomeForm() {
+export function EditIncomeForm() {
     const data = useData<Data>();
     const [isPaid, setIsPaid] = createSignal<boolean>(false);
     const [isRecuring, setIsRecuring] = createSignal<boolean>(false);
@@ -225,8 +234,9 @@ export function CreateIncomeForm() {
     }))
 
     return (
-        <Form callback={income.handleCreateIncome}>
-            <TextField label="Nom" onInput={income.handleInputIncome("name")} />
+        <Form callback={income.handleEditIncome}>
+            <TextField label="Nom" onInput={income.handleUpdateIncome("name")}
+                value={income.updateIncome().name} />
 
             {income.incomeErrors() && (
                 <Text class="text-red-500">
@@ -237,7 +247,7 @@ export function CreateIncomeForm() {
                 </Text>
             )}
 
-            <TextField label="Montant" onInput={income.handleInputIncome("amount")} />
+            <TextField label="Montant" onInput={income.handleUpdateIncome("amount")} value={income.updateIncome().amount} />
             {income.incomeErrors() && (
                 <Text class="text-red-500">
                     {
@@ -252,7 +262,8 @@ export function CreateIncomeForm() {
                         label="Contrat associé"
                         labelOptions="Sélectionner un contrat"
                         options={contractsList}
-                        onInput={income.handleInputIncome("contractId")}
+                        onInput={income.handleUpdateIncome("contractId")}
+                        value={income.updateIncome().contractId}
                     />
                     {income.incomeErrors() && (
                         <Text class="text-red-500">
@@ -268,13 +279,14 @@ export function CreateIncomeForm() {
                         label="Catégorie"
                         labelOptions="Sélectionner une catégorie"
                         options={incomeCategory}
-                        onInput={income.handleInputIncome("incomeCategoryId")}
+                        onInput={income.handleUpdateIncome("categoryId")}
+                        value={income.updateIncome().categoryId}
                     />
                     {income.incomeErrors() && (
                         <Text class="text-red-500">
                             {
                                 z.treeifyError(income.incomeErrors()!.error).properties
-                                    ?.incomeCategoryId?.errors[0]
+                                    ?.categoryId?.errors[0]
                             }
                         </Text>
                     )}
@@ -282,14 +294,17 @@ export function CreateIncomeForm() {
             </div>
 
             <TextField
-                label="Débiteur"
-                onInput={income.handleInputIncome("issueDate")}
+                label="Débiteur ????"
+                onInput={income.handleUpdateIncome("issueDate")}
+
+                disabled
             />
 
             <TextField
                 label="Date d'émission"
                 type="date"
-                onInput={income.handleInputIncome("issueDate")}
+                onInput={income.handleUpdateIncome("issueDate")}
+                value={income.updateIncome().issueDate ? new Date(income.updateIncome().issueDate ?? "").toISOString().split("T")[0] : ""}
             />
             {income.incomeErrors() && (
                 <Text class="text-red-500">
@@ -305,9 +320,10 @@ export function CreateIncomeForm() {
                     <ToggleSwitch
                         label="Récurrent"
                         onInput={(event: InputEvent) => {
-                            income.handleInputIncome("isRecurring")(event);
+                            income.handleUpdateIncome("isRecurring")(event);
                             setIsRecuring(!isRecuring());
                         }}
+                        checked={income.updateIncome().isRecurring}
                     />
                 </div>
                 <Show when={isRecuring()}>
@@ -315,7 +331,8 @@ export function CreateIncomeForm() {
                         label="Récurrence"
                         labelOptions="Sélectionner une récurrence"
                         options={recurrence}
-                        onInput={income.handleInputIncome("frequency")}
+                        onInput={income.handleUpdateIncome("frequency")}
+                        value={income.updateIncome().frequency}
                     />
                     {income.incomeErrors() && (
                         <Text class="text-red-500">
@@ -333,9 +350,10 @@ export function CreateIncomeForm() {
                     <ToggleSwitch
                         label="Payé"
                         onInput={(event: InputEvent) => {
-                            income.handleInputIncome("isPaid")(event);
+                            income.handleUpdateIncome("isPaid")(event);
                             setIsPaid(!isPaid());
                         }}
+                        checked={income.updateIncome().isPaid}
                     />
                     {income.incomeErrors() && (
                         <Text class="text-red-500">
@@ -351,7 +369,8 @@ export function CreateIncomeForm() {
                     <TextField
                         label="Date de paiement"
                         type="date"
-                        onInput={income.handleInputIncome("isPaid")}
+                        onInput={income.handleUpdateIncome("isPaid")}
+                        value={income.updateIncome().paidOn ? new Date(income.updateIncome().paidOn ?? "").toISOString().split("T")[0] : ""}
                     />
                     {income.incomeErrors() && (
                         <Text class="text-red-500">

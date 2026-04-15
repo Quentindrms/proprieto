@@ -18,7 +18,7 @@ const FormContext = createContext<{
 
 interface FormProps extends JSX.FormHTMLAttributes<HTMLFormElement> {
 	children: JSX.Element;
-	callback: (e?: SubmitEvent) => void;
+	callback: (e: SubmitEvent) => void | Promise<void>;
 	background?: boolean;
 }
 
@@ -30,7 +30,7 @@ export function Form(props: FormProps) {
 		event.preventDefault();
 		event.stopPropagation();
 		if (local.callback) {
-			local.callback();
+			local.callback(event);
 		}
 	}
 

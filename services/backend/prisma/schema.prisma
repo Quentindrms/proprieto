@@ -131,6 +131,7 @@ model Incomes {
   issueDate DateTime  @db.Date()
   paidOn    DateTime? @db.Date()
   frequency String?   @db.VarChar(50)
+  isDeleted Boolean   @default(false) @db.Boolean()
 
   contractId String
   categoryId String
@@ -150,6 +151,7 @@ model Outcomes {
   issueDate   DateTime  @db.Date()
   paidOn      DateTime? @db.Date()
   frequency   String    @db.VarChar(50)
+  isDeleted   Boolean   @default(false) @db.Boolean()
 
   propertyId String
   providerId String

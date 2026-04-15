@@ -1,6 +1,16 @@
-import { Body, Controller, Get, Post, Req, Res } from "@nestjs/common";
+import {
+	Body,
+	Controller,
+	Delete,
+	Get,
+	Param,
+	Post,
+	Put,
+	Req,
+	Res,
+} from "@nestjs/common";
 import type { Request, Response } from "express";
-import type { CreateOutcomeDto } from "types/DtoType";
+import type { CreateOutcomeDto, UpdateOutcomeDto } from "types/DtoType";
 //biome-ignore lint/style/useImportType: required for NestJS DI
 import { OutcomeService } from "./outcome.service";
 
@@ -29,5 +39,45 @@ export class OutcomeController {
 		const outcomes = await this.outcomeService.browseOutcome(user.id);
 		console.log(outcomes);
 		return response.status(200).send(outcomes);
+	}
+
+	@Get("/:id")
+	async get(
+		@Param("id") outcomeId: string,
+		@Req() request: Request,
+		@Res() response: Response,
+	) {
+		const user = request.user;
+		if (!user) return response.status(401).send({});
+		const outcome = await this.outcomeService.getOutcome(outcomeId, user.id);
+		if (!outcome) return response.status(404).send({});
+		console.log(`Outcome : ${outcome}`);
+		return response.status(200).send(outcome);
+	}
+
+	@Delete("/:id")
+	async delete(
+		@Param("id") outcomeId: string,
+		@Req() request: Request,
+		@Res() response: Response,
+	) {
+		const user = request.user;
+		if (!user) return response.status(401).send({});
+		const deletedOutcome = await this.outcomeService.delete(outcomeId);
+		if (!deletedOutcome) return response.status(404).send({ message: "error" });
+		return response.status(200).send({ message: "success" });
+	}
+
+	@Put("")
+	async update(
+		@Req() request: Request,
+		@Res() response: Response,
+		@Body() body: UpdateOutcomeDto,
+	) {
+		const user = request.user;
+		if (!user) return response.status(401).send({});
+		const outcome = this.outcomeService.update(body);
+		if (!outcome) response.status(404).send({ message: "error" });
+		return response.status(200).send({ message: "success" });
 	}
 }

@@ -116,17 +116,19 @@ export function ContractRow(props: ContractRowData) {
 }
 
 export interface FluxRowData {
+    id: string;
     name: string;
     category: string;
     issueDate: string;
     amount: string;
     type: "outcome" | "income";
+    onClick: (item: Omit<FluxRowData, "onClick">) => void;
 }
 
 export function FluxRow(props: FluxRowData) {
 
     return (
-        <tr class="last:border-0 hover:bg-background-secondary transition-colors">
+        <tr class="last:border-0 hover:bg-background-muted/10 transition-colors" onClick={() => props.onClick({ id: props.id, name: props.name, category: props.category, issueDate: props.issueDate, amount: props.amount, type: props.type })}>
             <td class="px-4 py-3">
                 <Heading components="h3" size="medium">
                     {props.name}
@@ -140,12 +142,6 @@ export function FluxRow(props: FluxRowData) {
             </td>
             <td class="px-4 py-3">
                 <Text size="medium">{props.amount}€</Text>
-            </td>
-            <td class="px-4 py-3">
-                <div class="flex gap-5">
-                    <FaSolidEdit size={25} color="var(--color-dark)" />
-                    <FaSolidTrashCan size={25} color="var(--color-action-red)" />
-                </div>
             </td>
         </tr>
     )

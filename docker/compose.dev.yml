@@ -46,6 +46,8 @@ services:
     networks:
       - database
       - frontback
+    restart: always
+
 
   postgres:
     image: postgres:18-alpine

@@ -9,3 +9,6 @@ dev-start:
 
 dev-stop: 
 	docker compose -f ${DEV_COMPOSE_FILE} --env-file .env.development down
+
+dev-restart: 
+	docker compose -f ${DEV_COMPOSE_FILE} --env-file .env.development restart
