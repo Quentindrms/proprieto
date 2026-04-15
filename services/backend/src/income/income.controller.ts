@@ -5,11 +5,12 @@ import {
 	Get,
 	Param,
 	Post,
+	Put,
 	Req,
 	Res,
 } from "@nestjs/common";
 import type { Request, Response } from "express";
-import type { CreateIncomeDto } from "types/DtoType";
+import type { CreateIncomeDto, UpdateIncomeDto } from "types/DtoType";
 //biome-ignore lint/style/useImportType: required for NestJS DI
 import { IncomeService } from "./income.service";
 
@@ -61,6 +62,19 @@ export class IncomeController {
 		if (!user) return response.status(401).send({});
 		const deletedIncome = await this.incomeService.delete(incomeId);
 		if (!deletedIncome) return response.status(404).send({ message: "error" });
+		return response.status(200).send({ message: "success" });
+	}
+
+	@Put("")
+	async update(
+		@Req() request: Request,
+		@Res() response: Response,
+		@Body() body: UpdateIncomeDto,
+	) {
+		const user = request.user;
+		if (!user) return response.status(401).send({});
+		const update = this.incomeService.update(body);
+		if (!update) return response.status(404).send({ message: "error" });
 		return response.status(200).send({ message: "success" });
 	}
 }

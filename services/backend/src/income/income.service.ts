@@ -1,6 +1,6 @@
 import { prisma } from "@libs/DatabaseClient";
 import { Injectable } from "@nestjs/common";
-import type { CreateIncomeDto } from "types/DtoType";
+import type { CreateIncomeDto, UpdateIncomeDto } from "types/DtoType";
 
 @Injectable()
 export class IncomeService {
@@ -48,6 +48,17 @@ export class IncomeService {
 			data: {
 				isDeleted: true,
 			},
+		});
+	}
+
+	async update(income: UpdateIncomeDto) {
+		const { id, ...data } = income;
+
+		return await prisma.incomes.update({
+			where: {
+				id,
+			},
+			data,
 		});
 	}
 }
