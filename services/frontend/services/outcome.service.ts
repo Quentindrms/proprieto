@@ -22,4 +22,8 @@ export class OutcomeService extends CoreService {
 	async updateOutcome(outcome: OutcomeUpdateType) {
 		return await this.put<{ message: string }>("/outcome/", outcome);
 	}
+
+	async monthlyProfit() {
+		return await this.get("/outcome/monthly");
+	}
 }

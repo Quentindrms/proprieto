@@ -111,7 +111,7 @@ export default function Page() {
 					Propriétés les plus perfomantes
 				</Heading>
 				<div class="flex flex-row">
-					<PropertyCard property={property} />
+					<PropertyCard property={property} onClick={() => { }} />
 				</div>
 			</div>
 		</div>
