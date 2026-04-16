@@ -23,6 +23,7 @@ export class PropertyService {
 		return await prisma.properties.findMany({
 			where: {
 				userId,
+				isDeleted: false,
 			},
 			include: {
 				propertyType: true,
