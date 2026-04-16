@@ -4,25 +4,17 @@ import PageNamer from "@components/pageNamer";
 import PropertyCard from "@components/propertyCard";
 import { useModal } from "@hooks/useModal";
 import { PropertyContext, useProperty } from "@hooks/useProperty";
-import type { PropertyUpdateType } from "@schemas/property";
 import { createSignal, For } from "solid-js";
 import { useData } from "vike-solid/useData";
-import EditModal from "../finances/modals/edit";
 import type { Data } from "./+data";
 import CreateModal from "./modal/createModal";
 import DetailsModal from "./modal/details";
 import EditProperty from "./modal/edit";
 
-const fakeData = ["", "", "", "", "", "", "", ""];
-
 export default function Page() {
 	const data = useData<Data>();
 
 	const property = useProperty();
-
-	const [propertyToEdit, setPropertyToEdit] =
-		createSignal<PropertyUpdateType | null>(null);
-	const [propertyToDelete, setPropertyToDelete] = createSignal<string>("");
 
 	const [propertyDetails, setPropertyDetails] = createSignal<Property>({
 		id: "",
@@ -36,8 +28,6 @@ export default function Page() {
 	const createModal = useModal(350);
 	const editModal = useModal(350);
 	const detailsModal = useModal(350);
-
-	const removeProperty = useProperty().remove;
 
 	const [filter, setFilter] = createSignal<
 		"office" | "house" | "apartment" | "all"
@@ -78,6 +68,7 @@ export default function Page() {
 					isOpened={detailsModal.isOpened}
 					property={propertyDetails()}
 					edit={handleEdit}
+					delete={() => property.deleteProperty(propertyDetails().id)}
 				/>
 
 				<EditProperty
