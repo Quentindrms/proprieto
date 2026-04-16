@@ -68,7 +68,7 @@ export function useProperty() {
 		return;
 	}
 
-	async function update() {
+	async function update(onSuccess: () => void) {
 		const validation = PropertyUpdateSchema.safeParse(updateProperty());
 		if (!validation.success) {
 			setFormError(validation);
@@ -81,6 +81,7 @@ export function useProperty() {
 			return;
 		}
 		toast.success("Propriété mise à jour");
+		onSuccess?.();
 		await reload();
 	}
 

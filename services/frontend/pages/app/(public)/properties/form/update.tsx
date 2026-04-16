@@ -5,7 +5,11 @@ import { useData } from "vike-solid/useData";
 import { z } from "zod";
 import type { Data } from "../+data";
 
-export default function UpdateProperty() {
+interface UpdateProperty {
+    onSuccess: () => void,
+}
+
+export default function UpdateProperty(props: UpdateProperty) {
     const property = usePropertyContext();
 
     const data = useData<Data>();
@@ -17,7 +21,7 @@ export default function UpdateProperty() {
     }));
 
     return (
-        <Form callback={property.update}>
+        <Form callback={() => { property.update(props.onSuccess) }}>
             <TextField
                 label="Nom"
                 name="name"

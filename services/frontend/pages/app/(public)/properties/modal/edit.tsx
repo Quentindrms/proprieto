@@ -24,7 +24,7 @@ export default function EditProperty(props: EditPropertyProps) {
                 <Heading components="h3" size="large">Édition d'une propriété</Heading>
             </ModalHeader>
             <ModalBody>
-                <UpdateProperty />
+                <UpdateProperty onSuccess={props.close} />
             </ModalBody>
         </Modal>
     )
