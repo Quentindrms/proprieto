@@ -4,7 +4,7 @@ import {
 	PropertyUpdateSchema,
 	type PropertyUpdateType,
 } from "@schemas/property";
-import { createSignal } from "solid-js";
+import { createContext, createSignal, useContext } from "solid-js";
 import toast from "solid-toast";
 import { reload } from "vike/client/router";
 import type { ZodSafeParseError } from "zod";
@@ -56,7 +56,7 @@ export function useProperty() {
 	async function create() {
 		const validate = validateData();
 		if (!validate.success) {
-			return validate.error;
+			setFormError(validate);
 		}
 		const response = await onCreate(createProperty());
 		if (response?.message !== "success") {
@@ -65,9 +65,10 @@ export function useProperty() {
 		}
 		toast.success("Propriété créee");
 		await reload();
+		return;
 	}
 
-	async function update() {
+	async function update(onSuccess: () => void) {
 		const validation = PropertyUpdateSchema.safeParse(updateProperty());
 		if (!validation.success) {
 			setFormError(validation);
@@ -80,10 +81,11 @@ export function useProperty() {
 			return;
 		}
 		toast.success("Propriété mise à jour");
+		onSuccess?.();
 		await reload();
 	}
 
-	async function remove(propertyId: string) {
+	async function deleteProperty(propertyId: string) {
 		const response = await onDelete(propertyId);
 		if (response?.message !== "success") {
 			toast.error("Une erreur est survenue lors de la suppression");
@@ -111,13 +113,22 @@ export function useProperty() {
 
 	return {
 		createProperty,
+		updateProperty,
 		handleCreateInput,
 		handleUpdateInput,
 		create,
 		update,
-		remove,
+		deleteProperty,
 		browseProperties,
 		formError,
 		setUpdateProperty,
 	};
+}
+
+export const PropertyContext = createContext<ReturnType<typeof useProperty>>();
+
+export function usePropertyContext() {
+	const context = useContext(PropertyContext);
+	if (!context) throw new Error("Context absent");
+	return context;
 }
