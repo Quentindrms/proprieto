@@ -1,5 +1,6 @@
 import { prisma } from "@libs/DatabaseClient";
 import { Injectable } from "@nestjs/common";
+import type { Outcomes } from "@prisma/browser";
 import type { CreateOutcomeDto, UpdateOutcomeDto } from "types/DtoType";
 
 @Injectable()
@@ -90,5 +91,44 @@ export class OutcomeService {
 				amount: Number(amount),
 			},
 		});
+	}
+
+	async monthlyOutcome(userId: string) {
+		const now = new Date();
+		const start = new Date(Date.UTC(now.getFullYear(), now.getMonth(), 1));
+		const end = new Date(Date.UTC(now.getFullYear(), now.getMonth() + 1, 1));
+
+		console.log("userId:", userId);
+		console.log("start:", start, "end:", end);
+
+		const outcomes = await prisma.outcomes.findMany({
+			orderBy: [{ issueDate: "desc" }],
+			where: {
+				issueDate: {
+					gte: start,
+					lt: end,
+				},
+				property: {
+					userId,
+				},
+			},
+		});
+
+		return {
+			outcomes,
+			sum: this.calculateTotalAmount(outcomes),
+			outcomesValue: outcomes.length,
+			unpaidOutcomes: this.calculateTotalUnpaid(outcomes),
+		};
+	}
+
+	private calculateTotalAmount(outcomes: Outcomes[]) {
+		return outcomes
+			.map((outcome) => outcome.amount)
+			.reduce((sum, amount) => sum + amount, 0);
+	}
+
+	private calculateTotalUnpaid(outcomes: Outcomes[]) {
+		return outcomes.filter((outcome) => outcome.isPaid === false).length;
 	}
 }

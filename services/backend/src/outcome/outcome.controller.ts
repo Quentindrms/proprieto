@@ -41,6 +41,16 @@ export class OutcomeController {
 		return response.status(200).send(outcomes);
 	}
 
+	@Get("/monthly")
+	async getMonthlyProfit(@Req() request: Request, @Res() response: Response) {
+		console.log("ping");
+		const user = request.user;
+		if (!user) return response.status(401).send({});
+		const outcomes = await this.outcomeService.monthlyOutcome(user.id);
+		console.log(outcomes);
+		return response.status(200).send({});
+	}
+
 	@Get("/:id")
 	async get(
 		@Param("id") outcomeId: string,
