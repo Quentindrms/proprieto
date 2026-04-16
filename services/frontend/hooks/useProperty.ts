@@ -85,7 +85,7 @@ export function useProperty() {
 		await reload();
 	}
 
-	async function remove(propertyId: string) {
+	async function deleteProperty(propertyId: string) {
 		const response = await onDelete(propertyId);
 		if (response?.message !== "success") {
 			toast.error("Une erreur est survenue lors de la suppression");
@@ -118,7 +118,7 @@ export function useProperty() {
 		handleUpdateInput,
 		create,
 		update,
-		remove,
+		deleteProperty,
 		browseProperties,
 		formError,
 		setUpdateProperty,

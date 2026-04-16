@@ -11,6 +11,7 @@ interface ModalProps {
     close: () => void;
     property: Property;
     edit: (property: Property) => void;
+    delete: (property: Property) => void;
 }
 
 export default function DetailsModal(props: ModalProps) {
@@ -48,7 +49,7 @@ export default function DetailsModal(props: ModalProps) {
                 </div>
                 <div class="flex justify-around">
                     <ActionButton color="black" onClick={() => props.edit(props.property)}>Modifier</ActionButton>
-                    <ActionButton color="black">Supprimer</ActionButton>
+                    <ActionButton color="black" onclick={() => props.delete(props.property)}>Supprimer</ActionButton>
                 </div>
             </ModalBody>
         </Modal>
