@@ -17,7 +17,7 @@ export default function UpdateProperty() {
     }));
 
     return (
-        <Form callback={property.create}>
+        <Form callback={property.update}>
             <TextField
                 label="Nom"
                 name="name"
