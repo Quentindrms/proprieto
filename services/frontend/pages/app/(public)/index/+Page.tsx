@@ -33,14 +33,14 @@ export default function Page() {
 
 			<div class="flex gap-5 justify-center">
 				<CardRevenue
-					title="Revenu total"
+					title="Dépense totale"
 					stat={data.monthlyOutcome.sum}
 					comment={data.monthlyOutcome.growth > 0 ? `${data.monthlyOutcome.growth}% de plus que le mois dernier` : `${data.monthlyOutcome.growth}% de moins que le mois dernier`}
 				/>
 				<CardRevenue
-					title="Dépense totale"
-					stat={data.monthlyOutcome.sum}
-					comment={data.monthlyOutcome.growth > 0 ? `${data.monthlyOutcome.growth}% de plus que le mois dernier` : `${data.monthlyOutcome.growth}% de moins que le mois dernier`}
+					title="Revenu total"
+					stat={data.monthlyIncome.sum}
+					comment={data.monthlyIncome.growth > 0 ? `${data.monthlyIncome.growth}% de plus que le mois dernier` : `${data.monthlyOutcome.growth}% de moins que le mois dernier`}
 				/>
 				<CardProgressionBar
 					title="Taux d'occupation"

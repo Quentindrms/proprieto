@@ -30,4 +30,8 @@ export type IncomeType = {
 
 export type MonthlyIncome = {
 	incomes: IncomeType[];
+	sum: number;
+	growth: number;
+	incomesValue: number;
+	unpaidIncomes: number;
 };
