@@ -13,9 +13,11 @@ export async function data(pageContext: PageContextServer) {
 	const incomeService = new IncomeService(cookies.auth);
 	const propertyService = new PropertyService(cookies.auth);
 
-	const monthlyOutcome = await outcomeService.monthlyOutcome();
-	const monthlyIncome = await incomeService.monthlyIncome();
-	const propertyCount = await propertyService.countProperties();
+	const [monthlyOutcome, monthlyIncome, propertyCount] = await Promise.all([
+		outcomeService.monthlyOutcome(),
+		incomeService.monthlyIncome(),
+		propertyService.countProperties(),
+	]);
 
 	return { monthlyOutcome, monthlyIncome, propertyCount };
 }
