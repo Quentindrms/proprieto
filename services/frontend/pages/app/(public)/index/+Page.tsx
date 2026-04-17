@@ -39,8 +39,8 @@ export default function Page() {
 				/>
 				<CardRevenue
 					title="Dépense totale"
-					stat={1300}
-					comment="10% de plus que le mois dernier"
+					stat={data.monthlyOutcome.sum}
+					comment={data.monthlyOutcome.growth > 0 ? `${data.monthlyOutcome.growth}% de plus que le mois dernier` : `${data.monthlyOutcome.growth}% de moins que le mois dernier`}
 				/>
 				<CardProgressionBar
 					title="Taux d'occupation"
