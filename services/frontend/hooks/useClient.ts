@@ -8,9 +8,8 @@ import {
 import { createContext, createSignal, useContext } from "solid-js";
 import toast from "solid-toast";
 import { reload } from "vike/client/router";
-import { Update } from "vite";
 import type { ZodSafeParseError } from "zod";
-import { onCreate } from "./useClient.telefunc";
+import { onCreate, onDelete, onEdit } from "./useClient.telefunc";
 
 export function useClient() {
 	const emptyField: CreateClientType = {
@@ -83,12 +82,32 @@ export function useClient() {
 	}
 
 	async function update() {
+		console.log(updateClient());
 		const validate = UpdateClientSchema.safeParse(updateClient());
 		if (!validate.success) {
 			setFormError(validate);
 			return;
 		}
 		setFormError(undefined);
+		const response = await onEdit(updateClient());
+		if (response?.message !== "success") {
+			toast.error("Une erreur est survenue lors de l'édition de la ressource");
+			return;
+		}
+		toast.success("Ressource éditée");
+		return;
+	}
+
+	async function remove() {
+		const response = await onDelete(clientDetails().id);
+		if (response?.message !== "success") {
+			toast.error(
+				"Une erreur est survenue lros de la suppression de la ressource",
+			);
+			return;
+		}
+		toast.success("Ressource supprimée");
+		return;
 	}
 
 	return {
@@ -99,6 +118,7 @@ export function useClient() {
 		setClientDetails,
 		clientDetails,
 		update,
+		setUpdateClient,
 	};
 }
 
