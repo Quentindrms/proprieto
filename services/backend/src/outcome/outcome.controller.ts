@@ -47,8 +47,7 @@ export class OutcomeController {
 		const user = request.user;
 		if (!user) return response.status(401).send({});
 		const outcomes = await this.outcomeService.monthlyOutcome(user.id);
-		console.log(outcomes);
-		return response.status(200).send({});
+		return response.status(200).send(outcomes);
 	}
 
 	@Get("/:id")

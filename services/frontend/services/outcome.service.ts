@@ -1,4 +1,8 @@
-import type { Outcome, OutcomeDetail } from "@app/types/outcome";
+import type {
+	MonthlyOutcome,
+	Outcome,
+	OutcomeDetail,
+} from "@app/types/outcome";
 import type { OutcomeCreationType, OutcomeUpdateType } from "@schemas/outcome";
 import { CoreService } from "./core.service";
 
@@ -24,6 +28,6 @@ export class OutcomeService extends CoreService {
 	}
 
 	async monthlyProfit() {
-		return await this.get("/outcome/monthly");
+		return await this.get<MonthlyOutcome>("/outcome/monthly");
 	}
 }
