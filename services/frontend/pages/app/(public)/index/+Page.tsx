@@ -63,7 +63,7 @@ export default function Page() {
 			<PageNamer
 				onClick={() => { }}
 				pageName="Portfolio"
-				subText="Aperçu de vos <nombre propriété> et de leurs performances"
+				subText={`Aperçu de vos ${data.propertyCount} propriétés et de leurs performances`}
 				buttonText="Ajouter une propriété"
 			/>
 
