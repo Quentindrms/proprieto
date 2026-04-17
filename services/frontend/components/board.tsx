@@ -253,22 +253,22 @@ export default function Board(props: BoardProps) {
 								Nom
 							</Heading>
 						</th>
-						<th class="px-4 py-3 text-left">
+						<th class="px-4 py-3 text-center">
 							<Heading components="h4" size="large">
 								Date
 							</Heading>
 						</th>
-						<th class="px-4 py-3 text-right">
+						<th class="px-4 py-3 text-center">
 							<Heading components="h4" size="large">
 								Montant
 							</Heading>
 						</th>
-						<th class="px-4 py-3 text-left">
+						<th class="px-4 py-3 text-center">
 							<Heading components="h4" size="large">
 								Type
 							</Heading>
 						</th>
-						<th class="px-4 py-3 text-left">
+						<th class="px-4 py-3 text-center">
 							<Heading components="h4" size="large">
 								Statut
 							</Heading>
