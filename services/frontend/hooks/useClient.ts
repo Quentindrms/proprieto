@@ -1,29 +1,46 @@
+import type { Client } from "@app/types/client";
 import {
 	CreateClientSchema,
 	type CreateClientType,
+	UpdateClientSchema,
 	type UpdateClientType,
 } from "@schemas/client";
-import { createSignal } from "solid-js";
+import { createContext, createSignal, useContext } from "solid-js";
 import toast from "solid-toast";
 import { reload } from "vike/client/router";
+import { Update } from "vite";
 import type { ZodSafeParseError } from "zod";
 import { onCreate } from "./useClient.telefunc";
 
 export function useClient() {
-	const [createClient, setCreateClient] = createSignal<CreateClientType>({
+	const emptyField: CreateClientType = {
 		name: "",
 		firstName: "",
 		email: "",
 		address: "",
 		phone: "",
+	};
+
+	const [createClient, setCreateClient] =
+		createSignal<CreateClientType>(emptyField);
+
+	const [updateClient, setUpdateClient] = createSignal<UpdateClientType>({
+		id: "",
+		name: "",
+		firstName: "",
+		address: "",
+		phone: "",
+		email: "",
 	});
 
-	const [updateClient, setUpdateClient] = createSignal<CreateClientType>({
-		name: "",
-		firstName: "",
+	const [clientDetails, setClientDetails] = createSignal<Client>({
 		address: "",
-		phone: "",
 		email: "",
+		firstName: "",
+		id: "",
+		name: "",
+		phone: "",
+		clients: [],
 	});
 
 	const [formError, setFormError] =
@@ -61,7 +78,17 @@ export function useClient() {
 			toast.error("Une erreur est survenue lors de la création du client");
 		}
 		toast.success("Client crée avec succès");
+		setCreateClient(emptyField);
 		await reload();
+	}
+
+	async function update() {
+		const validate = UpdateClientSchema.safeParse(updateClient());
+		if (!validate.success) {
+			setFormError(validate);
+			return;
+		}
+		setFormError(undefined);
 	}
 
 	return {
@@ -69,5 +96,16 @@ export function useClient() {
 		handleCreate,
 		handleUpdateClient,
 		formError,
+		setClientDetails,
+		clientDetails,
+		update,
 	};
+}
+
+export const ClientContext = createContext<ReturnType<typeof useClient>>();
+
+export function useClientContext() {
+	const context = useContext(ClientContext);
+	if (!context) throw new Error("Context absent");
+	return context;
 }
