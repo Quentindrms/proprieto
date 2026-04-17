@@ -6,6 +6,7 @@ import { z } from "zod";
 
 export default function EditForm() {
     const client = useClientContext();
+    client.setUpdateClient(client.clientDetails())
 
     return (
         <Form callback={client.update}>
