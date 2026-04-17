@@ -98,10 +98,14 @@ export class OutcomeService {
 		const start = new Date(Date.UTC(now.getFullYear(), now.getMonth(), 1));
 		const end = new Date(Date.UTC(now.getFullYear(), now.getMonth() + 1, 1));
 
-		console.log("userId:", userId);
-		console.log("start:", start, "end:", end);
+		const startPreviousMonth = new Date(
+			Date.UTC(now.getFullYear(), now.getMonth() - 1, 1),
+		);
+		const endPreviousMonth = new Date(
+			Date.UTC(now.getFullYear(), now.getMonth(), 1),
+		);
 
-		const outcomes = await prisma.outcomes.findMany({
+		const currentMonth = await prisma.outcomes.findMany({
 			orderBy: [{ issueDate: "desc" }],
 			where: {
 				issueDate: {
@@ -114,11 +118,25 @@ export class OutcomeService {
 			},
 		});
 
+		const previousMonth = await prisma.outcomes.findMany({
+			orderBy: [{ issueDate: "desc" }],
+			where: {
+				issueDate: {
+					gte: startPreviousMonth,
+					lt: endPreviousMonth,
+				},
+				property: {
+					userId,
+				},
+			},
+		});
+
 		return {
-			outcomes,
-			sum: this.calculateTotalAmount(outcomes),
-			outcomesValue: outcomes.length,
-			unpaidOutcomes: this.calculateTotalUnpaid(outcomes),
+			outcomes: currentMonth,
+			sum: this.calculateTotalAmount(currentMonth),
+			growth: this.previousMonthGrowth(currentMonth, previousMonth),
+			outcomesValue: currentMonth.length,
+			unpaidOutcomes: this.calculateTotalUnpaid(currentMonth),
 		};
 	}
 
@@ -130,5 +148,25 @@ export class OutcomeService {
 
 	private calculateTotalUnpaid(outcomes: Outcomes[]) {
 		return outcomes.filter((outcome) => outcome.isPaid === false).length;
+	}
+
+	private previousMonthGrowth(
+		currentMonth: Outcomes[],
+		previousMonth: Outcomes[],
+	) {
+		const currentMonthTotal = currentMonth
+			.map((outcome) => outcome.amount)
+			.reduce((sum, amount) => sum + amount, 0);
+		const previousMonthTotal = previousMonth
+			.map((outcome) => outcome.amount)
+			.reduce((sum, amount) => sum + amount, 0);
+
+		if (previousMonthTotal === 0) {
+			return currentMonthTotal > 0 ? 100 : 0;
+		}
+
+		const growth =
+			((currentMonthTotal - previousMonthTotal) / previousMonthTotal) * 100;
+		return growth;
 	}
 }
