@@ -10,6 +10,7 @@ interface DetailsModalProps {
     isOpened: Accessor<boolean>;
     isClosing: Accessor<boolean>;
     client: Client;
+    onEdit: () => void,
 }
 
 export default function DetailsModal(props: DetailsModalProps) {
@@ -30,7 +31,7 @@ export default function DetailsModal(props: DetailsModalProps) {
                 <Text>Addresse email: {props.client.email}</Text>
                 <Text>Téléphone : {props.client.phone}</Text>
                 <div class="flex justify-between">
-                    <ActionButton>Modifier</ActionButton>
+                    <ActionButton onClick={props.onEdit}>Modifier</ActionButton>
                     <ActionButton>Supprimer</ActionButton>
                 </div>
             </ModalBody>
