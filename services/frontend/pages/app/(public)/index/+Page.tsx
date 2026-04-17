@@ -37,7 +37,7 @@ export default function Page() {
 			amount: income.amount,
 			type: "income",
 			isPaid: income.isPaid,
-			issueDate: new Date(income.issueDate).toLocaleDateString("fr-FR")
+			issueDate: new Date(income.issueDate)
 		}),
 	);
 	const outcomesRow: TransactionRowData[] = data.monthlyOutcome.outcomes.map(
@@ -47,11 +47,16 @@ export default function Page() {
 			amount: outcome.amount,
 			type: "outcome",
 			isPaid: outcome.isPaid,
-			issueDate: new Date(outcome.issueDate).toLocaleDateString("fr-FR")
+			issueDate: new Date(outcome.issueDate)
 		}),
 	);
 
-	const transactionRow: TransactionRowData[] = [...incomesRow, ...outcomesRow]
+	const transactionRow: TransactionRowData[] = [...incomesRow, ...outcomesRow];
+	const sortedTransactionRow = transactionRow.sort((a, b) => {
+		const dateA = new Date(a.issueDate).getTime();
+		const dateB = new Date(b.issueDate).getTime();
+		return (dateA - dateB);
+	})
 
 	return (
 		<div class="h-full w-full flex flex-col gap-5">
@@ -92,7 +97,7 @@ export default function Page() {
 			</div>
 
 			<div class="flex gap-2">
-				<Board transactions={transactionRow} />
+				<Board transactions={sortedTransactionRow} />
 				<div class="flex flex-col gap-2 p-2">
 					<CardRevenue
 						title="Profit du portefeuille"

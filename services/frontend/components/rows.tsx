@@ -15,7 +15,7 @@ export interface TransactionRowData {
     amount: number;
     type: TransactionType;
     isPaid: boolean;
-    issueDate: string,
+    issueDate: Date,
 }
 
 export default function TransactionRow(props: TransactionRowData) {
@@ -43,7 +43,7 @@ export default function TransactionRow(props: TransactionRowData) {
             </td>
             <td class="px-4 py-3">
                 <Text size="large">
-                    {props.issueDate}
+                    {props.issueDate.toLocaleDateString("fr-FR")}
                 </Text>
             </td>
             <td class="px-4 py-3 text-right">
