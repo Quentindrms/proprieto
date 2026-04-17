@@ -27,6 +27,8 @@ export default function Page() {
 		sellPrice: undefined,
 	};
 
+	const currentMonthProfit = data.monthlyIncome.sum - data.monthlyOutcome.sum;
+
 	return (
 		<div class="h-full w-full flex flex-col gap-5">
 			<PageNamer onClick={() => { }} pageName="Portfolio" subText="Aperçu de vos <nombre propriété> et de leurs performances" buttonText="Ajouter une propriété" />
@@ -106,7 +108,7 @@ export default function Page() {
 					]}
 				/>
 				<div class="flex flex-col gap-2 p-2">
-					<CardRevenue title="Profit du portefeuille" stat={15360} />
+					<CardRevenue title="Profit du portefeuille" stat={currentMonthProfit} />
 				</div>
 			</div>
 
