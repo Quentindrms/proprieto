@@ -24,6 +24,7 @@ export class IncomeController {
 		@Res() response: Response,
 		@Body() body: CreateIncomeDto,
 	) {
+		console.log(body);
 		const user = request.user;
 		if (!user) return response.status(401).send({});
 		const income = this.incomeService.create(body);

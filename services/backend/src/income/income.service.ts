@@ -18,8 +18,8 @@ export class IncomeService {
 				issueDate: new Date(income.issueDate),
 				paidOn: income.paidOn ? new Date(income.paidOn) : undefined,
 				frequency: income.frequency,
-				categoryId: income.incomeCategoryId,
 				contractId: income.contractId,
+				categoryId: income.categoryId,
 			},
 		});
 	}
