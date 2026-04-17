@@ -1,4 +1,3 @@
-import { IncomeService } from "@services/income.service";
 import { OutcomeService } from "@services/outcome.service";
 import { getCookiesFromPageContext } from "@utils/cookie";
 import type { PageContextServer } from "vike/types";

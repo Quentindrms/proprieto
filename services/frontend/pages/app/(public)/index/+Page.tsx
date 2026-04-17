@@ -4,8 +4,12 @@ import { CardProgressionBar, CardRevenue } from "@components/dataCard";
 import Heading from "@components/heading";
 import PageNamer from "@components/pageNamer";
 import PropertyCard from "@components/propertyCard";
+import { useData } from "vike-solid/useData";
+import type { Data } from "./+data";
 
 export default function Page() {
+	const data = useData<Data>();
+
 	const property: Property = {
 		id: "",
 		isActive: true,
@@ -30,8 +34,8 @@ export default function Page() {
 			<div class="flex gap-5 justify-center">
 				<CardRevenue
 					title="Revenu total"
-					stat={1300}
-					comment="10% de plus que le mois dernier"
+					stat={data.monthlyOutcome.sum}
+					comment={data.monthlyOutcome.growth > 0 ? `${data.monthlyOutcome.growth}% de plus que le mois dernier` : `${data.monthlyOutcome.growth}% de moins que le mois dernier`}
 				/>
 				<CardRevenue
 					title="Dépense totale"

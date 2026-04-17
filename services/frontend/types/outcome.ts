@@ -37,4 +37,5 @@ export interface MonthlyOutcome {
 	sum: number;
 	outcomesValue: number;
 	unpaidOutcomes: number;
+	growth: number;
 }
