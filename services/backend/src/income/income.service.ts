@@ -64,4 +64,32 @@ export class IncomeService {
 			},
 		});
 	}
+
+	async monthlyProfit(userId: string) {
+		const now = new Date();
+		const start = new Date(Date.UTC(now.getFullYear(), now.getMonth(), 1));
+		const end = new Date(Date.UTC(now.getFullYear(), now.getMonth() + 1, 1));
+
+		const startPreviousMonth = new Date(
+			Date.UTC(now.getFullYear(), now.getMonth() - 1, 1),
+		);
+		const endPreviousMonth = new Date(
+			Date.UTC(now.getFullYear(), now.getMonth(), 1),
+		);
+
+		const incomes = prisma.incomes.findMany({
+			orderBy: [{ issueDate: "asc" }],
+			where: {
+				issueDate: {
+					gte: start,
+					lt: end,
+				},
+				contract: {
+					property: {
+						userId,
+					},
+				},
+			},
+		});
+	}
 }
