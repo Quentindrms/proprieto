@@ -27,7 +27,7 @@ export class OutcomeService extends CoreService {
 		return await this.put<{ message: string }>("/outcome/", outcome);
 	}
 
-	async monthlyProfit() {
+	async monthlyOutcome() {
 		return await this.get<MonthlyOutcome>("/outcome/monthly");
 	}
 }
