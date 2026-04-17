@@ -44,7 +44,7 @@ export class IncomeController {
 		const user = request.user;
 		if (!user) return response.status(401).send({});
 		const incomes = await this.incomeService.monthlyProfit(user.id);
-		return response.status(200).send({ incomes });
+		return response.status(200).send(incomes);
 	}
 
 	@Get("/:id")
