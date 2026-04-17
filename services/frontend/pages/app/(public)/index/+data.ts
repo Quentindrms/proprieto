@@ -14,7 +14,5 @@ export async function data(pageContext: PageContextServer) {
 	const monthlyOutcome = await outcomeService.monthlyOutcome();
 	const monthlyIncome = await incomeService.monthlyIncome();
 
-	console.log(monthlyIncome);
-
 	return { monthlyOutcome, monthlyIncome };
 }
