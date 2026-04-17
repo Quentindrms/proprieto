@@ -27,5 +27,5 @@ export function previousMonthGrowth(
 
 	const growth =
 		((currentMonthTotal - previousMonthTotal) / previousMonthTotal) * 100;
-	return growth;
+	return Math.round(growth);
 }
