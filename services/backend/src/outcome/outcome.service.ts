@@ -93,7 +93,7 @@ export class OutcomeService {
 		});
 	}
 
-	async monthlyOutcome(userId: string) {
+	async monthlyLoss(userId: string) {
 		const now = new Date();
 		const start = new Date(Date.UTC(now.getFullYear(), now.getMonth(), 1));
 		const end = new Date(Date.UTC(now.getFullYear(), now.getMonth() + 1, 1));
