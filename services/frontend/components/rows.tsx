@@ -10,10 +10,12 @@ import Text from "./text";
 export type TransactionType = "income" | "outcome";
 
 export interface TransactionRowData {
+    id: string,
     name: string;
     amount: number;
     type: TransactionType;
     isPaid: boolean;
+    issueDate: string,
 }
 
 export default function TransactionRow(props: TransactionRowData) {
@@ -38,6 +40,11 @@ export default function TransactionRow(props: TransactionRowData) {
                         {props.name}
                     </Heading>
                 </div>
+            </td>
+            <td class="px-4 py-3">
+                <Text size="large">
+                    {props.issueDate}
+                </Text>
             </td>
             <td class="px-4 py-3 text-right">
                 <Text size="large">

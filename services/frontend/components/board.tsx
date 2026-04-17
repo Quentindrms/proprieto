@@ -253,6 +253,11 @@ export default function Board(props: BoardProps) {
 								Nom
 							</Heading>
 						</th>
+						<th class="px-4 py-3 text-left">
+							<Heading components="h4" size="large">
+								Date
+							</Heading>
+						</th>
 						<th class="px-4 py-3 text-right">
 							<Heading components="h4" size="large">
 								Montant
