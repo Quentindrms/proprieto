@@ -4,8 +4,13 @@ import { CardProgressionBar, CardRevenue } from "@components/dataCard";
 import Heading from "@components/heading";
 import PageNamer from "@components/pageNamer";
 import PropertyCard from "@components/propertyCard";
+import type { TransactionRowData } from "@components/rows";
+import { useData } from "vike-solid/useData";
+import type { Data } from "./+data";
 
 export default function Page() {
+	const data = useData<Data>();
+
 	const property: Property = {
 		id: "",
 		isActive: true,
@@ -23,20 +28,64 @@ export default function Page() {
 		sellPrice: undefined,
 	};
 
+	const currentMonthProfit = data.monthlyIncome.sum - data.monthlyOutcome.sum;
+
+	const incomesRow: TransactionRowData[] = data.monthlyIncome.incomes.map(
+		(income) => ({
+			id: income.id,
+			name: income.name,
+			amount: income.amount,
+			type: "income",
+			isPaid: income.isPaid,
+			issueDate: new Date(income.issueDate)
+		}),
+	);
+	const outcomesRow: TransactionRowData[] = data.monthlyOutcome.outcomes.map(
+		(outcome) => ({
+			id: outcome.id,
+			name: outcome.name,
+			amount: outcome.amount,
+			type: "outcome",
+			isPaid: outcome.isPaid,
+			issueDate: new Date(outcome.issueDate)
+		}),
+	);
+
+	const transactionRow: TransactionRowData[] = [...incomesRow, ...outcomesRow];
+	const sortedTransactionRow = transactionRow.sort((a, b) => {
+		const dateA = new Date(a.issueDate).getTime();
+		const dateB = new Date(b.issueDate).getTime();
+		return (dateB - dateA);
+	})
+
 	return (
 		<div class="h-full w-full flex flex-col gap-5">
-			<PageNamer onClick={() => { }} pageName="Portfolio" subText="Aperçu de vos <nombre propriété> et de leurs performances" buttonText="Ajouter une propriété" />
+			<PageNamer
+				onClick={() => { }}
+				pageName="Portfolio"
+				subText={`Aperçu de vos ${data.propertyCount} propriétés et de leurs performances`}
+				buttonText="Ajouter une propriété"
+			/>
 
 			<div class="flex gap-5 justify-center">
 				<CardRevenue
-					title="Revenu total"
-					stat={1300}
-					comment="10% de plus que le mois dernier"
+					title="Dépense totale"
+					stat={data.monthlyOutcome.sum}
+					comment={
+						data.monthlyOutcome.growth > 0
+							? `${data.monthlyOutcome.growth}% par rapport au mois précédent`
+							: `${data.monthlyOutcome.growth}% par rapport au mois précédent`
+					}
+					dynamic
 				/>
 				<CardRevenue
-					title="Dépense totale"
-					stat={1300}
-					comment="10% de plus que le mois dernier"
+					title="Revenu total"
+					stat={data.monthlyIncome.sum}
+					comment={
+						data.monthlyIncome.growth > 0
+							? `+${data.monthlyIncome.growth}% par rapport au mois précédent`
+							: `${data.monthlyOutcome.growth}% par rapport au mois précédent`
+					}
 				/>
 				<CardProgressionBar
 					title="Taux d'occupation"
@@ -49,60 +98,12 @@ export default function Page() {
 			</div>
 
 			<div class="flex gap-2">
-				<Board
-					transactions={[
-						{
-							name: "Loyer - Appartement Lyon",
-							amount: 850,
-							type: "income",
-							isPaid: true,
-						},
-						{
-							name: "Loyer - Studio Bordeaux",
-							amount: 620,
-							type: "income",
-							isPaid: false,
-						},
-						{
-							name: "Charges copropriété",
-							amount: 180,
-							type: "outcome",
-							isPaid: true,
-						},
-						{
-							name: "Réparation plomberie",
-							amount: 320,
-							type: "outcome",
-							isPaid: true,
-						},
-						{
-							name: "Loyer - Maison Nantes",
-							amount: 1100,
-							type: "income",
-							isPaid: true,
-						},
-						{
-							name: "Assurance habitation",
-							amount: 95,
-							type: "outcome",
-							isPaid: false,
-						},
-						{
-							name: "Taxe foncière",
-							amount: 740,
-							type: "outcome",
-							isPaid: false,
-						},
-						{
-							name: "Loyer - T2 Paris",
-							amount: 1450,
-							type: "income",
-							isPaid: true,
-						},
-					]}
-				/>
+				<Board transactions={sortedTransactionRow} />
 				<div class="flex flex-col gap-2 p-2">
-					<CardRevenue title="Profit du portefeuille" stat={15360} />
+					<CardRevenue
+						title="Profit du portefeuille"
+						stat={currentMonthProfit}
+					/>
 				</div>
 			</div>
 
@@ -111,7 +112,7 @@ export default function Page() {
 					Propriétés les plus perfomantes
 				</Heading>
 				<div class="flex flex-row">
-					<PropertyCard property={property} />
+					<PropertyCard property={property} onClick={() => { }} />
 				</div>
 			</div>
 		</div>

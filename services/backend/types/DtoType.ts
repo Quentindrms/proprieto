@@ -71,7 +71,7 @@ export interface CreateIncomeDto {
 	paidOn: Date;
 	frequency: string;
 	propertyId: string;
-	incomeCategoryId: string;
+	categoryId: string;
 	contractId: string;
 	clientId: string;
 }

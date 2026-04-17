@@ -24,6 +24,7 @@ export class IncomeController {
 		@Res() response: Response,
 		@Body() body: CreateIncomeDto,
 	) {
+		console.log(body);
 		const user = request.user;
 		if (!user) return response.status(401).send({});
 		const income = this.incomeService.create(body);
@@ -36,6 +37,14 @@ export class IncomeController {
 		const user = request.user;
 		if (!user) return response.status(401).send({});
 		const incomes = await this.incomeService.browse(user.id);
+		return response.status(200).send(incomes);
+	}
+
+	@Get("/monthly")
+	async getMonthlyProfit(@Req() request: Request, @Res() response: Response) {
+		const user = request.user;
+		if (!user) return response.status(401).send({});
+		const incomes = await this.incomeService.monthlyProfit(user.id);
 		return response.status(200).send(incomes);
 	}
 

@@ -59,4 +59,12 @@ export class PropertyService {
 	async browseType() {
 		return await prisma.propertyTypes.findMany({});
 	}
+
+	async countProperties(userId: string) {
+		return await prisma.properties.count({
+			where: {
+				userId,
+			},
+		});
+	}
 }

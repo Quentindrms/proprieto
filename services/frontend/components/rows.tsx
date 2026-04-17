@@ -10,10 +10,12 @@ import Text from "./text";
 export type TransactionType = "income" | "outcome";
 
 export interface TransactionRowData {
+    id: string,
     name: string;
     amount: number;
     type: TransactionType;
     isPaid: boolean;
+    issueDate: Date,
 }
 
 export default function TransactionRow(props: TransactionRowData) {
@@ -39,7 +41,12 @@ export default function TransactionRow(props: TransactionRowData) {
                     </Heading>
                 </div>
             </td>
-            <td class="px-4 py-3 text-right">
+            <td class="px-4 py-3">
+                <Text size="large">
+                    {props.issueDate.toLocaleDateString("fr-FR")}
+                </Text>
+            </td>
+            <td class="px-4 py-3 text-center">
                 <Text size="large">
                     {isIncome() ? "+" : "-"}
                     {props.amount.toLocaleString("fr-FR", {
@@ -49,14 +56,18 @@ export default function TransactionRow(props: TransactionRowData) {
                 </Text>
             </td>
             <td class="px-4 py-3">
-                <Badge color={isIncome() ? "success" : "error"}>
-                    {isIncome() ? "Entrée" : "Sortie"}
-                </Badge>
+                <div class="flex justify-center">
+                    <Badge color={isIncome() ? "success" : "error"}>
+                        {isIncome() ? "Entrée" : "Sortie"}
+                    </Badge>
+                </div>
             </td>
             <td class="px-4 py-3">
-                <Badge color={props.isPaid ? "success" : "warning"}>
-                    {props.isPaid ? "Payé" : "En attente"}
-                </Badge>
+                <div class="flex justify-center">
+                    <Badge color={props.isPaid ? "success" : "warning"}>
+                        {props.isPaid ? "Payé" : "En attente"}
+                    </Badge>
+                </div>
             </td>
         </tr>
     );

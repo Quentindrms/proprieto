@@ -25,4 +25,8 @@ export class PropertyService extends CoreService {
 	async browsePropertyType() {
 		return this.get<PropertyType[]>("/property/types");
 	}
+
+	async countProperties() {
+		return this.get<number>("/property/count/");
+	}
 }

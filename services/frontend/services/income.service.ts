@@ -1,4 +1,8 @@
-import type { IncomeDetail, IncomeType } from "@app/types/income";
+import type {
+	IncomeDetail,
+	IncomeType,
+	MonthlyIncome,
+} from "@app/types/income";
 import type { IncomeCreationType, IncomeUpdateType } from "@schemas/income";
 import { CoreService } from "./core.service";
 
@@ -21,5 +25,9 @@ export class IncomeService extends CoreService {
 
 	async updateIncome(income: IncomeUpdateType) {
 		return this.put<{ message: string }>(`/income/`, income);
+	}
+
+	async monthlyIncome() {
+		return this.get<MonthlyIncome>("/income/monthly");
 	}
 }

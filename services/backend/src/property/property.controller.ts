@@ -77,4 +77,12 @@ export class PropertyController {
 		const property = await this.propertyService.browseType();
 		return response.status(200).send(property);
 	}
+
+	@Get("count")
+	async countProperties(@Req() request: Request, @Res() response: Response) {
+		const user = request.user;
+		if (!user) return response.status(401).send({});
+		const properties = await this.propertyService.countProperties(user.id);
+		return response.status(200).send(properties);
+	}
 }

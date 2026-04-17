@@ -13,25 +13,18 @@ interface CardRevenueProps {
 export function CardRevenue(props: CardRevenueProps) {
     const globalClasses =
         "p-2 w-2xs border-2 border-slate-marked background-base rounded-xl flex flex-col justify-center gap-1 shadow-xs shadow-background-muted bg-background-base";
-    const colorText = getDynamicTextColor();
-
-    function getDynamicTextColor() {
-        if (props.dynamic && props.stat > 0) {
-            return "text-action-green"
-        }
-        else if (props.dynamic && props.stat < 0) {
+    const colorText = createMemo(() => {
+        if (props.dynamic && props.stat < 0) {
             return "text-action-red"
         }
-        else {
-            return "text-action-green"
-        }
-    }
+        return "text-action-green"
+    });
 
     return (
         <div class={clsx([globalClasses])}>
             <Heading components="h2" size="medium" color="gray">{props.title}</Heading>
             <p class="font-base-extrabold text-3xl">{props.stat}$</p>
-            {props.comment && <Text size="small" class={clsx([colorText, "font-base-bold"])}>{props.comment}</Text>}
+            {props.comment && <Text size="small" class={clsx([colorText(), "font-base-bold"])}>{props.comment}</Text>}
         </div>
     )
 }

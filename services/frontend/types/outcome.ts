@@ -31,3 +31,11 @@ export interface Outcome {
 	};
 	provider: ProviderType;
 }
+
+export interface MonthlyOutcome {
+	outcomes: Outcome[];
+	sum: number;
+	outcomesValue: number;
+	unpaidOutcomes: number;
+	growth: number;
+}
