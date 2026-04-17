@@ -1,3 +1,8 @@
+import {
+	calculateTotalAmount,
+	calculateTotalUnpaid,
+	previousMonthGrowth,
+} from "@libs/calculation";
 import { prisma } from "@libs/DatabaseClient";
 import { Injectable } from "@nestjs/common";
 import type { CreateIncomeDto, UpdateIncomeDto } from "types/DtoType";
@@ -77,7 +82,7 @@ export class IncomeService {
 			Date.UTC(now.getFullYear(), now.getMonth(), 1),
 		);
 
-		const incomes = prisma.incomes.findMany({
+		const currentMonth = await prisma.incomes.findMany({
 			orderBy: [{ issueDate: "asc" }],
 			where: {
 				issueDate: {
@@ -91,5 +96,28 @@ export class IncomeService {
 				},
 			},
 		});
+
+		const previousMonth = await prisma.incomes.findMany({
+			orderBy: [{ issueDate: "asc" }],
+			where: {
+				issueDate: {
+					gte: startPreviousMonth,
+					lt: endPreviousMonth,
+				},
+				contract: {
+					property: {
+						userId,
+					},
+				},
+			},
+		});
+
+		return {
+			incomes: currentMonth,
+			sum: calculateTotalAmount(currentMonth),
+			growth: previousMonthGrowth(currentMonth, previousMonth),
+			incomesValue: currentMonth.length,
+			unpaidIncomes: calculateTotalUnpaid(currentMonth),
+		};
 	}
 }
