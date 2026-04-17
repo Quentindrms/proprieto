@@ -1,6 +1,10 @@
+import {
+	calculateTotalAmount,
+	calculateTotalUnpaid,
+	previousMonthGrowth,
+} from "@libs/calculation";
 import { prisma } from "@libs/DatabaseClient";
 import { Injectable } from "@nestjs/common";
-import type { Outcomes } from "@prisma/browser";
 import type { CreateOutcomeDto, UpdateOutcomeDto } from "types/DtoType";
 
 @Injectable()
@@ -133,40 +137,10 @@ export class OutcomeService {
 
 		return {
 			outcomes: currentMonth,
-			sum: this.calculateTotalAmount(currentMonth),
-			growth: this.previousMonthGrowth(currentMonth, previousMonth),
+			sum: calculateTotalAmount(currentMonth),
+			growth: previousMonthGrowth(currentMonth, previousMonth),
 			outcomesValue: currentMonth.length,
-			unpaidOutcomes: this.calculateTotalUnpaid(currentMonth),
+			unpaidOutcomes: calculateTotalUnpaid(currentMonth),
 		};
-	}
-
-	private calculateTotalAmount(outcomes: Outcomes[]) {
-		return outcomes
-			.map((outcome) => outcome.amount)
-			.reduce((sum, amount) => sum + amount, 0);
-	}
-
-	private calculateTotalUnpaid(outcomes: Outcomes[]) {
-		return outcomes.filter((outcome) => outcome.isPaid === false).length;
-	}
-
-	private previousMonthGrowth(
-		currentMonth: Outcomes[],
-		previousMonth: Outcomes[],
-	) {
-		const currentMonthTotal = currentMonth
-			.map((outcome) => outcome.amount)
-			.reduce((sum, amount) => sum + amount, 0);
-		const previousMonthTotal = previousMonth
-			.map((outcome) => outcome.amount)
-			.reduce((sum, amount) => sum + amount, 0);
-
-		if (previousMonthTotal === 0) {
-			return currentMonthTotal > 0 ? 100 : 0;
-		}
-
-		const growth =
-			((currentMonthTotal - previousMonthTotal) / previousMonthTotal) * 100;
-		return growth;
 	}
 }
