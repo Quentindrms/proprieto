@@ -55,7 +55,7 @@ export default function Page() {
 	const sortedTransactionRow = transactionRow.sort((a, b) => {
 		const dateA = new Date(a.issueDate).getTime();
 		const dateB = new Date(b.issueDate).getTime();
-		return (dateA - dateB);
+		return (dateB - dateA);
 	})
 
 	return (
