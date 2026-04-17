@@ -73,17 +73,18 @@ export default function Page() {
 					stat={data.monthlyOutcome.sum}
 					comment={
 						data.monthlyOutcome.growth > 0
-							? `${data.monthlyOutcome.growth}% de plus que le mois dernier`
-							: `${data.monthlyOutcome.growth}% de moins que le mois dernier`
+							? `${data.monthlyOutcome.growth}% par rapport au mois précédent`
+							: `${data.monthlyOutcome.growth}% par rapport au mois précédent`
 					}
+					dynamic
 				/>
 				<CardRevenue
 					title="Revenu total"
 					stat={data.monthlyIncome.sum}
 					comment={
 						data.monthlyIncome.growth > 0
-							? `${data.monthlyIncome.growth}% de plus que le mois dernier`
-							: `${data.monthlyOutcome.growth}% de moins que le mois dernier`
+							? `+${data.monthlyIncome.growth}% par rapport au mois précédent`
+							: `${data.monthlyOutcome.growth}% par rapport au mois précédent`
 					}
 				/>
 				<CardProgressionBar
