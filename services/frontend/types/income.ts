@@ -27,3 +27,7 @@ export type IncomeType = {
 	clientId: string;
 	isRecurring: boolean;
 };
+
+export type MonthlyIncome = {
+	incomes: IncomeType[];
+};
