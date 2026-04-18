@@ -39,7 +39,6 @@ export default function Page() {
 					close={detailsModal.close}
 					isClosing={detailsModal.isClosing}
 					isOpened={detailsModal.isOpened}
-					client={client.clientDetails()}
 					onEdit={editModal.open}
 				/>
 

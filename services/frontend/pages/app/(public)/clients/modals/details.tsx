@@ -10,7 +10,6 @@ interface DetailsModalProps {
     close: () => void;
     isOpened: Accessor<boolean>;
     isClosing: Accessor<boolean>;
-    client: Client;
     onEdit: () => void,
 }
 
@@ -30,10 +29,10 @@ export default function DetailsModal(props: DetailsModalProps) {
                 </Heading>
             </ModalHeader>
             <ModalBody>
-                <Text>{props.client.firstName} {props.client.name}</Text>
-                <Text>Adresse : {props.client.address}</Text>
-                <Text>Addresse email: {props.client.email}</Text>
-                <Text>Téléphone : {props.client.phone}</Text>
+                <Text>{client.clientDetails().firstName} {client.clientDetails().name}</Text>
+                <Text>Adresse : {client.clientDetails().address}</Text>
+                <Text>Addresse email: {client.clientDetails().email}</Text>
+                <Text>Téléphone : {client.clientDetails().phone}</Text>
                 <div class="flex justify-between">
                     <ActionButton onClick={props.onEdit}>Modifier</ActionButton>
                     <ActionButton onClick={client.remove}>Supprimer</ActionButton>
