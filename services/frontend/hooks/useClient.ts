@@ -104,10 +104,11 @@ export function useClient() {
 			toast.error(
 				"Une erreur est survenue lros de la suppression de la ressource",
 			);
-			return;
+			return false;
 		}
 		toast.success("Ressource supprimée");
-		return;
+		await reload();
+		return true;
 	}
 
 	return {

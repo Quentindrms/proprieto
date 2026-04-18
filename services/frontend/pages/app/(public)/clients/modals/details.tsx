@@ -4,6 +4,7 @@ import { Modal, ModalBody, ModalHeader } from "@components/modal";
 import Text from "@components/text";
 import { useClientContext } from "@hooks/useClient";
 import type { Accessor } from "solid-js";
+import { fi } from "zod/locales";
 
 interface DetailsModalProps {
     close: () => void;
@@ -15,6 +16,15 @@ interface DetailsModalProps {
 export default function DetailsModal(props: DetailsModalProps) {
 
     const client = useClientContext();
+
+    async function handleDelete() {
+        const success = await client.remove();
+        if (success) {
+            props.close();
+            return
+        }
+        return
+    }
 
     return (
         <Modal
@@ -34,7 +44,7 @@ export default function DetailsModal(props: DetailsModalProps) {
                 <Text>Téléphone : {client.clientDetails().phone}</Text>
                 <div class="flex justify-between">
                     <ActionButton onClick={props.onEdit}>Modifier</ActionButton>
-                    <ActionButton onClick={client.remove}>Supprimer</ActionButton>
+                    <ActionButton onClick={handleDelete}>Supprimer</ActionButton>
                 </div>
             </ModalBody>
         </Modal>
