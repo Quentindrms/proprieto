@@ -2,11 +2,14 @@ import { Button } from "@components/button";
 import { Form, TextField } from "@components/form";
 import Text from "@components/text";
 import { useClient, useClientContext } from "@hooks/useClient";
+import { createEffect } from "solid-js";
 import { z } from "zod";
 
 export default function EditForm() {
     const client = useClientContext();
-    client.setUpdateClient(client.clientDetails())
+    createEffect(() => {
+        client.setUpdateClient(client.clientDetails());
+    });
 
     return (
         <Form callback={client.update}>
