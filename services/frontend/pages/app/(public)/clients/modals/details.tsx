@@ -12,7 +12,6 @@ interface DetailsModalProps {
     isClosing: Accessor<boolean>;
     client: Client;
     onEdit: () => void,
-    onDelete: () => void,
 }
 
 export default function DetailsModal(props: DetailsModalProps) {
