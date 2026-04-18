@@ -35,13 +35,14 @@ model Categories {
 }
 
 model Directories {
-  id        String @id @unique @default(uuid()) @map("id_directory")
-  name      String @db.VarChar(120)
-  firstName String @map("first_name") @db.VarChar(120)
-  email     String @db.VarChar(250)
-  phone     String @db.VarChar(20)
-  address   String @db.VarChar(250)
-  type      String @db.VarChar(50)
+  id        String  @id @unique @default(uuid()) @map("id_directory")
+  name      String  @db.VarChar(120)
+  firstName String  @map("first_name") @db.VarChar(120)
+  email     String  @db.VarChar(250)
+  phone     String  @db.VarChar(20)
+  address   String  @db.VarChar(250)
+  type      String  @db.VarChar(50)
+  isDeleted Boolean @default(false) @map("is_deleted") @db.Boolean()
 
   userId String
 

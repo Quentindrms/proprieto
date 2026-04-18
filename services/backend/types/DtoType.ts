@@ -54,6 +54,15 @@ export interface CreateClientDto {
 	phone: string;
 }
 
+export interface UpdateClientDto {
+	id: string;
+	name: string;
+	firstName: string;
+	email: string;
+	address: string;
+	phone: string;
+}
+
 export interface CreateContractDto {
 	startDate: string;
 	endDate: string;

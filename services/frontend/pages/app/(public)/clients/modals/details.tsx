@@ -1,18 +1,31 @@
-import type { Client } from "@app/types/client";
 import { ActionButton } from "@components/button";
 import Heading from "@components/heading";
 import { Modal, ModalBody, ModalHeader } from "@components/modal";
 import Text from "@components/text";
+import { useClientContext } from "@hooks/useClient";
 import type { Accessor } from "solid-js";
+import { fi } from "zod/locales";
 
 interface DetailsModalProps {
     close: () => void;
     isOpened: Accessor<boolean>;
     isClosing: Accessor<boolean>;
-    client: Client;
+    onEdit: () => void,
 }
 
 export default function DetailsModal(props: DetailsModalProps) {
+
+    const client = useClientContext();
+
+    async function handleDelete() {
+        const success = await client.remove();
+        if (success) {
+            props.close();
+            return
+        }
+        return
+    }
+
     return (
         <Modal
             close={props.close}
@@ -25,13 +38,13 @@ export default function DetailsModal(props: DetailsModalProps) {
                 </Heading>
             </ModalHeader>
             <ModalBody>
-                <Text>{props.client.firstName} {props.client.name}</Text>
-                <Text>Adresse : {props.client.address}</Text>
-                <Text>Addresse email: {props.client.email}</Text>
-                <Text>Téléphone : {props.client.phone}</Text>
+                <Text>{client.clientDetails().firstName} {client.clientDetails().name}</Text>
+                <Text>Adresse : {client.clientDetails().address}</Text>
+                <Text>Addresse email: {client.clientDetails().email}</Text>
+                <Text>Téléphone : {client.clientDetails().phone}</Text>
                 <div class="flex justify-between">
-                    <ActionButton>Modifier</ActionButton>
-                    <ActionButton>Supprimer</ActionButton>
+                    <ActionButton onClick={props.onEdit}>Modifier</ActionButton>
+                    <ActionButton onClick={handleDelete}>Supprimer</ActionButton>
                 </div>
             </ModalBody>
         </Modal>
