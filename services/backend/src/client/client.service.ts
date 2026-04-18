@@ -28,6 +28,7 @@ export class ClientService {
 			where: {
 				userId,
 				type: "client",
+				isDeleted: false,
 			},
 			include: {
 				clients: true,
@@ -48,6 +49,18 @@ export class ClientService {
 				address: data.address,
 				email: data.email,
 				phone: data.phone,
+			},
+		});
+	}
+
+	async deleteClient(userId: string, clientId) {
+		return await prisma.directories.update({
+			where: {
+				userId,
+				id: clientId,
+			},
+			data: {
+				isDeleted: true,
 			},
 		});
 	}
