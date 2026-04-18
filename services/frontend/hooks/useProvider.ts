@@ -3,7 +3,7 @@ import {
 	type CreateProviderType,
 	type UpdateProviderType,
 } from "@schemas/provider";
-import { createSignal } from "solid-js";
+import { createContext, createSignal, useContext } from "solid-js";
 import toast from "solid-toast";
 import type { ZodSafeParseError } from "zod";
 import { onCreate } from "./useProvider.telefunc";
@@ -72,4 +72,12 @@ export function useProvider() {
 		handleCreateInput,
 		handleUpdateInput,
 	};
+}
+
+export const ProviderContext = createContext<ReturnType<typeof useProvider>>();
+
+export function useProviderContext() {
+	const context = useContext(ProviderContext);
+	if (!context) throw new Error("Context absent");
+	return context;
 }
