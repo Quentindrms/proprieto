@@ -119,6 +119,7 @@ export function useClient() {
 		clientDetails,
 		update,
 		setUpdateClient,
+		remove,
 	};
 }
 
