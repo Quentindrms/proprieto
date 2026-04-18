@@ -1,9 +1,8 @@
-import type { Client } from "@app/types/client";
 import { ClientCard } from "@components/clientCard";
 import PageNamer from "@components/pageNamer";
 import { ClientContext, useClient } from "@hooks/useClient";
 import { useModal } from "@hooks/useModal";
-import { createSignal, For } from "solid-js";
+import { For } from "solid-js";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
 import CreateModal from "./modals/create";

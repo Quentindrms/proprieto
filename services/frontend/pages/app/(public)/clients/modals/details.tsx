@@ -1,4 +1,3 @@
-import type { Client } from "@app/types/client";
 import { ActionButton } from "@components/button";
 import Heading from "@components/heading";
 import { Modal, ModalBody, ModalHeader } from "@components/modal";
