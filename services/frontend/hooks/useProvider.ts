@@ -28,7 +28,17 @@ export function useProvider() {
 		id: "",
 	});
 
-	const [providerDetails, setProviderDetails] = createSignal<ProviderType>();
+	const [details, setDetails] = createSignal<ProviderType>({
+		directories: {
+			address: "",
+			email: "",
+			firstName: "",
+			name: "",
+			phone: "",
+			userId: "",
+		},
+		id: "",
+	});
 
 	const [formError, setFormError] =
 		createSignal<ZodSafeParseError<CreateProviderType | UpdateProviderType>>();
@@ -76,8 +86,8 @@ export function useProvider() {
 		setUpdateProvider,
 		handleCreateInput,
 		handleUpdateInput,
-		setProviderDetails,
-		providerDetails,
+		details,
+		setDetails,
 	};
 }
 

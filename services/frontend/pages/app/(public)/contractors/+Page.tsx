@@ -36,7 +36,7 @@ export default function Page() {
 
 	function handleClick(contractor: ProviderType) {
 		console.log("Click");
-		provider.setProviderDetails(contractor);
+		provider.setDetails(contractor);
 		detailsModal.open();
 	}
 
