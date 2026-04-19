@@ -10,7 +10,7 @@ import {
 } from "@hooks/useProvider";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
-import CreateModal from "./modal/createModal";
+import CreateModal from "./modal/create";
 import DetailsModal from "./modal/details";
 import EditModal from "./modal/edit";
 
