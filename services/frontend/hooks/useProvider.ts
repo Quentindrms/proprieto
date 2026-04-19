@@ -1,3 +1,4 @@
+import type { ProviderType } from "@app/types/provider";
 import {
 	CreateProviderSchema,
 	type CreateProviderType,
@@ -26,6 +27,8 @@ export function useProvider() {
 		userId: "",
 		id: "",
 	});
+
+	const [providerDetails, setProviderDetails] = createSignal<ProviderType>();
 
 	const [formError, setFormError] =
 		createSignal<ZodSafeParseError<CreateProviderType | UpdateProviderType>>();
@@ -69,8 +72,12 @@ export function useProvider() {
 	return {
 		create,
 		formError,
+		updateProvider,
+		setUpdateProvider,
 		handleCreateInput,
 		handleUpdateInput,
+		setProviderDetails,
+		providerDetails,
 	};
 }
 
