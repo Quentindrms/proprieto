@@ -7,7 +7,6 @@ import { useModal } from "@hooks/useModal";
 import {
 	ProviderContext,
 	useProvider,
-	useProviderContext,
 } from "@hooks/useProvider";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
