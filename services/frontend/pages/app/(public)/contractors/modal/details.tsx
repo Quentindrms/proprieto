@@ -10,13 +10,18 @@ interface DetailsModalProps {
     close: () => void;
     isClosing: Accessor<boolean>;
     isOpened: Accessor<boolean>;
-    onEdit: () => void,
-    onDelete: () => void,
+    onEdit: () => void;
+    onDelete: () => void;
 }
 
 export default function DetailsModal(props: DetailsModalProps) {
-
     const provider = useProviderContext();
+
+    function handleEdit() {
+        const d = provider.details();
+        provider.setUpdateProvider({ id: d.id, ...d.directories });
+        props.onEdit();
+    }
 
     return (
         <Modal
@@ -25,15 +30,22 @@ export default function DetailsModal(props: DetailsModalProps) {
             isOpened={props.isOpened}
         >
             <ModalHeader>
-                <Heading components="h2" size="large">Détails d'un préstataire</Heading>
+                <Heading components="h2" size="large">
+                    Détails d'un préstataire
+                </Heading>
             </ModalHeader>
             <ModalBody>
-                <Text>{provider.details().directories.firstName} {provider.details().directories.name}</Text>
+                <Text>
+                    {provider.details().directories.firstName}{" "}
+                    {provider.details().directories.name}
+                </Text>
                 <Text>{provider.details().directories.address}</Text>
                 <div class="flex flex-col gap-5">
                     <div class="flex gap-3">
                         <FiPhone size={25} color="var(--color-deep-neutral)" />
-                        <Text class="font-extrabold">{provider.details().directories.phone}</Text>
+                        <Text class="font-extrabold">
+                            {provider.details().directories.phone}
+                        </Text>
                     </div>
                     <div class="flex gap-3">
                         <FiMail size={25} color="var(--color-deep-neutral)" />
@@ -41,10 +53,10 @@ export default function DetailsModal(props: DetailsModalProps) {
                     </div>
                 </div>
                 <div class="flex justify-between p-5">
-                    <ActionButton onClick={props.onEdit}>Modifier</ActionButton>
+                    <ActionButton onClick={() => handleEdit()}>Modifier</ActionButton>
                     <ActionButton onClick={props.onDelete}>Supprimer</ActionButton>
                 </div>
             </ModalBody>
         </Modal>
-    )
+    );
 }

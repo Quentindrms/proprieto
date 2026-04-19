@@ -1,6 +1,7 @@
 import Heading from "@components/heading";
-import { Modal, ModalHeader } from "@components/modal";
+import { Modal, ModalBody, ModalHeader } from "@components/modal";
 import type { Accessor } from "solid-js";
+import EditForm from "../form/edit";
 
 interface EditModalProps {
     close: () => void;
@@ -20,6 +21,9 @@ export default function EditModal(props: EditModalProps) {
                     Éditer un préstataire
                 </Heading>
             </ModalHeader>
+            <ModalBody>
+                <EditForm />
+            </ModalBody>
         </Modal>
     );
 }
