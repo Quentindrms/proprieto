@@ -10,6 +10,8 @@ interface DetailsModalProps {
     close: () => void;
     isClosing: Accessor<boolean>;
     isOpened: Accessor<boolean>;
+    onEdit: () => void,
+    onDelete: () => void,
 }
 
 export default function DetailsModal(props: DetailsModalProps) {
@@ -39,8 +41,8 @@ export default function DetailsModal(props: DetailsModalProps) {
                     </div>
                 </div>
                 <div class="flex justify-between p-5">
-                    <ActionButton>Modifier</ActionButton>
-                    <ActionButton>Supprimer</ActionButton>
+                    <ActionButton onClick={props.onEdit}>Modifier</ActionButton>
+                    <ActionButton onClick={props.onDelete}>Supprimer</ActionButton>
                 </div>
             </ModalBody>
         </Modal>

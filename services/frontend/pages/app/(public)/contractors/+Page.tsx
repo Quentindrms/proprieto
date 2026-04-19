@@ -10,7 +10,7 @@ import {
 } from "@hooks/useProvider";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
-import CreateModal from "./createModal";
+import CreateModal from "./modal/createModal";
 import DetailsModal from "./modal/details";
 import EditModal from "./modal/edit";
 
@@ -59,6 +59,8 @@ export default function Page() {
 					close={detailsModal.close}
 					isClosing={detailsModal.isClosing}
 					isOpened={detailsModal.isOpened}
+					onEdit={editModal.open}
+					onDelete={() => { }}
 				/>
 
 				<EditModal

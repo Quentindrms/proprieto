@@ -1,7 +1,7 @@
 import Heading from "@components/heading";
 import { Modal, ModalBody, ModalHeader } from "@components/modal";
 import type { Accessor } from "solid-js";
-import CreateForm from "./createForm";
+import CreateForm from "../form/createForm";
 
 interface CreateModalProps {
 	isOpened: Accessor<boolean>;
