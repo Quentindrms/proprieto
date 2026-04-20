@@ -1,10 +1,11 @@
+import { ActionButton } from "./button";
 import Heading from "./heading";
 import Text from "./text";
 
 export default function Navbar() {
 
     return (
-        <div class="w-2xs">
+        <div class="w-2xs h-dvh flex flex-col">
             <div class="flex flex-col p-4">
                 <Heading components="h1" size="extra-large" fontClasses="bold">Proprieto</Heading>
                 <Text size="small" class="text-muted-text font-base-regular">Gestionnaire de propriété</Text>
@@ -16,6 +17,9 @@ export default function Navbar() {
                 <NavbarLink name="Clients" value="/app/clients" />
                 <NavbarLink name="Prestataires" value="/app/contractors" />
                 <NavbarLink name="Finances" value="/app/finances" />
+            </div>
+            <div class="mt-auto p-2">
+                <ActionButton class="mt-auto" color="outline">Déconnexion</ActionButton>
             </div>
         </div>
     )
