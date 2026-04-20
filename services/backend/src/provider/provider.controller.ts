@@ -62,6 +62,7 @@ export class ProviderController {
 	) {
 		const user = request.user;
 		if (!user) return response.status(401).send({});
+		console.log(providerId);
 		const provider = this.providerService.remove(user.id, providerId);
 		if (!provider) return response.status(404).send({ message: "error" });
 		return response.status(200).send({ message: "success" });

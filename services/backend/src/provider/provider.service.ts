@@ -29,6 +29,7 @@ export class ProviderService {
 				status: "active",
 				directories: {
 					userId,
+					isDeleted: false,
 				},
 			},
 			include: {
@@ -50,13 +51,19 @@ export class ProviderService {
 	}
 
 	async remove(userId, providerId) {
-		return await prisma.directories.update({
+		return await prisma.providers.update({
 			where: {
-				userId,
 				id: providerId,
+				directories: {
+					userId,
+				},
 			},
 			data: {
-				isDeleted: true,
+				directories: {
+					update: {
+						isDeleted: true,
+					},
+				},
 			},
 		});
 	}
