@@ -1,7 +1,7 @@
 import type { UserCreation } from "@app/types/user";
 import { AuthService } from "@services/auth.service";
 import { setAuthCookie } from "@utils/cookie";
-import { getAuthTokenFromContext, getContext } from "@utils/telefunc";
+import { getContext } from "@utils/telefunc";
 
 export async function onLogin(email: string, password: string) {
 	const context = getContext();
