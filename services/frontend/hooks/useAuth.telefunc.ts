@@ -27,3 +27,9 @@ export async function onRegister(user: UserCreation) {
 		console.trace(error);
 	}
 }
+
+export async function onLogout() {
+	const context = getContext();
+	context.fastify.reply.clearCookie("auth", { path: "/" });
+	return { success: true };
+}

@@ -11,7 +11,7 @@ export async function onCreatePageContext(pageContext: PageContextServer) {
 		pageContext.user = user;
 		pageContext.isAuthenticated = Boolean(user);
 	} catch {
-		/** TODO : IMPLEMENTS LOGOUT AND INVALIDE COOKIE DELETION */
+		pageContext.fastify.reply.clearCookie("auth", { path: "/" });
 		pageContext.user = undefined;
 		throw redirect("/auth/login/");
 	}

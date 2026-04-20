@@ -1,13 +1,31 @@
+import { onLogout } from "@hooks/useAuth.telefunc";
+import toast from "solid-toast";
+import { reload } from "vike/client/router";
+import { ActionButton } from "./button";
 import Heading from "./heading";
 import Text from "./text";
 
 export default function Navbar() {
+    async function handleLogout() {
+        const response = await onLogout();
+        if (!response) {
+            toast.error("Une erreur est survenue lors de la déconnexion");
+            return;
+        }
+        toast.success("Vous avez été déconnecté");
+        await reload();
+        return;
+    }
 
     return (
-        <div class="w-2xs">
+        <div class="w-2xs h-dvh flex flex-col">
             <div class="flex flex-col p-4">
-                <Heading components="h1" size="extra-large" fontClasses="bold">Proprieto</Heading>
-                <Text size="small" class="text-muted-text font-base-regular">Gestionnaire de propriété</Text>
+                <Heading components="h1" size="extra-large" fontClasses="bold">
+                    Proprieto
+                </Heading>
+                <Text size="small" class="text-muted-text font-base-regular">
+                    Gestionnaire de propriété
+                </Text>
             </div>
             <div class="flex flex-col text-left">
                 <NavbarLink name="Portefeuille" value="/app" />
@@ -17,19 +35,27 @@ export default function Navbar() {
                 <NavbarLink name="Prestataires" value="/app/contractors" />
                 <NavbarLink name="Finances" value="/app/finances" />
             </div>
+            <div class="mt-auto p-2">
+                <ActionButton class="mt-auto" color="outline" onClick={handleLogout}>
+                    Déconnexion
+                </ActionButton>
+            </div>
         </div>
-    )
+    );
 }
 
 interface NavbarLinkProps {
-    name: string,
-    value: string,
+    name: string;
+    value: string;
 }
 
 export function NavbarLink(props: NavbarLinkProps) {
-
     return (
-        <a href={props.value} class="text-xl p-3 rounded-md font-base-bold text-muted-text hover:bg-muted-text/10 hover:text-dark">
-            {props.name}</a>
-    )
+        <a
+            href={props.value}
+            class="text-xl p-3 rounded-md font-base-bold text-muted-text hover:bg-muted-text/10 hover:text-dark"
+        >
+            {props.name}
+        </a>
+    );
 }
