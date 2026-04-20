@@ -2,12 +2,15 @@ import type { ProviderType } from "@app/types/provider";
 import {
 	CreateProviderSchema,
 	type CreateProviderType,
+	UpdateProviderSchema,
 	type UpdateProviderType,
 } from "@schemas/provider";
 import { createContext, createSignal, useContext } from "solid-js";
 import toast from "solid-toast";
+import { reload } from "vike/client/router";
 import type { ZodSafeParseError } from "zod";
-import { onCreate } from "./useProvider.telefunc";
+import { onEdit } from "./useClient.telefunc";
+import { onCreate, onRemove } from "./useProvider.telefunc";
 
 export function useProvider() {
 	const [createProvider, setCreateProvider] = createSignal<CreateProviderType>({
@@ -64,9 +67,7 @@ export function useProvider() {
 	}
 
 	async function create() {
-		console.log(createProvider());
 		const validate = CreateProviderSchema.safeParse(createProvider());
-		console.log(validate);
 		if (!validate.success) {
 			setFormError(validate);
 			return;
@@ -79,6 +80,29 @@ export function useProvider() {
 		toast.success("Créancier crée avec succès");
 	}
 
+	async function edit() {
+		const validate = UpdateProviderSchema.safeParse(updateProvider());
+		if (!validate.success) {
+			setFormError(validate);
+			return;
+		}
+		const respponse = await onEdit(updateProvider());
+		if (respponse?.message !== "success") {
+			toast.error(
+				"Une erreur est survenue lors de la modification de la ressource",
+			);
+			return;
+		}
+		toast.success("Ressource modifiée");
+		await reload();
+		return;
+	}
+
+	async function remove() {
+		console.log(details().id);
+		onRemove(details().id);
+	}
+
 	return {
 		create,
 		formError,
@@ -86,6 +110,8 @@ export function useProvider() {
 		setUpdateProvider,
 		handleCreateInput,
 		handleUpdateInput,
+		edit,
+		remove,
 		details,
 		setDetails,
 	};
