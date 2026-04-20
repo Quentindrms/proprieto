@@ -1,7 +1,7 @@
 name: proprio-developement 
 services:
   frontend:
-    container_name: proprio-frontend-dev
+    container_name: proprio-frontend-test
     build:
       context: ../services/frontend
       dockerfile: test.dockerfile 
@@ -16,7 +16,7 @@ services:
       - frontback
   
   adminer:
-    container_name: proprieto-adminer-dev
+    container_name: proprieto-adminer-test
     image: adminer:latest
     ports:
       - ${ADMINER_PORT:-8080}:8080
@@ -28,7 +28,7 @@ services:
       - database
   
   backend: 
-    container_name: proprieto-backend-dev
+    container_name: proprieto-backend-test
     build: 
       context: ../services/backend
       dockerfile: test.dockerfile
