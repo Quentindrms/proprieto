@@ -4,7 +4,7 @@ services:
     container_name: proprio-frontend-dev
     build:
       context: ../services/frontend
-      dockerfile: dev.dockerfile 
+      dockerfile: test.dockerfile 
     ports: 
       - ${FRONTEND_PORT:-3000}:3000
       - ${HMR_PORT:-24678}:24678
@@ -31,7 +31,7 @@ services:
     container_name: proprieto-backend-dev
     build: 
       context: ../services/backend
-      dockerfile: dev.dockerfile
+      dockerfile: test.dockerfile
     ports:
       - ${BACKEND_PORT:-4000}:4000
     volumes:
