@@ -27,4 +27,9 @@ describe("Schema contrat", () => {
         const result = CreateContractSchema.safeParse({ ...validData, lease: (-100) })
         expect(result.success).toBe(false);
     })
+
+    it("Rejette les UUID incorrects", () => {
+        const result = CreateContractSchema.safeParse({ ...validData, clientId: "identifiant", propertyId: "identifiant" })
+        expect(result.success).toBe(false);
+    })
 });
