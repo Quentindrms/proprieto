@@ -9,7 +9,7 @@ export default function EditForm() {
 
 
     return (
-        <Form callback={provider.create}>
+        <Form callback={provider.edit}>
             <TextField label="Nom" onInput={provider.handleUpdateInput("name")} value={provider.updateProvider().name} />
 
             <TextField

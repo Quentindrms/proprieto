@@ -60,7 +60,7 @@ export default function Page() {
 					isClosing={detailsModal.isClosing}
 					isOpened={detailsModal.isOpened}
 					onEdit={editModal.open}
-					onDelete={() => { }}
+					onDelete={provider.remove}
 				/>
 
 				<EditModal
