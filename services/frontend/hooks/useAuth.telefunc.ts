@@ -1,7 +1,7 @@
 import type { UserCreation } from "@app/types/user";
 import { AuthService } from "@services/auth.service";
 import { setAuthCookie } from "@utils/cookie";
-import { getContext } from "@utils/telefunc";
+import { getAuthTokenFromContext, getContext } from "@utils/telefunc";
 
 export async function onLogin(email: string, password: string) {
 	const context = getContext();
@@ -26,4 +26,10 @@ export async function onRegister(user: UserCreation) {
 	} catch (error) {
 		console.trace(error);
 	}
+}
+
+export async function onLogout() {
+	const context = getContext();
+	context.fastify.reply.clearCookie("auth", { path: "/" });
+	return { success: true };
 }
