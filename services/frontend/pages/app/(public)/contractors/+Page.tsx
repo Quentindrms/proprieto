@@ -31,8 +31,6 @@ export default function Page() {
 		onClick: () => handleClick(contractor),
 	}));
 
-	console.log(contractor);
-
 	function handleClick(contractor: ProviderType) {
 		console.log("Click");
 		provider.setDetails(contractor);

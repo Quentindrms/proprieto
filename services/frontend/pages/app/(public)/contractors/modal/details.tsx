@@ -5,6 +5,7 @@ import Text from "@components/text";
 import { useProviderContext } from "@hooks/useProvider";
 import { FiMail, FiPhone } from "solid-icons/fi";
 import type { Accessor } from "solid-js";
+import { reload } from "vike/client/router";
 
 interface DetailsModalProps {
     close: () => void;
@@ -21,6 +22,14 @@ export default function DetailsModal(props: DetailsModalProps) {
         const d = provider.details();
         provider.setUpdateProvider({ id: d.id, ...d.directories });
         props.onEdit();
+    }
+
+    async function handleRemove() {
+        const result = await provider.remove()
+        if (result) {
+            props.close();
+            await reload();
+        }
     }
 
     return (
@@ -54,7 +63,7 @@ export default function DetailsModal(props: DetailsModalProps) {
                 </div>
                 <div class="flex justify-between p-5">
                     <ActionButton onClick={() => handleEdit()}>Modifier</ActionButton>
-                    <ActionButton onClick={props.onDelete}>Supprimer</ActionButton>
+                    <ActionButton onClick={() => handleRemove()}>Supprimer</ActionButton>
                 </div>
             </ModalBody>
         </Modal>

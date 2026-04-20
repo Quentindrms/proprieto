@@ -100,7 +100,15 @@ export function useProvider() {
 
 	async function remove() {
 		console.log(details().id);
-		onRemove(details().id);
+		const response = await onRemove(details().id);
+		if (response?.message !== "success") {
+			toast.error(
+				"Une erreur est survenue lors de la suppression de la ressource",
+			);
+			return false;
+		}
+		toast.success("Ressource supprimée");
+		return true;
 	}
 
 	return {
