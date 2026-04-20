@@ -1,6 +1,8 @@
-import { Button } from "@components/button";
+import { ActionButton, Button } from "@components/button";
 import { TextField } from "@components/form";
+import Text from "@components/text";
 import { useAuth } from "@hooks/useAuth";
+import { navigate } from "vike/client/router";
 
 export default function LoginForm() {
 	const auth = useAuth();
@@ -36,10 +38,14 @@ export default function LoginForm() {
 				name="password"
 				onInput={handleInput}
 			/>
+			<a href="/" class="text-muted-text font-base-regular text-sm">J'ai oublié mon mot de passe</a>
 			<div class="flex justify-center">
 				<Button type="submit" onClick={onClick}>
 					Connexion
 				</Button>
+			</div>
+			<div class="flex justify-center p-2">
+				<ActionButton color="outline" onClick={() => navigate("/auth/register")}>Vous n'avez pas de compte ? Inscrivez-vous</ActionButton>
 			</div>
 		</form>
 	);
