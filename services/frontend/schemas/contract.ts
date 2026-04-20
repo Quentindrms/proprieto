@@ -8,7 +8,7 @@ const endDateSchema = z.coerce.date("Le format de date est invalide");
 
 const leaseSchema = z.coerce
 	.number("Le loyer doit être un nombre")
-	.min(1, "Le loyer ne peut pas être inférieur à 1");
+	.min(0, "Le loyer ne peut pas être négatif");
 
 const propertyIdSchema = z.string();
 
