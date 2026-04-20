@@ -1,6 +1,6 @@
 import { prisma } from "@libs/DatabaseClient";
 import { Injectable } from "@nestjs/common";
-import type { CreateProviderDto } from "types/DtoType";
+import type { CreateProviderDto, UpdateProviderDto } from "types/DtoType";
 
 @Injectable()
 export class ProviderService {
@@ -29,10 +29,41 @@ export class ProviderService {
 				status: "active",
 				directories: {
 					userId,
+					isDeleted: false,
 				},
 			},
 			include: {
 				directories: true,
+			},
+		});
+	}
+
+	async edit(userId: string, provider: UpdateProviderDto) {
+		const { id, ...data } = provider;
+
+		return await prisma.directories.update({
+			where: {
+				userId,
+				id,
+			},
+			data,
+		});
+	}
+
+	async remove(userId, providerId) {
+		return await prisma.providers.update({
+			where: {
+				id: providerId,
+				directories: {
+					userId,
+				},
+			},
+			data: {
+				directories: {
+					update: {
+						isDeleted: true,
+					},
+				},
 			},
 		});
 	}

@@ -43,7 +43,7 @@ export default function TransactionRow(props: TransactionRowData) {
             </td>
             <td class="px-4 py-3">
                 <Text size="large">
-                    {props.issueDate.toLocaleDateString("fr-FR")}
+                    {new Date(props.issueDate).toLocaleDateString("fr-FR")}
                 </Text>
             </td>
             <td class="px-4 py-3 text-center">
@@ -163,11 +163,13 @@ export interface ContractorRowData {
     speciality: string;
     phone: string;
     mail: string;
+    onClick: () => void;
 }
+
 
 export function ContractorRow(props: ContractorRowData) {
     return (
-        <tr class="last:border-0 hover:bg-background-secondary transition-colors hover:bg-background-muted/10">
+        <tr class="last:border-0 hover:bg-background-secondary transition-colors hover:bg-background-muted/10" onClick={props.onClick}>
             <td class="px-4 py-3">
                 <Heading components="h3" size="medium" fontClasses="bold">{props.name}</Heading>
             </td>

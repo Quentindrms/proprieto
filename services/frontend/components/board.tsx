@@ -1,4 +1,4 @@
-import { createEffect, createSignal, For, Show } from "solid-js";
+import { createSignal, For, Show } from "solid-js";
 import { ButtonGroup } from "./button";
 import Heading from "./heading";
 import TransactionRow, {
@@ -91,6 +91,7 @@ interface ContractorsBoardItem {
 	speciality: string;
 	phone: string;
 	mail: string;
+	onClick: () => void;
 }
 
 interface ContractorsBoardProps {
@@ -133,6 +134,7 @@ export function ContractorsBoard(props: ContractorsBoardProps) {
 								name={contractor.name}
 								phone={contractor.phone}
 								speciality={contractor.speciality}
+								onClick={contractor.onClick}
 							/>
 						)}
 					</For>
