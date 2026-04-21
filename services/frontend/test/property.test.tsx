@@ -1,6 +1,5 @@
 import { useProperty } from "@hooks/useProperty";
 import { onCreate, onDelete, onUpdate } from "@hooks/useProperty.telefunc";
-import { reload } from "vike/client/router";
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("vike/client/router", () => ({

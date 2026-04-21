@@ -1,4 +1,4 @@
-import { property, z } from "zod";
+import { z } from "zod";
 
 export const idSchema = z.string();
 
@@ -12,7 +12,10 @@ export const purchasePriceSchema = z.coerce.number(
 export const purchaseDateSchema = z.coerce.date(
 	"Le format de la date est invalide",
 );
-export const sellpriceSchema = z.coerce.number().int("Le prix doit être un nombre").optional();
+export const sellpriceSchema = z.coerce
+	.number()
+	.int("Le prix doit être un nombre")
+	.optional();
 export const sellDateSchema = z.coerce
 	.date("Le format de la date est invalide")
 	.optional();
