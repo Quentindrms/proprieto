@@ -46,7 +46,7 @@ services:
     networks:
       - database
       - frontback
-    restart: always
+    restart: "no"
 
 
   postgres:
