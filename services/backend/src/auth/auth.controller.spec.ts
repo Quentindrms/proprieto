@@ -46,9 +46,25 @@ describe("Auth controller", () => {
 				{ email: "test@test.fr", password: "test" },
 				mockRes,
 			);
-
 			expect(mockStatus).toHaveBeenCalledWith(200);
-			expect(mockSend).toHaveBeenCalledWith({ success: true, token: "test-token" });
+			expect(mockSend).toHaveBeenCalledWith({
+				success: true,
+				token: "test-token",
+			});
+		});
+
+		it("Doit retourne success:false", async () => {
+			mockAuthService.login.mockResolvedValue({
+				token: null,
+				success: false,
+			});
+
+			await authController.login(
+				{ email: "test@test.fr", password: "test" },
+				mockRes,
+			);
+			expect(mockStatus).toHaveBeenCalledWith(401);
+			expect(mockSend).toHaveBeenCalledWith({ success: false });
 		});
 	});
 });
