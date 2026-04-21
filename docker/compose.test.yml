@@ -1,7 +1,7 @@
-name: proprio-developement 
+name: proprieto-test 
 services:
   frontend:
-    container_name: proprio-frontend-test
+    container_name: proprieto-frontend-test
     build:
       context: ../services/frontend
       dockerfile: test.dockerfile 
@@ -51,7 +51,7 @@ services:
 
   postgres:
     image: postgres:18-alpine
-    container_name: proprieto-database-development
+    container_name: proprieto-database-test
     volumes:
       - ../database/development:/var/lib/postgresql/18/docker
     environment:
