@@ -25,10 +25,6 @@ jest.mock("services/jwt.service", () => ({
 	},
 }));
 
-const mockSend = jest.fn();
-const mockStatus = jest.fn();
-const mockRes = { status: mockStatus, send: mockSend } as unknown as Response;
-
 describe("Auth service", () => {
 	let authService: AuthService;
 
@@ -77,6 +73,35 @@ describe("Auth service", () => {
 			(argon2.verify as jest.Mock).mockResolvedValue(true);
 			const result = await authService.login(fakeLogin);
 			expect(result).toEqual({ token: "mock_token", success: true });
+		});
+
+		it("Doit retourner success:false", async () => {
+			(prisma.users.findFirst as jest.Mock).mockResolvedValue(null);
+			(argon2.verify as jest.Mock).mockResolvedValue(true);
+			const result = await authService.login(fakeLogin);
+			expect(result).toEqual({ success: false });
+		});
+	});
+
+	describe("Verify", () => {
+		const fakeToken = "fakeToken";
+
+		it("Doit retourner un utilisateur", async () => {
+			(prisma.users.findFirst as jest.Mock).mockResolvedValue({
+				id: "123",
+				role: "user",
+				status: "active",
+				password: "password",
+			});
+			const result = await authService.verify("token");
+			expect(result).toEqual({
+				user: {
+					id: "123",
+					role: "user",
+					status: "active",
+					password: "password",
+				},
+			});
 		});
 	});
 });
