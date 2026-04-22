@@ -67,4 +67,61 @@ describe("Auth controller", () => {
 			expect(mockSend).toHaveBeenCalledWith({ success: false });
 		});
 	});
+
+	describe("Register", () => {
+		it("Doit retourner un status 200 succes:true", async () => {
+			mockAuthService.register.mockResolvedValue(true);
+			await authController.register(
+				{
+					address: "Test",
+					email: "test",
+					firstName: "test",
+					name: "test",
+					password: "test",
+					phone: "test",
+				},
+				mockRes,
+			);
+			expect(mockStatus).toHaveBeenLastCalledWith(200);
+			expect(mockSend).toHaveBeenCalledWith({ success: true });
+		});
+
+		it("Doit retourner un status 400, success:false", async () => {
+			mockAuthService.register.mockResolvedValue(false);
+			await authController.register(
+				{
+					address: "Test",
+					email: "test",
+					firstName: "test",
+					name: "test",
+					password: "test",
+					phone: "test",
+				},
+				mockRes,
+			);
+			expect(mockStatus).toHaveBeenCalledWith(400);
+			expect(mockSend).toHaveBeenCalledWith({ success: false });
+		});
+	});
+
+	describe("Verify", () => {
+		it("Doit retourner un status 201 avec un objet", async () => {
+			mockAuthService.verify.mockResolvedValue({
+				user: {
+					id: "id",
+					role: "user",
+					status: "active",
+					password: "password",
+				},
+				token: "token",
+			});
+			mockAuthService.generateNewToken.mockResolvedValue("token");
+			await authController.verify({ token: "token" }, mockRes);
+			expect(mockStatus).toHaveBeenCalledWith(201);
+			expect(mockSend).toHaveBeenCalledWith({
+				user: { userId: "id" },
+				token: "token",
+			});
+		});
+	});
 });
