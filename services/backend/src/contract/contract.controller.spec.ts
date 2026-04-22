@@ -72,4 +72,14 @@ describe("Contract", () => {
 			);
 		});
 	});
+
+	describe("Browse", () => {
+		it("Doit retourner un statut 200 et une liste de contrats", async () => {
+			mockContractService.browse.mockResolvedValue(["contract"]);
+			await contractController.browseContract(mockAuthentifiedReq, mockRes);
+			expect(mockStatus).toHaveBeenCalledWith(200);
+			expect(mockSend).toHaveBeenCalledWith(["contract"]);
+			expect(mockContractService.browse).toHaveBeenCalledWith("user-id");
+		});
+	});
 });
