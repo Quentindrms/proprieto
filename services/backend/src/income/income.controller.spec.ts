@@ -146,5 +146,67 @@ describe("Income", () => {
 				expect(mockIncomeService.monthlyProfit).toHaveBeenCalledWith("user-id");
 			});
 		});
+
+		describe("Get income by id", () => {
+			it("Doit retourner un statut 401", async () => {
+				await incomeController.get(mockUnauthentifiedReq, mockRes, "income-id");
+				expect(mockStatus).toHaveBeenCalledWith(401);
+				expect(mockSend).toHaveBeenLastCalledWith({});
+				expect(mockIncomeService.get).not.toHaveBeenCalled();
+			});
+
+			it("Doit retourner une erreur 404", async () => {
+				mockIncomeService.get.mockResolvedValue(null);
+				await incomeController.get(mockAuthentifiedReq, mockRes, "income-id");
+				expect(mockStatus).toHaveBeenCalledWith(404);
+				expect(mockSend).toHaveBeenCalledWith({});
+				expect(mockIncomeService.get).toHaveBeenCalledWith("income-id");
+			});
+
+			it("Doit retourner un statut 200 et une dépense", async () => {
+				mockIncomeService.get.mockResolvedValue(validIncome);
+				await incomeController.get(mockAuthentifiedReq, mockRes, "income-id");
+				expect(mockStatus).toHaveBeenCalledWith(200);
+				expect(mockSend).toHaveBeenLastCalledWith(validIncome);
+				expect(mockIncomeService.get).toHaveBeenCalledWith("income-id");
+			});
+		});
+
+		describe("Delete", () => {
+			it("Doit retourner une erreur 401", async () => {
+				await incomeController.delete(
+					mockUnauthentifiedReq,
+					mockRes,
+					"income-id",
+				);
+				expect(mockStatus).toHaveBeenCalledWith(401);
+				expect(mockSend).toHaveBeenCalledWith({});
+				expect(mockIncomeService.delete).not.toHaveBeenCalled();
+			});
+
+			it("Doit retourner une erreur 404 et un message d'erreur", async () => {
+				mockIncomeService.delete.mockResolvedValue(null);
+				await incomeController.delete(
+					mockAuthentifiedReq,
+					mockRes,
+					"income-id",
+				);
+				expect(mockStatus).toHaveBeenCalledWith(404);
+				expect(mockSend).toHaveBeenCalledWith({ message: "error" });
+				expect(mockIncomeService.delete).toHaveBeenLastCalledWith("income-id");
+			});
+
+			it("Doit retourner un statut 200 et un message de succès", async () => {
+				mockIncomeService.delete.mockResolvedValue("income");
+				await incomeController.delete(
+					mockAuthentifiedReq,
+					mockRes,
+					"income-id",
+				);
+				expect(mockStatus).toHaveBeenCalledWith(200);
+				expect(mockSend).toHaveBeenCalledWith({ message: "success" });
+				expect(mockIncomeService.delete).toHaveBeenCalledWith("income-id");
+			});
+		});
 	});
 });
