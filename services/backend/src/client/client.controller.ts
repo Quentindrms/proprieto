@@ -47,7 +47,7 @@ export class ClientController {
 	) {
 		const user = request.user;
 		if (!user) return response.status(401).send({});
-		const client = this.clientService.editClient(user.id, body);
+		const client = await this.clientService.editClient(user.id, body);
 		if (!client) return response.status(404).send({ message: "error" });
 		return response.status(200).send({ message: "success" });
 	}
