@@ -34,6 +34,15 @@ describe("Client", () => {
 		phone: "0684529961",
 	};
 
+	const validEditClient = {
+		id: "utilisateur",
+		name: "Smith",
+		firstName: "John",
+		address: "10 rue de la paix, 75016 Paris",
+		email: "john.smith@mail.com",
+		phone: "0684529961",
+	};
+
 	beforeEach(async () => {
 		jest.clearAllMocks();
 		mockStatus.mockReturnValue(mockRes);
@@ -109,6 +118,49 @@ describe("Client", () => {
 			expect(mockStatus).toHaveBeenCalledWith(200);
 			expect(mockSend).toHaveBeenCalledWith(["user"]);
 			expect(mockClientService.browseClient).toHaveBeenCalled();
+		});
+	});
+
+	describe("Edit", () => {
+		it("Doit retourner une erreur 401", async () => {
+			await clientController.edit(
+				mockUnauthentifiedReq,
+				mockRes,
+				validEditClient,
+			);
+			expect(mockStatus).toHaveBeenCalledWith(401);
+			expect(mockSend).toHaveBeenCalledWith({});
+			expect(mockClientService.editClient).not.toHaveBeenCalledWith();
+		});
+
+		it("Doit retourner un statut 404 et un message d'erreur", async () => {
+			mockClientService.editClient.mockResolvedValue(null);
+			await clientController.edit(
+				mockAuthentifiedReq,
+				mockRes,
+				validEditClient,
+			);
+			expect(mockStatus).toHaveBeenCalledWith(404);
+			expect(mockSend).toHaveBeenCalledWith({ message: "error" });
+			expect(mockClientService.editClient).toHaveBeenCalledWith(
+				"user-id",
+				validEditClient,
+			);
+		});
+
+		it("Doit retourner un statut 200 et un message de succès", async () => {
+			mockClientService.editClient.mockResolvedValue(["user"]);
+			await clientController.edit(
+				mockAuthentifiedReq,
+				mockRes,
+				validEditClient,
+			);
+			expect(mockStatus).toHaveBeenCalledWith(200);
+			expect(mockSend).toHaveBeenCalledWith({ message: "success" });
+			expect(mockClientService.editClient).toHaveBeenCalledWith(
+				"user-id",
+				validEditClient,
+			);
 		});
 	});
 });
