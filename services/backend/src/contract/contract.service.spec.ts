@@ -42,4 +42,25 @@ describe("Contract service", () => {
 			});
 		});
 	});
+
+	describe("Browse contract", () => {
+		it("Doit retourner une liste de contrats", async () => {
+			(prisma.contracts.findMany as jest.Mock).mockResolvedValue(["contract"]);
+			await contractService.browse("user-id");
+			expect(prisma.contracts.findMany).toHaveBeenCalledWith({
+				where: {
+					property: {
+						userId: "user-id",
+					},
+				},
+				select: {
+					id: true,
+					startDate: true,
+					endDate: true,
+					lease: true,
+					property: true,
+				},
+			});
+		});
+	});
 });
