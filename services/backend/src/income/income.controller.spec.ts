@@ -1,6 +1,6 @@
 import { Test, type TestingModule } from "@nestjs/testing";
 import type { Incomes } from "@prisma/client";
-import type { CreateIncomeDto } from "types/DtoType";
+import type { CreateIncomeDto, UpdateIncomeDto } from "types/DtoType";
 import {
 	mockAuthentifiedReq,
 	mockRes,
@@ -60,6 +60,19 @@ describe("Income", () => {
 		propertyId: "property-id",
 	};
 
+	const validUpdateIncome: UpdateIncomeDto = {
+		amount: 0,
+		contractId: "contract-id",
+		frequency: "none",
+		isPaid: false,
+		issueDate: new Date("01/01/2026"),
+		paidOn: new Date("01/01/2026"),
+		clientId: "client-id",
+		isReccuring: "none",
+		propertyId: "property-id",
+		id: "income-id",
+		incomeCategoryId: "income-id",
+	};
 	beforeEach(async () => {
 		jest.clearAllMocks();
 		mockStatus.mockReturnValue(mockRes);
@@ -206,6 +219,48 @@ describe("Income", () => {
 				expect(mockStatus).toHaveBeenCalledWith(200);
 				expect(mockSend).toHaveBeenCalledWith({ message: "success" });
 				expect(mockIncomeService.delete).toHaveBeenCalledWith("income-id");
+			});
+		});
+
+		describe("Update", () => {
+			it("Doit retourner une erreur 401", async () => {
+				await incomeController.update(
+					mockUnauthentifiedReq,
+					mockRes,
+					validUpdateIncome,
+				);
+				expect(mockStatus).toHaveBeenLastCalledWith(401);
+				expect(mockSend).toHaveBeenCalledWith({});
+				expect(mockIncomeService.update).not.toHaveBeenCalled();
+			});
+
+			it("Doit retourner une erreur 404 et un message d'erreur", async () => {
+				mockIncomeService.update.mockResolvedValue(undefined);
+				const response = await incomeController.update(
+					mockAuthentifiedReq,
+					mockRes,
+					validUpdateIncome,
+				);
+				expect(mockStatus).toHaveBeenCalledWith(404);
+				expect(mockSend).toHaveBeenCalledWith({ message: "error" });
+				expect(mockIncomeService.update).toHaveBeenCalledWith(
+					validUpdateIncome,
+				);
+				expect(response).toBe(undefined);
+			});
+
+			it("Doit retourner un statut 200 et un message de succès", async () => {
+				mockIncomeService.update.mockResolvedValue(validIncome);
+				await incomeController.update(
+					mockAuthentifiedReq,
+					mockRes,
+					validUpdateIncome,
+				);
+				expect(mockStatus).toHaveBeenCalledWith(200);
+				expect(mockSend).toHaveBeenCalledWith({ message: "success" });
+				expect(mockIncomeService.update).toHaveBeenCalledWith(
+					validUpdateIncome,
+				);
 			});
 		});
 	});
