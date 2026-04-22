@@ -163,4 +163,28 @@ describe("Client", () => {
 			);
 		});
 	});
+
+	describe("Remove", () => {
+		it("Doit retourner une erreur 401", async () => {
+			await clientController.remove(
+				mockUnauthentifiedReq,
+				mockRes,
+				"client-id",
+			);
+			expect(mockStatus).toHaveBeenCalledWith(401);
+			expect(mockSend).toHaveBeenLastCalledWith({});
+			expect(mockClientService.deleteClient).not.toHaveBeenCalled();
+		});
+
+		it("Doit retourner une erreur 404 et un message d'erreur", async () => {
+			mockClientService.deleteClient.mockResolvedValue(null);
+			await clientController.remove(mockAuthentifiedReq, mockRes, "client-id");
+			expect(mockStatus).toHaveBeenCalledWith(404);
+			expect(mockSend).toHaveBeenCalledWith({ message: "error" });
+			expect(mockClientService.deleteClient).toHaveBeenLastCalledWith(
+				"user-id",
+				"client-id",
+			);
+		});
+	});
 });
