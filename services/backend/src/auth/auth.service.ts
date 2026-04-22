@@ -44,8 +44,8 @@ export class AuthService extends JwtService {
 			},
 		});
 
-		if (!user) throw Error("Utilisateur inexistant");
 		try {
+			if (!user) throw Error("Utilisateur inexistant");
 			if (!(await argon2.verify(user.password, loginDetails.password)))
 				throw Error("Identifiants invalides");
 			return { token: await this.generateNewToken(user.id), success: true };
