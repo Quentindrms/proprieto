@@ -26,7 +26,6 @@ export class ContractController {
 		const user = request.user;
 		if (!user) return response.status(401).send({});
 		const contracts = await this.contractService.browse(user.id);
-		console.log(contracts);
 		return response.status(200).send(contracts);
 	}
 }
