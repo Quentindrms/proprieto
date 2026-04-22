@@ -27,7 +27,7 @@ export class IncomeController {
 		console.log(body);
 		const user = request.user;
 		if (!user) return response.status(401).send({});
-		const income = this.incomeService.create(body);
+		const income = await this.incomeService.create(body);
 		if (!income) return response.status(404).send({ message: "error" });
 		return response.status(200).send({ message: "success" });
 	}
@@ -82,7 +82,7 @@ export class IncomeController {
 	) {
 		const user = request.user;
 		if (!user) return response.status(401).send({});
-		const update = this.incomeService.update(body);
+		const update = await this.incomeService.update(body);
 		if (!update) return response.status(404).send({ message: "error" });
 		return response.status(200).send({ message: "success" });
 	}
