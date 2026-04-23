@@ -33,7 +33,6 @@ export class PropertyService {
 
 	async updateProperty(property: UpdatePropertyDto) {
 		const { id, type, ...data } = property;
-		console.log(data);
 		return await prisma.properties.update({
 			where: {
 				id,

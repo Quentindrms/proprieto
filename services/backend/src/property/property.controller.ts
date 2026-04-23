@@ -36,7 +36,6 @@ export class PropertyController {
 		const user = request.user;
 		if (!user) return response.status(401).send({});
 		const properties = await this.propertyService.browseProperties(user.id);
-		console.log(properties);
 		return response.status(200).send(properties);
 	}
 
@@ -46,7 +45,6 @@ export class PropertyController {
 		@Res() response: Response,
 		@Body() body: UpdatePropertyDto,
 	) {
-		console.log(body);
 		const user = request.user;
 		if (!user) return response.status(401).send({});
 		const update = await this.propertyService.updateProperty(body);

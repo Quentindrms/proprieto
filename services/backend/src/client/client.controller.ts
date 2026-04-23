@@ -58,7 +58,6 @@ export class ClientController {
 		@Res() response: Response,
 		@Param("id") clientId: string,
 	) {
-		console.log(clientId);
 		const user = request.user;
 		if (!user) return response.status(401).send({});
 		const client = await this.clientService.deleteClient(user.id, clientId);
