@@ -55,9 +55,6 @@ describe("Income", () => {
 		issueDate: new Date("01/01/2026"),
 		name: "Income",
 		paidOn: new Date("01/01/2026"),
-		clientId: "client-id",
-		isReccuring: "none",
-		propertyId: "property-id",
 	};
 
 	const validUpdateIncome: UpdateIncomeDto = {
@@ -67,11 +64,8 @@ describe("Income", () => {
 		isPaid: false,
 		issueDate: new Date("01/01/2026"),
 		paidOn: new Date("01/01/2026"),
-		clientId: "client-id",
-		isReccuring: "none",
-		propertyId: "property-id",
 		id: "income-id",
-		incomeCategoryId: "income-id",
+		categoryId: "category-id",
 	};
 	beforeEach(async () => {
 		jest.clearAllMocks();
