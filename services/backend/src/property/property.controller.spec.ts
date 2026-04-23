@@ -1,7 +1,5 @@
 import { Test, type TestingModule } from "@nestjs/testing";
 import type { PropertyTypes } from "@prisma/client";
-import { IncomeService } from "@src/income/income.service";
-import { execPath } from "process";
 import type { CreatePropertyDto, UpdatePropertyDto } from "types/DtoType";
 import {
 	mockAuthentifiedReq,
@@ -187,6 +185,82 @@ describe("Property", () => {
 				expect(mockSend).toHaveBeenCalledWith({});
 				expect(mockPropertyService.deleteProperty).toHaveBeenCalledWith(
 					"property-id",
+				);
+			});
+
+			it("Doit retourner un statut 200 avec un message de succès", async () => {
+				mockPropertyService.deleteProperty.mockResolvedValue("property");
+				await propertyController.deleteProperty(
+					mockAuthentifiedReq,
+					mockRes,
+					"property-id",
+				);
+				expect(mockStatus).toHaveBeenCalledWith(200);
+				expect(mockSend).toHaveBeenCalledWith({ message: "success" });
+				expect(mockPropertyService.deleteProperty).toHaveBeenCalledWith(
+					"property-id",
+				);
+			});
+		});
+
+		describe("Browse types", () => {
+			it("Doit retourner une erreur 401", async () => {
+				await propertyController.browsePropertyTypes(
+					mockUnauthentifiedReq,
+					mockRes,
+				);
+				expect(mockStatus).toHaveBeenCalledWith(401);
+				expect(mockSend).toHaveBeenCalledWith({});
+				expect(mockPropertyService.browseType).not.toHaveBeenCalled();
+			});
+
+			it("Doit retourner un statut 200 avec la liste des types", async () => {
+				mockPropertyService.browseType.mockResolvedValue([validProperty]);
+				await propertyController.browsePropertyTypes(
+					mockAuthentifiedReq,
+					mockRes,
+				);
+				expect(mockStatus).toHaveBeenCalledWith(200);
+				expect(mockSend).toHaveBeenCalledWith([validProperty]);
+				expect(mockPropertyService.browseType).toHaveBeenCalled();
+			});
+		});
+
+		describe("Count", () => {
+			it("Doit retourner une erreur 401", async () => {
+				await propertyController.countProperties(
+					mockUnauthentifiedReq,
+					mockRes,
+				);
+				expect(mockStatus).toHaveBeenCalledWith(401);
+				expect(mockSend).toHaveBeenCalledWith({});
+				expect(mockPropertyService.countProperties).not.toHaveBeenCalled();
+			});
+
+			it("Doit retourner un statut 200 avec le nombre de propriétés", async () => {
+				mockPropertyService.countProperties.mockResolvedValue(3);
+				await propertyController.countProperties(mockAuthentifiedReq, mockRes);
+				expect(mockStatus).toHaveBeenCalledWith(200);
+				expect(mockSend).toHaveBeenCalledWith(3);
+				expect(mockPropertyService.countProperties).toHaveBeenCalledWith(
+					"user-id",
+				);
+			});
+		});
+
+		describe("Create success", () => {
+			it("Doit retourner un statut 200 avec un message de succès", async () => {
+				mockPropertyService.create.mockResolvedValue("property");
+				await propertyController.createProperty(
+					mockAuthentifiedReq,
+					mockRes,
+					validCreateProperty,
+				);
+				expect(mockStatus).toHaveBeenCalledWith(200);
+				expect(mockSend).toHaveBeenCalledWith({ message: "success" });
+				expect(mockPropertyService.create).toHaveBeenCalledWith(
+					validCreateProperty,
+					"user-id",
 				);
 			});
 		});
