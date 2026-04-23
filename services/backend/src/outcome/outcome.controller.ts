@@ -83,8 +83,8 @@ export class OutcomeController {
 	) {
 		const user = request.user;
 		if (!user) return response.status(401).send({});
-		const outcome = this.outcomeService.update(body);
-		if (!outcome) response.status(404).send({ message: "error" });
+		const outcome = await this.outcomeService.update(body);
+		if (!outcome) return response.status(404).send({ message: "error" });
 		return response.status(200).send({ message: "success" });
 	}
 }
