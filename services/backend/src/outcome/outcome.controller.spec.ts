@@ -154,4 +154,25 @@ describe("Outcome", () => {
 			expect(mockOutcomeService.browseOutcome).toHaveBeenCalledWith("user-id");
 		});
 	});
+
+	describe("Get monthly loss", () => {
+		it("Doit retourner une erreur 401", async () => {
+			await outcomeController.browse(mockUnauthentifiedReq, mockRes);
+			expect(mockStatus).toHaveBeenCalledWith(401);
+			expect(mockSend).toHaveBeenCalledWith({});
+			expect(mockOutcomeService.monthlyLoss).not.toHaveBeenCalled();
+		});
+
+		it("Doit retourner un statut 200 et une liste de dépenses", async () => {
+			mockOutcomeService.monthlyLoss.mockResolvedValue(["outcome"]);
+			const response = await outcomeController.getMonthlyLoss(
+				mockAuthentifiedReq,
+				mockRes,
+			);
+			expect(mockStatus).toHaveBeenCalledWith(200);
+			expect(mockSend).toHaveBeenCalledWith(["outcome"]);
+			expect(mockOutcomeService.monthlyLoss).toHaveBeenCalledWith("user-id");
+			expect(response).toEqual(["outcome"]);
+		});
+	});
 });
