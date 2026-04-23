@@ -1,4 +1,3 @@
-import { prisma } from "@libs/DatabaseClient";
 import { Test, type TestingModule } from "@nestjs/testing";
 import {
 	mockAuthentifiedReq,
@@ -49,7 +48,9 @@ describe("Income category", () => {
 		});
 
 		it("Doit retourner une liste de catégories", async () => {
-			mockIncomeCategoryService.browseCategories.mockResolvedValue(["category"]);
+			mockIncomeCategoryService.browseCategories.mockResolvedValue([
+				"category",
+			]);
 			await incomeCategoryController.browse(mockAuthentifiedReq, mockRes);
 			expect(mockStatus).toHaveBeenCalledWith(200);
 			expect(mockSend).toHaveBeenCalledWith(["category"]);
