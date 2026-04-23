@@ -1,12 +1,6 @@
 import { Test, type TestingModule } from "@nestjs/testing";
 import type { Outcomes } from "@prisma/client";
-import { IncomeController } from "@src/income/income.controller";
-import type {
-	CreateIncomeDto,
-	CreateOutcomeDto,
-	UpdateIncomeDto,
-	UpdateOutcomeDto,
-} from "types/DtoType";
+import type { CreateOutcomeDto, UpdateOutcomeDto } from "types/DtoType";
 import {
 	mockAuthentifiedReq,
 	mockRes,
@@ -145,10 +139,7 @@ describe("Outcome", () => {
 
 		it("Doit retourner un statut 200 avec une liste de dépense", async () => {
 			mockOutcomeService.browseOutcome.mockResolvedValue(["outcome"]);
-			const response = await outcomeController.browse(
-				mockAuthentifiedReq,
-				mockRes,
-			);
+			await outcomeController.browse(mockAuthentifiedReq, mockRes);
 			expect(mockStatus).toHaveBeenCalledWith(200);
 			expect(mockSend).toHaveBeenCalledWith(["outcome"]);
 			expect(mockOutcomeService.browseOutcome).toHaveBeenCalledWith("user-id");
@@ -202,11 +193,7 @@ describe("Outcome", () => {
 
 		it("Doit retourner un statut 200 avec une dépense", async () => {
 			mockOutcomeService.getOutcome.mockResolvedValue("outcome");
-			const response = await outcomeController.get(
-				"outcome-id",
-				mockAuthentifiedReq,
-				mockRes,
-			);
+			await outcomeController.get("outcome-id", mockAuthentifiedReq, mockRes);
 			expect(mockStatus).toHaveBeenCalledWith(200);
 			expect(mockSend).toHaveBeenCalledWith("outcome");
 			expect(mockOutcomeService.getOutcome).toHaveBeenCalledWith(
@@ -243,7 +230,7 @@ describe("Outcome", () => {
 
 		it("Doit retourner un statut 200 et un message de succès", async () => {
 			mockOutcomeService.delete.mockResolvedValue(true);
-			const response = await outcomeController.delete(
+			await outcomeController.delete(
 				"outcome-id",
 				mockAuthentifiedReq,
 				mockRes,
