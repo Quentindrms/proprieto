@@ -175,4 +175,123 @@ describe("Outcome", () => {
 			expect(response).toEqual(["outcome"]);
 		});
 	});
+
+	describe("Get outcome by id", () => {
+		it("Doit retourner une erreur 401", async () => {
+			await outcomeController.get("outcome-id", mockUnauthentifiedReq, mockRes);
+			expect(mockStatus).toHaveBeenCalledWith(401);
+			expect(mockSend).toHaveBeenCalledWith({});
+			expect(mockOutcomeService.getOutcome).not.toHaveBeenCalled();
+		});
+
+		it("Doit retourner une erreur 404 et un message d'erreur", async () => {
+			mockOutcomeService.getOutcome.mockResolvedValue(null);
+			const response = await outcomeController.get(
+				"outcome-id",
+				mockAuthentifiedReq,
+				mockRes,
+			);
+			expect(mockStatus).toHaveBeenCalledWith(404);
+			expect(mockSend).toHaveBeenCalledWith({});
+			expect(mockOutcomeService.getOutcome).toHaveBeenCalledWith(
+				"outcome-id",
+				"user-id",
+			);
+			expect(response).toBeUndefined();
+		});
+
+		it("Doit retourner un statut 200 avec une dépense", async () => {
+			mockOutcomeService.getOutcome.mockResolvedValue("outcome");
+			const response = await outcomeController.get(
+				"outcome-id",
+				mockAuthentifiedReq,
+				mockRes,
+			);
+			expect(mockStatus).toHaveBeenCalledWith(200);
+			expect(mockSend).toHaveBeenCalledWith("outcome");
+			expect(mockOutcomeService.getOutcome).toHaveBeenCalledWith(
+				"outcome-id",
+				"user-id",
+			);
+		});
+	});
+
+	describe("Delete", () => {
+		it("Doit retourner une erreur 401", async () => {
+			await outcomeController.delete(
+				"outcome-id",
+				mockUnauthentifiedReq,
+				mockRes,
+			);
+			expect(mockStatus).toHaveBeenCalledWith(401);
+			expect(mockSend).toHaveBeenCalledWith({});
+			expect(mockOutcomeService.delete).not.toHaveBeenCalled();
+		});
+
+		it("Doit retourner une erreur 404 et un message d'erreur", async () => {
+			mockOutcomeService.delete.mockResolvedValue(null);
+			const response = await outcomeController.delete(
+				"outcome-id",
+				mockAuthentifiedReq,
+				mockRes,
+			);
+			expect(mockStatus).toHaveBeenCalledWith(404);
+			expect(mockSend).toHaveBeenCalledWith({ message: "error" });
+			expect(mockOutcomeService.delete).toHaveBeenCalledWith("outcome-id");
+			expect(response).toBeUndefined();
+		});
+
+		it("Doit retourner un statut 200 et un message de succès", async () => {
+			mockOutcomeService.delete.mockResolvedValue(true);
+			const response = await outcomeController.delete(
+				"outcome-id",
+				mockAuthentifiedReq,
+				mockRes,
+			);
+			expect(mockStatus).toHaveBeenCalledWith(200);
+			expect(mockSend).toHaveBeenCalledWith({ message: "success" });
+			expect(mockOutcomeService.delete).toHaveBeenCalledWith("outcome-id");
+		});
+	});
+
+	describe("Update", () => {
+		it("Doit retourner une erreur 401", async () => {
+			await outcomeController.update(
+				mockUnauthentifiedReq,
+				mockRes,
+				validUpdateOutcome,
+			);
+			expect(mockStatus).toHaveBeenCalledWith(401);
+			expect(mockSend).toHaveBeenCalledWith({});
+			expect(mockOutcomeService.update).not.toHaveBeenCalled();
+		});
+
+		it("Doit retourner une erreur 404 et un message d'erreur", async () => {
+			mockOutcomeService.update.mockResolvedValue(null);
+			await outcomeController.update(
+				mockAuthentifiedReq,
+				mockRes,
+				validUpdateOutcome,
+			);
+			expect(mockStatus).toHaveBeenCalledWith(404);
+			expect(mockSend).toHaveBeenCalledWith({ message: "error" });
+			expect(mockOutcomeService.update).toHaveBeenCalledWith(
+				validUpdateOutcome,
+			);
+		});
+
+		it("Doit retourner un status 200 et un message de succès", async () => {
+			mockOutcomeService.update.mockResolvedValue("outcome");
+			await outcomeController.update(
+				mockAuthentifiedReq,
+				mockRes,
+				validUpdateOutcome,
+			);
+			expect(mockStatus).toHaveBeenCalledWith(200);
+			expect(mockSend).toHaveBeenCalledWith({ message: "success" });
+			expect(mockOutcomeService.update).toHaveBeenCalledWith(
+				validUpdateOutcome,
+			);
+		});
+	});
 });
