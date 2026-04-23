@@ -36,6 +36,22 @@ export interface CreateOutcomeDto {
 	providerId: string;
 	propertyId: string;
 	categoryId: string;
+	isDeleted: boolean;
+}
+
+export interface UpdateOutcomeDto {
+	id: string;
+	name: string;
+	amount: number;
+	isRecurring: boolean;
+	isPaid: boolean;
+	issueDate: Date;
+	paidOn?: Date;
+	frequency: string;
+	providerId: string;
+	propertyId: string;
+	categoryId: string;
+	isDeleted: boolean;
 }
 
 export interface CreateProviderDto {
@@ -83,41 +99,21 @@ export interface CreateContractDto {
 export interface CreateIncomeDto {
 	name: string;
 	amount: number;
-	isReccuring: string;
 	isPaid: boolean;
 	issueDate: Date;
 	paidOn: Date;
 	frequency: string;
-	propertyId: string;
 	categoryId: string;
 	contractId: string;
-	clientId: string;
 }
 
 export interface UpdateIncomeDto {
 	id: string;
 	amount: number;
-	isReccuring: string;
 	isPaid: boolean;
 	issueDate: Date;
 	paidOn: Date;
 	frequency: string;
-	propertyId: string;
-	incomeCategoryId: string;
-	contractId: string;
-	clientId: string;
-}
-
-export interface UpdateOutcomeDto {
-	id: string;
-	name: string;
-	amount: number;
-	isRecurring: boolean;
-	isPaid: boolean;
-	issueDate: Date;
-	paidOn?: Date;
-	frequency: string;
-	providerId: string;
-	propertyId: string;
 	categoryId: string;
+	contractId: string;
 }

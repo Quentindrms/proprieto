@@ -9,15 +9,14 @@ export class ContractController {
 	constructor(private readonly contractService: ContractService) {}
 
 	@Post("")
-	createContract(
+	async createContract(
 		@Req() request: Request,
 		@Res() response: Response,
 		@Body() body: CreateContractDto,
 	) {
-		console.log(body);
 		const user = request.user;
 		if (!user) return response.status(401).send({});
-		const contract = this.contractService.create(body, user.id);
+		const contract = await this.contractService.create(body, user.id);
 		if (!contract) return response.status(400).send({});
 		return response.status(200).send({ message: "success" });
 	}
@@ -27,7 +26,6 @@ export class ContractController {
 		const user = request.user;
 		if (!user) return response.status(401).send({});
 		const contracts = await this.contractService.browse(user.id);
-		console.log(contracts);
 		return response.status(200).send(contracts);
 	}
 }

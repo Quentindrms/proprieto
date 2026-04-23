@@ -1,10 +1,10 @@
-name: proprio-developement 
+name: proprieto-test 
 services:
   frontend:
-    container_name: proprio-frontend-dev
+    container_name: proprieto-frontend-test
     build:
       context: ../services/frontend
-      dockerfile: dev.dockerfile 
+      dockerfile: test.dockerfile 
     ports: 
       - ${FRONTEND_PORT:-3000}:3000
       - ${HMR_PORT:-24678}:24678
@@ -16,7 +16,7 @@ services:
       - frontback
   
   adminer:
-    container_name: proprieto-adminer-dev
+    container_name: proprieto-adminer-test
     image: adminer:latest
     ports:
       - ${ADMINER_PORT:-8080}:8080
@@ -28,10 +28,10 @@ services:
       - database
   
   backend: 
-    container_name: proprieto-backend-dev
+    container_name: proprieto-backend-test
     build: 
       context: ../services/backend
-      dockerfile: dev.dockerfile
+      dockerfile: test.dockerfile
     ports:
       - ${BACKEND_PORT:-4000}:4000
     volumes:
@@ -46,12 +46,12 @@ services:
     networks:
       - database
       - frontback
-    restart: always
+    restart: "no"
 
 
   postgres:
     image: postgres:18-alpine
-    container_name: proprieto-database-development
+    container_name: proprieto-database-test
     volumes:
       - ../database/development:/var/lib/postgresql/18/docker
     environment:

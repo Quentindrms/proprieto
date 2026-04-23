@@ -57,6 +57,7 @@ export function useProperty() {
 		const validate = validateData();
 		if (!validate.success) {
 			setFormError(validate);
+			return;
 		}
 		const response = await onCreate(createProperty());
 		if (response?.message !== "success") {

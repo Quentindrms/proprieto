@@ -12,7 +12,6 @@ export class IncomeCategoryController {
 		const user = request.user;
 		if (!user) return response.status(401).send({});
 		const categories = await this.incomeCategoryService.browseCategories();
-		console.log(categories);
 		return response.status(200).send(categories);
 	}
 }

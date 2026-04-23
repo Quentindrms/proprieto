@@ -47,7 +47,7 @@ export class ClientController {
 	) {
 		const user = request.user;
 		if (!user) return response.status(401).send({});
-		const client = this.clientService.editClient(user.id, body);
+		const client = await this.clientService.editClient(user.id, body);
 		if (!client) return response.status(404).send({ message: "error" });
 		return response.status(200).send({ message: "success" });
 	}
@@ -58,10 +58,10 @@ export class ClientController {
 		@Res() response: Response,
 		@Param("id") clientId: string,
 	) {
-		console.log(clientId);
 		const user = request.user;
 		if (!user) return response.status(401).send({});
-		this.clientService.deleteClient(user.id, clientId);
+		const client = await this.clientService.deleteClient(user.id, clientId);
+		if (!client) return response.status(404).send({ message: "error" });
 		return response.status(200).send({ message: "success" });
 	}
 }

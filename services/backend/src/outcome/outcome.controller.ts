@@ -24,12 +24,12 @@ export class OutcomeController {
 		@Res() response: Response,
 		@Body() body: CreateOutcomeDto,
 	) {
-		console.log(body);
 		const user = request.user;
 		if (!user) return response.status(401).send({});
-		const outcome = this.outcomeService.createOutcome(body);
+		const outcome = await this.outcomeService.createOutcome(body);
 		if (!outcome) return response.status(403).send({});
-		return response.status(200).send({ message: "success" });
+		response.status(200).send({ message: "success" });
+		return outcome;
 	}
 
 	@Get("browse")
@@ -37,17 +37,16 @@ export class OutcomeController {
 		const user = request.user;
 		if (!user) return response.status(401).send({});
 		const outcomes = await this.outcomeService.browseOutcome(user.id);
-		console.log(outcomes);
 		return response.status(200).send(outcomes);
 	}
 
 	@Get("/monthly")
 	async getMonthlyLoss(@Req() request: Request, @Res() response: Response) {
-		console.log("ping");
 		const user = request.user;
 		if (!user) return response.status(401).send({});
 		const outcomes = await this.outcomeService.monthlyLoss(user.id);
-		return response.status(200).send(outcomes);
+		response.status(200).send(outcomes);
+		return outcomes;
 	}
 
 	@Get("/:id")
@@ -60,7 +59,6 @@ export class OutcomeController {
 		if (!user) return response.status(401).send({});
 		const outcome = await this.outcomeService.getOutcome(outcomeId, user.id);
 		if (!outcome) return response.status(404).send({});
-		console.log(`Outcome : ${outcome}`);
 		return response.status(200).send(outcome);
 	}
 
@@ -85,8 +83,8 @@ export class OutcomeController {
 	) {
 		const user = request.user;
 		if (!user) return response.status(401).send({});
-		const outcome = this.outcomeService.update(body);
-		if (!outcome) response.status(404).send({ message: "error" });
+		const outcome = await this.outcomeService.update(body);
+		if (!outcome) return response.status(404).send({ message: "error" });
 		return response.status(200).send({ message: "success" });
 	}
 }
