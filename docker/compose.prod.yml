@@ -1,29 +1,21 @@
-name: proprio-developement 
+name: proprieto-production
 services:
   frontend:
     container_name: proprieto-frontend-prod
-    build:
-      context: ../services/frontend
-      dockerfile: prod.dockerfile 
-    ports: 
+    image: ghcr.io/quentindrms/proprieto-frontend:latest
+    ports:
       - ${FRONTEND_PORT:-3000}:3000
-      - ${HMR_PORT:-24678}:24678
-    volumes: 
-      - ../services/frontend:/app
-    environment: 
+    environment:
       - NODE_ENV=production
     networks:
       - frontback
-  
-  backend: 
+    restart: always
+
+  backend:
     container_name: proprieto-backend-prod
-    build: 
-      context: ../services/backend
-      dockerfile: prod.dockerfile
+    image: ghcr.io/quentindrms/proprieto-backend:latest
     ports:
       - ${BACKEND_PORT:-4000}:4000
-    volumes:
-      - ../services/backend:/app
     environment:
       - NODE_ENV=production
       - DB_USERNAME=${DB_USERNAME}
@@ -36,21 +28,24 @@ services:
       - frontback
     restart: always
 
-
   postgres:
     image: postgres:18-alpine
     container_name: proprieto-database-prod
     volumes:
-      - ../database/development:/var/lib/postgresql/18/docker
+      - postgres_data:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=${DB_USERNAME}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=${DB_NAME}
     networks:
       - database
+    restart: always
+
+volumes:
+  postgres_data:
 
 networks:
-  database: 
+  database:
     driver: bridge
-  frontback: 
+  frontback:
     driver: bridge
