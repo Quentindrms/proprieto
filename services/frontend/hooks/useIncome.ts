@@ -6,7 +6,7 @@ import {
 } from "@schemas/income";
 import { createSignal } from "solid-js";
 import toast from "solid-toast";
-import type { ZodSafeParseError, ZodSafeParseResult } from "zod";
+import type { ZodSafeParseError } from "zod";
 import { onCreate } from "./useIncome.telefunc";
 
 export function UseIncome() {
