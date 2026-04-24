@@ -1,0 +1,56 @@
+name: proprio-developement 
+services:
+  frontend:
+    container_name: proprio-frontend-dev
+    build:
+      context: ../services/frontend
+      dockerfile: dev.dockerfile 
+    ports: 
+      - ${FRONTEND_PORT:-3000}:3000
+      - ${HMR_PORT:-24678}:24678
+    volumes: 
+      - ../services/frontend:/app
+    environment: 
+      - NODE_ENV=development
+    networks:
+      - frontback
+  
+  backend: 
+    container_name: proprieto-backend-dev
+    build: 
+      context: ../services/backend
+      dockerfile: dev.dockerfile
+    ports:
+      - ${BACKEND_PORT:-4000}:4000
+    volumes:
+      - ../services/backend:/app
+    environment:
+      - NODE_ENV=development
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - DATABASE_URL=postgresql://${DB_USERNAME}:${DB_PASSWORD}@postgres:5432/${DB_NAME}?schema=public
+      - JWT_SECRET=${JWT_SECRET}
+    networks:
+      - database
+      - frontback
+    restart: always
+
+
+  postgres:
+    image: postgres:18-alpine
+    container_name: proprieto-database-development
+    volumes:
+      - ../database/development:/var/lib/postgresql/18/docker
+    environment:
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    networks:
+      - database
+
+networks:
+  database: 
+    driver: bridge
+  frontback: 
+    driver: bridge
