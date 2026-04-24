@@ -32,7 +32,7 @@ services:
     image: postgres:18-alpine
     container_name: proprieto-database-prod
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql
     environment:
       - POSTGRES_USER=${DB_USERNAME}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
