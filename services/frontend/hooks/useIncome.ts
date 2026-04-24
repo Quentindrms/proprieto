@@ -15,10 +15,11 @@ export function UseIncome() {
 		amount: 0,
 		isPaid: false,
 		issueDate: new Date(),
-		paidOn: undefined,
+		paidOn: null,
 		frequency: "",
-		incomeCategoryId: "",
 		contractId: "",
+		categoryId: "",
+		isRecurring: false,
 	});
 
 	const [updateIncome, setUpdateIncome] = createSignal<IncomeUpdateType>({
@@ -27,10 +28,11 @@ export function UseIncome() {
 		amount: 0,
 		isPaid: false,
 		issueDate: new Date(),
-		paidOn: undefined,
+		paidOn: null,
 		frequency: "",
-		incomeCategoryId: "",
 		contractId: "",
+		categoryId: "",
+		isRecurring: false,
 	});
 
 	const [formError, setFormError] =

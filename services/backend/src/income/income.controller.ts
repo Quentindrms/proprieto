@@ -8,9 +8,12 @@ import {
 	Put,
 	Req,
 	Res,
+	UsePipes,
 } from "@nestjs/common";
+// biome-ignore lint/style/useImportType: required for class-validator metadata
+import { CreateIncomeDto, UpdateIncomeDto } from "@src/dto/income.dto";
+import { validationPipe } from "@src/pipes/validationPipes";
 import type { Request, Response } from "express";
-import type { CreateIncomeDto, UpdateIncomeDto } from "types/DtoType";
 //biome-ignore lint/style/useImportType: required for NestJS DI
 import { IncomeService } from "./income.service";
 
@@ -19,6 +22,7 @@ export class IncomeController {
 	constructor(private readonly incomeService: IncomeService) {}
 
 	@Post("")
+	@UsePipes(validationPipe)
 	async create(
 		@Req() request: Request,
 		@Res() response: Response,

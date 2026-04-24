@@ -5,7 +5,8 @@ import {
 } from "@libs/calculation";
 import { prisma } from "@libs/DatabaseClient";
 import { Injectable } from "@nestjs/common";
-import type { CreateIncomeDto, UpdateIncomeDto } from "types/DtoType";
+// biome-ignore lint/style/useImportType: required for class-validator metadata
+import { CreateIncomeDto, UpdateIncomeDto } from "@src/dto/income.dto";
 
 @Injectable()
 export class IncomeService {
