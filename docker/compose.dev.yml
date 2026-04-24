@@ -1,7 +1,7 @@
 name: proprio-developement 
 services:
   frontend:
-    container_name: proprio-frontend-dev
+    container_name: proprieto-frontend-dev
     build:
       context: ../services/frontend
       dockerfile: dev.dockerfile 
