@@ -8,9 +8,12 @@ import {
 	Put,
 	Req,
 	Res,
+	UsePipes,
 } from "@nestjs/common";
+// biome-ignore lint/style/useImportType: required for class-validator metadata
+import { CreateOutcomeDto, UpdateOutcomeDto } from "@src/dto/outcome.dto";
+import { validationPipe } from "@src/pipes/validationPipes";
 import type { Request, Response } from "express";
-import type { CreateOutcomeDto, UpdateOutcomeDto } from "types/DtoType";
 //biome-ignore lint/style/useImportType: required for NestJS DI
 import { OutcomeService } from "./outcome.service";
 
@@ -19,6 +22,7 @@ export class OutcomeController {
 	constructor(private readonly outcomeService: OutcomeService) {}
 
 	@Post("")
+	@UsePipes(validationPipe)
 	async create(
 		@Req() request: Request,
 		@Res() response: Response,
@@ -76,6 +80,7 @@ export class OutcomeController {
 	}
 
 	@Put("")
+	@UsePipes(validationPipe)
 	async update(
 		@Req() request: Request,
 		@Res() response: Response,
