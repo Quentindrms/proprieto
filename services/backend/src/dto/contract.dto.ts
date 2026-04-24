@@ -1,10 +1,4 @@
-import {
-	IsDate,
-	IsDateString,
-	IsNumber,
-	IsNumberString,
-	IsUUID,
-} from "class-validator";
+import { IsDateString, IsNumberString, IsUUID } from "class-validator";
 
 export class CreateContractDto {
 	@IsDateString()
