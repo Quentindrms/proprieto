@@ -6,7 +6,6 @@ import {
 	IsOptional,
 	IsString,
 	IsUUID,
-	isUUID,
 } from "class-validator";
 
 export class CreateOutcomeDto {
