@@ -1,6 +1,6 @@
 import { prisma } from "@libs/DatabaseClient";
 import { Injectable } from "@nestjs/common";
-import type { CreateClientDto, UpdateClientDto } from "types/DtoType";
+import type { CreateClientDto, UpdateClientDto } from "@src/dto/client.dto";
 
 @Injectable()
 export class ClientService {
