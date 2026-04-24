@@ -21,7 +21,8 @@ const issueDateSchema = z.coerce
 
 const paidOnSchema = z.coerce
 	.date("La format de la date est invalide")
-	.optional();
+	.optional()
+	.nullable();
 
 const frequencySchema = z.enum(["none", "week", "month", "year"]).optional();
 
