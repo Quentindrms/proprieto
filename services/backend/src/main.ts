@@ -1,5 +1,5 @@
 import { NestFactory } from "@nestjs/core";
-import type { Users } from "@prisma/client";
+import type { Users } from "generated/prisma/client";
 import { seed } from "prisma/seed";
 import { AppModule } from "./app.module";
 
