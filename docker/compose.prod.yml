@@ -1,31 +1,31 @@
 name: proprio-developement 
 services:
   frontend:
-    container_name: proprio-frontend-dev
+    container_name: proprieto-frontend-prod
     build:
       context: ../services/frontend
-      dockerfile: dev.dockerfile 
+      dockerfile: prod.dockerfile 
     ports: 
       - ${FRONTEND_PORT:-3000}:3000
       - ${HMR_PORT:-24678}:24678
     volumes: 
       - ../services/frontend:/app
     environment: 
-      - NODE_ENV=development
+      - NODE_ENV=production
     networks:
       - frontback
   
   backend: 
-    container_name: proprieto-backend-dev
+    container_name: proprieto-backend-prod
     build: 
       context: ../services/backend
-      dockerfile: dev.dockerfile
+      dockerfile: prod.dockerfile
     ports:
       - ${BACKEND_PORT:-4000}:4000
     volumes:
       - ../services/backend:/app
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=production
       - DB_USERNAME=${DB_USERNAME}
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
@@ -39,7 +39,7 @@ services:
 
   postgres:
     image: postgres:18-alpine
-    container_name: proprieto-database-development
+    container_name: proprieto-database-prod
     volumes:
       - ../database/development:/var/lib/postgresql/18/docker
     environment:
