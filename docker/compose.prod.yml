@@ -27,12 +27,15 @@ services:
       - database
       - frontback
     restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
 
   postgres:
-    image: postgres:18-alpine
+    image: postgres:17-alpine
     container_name: proprieto-database-prod
     volumes:
-      - postgres_data:/var/lib/postgresql
+      - postgres_data:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=${DB_USERNAME}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
@@ -40,6 +43,11 @@ services:
     networks:
       - database
     restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
 volumes:
   postgres_data:
