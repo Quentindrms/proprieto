@@ -1,5 +1,5 @@
 import { Test, type TestingModule } from "@nestjs/testing";
-import type { Outcomes } from "@prisma/client";
+import type { Outcomes } from "generated/prisma/client";
 import type { CreateOutcomeDto, UpdateOutcomeDto } from "types/DtoType";
 import {
 	mockAuthentifiedReq,

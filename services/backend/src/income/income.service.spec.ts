@@ -1,5 +1,5 @@
 import { prisma } from "@libs/DatabaseClient";
-import type { Incomes } from "@prisma/browser";
+import type { Incomes } from "generated/prisma/client";
 import type { CreateIncomeDto, UpdateIncomeDto } from "types/DtoType";
 import { IncomeService } from "./income.service";
 

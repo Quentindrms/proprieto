@@ -1,6 +1,6 @@
 import { prisma } from "@libs/DatabaseClient";
 import { Injectable } from "@nestjs/common";
-import type { Users } from "@prisma/client";
+import type { Users } from "generated/prisma/client";
 import type { CreateUserDto } from "@src/dto/create-user.dto";
 import argon2 from "argon2";
 import { JwtService } from "services/jwt.service";
