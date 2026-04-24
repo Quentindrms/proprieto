@@ -4,14 +4,16 @@ import {
 	Delete,
 	Get,
 	Param,
-	Patch,
 	Post,
 	Put,
 	Req,
 	Res,
+	UsePipes,
 } from "@nestjs/common";
+// biome-ignore lint/style/useImportType: required for class-validator metadata
+import { CreateProviderDto, UpdateProviderDto } from "@src/dto/provider.dto";
+import { validationPipe } from "@src/pipes/validationPipes";
 import type { Request, Response } from "express";
-import type { CreateProviderDto, UpdateProviderDto } from "types/DtoType";
 //biome-ignore lint/style/useImportType: required for NestJS DI
 import { ProviderService } from "./provider.service";
 
@@ -20,6 +22,7 @@ export class ProviderController {
 	constructor(private readonly providerService: ProviderService) {}
 
 	@Post("create")
+	@UsePipes(validationPipe)
 	async createProvider(
 		@Req() request: Request,
 		@Res() response: Response,
@@ -41,6 +44,7 @@ export class ProviderController {
 	}
 
 	@Put("")
+	@UsePipes(validationPipe)
 	async edit(
 		@Req() request: Request,
 		response: Response,

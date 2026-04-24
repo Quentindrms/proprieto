@@ -1,6 +1,16 @@
-import { Body, Controller, Get, Post, Req, Res } from "@nestjs/common";
+import {
+	Body,
+	Controller,
+	Get,
+	Post,
+	Req,
+	Res,
+	UsePipes,
+} from "@nestjs/common";
+// biome-ignore lint/style/useImportType: required for class-validator metadata
+import { CreateContractDto } from "@src/dto/contract.dto";
+import { validationPipe } from "@src/pipes/validationPipes";
 import type { Request, Response } from "express";
-import type { CreateContractDto } from "types/DtoType";
 //biome-ignore lint/style/useImportType: required for NestJS DI
 import { ContractService } from "./contract.service";
 
@@ -9,6 +19,7 @@ export class ContractController {
 	constructor(private readonly contractService: ContractService) {}
 
 	@Post("")
+	@UsePipes(validationPipe)
 	async createContract(
 		@Req() request: Request,
 		@Res() response: Response,

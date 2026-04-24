@@ -6,7 +6,7 @@ import {
 } from "@schemas/income";
 import { createSignal } from "solid-js";
 import toast from "solid-toast";
-import type { ZodSafeParseError, ZodSafeParseResult } from "zod";
+import type { ZodSafeParseError } from "zod";
 import { onCreate } from "./useIncome.telefunc";
 
 export function UseIncome() {
@@ -15,10 +15,11 @@ export function UseIncome() {
 		amount: 0,
 		isPaid: false,
 		issueDate: new Date(),
-		paidOn: undefined,
+		paidOn: null,
 		frequency: "",
-		incomeCategoryId: "",
 		contractId: "",
+		categoryId: "",
+		isRecurring: false,
 	});
 
 	const [updateIncome, setUpdateIncome] = createSignal<IncomeUpdateType>({
@@ -27,10 +28,11 @@ export function UseIncome() {
 		amount: 0,
 		isPaid: false,
 		issueDate: new Date(),
-		paidOn: undefined,
+		paidOn: null,
 		frequency: "",
-		incomeCategoryId: "",
 		contractId: "",
+		categoryId: "",
+		isRecurring: false,
 	});
 
 	const [formError, setFormError] =
