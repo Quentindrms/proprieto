@@ -1,4 +1,15 @@
-import { Body, Controller, Get, Post, Req, Res } from "@nestjs/common";
+import {
+	Body,
+	Controller,
+	Get,
+	Post,
+	Req,
+	Res,
+	UsePipes,
+} from "@nestjs/common";
+// biome-ignore lint/style/useImportType: required for class-validator metadata
+import { CreateUserDto } from "@src/dto/create-user.dto";
+import { validationPipe } from "@src/pipes/validationPipes";
 import type { Request, Response } from "express";
 import type { CreateAccountDto } from "types/DtoType";
 //biome-ignore lint/style/useImportType: required for NestJS DI
@@ -23,7 +34,9 @@ export class AuthController {
 	}
 
 	@Post("register")
-	async register(@Body() body: CreateAccountDto, @Res() response: Response) {
+	@UsePipes(validationPipe)
+	async register(@Body() body: CreateUserDto, @Res() response: Response) {
+		console.log(body);
 		const registeredUser = await this.authService.register(body);
 		if (!registeredUser) return response.status(400).send({ success: false });
 		return response.status(200).send({ success: true });
