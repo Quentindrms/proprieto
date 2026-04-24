@@ -1,22 +1,28 @@
 import { prisma } from "@libs/DatabaseClient";
 import { Injectable } from "@nestjs/common";
-import type { CreatePropertyDto, UpdatePropertyDto } from "types/DtoType";
+// biome-ignore lint/style/useImportType: required for class-validator metadata
+import { CreatePropertyDto, UpdatePropertyDto } from "@src/dto/property.dto";
 
 @Injectable()
 export class PropertyService {
 	async create(property: CreatePropertyDto, userId: string) {
-		return await prisma.properties.create({
-			data: {
-				name: property.name,
-				purchasePrice: Number(property.purchasePrice),
-				purchaseDate: property.purchaseDate
-					? new Date(property.purchaseDate)
-					: new Date(),
-				userId: userId,
-				isDeleted: false,
-				typeId: property.type,
-			},
-		});
+		try {
+			return await prisma.properties.create({
+				data: {
+					name: property.name,
+					purchasePrice: Number(property.purchasePrice),
+					purchaseDate: property.purchaseDate
+						? new Date(property.purchaseDate)
+						: new Date(),
+					userId: userId,
+					isDeleted: false,
+					typeId: property.type,
+				},
+			});
+		} catch (error) {
+			console.trace(error);
+			return null;
+		}
 	}
 
 	async browseProperties(userId: string) {

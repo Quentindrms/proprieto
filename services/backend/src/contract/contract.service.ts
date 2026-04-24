@@ -1,6 +1,7 @@
 import { prisma } from "@libs/DatabaseClient";
 import { Injectable } from "@nestjs/common";
-import type { CreateContractDto } from "types/DtoType";
+// biome-ignore lint/style/useImportType: required for class-validator metadata
+import { CreateContractDto } from "@src/dto/contract.dto";
 
 @Injectable()
 export class ContractService {

@@ -8,9 +8,12 @@ import {
 	Put,
 	Req,
 	Res,
+	UsePipes,
 } from "@nestjs/common";
+// biome-ignore lint/style/useImportType: required for class-validator metadata
+import { CreatePropertyDto, UpdatePropertyDto } from "@src/dto/property.dto";
+import { validationPipe } from "@src/pipes/validationPipes";
 import type { Request, Response } from "express";
-import type { CreatePropertyDto, UpdatePropertyDto } from "types/DtoType";
 //biome-ignore lint/style/useImportType: required for NestJS DI
 import { PropertyService } from "./property.service";
 
@@ -19,6 +22,7 @@ export class PropertyController {
 	constructor(private readonly propertyService: PropertyService) {}
 
 	@Post("")
+	@UsePipes(validationPipe)
 	async createProperty(
 		@Req() request: Request,
 		@Res() response: Response,
@@ -40,6 +44,7 @@ export class PropertyController {
 	}
 
 	@Put("")
+	@UsePipes(validationPipe)
 	async updateProperty(
 		@Req() request: Request,
 		@Res() response: Response,

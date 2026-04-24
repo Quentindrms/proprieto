@@ -47,6 +47,20 @@ export default function RegisterForm() {
 					}
 				</span>
 			)}
+
+			<TextField
+				label="Adresse postale"
+				onInput={auth.handleRegisterInputChange("address")}
+			/>
+			{auth.formError() && (
+				<span class="text-red-500">
+					{
+						z.treeifyError(auth.formError()!.error).properties?.phone
+							?.errors[0]
+					}
+				</span>
+			)}
+
 			<TextField
 				label="Téléphone"
 				type="tel"

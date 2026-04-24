@@ -8,9 +8,12 @@ import {
 	Post,
 	Req,
 	Res,
+	UsePipes,
 } from "@nestjs/common";
+// biome-ignore lint/style/useImportType: required for class-validator metadata
+import { CreateClientDto, UpdateClientDto } from "@src/dto/client.dto";
+import { validationPipe } from "@src/pipes/validationPipes";
 import type { Request, Response } from "express";
-import type { CreateClientDto, UpdateClientDto } from "types/DtoType";
 //biome-ignore lint/style/useImportType: required for NestJS DI
 import { ClientService } from "./client.service";
 
@@ -19,6 +22,7 @@ export class ClientController {
 	constructor(private readonly clientService: ClientService) {}
 
 	@Post("")
+	@UsePipes(validationPipe)
 	async create(
 		@Req() request: Request,
 		@Res() response: Response,
