@@ -3,7 +3,6 @@ import {
 	IsPhoneNumber,
 	IsString,
 	IsStrongPassword,
-	min,
 } from "class-validator";
 
 export class CreateUserDto {

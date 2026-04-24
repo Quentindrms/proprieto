@@ -1,17 +1,8 @@
-import {
-	Body,
-	Controller,
-	Get,
-	Post,
-	Req,
-	Res,
-	UsePipes,
-} from "@nestjs/common";
+import { Body, Controller, Post, Res, UsePipes } from "@nestjs/common";
 // biome-ignore lint/style/useImportType: required for class-validator metadata
 import { CreateUserDto } from "@src/dto/create-user.dto";
 import { validationPipe } from "@src/pipes/validationPipes";
-import type { Request, Response } from "express";
-import type { CreateAccountDto } from "types/DtoType";
+import type { Response } from "express";
 //biome-ignore lint/style/useImportType: required for NestJS DI
 import { AuthService } from "./auth.service";
 
