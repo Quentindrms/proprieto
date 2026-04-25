@@ -18,7 +18,6 @@ const defaultOptions: CookieOptions = {
 	path: "/",
 	secure: false,
 	sameSite: "strict",
-	domain: "localhost",
 	httpOnly: false,
 	maxAge: 1000 * 60 * 60 * 24 * 30,
 };
