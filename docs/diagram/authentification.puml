@@ -1,0 +1,53 @@
+@startuml Authentification
+
+title Authentification
+
+actor Utilisateur
+participant "Frontend\n(Solid.js)" as FE
+participant "Middleware\nIsAuthenticated" as MW
+participant "AuthController\nPOST /auth/*" as AC
+participant "AuthService" as AS
+database "PostgreSQL\n(Prisma)" as DB
+
+== Inscription ==
+Utilisateur -> FE: Remplit le formulaire\n(nom, prénom, email, adresse, téléphone, mot de passe)
+FE -> AC: POST /auth/register
+AC -> AS: register(createUserDto)
+AS -> DB: Crée un enregistrement Users\n(rôle, statut, mot de passe hashé avec argon2)
+AS -> DB: Crée un enregistrement Directories\n(type = "user", lié au userId)
+DB --> AS: Utilisateur + Annuaire créés
+AS --> AC: { token: JWT }
+AC --> FE: 200 { token }
+FE -> FE: Stocke le token dans un cookie
+
+== Connexion ==
+Utilisateur -> FE: Remplit le formulaire\n(email, mot de passe)
+FE -> AC: POST /auth/login
+AC -> AS: login(email, motDePasse)
+AS -> DB: Recherche l'utilisateur par email
+DB --> AS: Enregistrement utilisateur
+AS -> AS: Vérifie le mot de passe avec argon2
+AS -> AS: Signe le JWT (jose)
+AS --> AC: { token: JWT }
+AC --> FE: 200 { token }
+FE -> FE: Stocke le token dans un cookie
+
+== Vérification du token ==
+FE -> AC: POST /auth/verify\nAuthorization: Bearer <token>
+AC -> AS: verify(token)
+AS -> AS: Décode et valide le JWT
+AS --> AC: { token: JWT rafraîchi }
+AC --> FE: 200 { token }
+
+== Accès aux routes protégées ==
+FE -> MW: Requête vers un endpoint protégé\nAuthorization: Bearer <token>
+MW -> MW: Extrait le JWT de l'en-tête Authorization
+MW -> MW: Vérifie la signature du token
+alt Token valide
+    MW -> MW: Attache le userId à la requête
+    MW --> FE: La requête passe
+else Token invalide ou absent
+    MW --> FE: 401 Non autorisé
+end
+
+@enduml

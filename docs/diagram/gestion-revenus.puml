@@ -1,0 +1,62 @@
+@startuml GestionRevenus
+
+title Gestion des Revenus
+
+actor Utilisateur
+participant "Frontend\n(Solid.js)" as FE
+participant "IncomeController\n/income" as IC
+participant "IncomeService" as IS
+participant "IncomeCategoryController\n/income-category" as ICC
+database "PostgreSQL\n(Prisma)" as DB
+
+== Lister les revenus ==
+Utilisateur -> FE: Accède à la page Finances
+FE -> IC: GET /income/browse
+IC -> IS: browse(userId)
+IS -> DB: Recherche Incomes avec Contracts et Categories\noù userId = userId et isDeleted = false
+DB --> IS: Liste des revenus avec catégorie et contrat
+IS --> IC: Incomes[]
+IC --> FE: 200 Incomes[]
+
+== Récupérer les revenus mensuels ==
+FE -> IC: GET /income/monthly
+IC -> IS: monthlyProfit(userId)
+IS -> DB: Agrège les revenus du mois en cours\net du mois précédent pour userId
+DB --> IS: Totaux mensuels
+IS -> IS: Calcule la croissance\n(mois actuel vs mois précédent)
+IS --> IC: { total, croissance }
+IC --> FE: 200 { total, croissance }
+FE -> FE: Affiche le total des revenus\navec l'indicateur de croissance
+
+== Créer un revenu ==
+Utilisateur -> FE: Remplit le formulaire\n(nom, montant, payé, date d'émission, fréquence, contrat, catégorie)
+FE -> ICC: GET /income-category/browse
+ICC --> FE: Categories[]
+FE -> IC: POST /income
+IC -> IS: create(createIncomeDto, userId)
+IS -> DB: Vérifie que contractId appartient à userId
+IS -> DB: Insère un enregistrement Incomes\n(nom, montant, isPaid, dateEmission, fréquence, contractId, categoryId)
+DB --> IS: Revenu créé
+IS --> IC: Revenu
+IC --> FE: 201 Revenu
+FE -> FE: Met à jour la liste des revenus
+
+== Modifier un revenu ==
+Utilisateur -> FE: Modifie les informations du revenu
+FE -> IC: PUT /income
+IC -> IS: update(updateIncomeDto, userId)
+IS -> DB: Met à jour l'enregistrement Incomes\noù id = incomeId et userId = userId
+DB --> IS: Revenu mis à jour
+IS --> IC: Revenu
+IC --> FE: 200 Revenu
+
+== Supprimer un revenu ==
+Utilisateur -> FE: Confirme la suppression
+FE -> IC: DELETE /income/:id
+IC -> IS: delete(incomeId, userId)
+IS -> DB: Marque isDeleted = true\noù id = incomeId et userId = userId
+DB --> IS: Suppression logique effectuée
+IS --> IC: Succès
+IC --> FE: 200 OK
+
+@enduml
