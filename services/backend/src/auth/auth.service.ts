@@ -1,5 +1,6 @@
 import { prisma } from "@libs/DatabaseClient";
 import { Injectable } from "@nestjs/common";
+import { PrismaClientKnownRequestError } from "@prisma/internal/prismaNamespace";
 import type { CreateUserDto } from "@src/dto/create-user.dto";
 import argon2 from "argon2";
 import type { Users } from "../../generated/prisma/client";
@@ -27,10 +28,18 @@ export class AuthService extends JwtService {
 					},
 				},
 			});
-			return true;
+			return { success: true, message: "Utilisateur crée" };
 		} catch (error) {
-			console.trace(error);
-			return false;
+			if (
+				error instanceof PrismaClientKnownRequestError &&
+				error.code === "P2002"
+			) {
+				return {
+					success: false,
+					message: "Un utilisateur avec cet email existe déjà",
+				};
+			}
+			return { success: false, message: "Une erreur est survenue" };
 		}
 	}
 
