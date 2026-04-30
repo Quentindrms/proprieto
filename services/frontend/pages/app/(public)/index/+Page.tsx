@@ -11,23 +11,6 @@ import type { Data } from "./+data";
 export default function Page() {
 	const data = useData<Data>();
 
-	const property: Property = {
-		id: "",
-		isActive: true,
-		isDeleted: false,
-		name: "Ma belle maison",
-		propertyType: {
-			id: "",
-			name: "",
-			slug: "",
-		},
-		userId: "",
-		purchaseDate: new Date(),
-		purchasePrice: "100000",
-		sellDate: undefined,
-		sellPrice: undefined,
-	};
-
 	const currentMonthProfit = data.monthlyIncome.sum - data.monthlyOutcome.sum;
 
 	const incomesRow: TransactionRowData[] = data.monthlyIncome.incomes.map(
@@ -87,14 +70,7 @@ export default function Page() {
 							: `${data.monthlyOutcome.growth}% par rapport au mois précédent`
 					}
 				/>
-				<CardProgressionBar
-					title="Taux d'occupation"
-					value={30}
-					min={0}
-					max={100}
-					style="light"
-					size="large"
-				/>
+
 			</div>
 
 			<div class="flex gap-2">
@@ -112,7 +88,6 @@ export default function Page() {
 					Propriétés les plus perfomantes
 				</Heading>
 				<div class="flex flex-row">
-					<PropertyCard property={property} onClick={() => { }} />
 				</div>
 			</div>
 		</div>

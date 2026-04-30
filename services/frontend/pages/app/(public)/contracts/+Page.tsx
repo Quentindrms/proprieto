@@ -75,9 +75,6 @@ export default function Page() {
 						{stats.endSoon.length === 0 && <Heading components="h2" size="medium">Aucun contrat expirant prochainement</Heading>}
 					</div>
 				</div>
-				<div>
-					<CardRevenue stat={5500} title="Revenu de contrat" comment="+12%" />
-				</div>
 			</div>
 			<ContractBoard contracts={contractRows} />
 		</div>
