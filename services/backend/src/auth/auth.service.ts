@@ -1,6 +1,6 @@
 import { prisma } from "@libs/DatabaseClient";
 import { Injectable } from "@nestjs/common";
-import { PrismaClientKnownRequestError } from "@prisma/internal/prismaNamespace";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 import type { CreateUserDto } from "@src/dto/create-user.dto";
 import argon2 from "argon2";
 import type { Users } from "../../generated/prisma/client";
