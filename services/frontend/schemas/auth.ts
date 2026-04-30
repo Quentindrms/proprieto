@@ -5,7 +5,7 @@ const nameSchema = z
 	.min(5, "Le nom doit contenir au moins 5 caractères");
 const firstNameSchema = z
 	.string("Le prénom doit être une chaîne de caractères")
-	.min(2, "Le prénom doit contenir au moins deux caractères")
+	.min(2, "Le prénom doit contenir au moins 2 caractères")
 	.max(120, "Le prénom ne peut pas contenir plus de 120 caractères");
 
 const emailSchema = z
@@ -19,7 +19,10 @@ const adressSchema = z
 
 const phoneSchema = z
 	.string()
-	.regex(/^\d{10}$/, "Le numéro de téléphone doit contenir exactement 10 chiffres");
+	.regex(
+		/^\d{10}$/,
+		"Le numéro de téléphone doit contenir exactement 10 chiffres",
+	);
 
 const passwordSchema = z
 	.string("Le mot de passe doit être une chaîne de caractères")
