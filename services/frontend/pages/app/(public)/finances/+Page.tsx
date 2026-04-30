@@ -84,13 +84,11 @@ export default function Page() {
         setEditType(type)
         if (type === "income") {
             finances.setUpdateIncome({ ...(detail as unknown as IncomeUpdateType) });
-            console.log(finances.updateIncome());
             editModal.open();
         } else {
             finances.setUpdateOutcome({
                 ...(detail as unknown as OutcomeUpdateType),
             });
-            console.log(finances.updateOutcome());
             editModal.open();
         }
     }

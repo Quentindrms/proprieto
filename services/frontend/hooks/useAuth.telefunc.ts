@@ -23,7 +23,7 @@ export async function onRegister(user: UserCreation) {
 	try {
 		const authService = new AuthService();
 		const response = await authService.register(user);
-		console.log(response);
+		response;
 		return response;
 	} catch (error) {
 		console.trace(error);

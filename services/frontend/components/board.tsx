@@ -171,8 +171,8 @@ export function FluxBoard(props: FluxBoardProps) {
 	}
 
 	const flux = sortFlux(props.flux);
-	flux.income.forEach((income) => { console.log(income) })
-	flux.outcome.forEach((outcome) => { console.log(outcome) })
+	flux.income.forEach((income) => { (income) })
+	flux.outcome.forEach((outcome) => { (outcome) })
 
 	return (
 		<div>

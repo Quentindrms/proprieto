@@ -142,7 +142,7 @@ export function useFinance() {
 
 	async function handleCreateIncome() {
 		const validate = IncomeCreationSchema.safeParse(createIncome());
-		console.log(createIncome());
+		createIncome();
 		if (!validate.success) {
 			setIncomeErrors(validate);
 			return;
@@ -160,7 +160,7 @@ export function useFinance() {
 
 	async function handleCreateOutcome() {
 		const validate = OutcomeCreationSchema.safeParse(createOutcome());
-		console.log(createOutcome());
+		createOutcome();
 		if (!validate.success) {
 			setOutcomeErrors(validate);
 			return;

@@ -15,14 +15,10 @@ export default function CreatePropertyForm() {
 		disabled: false,
 	}));
 
-	console.log(`Property type lengh ${propertyTypes.length}`)
-	console.log(`Data property type lengh ${data.propertyTypes.length}`)
-
 	return (
 		<Form callback={property.create}>
 			<TextField
 				label="Nom"
-				type="text"
 				name="name"
 				onInput={property.handleCreateInput("name")}
 			/>
@@ -37,7 +33,6 @@ export default function CreatePropertyForm() {
 
 			<TextField
 				label="Prix d'acquisition"
-				type="text"
 				name="purshacePrice"
 				onInput={property.handleCreateInput("purchasePrice")}
 			/>
