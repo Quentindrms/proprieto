@@ -35,7 +35,7 @@ export function setCookie(
 export function setAuthCookie(reply: FastifyReply, value: string) {
 	setCookie(reply, "auth", value, {
 		httpOnly: true,
-		sameSite: "lax",
+		sameSite: "strict",
 		maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
 	});
 }
