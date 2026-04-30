@@ -1,8 +1,6 @@
 import {
-	IsBoolean,
 	IsDateString,
 	IsNumber,
-	IsNumberString,
 	IsOptional,
 	IsString,
 	IsUUID,
@@ -12,7 +10,7 @@ export class CreatePropertyDto {
 	@IsString()
 	name!: string;
 
-	@IsNumberString()
+	@IsNumber()
 	purchasePrice!: number;
 
 	@IsDateString()
