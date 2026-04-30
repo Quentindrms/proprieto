@@ -14,10 +14,14 @@
     "sourceMap": true,
     "outDir": "./dist",
     "paths": {
+      "*": ["./"],
       "@libs/*": ["./libs/*"],
       "@prisma/*": ["./generated/prisma/*"],
       "@src/*": ["./src/*"],
-      "@types/*": ["./types/*"]
+      "@types/*": ["./types/*"],
+      "@services/*": ["./services/*"],
+      "@dto/*": ["./src/dto/*"],
+      "@middleware/*": ["./middleware/*"]
     },
     "incremental": true,
     "skipLibCheck": true,
