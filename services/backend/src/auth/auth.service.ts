@@ -55,8 +55,7 @@ export class AuthService extends JwtService {
 			if (!(await argon2.verify(user.password, loginDetails.password)))
 				throw Error("Identifiants invalides");
 			return { token: await this.generateNewToken(user.id), success: true };
-		} catch (error) {
-			console.trace(error);
+		} catch {
 			return { success: false };
 		}
 	}
