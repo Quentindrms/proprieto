@@ -1,9 +1,9 @@
+import { IsAuthenticatedMiddleware } from "@middleware/is-authenticated.middleware";
 import {
 	type MiddlewareConsumer,
 	Module,
 	type NestModule,
 } from "@nestjs/common";
-import { IsAuthenticatedMiddleware } from "middleware/is-authenticated.middleware";
 import { IncomeController } from "./income.controller";
 import { IncomeService } from "./income.service";
 

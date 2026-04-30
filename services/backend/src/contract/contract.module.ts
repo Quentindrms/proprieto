@@ -1,10 +1,10 @@
+import { IsAuthenticatedMiddleware } from "@middleware/is-authenticated.middleware";
 import {
 	type MiddlewareConsumer,
 	Module,
 	NestMiddleware,
 	type NestModule,
 } from "@nestjs/common";
-import { IsAuthenticatedMiddleware } from "middleware/is-authenticated.middleware";
 import { ContractController } from "./contract.controller";
 import { ContractService } from "./contract.service";
 

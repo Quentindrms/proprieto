@@ -1,4 +1,4 @@
-import type { Incomes, Outcomes } from "generated/prisma/client";
+import type { Incomes, Outcomes } from "@prisma/client";
 
 export function calculateTotalAmount(entry: Outcomes[] | Incomes[]) {
 	return entry
