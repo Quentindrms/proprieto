@@ -2,37 +2,37 @@ import { IsEmail, IsPhoneNumber, IsString, IsUUID } from "class-validator";
 
 export class CreateClientDto {
 	@IsString()
-	name: string;
+	name!: string;
 
 	@IsString()
-	firstName: string;
+	firstName!: string;
 
 	@IsEmail()
-	email: string;
+	email!: string;
 
 	@IsString()
-	address: string;
+	address!: string;
 
 	@IsPhoneNumber("FR")
-	phone: string;
+	phone!: string;
 }
 
 export class UpdateClientDto {
 	@IsUUID()
-	id: string;
+	id!: string;
 
 	@IsString()
-	name: string;
+	name!: string;
 
 	@IsString()
-	firstName: string;
+	firstName!: string;
 
 	@IsEmail()
-	email: string;
+	email!: string;
 
 	@IsString()
-	address: string;
+	address!: string;
 
 	@IsPhoneNumber("FR")
-	phone: string;
+	phone!: string;
 }

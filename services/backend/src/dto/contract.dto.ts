@@ -2,19 +2,19 @@ import { IsDateString, IsNumberString, IsUUID } from "class-validator";
 
 export class CreateContractDto {
 	@IsDateString()
-	startDate: string;
+	startDate!: string;
 
 	@IsDateString()
-	endDate: string;
+	endDate!: string;
 
 	@IsNumberString()
-	lease: number;
+	lease!: number;
 
 	@IsUUID()
-	propertyId: string;
+	propertyId!: string;
 
 	@IsUUID()
-	clientId: string;
+	clientId!: string;
 }
 
 export class UpdateContractDto {}

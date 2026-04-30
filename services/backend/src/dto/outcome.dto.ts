@@ -10,72 +10,72 @@ import {
 
 export class CreateOutcomeDto {
 	@IsString()
-	name: string;
+	name!: string;
 
 	@IsNumberString()
-	amount: number;
+	amount!: number;
 
 	@IsBoolean()
-	isRecurring: boolean;
+	isRecurring!: boolean;
 
 	@IsBoolean()
-	isPaid: boolean;
+	isPaid!: boolean;
 
 	@IsDateString()
-	issueDate: string;
+	issueDate!: string;
 
 	@IsOptional()
 	@IsDateString()
 	paidOn?: string;
 
 	@IsEnum({ week: "week", month: "month", year: "year", none: "none" })
-	frequency: string;
+	frequency!: string;
 
 	@IsUUID()
-	providerId: string;
+	providerId!: string;
 
 	@IsUUID()
-	propertyId: string;
+	propertyId!: string;
 
 	@IsUUID()
-	categoryId: string;
+	categoryId!: string;
 }
 
 export class UpdateOutcomeDto {
 	@IsUUID()
-	id: string;
+	id!: string;
 
 	@IsString()
-	name: string;
+	name!: string;
 
 	@IsNumberString()
-	amount: number;
+	amount!: number;
 
 	@IsBoolean()
-	isRecurring: boolean;
+	isRecurring!: boolean;
 
 	@IsBoolean()
-	isPaid: boolean;
+	isPaid!: boolean;
 
 	@IsDateString()
-	issueDate: string;
+	issueDate!: string;
 
 	@IsOptional()
 	@IsDateString()
 	paidOn?: string;
 
 	@IsEnum({ week: "week", month: "month", year: "year", none: "none" })
-	frequency: string;
+	frequency!: string;
 
 	@IsUUID()
-	providerId: string;
+	providerId!: string;
 
 	@IsUUID()
-	propertyId: string;
+	propertyId!: string;
 
 	@IsUUID()
-	categoryId: string;
+	categoryId!: string;
 
 	@IsBoolean()
-	isDeleted: boolean;
+	isDeleted!: boolean;
 }
