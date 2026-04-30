@@ -27,7 +27,6 @@ export class AuthController {
 	@Post("register")
 	@UsePipes(validationPipe)
 	async register(@Body() body: CreateUserDto, @Res() response: Response) {
-		console.log(body);
 		const registeredUser = await this.authService.register(body);
 		if (!registeredUser) return response.status(400).send({ success: false });
 		return response.status(200).send({ success: true });

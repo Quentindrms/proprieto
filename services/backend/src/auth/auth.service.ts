@@ -14,6 +14,7 @@ export class AuthService extends JwtService {
 					password: await argon2.hash(account.password),
 					role: "user",
 					status: "active",
+					email: account.email,
 					directory: {
 						create: {
 							address: account.address,
@@ -36,11 +37,7 @@ export class AuthService extends JwtService {
 	async login(loginDetails: { email: string; password: string }) {
 		const user = await prisma.users.findFirst({
 			where: {
-				directory: {
-					some: {
-						email: loginDetails.email,
-					},
-				},
+				email: loginDetails.email,
 			},
 		});
 
