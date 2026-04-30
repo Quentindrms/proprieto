@@ -3,10 +3,22 @@ import type { Response } from "express";
 import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.service";
 
+jest.mock("@prisma/internal/prismaNamespace", () => ({
+	PrismaClientKnownRequestError: class PrismaClientKnownRequestError extends Error {
+		code: string;
+		constructor(message: string, { code }: { code: string }) {
+			super(message);
+			this.code = code;
+		}
+	},
+}));
+
 jest.mock("@libs/DatabaseClient", () => ({
 	prisma: {
-		create: jest.fn(),
-		findFirst: jest.fn(),
+		users: {
+			create: jest.fn(),
+			findFirst: jest.fn(),
+		},
 	},
 }));
 
@@ -55,7 +67,6 @@ describe("Auth controller", () => {
 
 		it("Doit retourne success:false", async () => {
 			mockAuthService.login.mockResolvedValue({
-				token: null,
 				success: false,
 			});
 
@@ -70,37 +81,49 @@ describe("Auth controller", () => {
 
 	describe("Register", () => {
 		it("Doit retourner un status 200 succes:true", async () => {
-			mockAuthService.register.mockResolvedValue(true);
+			mockAuthService.register.mockResolvedValue({
+				success: true,
+				message: "Utilisateur crée",
+			});
 			await authController.register(
 				{
 					address: "Test",
-					email: "test",
-					firstName: "test",
-					name: "test",
-					password: "test",
-					phone: "test",
+					email: "test@test.fr",
+					firstName: "Test",
+					name: "Test",
+					password: "password123!",
+					phone: "0680341827",
 				},
 				mockRes,
 			);
 			expect(mockStatus).toHaveBeenLastCalledWith(200);
-			expect(mockSend).toHaveBeenCalledWith({ success: true });
+			expect(mockSend).toHaveBeenCalledWith({
+				success: true,
+				message: "Utilisateur crée",
+			});
 		});
 
 		it("Doit retourner un status 400, success:false", async () => {
-			mockAuthService.register.mockResolvedValue(false);
+			mockAuthService.register.mockResolvedValue({
+				success: false,
+				message: "Un utilisateur avec cet email existe déjà",
+			});
 			await authController.register(
 				{
 					address: "Test",
-					email: "test",
-					firstName: "test",
-					name: "test",
-					password: "test",
-					phone: "test",
+					email: "test@test.fr",
+					firstName: "Test",
+					name: "Test",
+					password: "password123!",
+					phone: "0680341827",
 				},
 				mockRes,
 			);
 			expect(mockStatus).toHaveBeenCalledWith(400);
-			expect(mockSend).toHaveBeenCalledWith({ success: false });
+			expect(mockSend).toHaveBeenCalledWith({
+				success: false,
+				message: "Un utilisateur avec cet email existe déjà",
+			});
 		});
 	});
 
@@ -113,7 +136,6 @@ describe("Auth controller", () => {
 					status: "active",
 					password: "password",
 				},
-				token: "token",
 			});
 			mockAuthService.generateNewToken.mockResolvedValue("token");
 			await authController.verify({ token: "token" }, mockRes);

@@ -58,6 +58,7 @@ model Users {
   id       String @id @unique @default(uuid()) @map("id_user")
   role     String @db.VarChar(100)
   status   String @db.VarChar(50)
+  email    String @unique @db.VarChar(250)
   password String @db.VarChar(150)
 
   properties Properties[]

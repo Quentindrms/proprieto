@@ -8,8 +8,8 @@ export default function LoginForm() {
 	const auth = useAuth();
 
 	function onClick() {
-		console.log(auth.email());
-		console.log(auth.password());
+		(auth.email());
+		(auth.password());
 	}
 
 	function handleInput(event: InputEvent) {

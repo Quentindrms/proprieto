@@ -16,7 +16,10 @@ export class AuthService extends CoreService {
 
 	async register(user: UserCreation) {
 		try {
-			return this.post<{ success: boolean }>("/auth/register", user);
+			return this.post<{ success: boolean; message: string }>(
+				"/auth/register",
+				user,
+			);
 		} catch (error) {
 			console.trace(error);
 		}

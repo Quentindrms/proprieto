@@ -52,7 +52,7 @@ export function useContract() {
 
 	async function create() {
 		const validate = CreateContractSchema.safeParse(createContract());
-		console.log(createContract());
+		createContract();
 		if (!validate.success) {
 			setFormError(validate);
 			return;
@@ -88,7 +88,7 @@ export function useContract() {
 			})
 			.map((contract) => contract.lease)
 			.reduce((sum, lease) => sum + lease, 0);
-		console.log(`Total loans : ${totalLoans}`);
+		`Total loans : ${totalLoans}`;
 		return totalLoans;
 	}
 

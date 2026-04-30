@@ -1,5 +1,6 @@
 import { prisma } from "@libs/DatabaseClient";
 import { Injectable } from "@nestjs/common";
+import { PrismaClientKnownRequestError } from "@prisma/internal/prismaNamespace";
 import type { CreateUserDto } from "@src/dto/create-user.dto";
 import argon2 from "argon2";
 import type { Users } from "../../generated/prisma/client";
@@ -14,6 +15,7 @@ export class AuthService extends JwtService {
 					password: await argon2.hash(account.password),
 					role: "user",
 					status: "active",
+					email: account.email,
 					directory: {
 						create: {
 							address: account.address,
@@ -26,21 +28,25 @@ export class AuthService extends JwtService {
 					},
 				},
 			});
-			return true;
+			return { success: true, message: "Utilisateur crée" };
 		} catch (error) {
-			console.trace(error);
-			return false;
+			if (
+				error instanceof PrismaClientKnownRequestError &&
+				error.code === "P2002"
+			) {
+				return {
+					success: false,
+					message: "Un utilisateur avec cet email existe déjà",
+				};
+			}
+			return { success: false, message: "Une erreur est survenue" };
 		}
 	}
 
 	async login(loginDetails: { email: string; password: string }) {
 		const user = await prisma.users.findFirst({
 			where: {
-				directory: {
-					some: {
-						email: loginDetails.email,
-					},
-				},
+				email: loginDetails.email,
 			},
 		});
 
@@ -49,8 +55,7 @@ export class AuthService extends JwtService {
 			if (!(await argon2.verify(user.password, loginDetails.password)))
 				throw Error("Identifiants invalides");
 			return { token: await this.generateNewToken(user.id), success: true };
-		} catch (error) {
-			console.trace(error);
+		} catch {
 			return { success: false };
 		}
 	}

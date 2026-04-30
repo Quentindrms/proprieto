@@ -1,8 +1,17 @@
 import { prisma } from "@libs/DatabaseClient";
-import { Test, TestingModule } from "@nestjs/testing";
+import type { CreateUserDto } from "@src/dto/create-user.dto";
 import argon2 from "argon2";
-import type { CreateAccountDto } from "types/DtoType";
 import { AuthService } from "./auth.service";
+
+jest.mock("@prisma/internal/prismaNamespace", () => ({
+	PrismaClientKnownRequestError: class PrismaClientKnownRequestError extends Error {
+		code: string;
+		constructor(message: string, { code }: { code: string }) {
+			super(message);
+			this.code = code;
+		}
+	},
+}));
 
 jest.mock("@libs/DatabaseClient", () => ({
 	prisma: {
@@ -18,7 +27,7 @@ jest.mock("argon2", () => ({
 	verify: jest.fn(),
 }));
 
-jest.mock("services/jwt.service", () => ({
+jest.mock("../../services/jwt.service", () => ({
 	JwtService: class {
 		protected createJWT = jest.fn().mockResolvedValue("mock_token");
 		protected verifyJWT = jest.fn().mockResolvedValue({ userId: "user-123" });
@@ -34,7 +43,7 @@ describe("Auth service", () => {
 	});
 
 	describe("Register", () => {
-		const fakeRegistration: CreateAccountDto = {
+		const fakeRegistration: CreateUserDto = {
 			name: "Smith",
 			firstName: "John",
 			address: "10 Rue de la paix, 75016 PARIS",
@@ -43,19 +52,21 @@ describe("Auth service", () => {
 			password: "password123!",
 		};
 
-		it("Doit retourner true", async () => {
+		it("Doit retourner success:true avec un message", async () => {
 			(prisma.users.create as jest.Mock).mockResolvedValue({});
 			const result = await authService.register(fakeRegistration);
-			expect(result).toBe(true);
+			expect(result).toEqual({ success: true, message: "Utilisateur crée" });
 		});
 
-		it("Doit retourner false", async () => {
-			jest.spyOn(console, "trace").mockImplementation(() => {});
+		it("Doit retourner success:false avec un message d'erreur", async () => {
 			(prisma.users.create as jest.Mock).mockRejectedValue(
 				new Error("Database error"),
 			);
 			const result = await authService.register(fakeRegistration);
-			expect(result).toBe(false);
+			expect(result).toEqual({
+				success: false,
+				message: "Une erreur est survenue",
+			});
 		});
 	});
 
@@ -84,8 +95,6 @@ describe("Auth service", () => {
 	});
 
 	describe("Verify", () => {
-		const fakeToken = "fakeToken";
-
 		it("Doit retourner un utilisateur", async () => {
 			(prisma.users.findFirst as jest.Mock).mockResolvedValue({
 				id: "123",

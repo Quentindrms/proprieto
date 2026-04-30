@@ -47,9 +47,9 @@ export function useAuth() {
 	}
 
 	async function handleRegister() {
-		console.log(formData());
+		formData();
 		const validate = CreateUserSchema.safeParse(formData());
-		console.log(`Validate : ${validate.success}`);
+		`Validate : ${validate.success}`;
 		if (!validate.success) {
 			setFormError(validate);
 			return;
@@ -60,7 +60,7 @@ export function useAuth() {
 			toast.success("Inscription réussie");
 			navigate("/auth/login");
 		} else {
-			toast.error("Une erreur est survenue lors de l'inscription");
+			toast.error(response?.message);
 		}
 	}
 

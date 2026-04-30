@@ -82,7 +82,7 @@ export function useClient() {
 	}
 
 	async function update() {
-		console.log(updateClient());
+		updateClient();
 		const validate = UpdateClientSchema.safeParse(updateClient());
 		if (!validate.success) {
 			setFormError(validate);

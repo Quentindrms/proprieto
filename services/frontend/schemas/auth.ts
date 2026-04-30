@@ -19,8 +19,7 @@ const adressSchema = z
 
 const phoneSchema = z
 	.string()
-	.min(10, "Le téléphone doit contenir au moins 10 caractères")
-	.max(20, "Le téléphone ne peut pas contenir plus de 20 caractères");
+	.regex(/^\d{10}$/, "Le numéro de téléphone doit contenir exactement 10 chiffres");
 
 const passwordSchema = z
 	.string("Le mot de passe doit être une chaîne de caractères")
