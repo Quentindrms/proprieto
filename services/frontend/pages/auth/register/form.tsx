@@ -55,7 +55,7 @@ export default function RegisterForm() {
 			{auth.formError() && (
 				<span class="text-red-500">
 					{
-						z.treeifyError(auth.formError()!.error).properties?.phone
+						z.treeifyError(auth.formError()!.error).properties?.address
 							?.errors[0]
 					}
 				</span>

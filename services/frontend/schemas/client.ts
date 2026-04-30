@@ -23,8 +23,7 @@ const addressSchema = z
 
 const phoneSchema = z
 	.string()
-	.min(10, "Le téléphone doit contenir au moins 10 caractères")
-	.max(20, "Le téléphone ne peut pas contenir plus de 20 caractères");
+	.length(10, "Le numéro de téléphone doit contenir 10 caractères");
 
 export const CreateClientSchema = z.object({
 	name: nameSchema,
