@@ -81,7 +81,8 @@
     "testEnvironment": "node",
     "moduleNameMapper": {
       "^@libs/(.*)$": "<rootDir>/../libs/$1",
-      "^@prisma/internal/(.*)$": "<rootDir>/../generated/prisma/internal/$1",
+      "^@prisma/client(.*)$": "@prisma/client$1",
+      "^@prisma/(.*)$": "<rootDir>/../generated/prisma/$1",
       "^@src/(.*)$": "<rootDir>/$1",
       "^@types/(.*)$": "<rootDir>/../types/$1",
       "^services/(.*)$": "<rootDir>/../services/$1"
