@@ -3,16 +3,6 @@ import type { Response } from "express";
 import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.service";
 
-jest.mock("@prisma/internal/prismaNamespace", () => ({
-	PrismaClientKnownRequestError: class PrismaClientKnownRequestError extends Error {
-		code: string;
-		constructor(message: string, { code }: { code: string }) {
-			super(message);
-			this.code = code;
-		}
-	},
-}));
-
 jest.mock("@libs/DatabaseClient", () => ({
 	prisma: {
 		users: {
