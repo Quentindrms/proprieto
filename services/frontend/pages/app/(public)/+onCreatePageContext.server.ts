@@ -5,7 +5,6 @@ import type { PageContextServer } from "vike/types";
 export async function onCreatePageContext(pageContext: PageContextServer) {
 	try {
 		const { user, token } = await getUserFromPageContext(pageContext);
-		console.log(`USER : ${user} TOKEN : ${token}`);
 		if (!user) throw new Error("No user found");
 		setAuthCookie(pageContext.fastify.reply, token);
 		pageContext.user = user;
