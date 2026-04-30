@@ -27,7 +27,7 @@ export default function LoginForm() {
 			onSubmit={auth.handleLogin}
 		>
 			<TextField
-				label="Adrese email"
+				label="Adresse email"
 				type="email"
 				name="mail"
 				onInput={handleInput}
