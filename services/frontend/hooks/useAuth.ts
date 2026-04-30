@@ -60,7 +60,7 @@ export function useAuth() {
 			toast.success("Inscription réussie");
 			navigate("/auth/login");
 		} else {
-			toast.error("Une erreur est survenue lors de l'inscription");
+			toast.error(response?.message);
 		}
 	}
 

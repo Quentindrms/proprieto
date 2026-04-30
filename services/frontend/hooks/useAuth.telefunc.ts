@@ -22,7 +22,9 @@ export async function onLogin(email: string, password: string) {
 export async function onRegister(user: UserCreation) {
 	try {
 		const authService = new AuthService();
-		return await authService.register(user);
+		const response = await authService.register(user);
+		console.log(response);
+		return response;
 	} catch (error) {
 		console.trace(error);
 	}
