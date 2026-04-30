@@ -4,33 +4,24 @@
     "target": "ES2022",
     "module": "ES2022",
     "moduleResolution": "Bundler",
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
-    ],
-    "types": [
-      "vite/client",
-      "vike-solid/client"
-    ],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "types": ["vite/client", "vike-solid/client"],
     "noEmit": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "jsx": "react-jsx",
     "jsxImportSource": "solid-js",
-    "baseUrl": ".",
+    "ignoreDeprecations": "6.0",
+    "baseUrl": "./",
     "paths": {
-      "@components/*":["components/*"],
-      "@app/types/*":["types/*"],
-      "@assets/*":["assets/*"],
-      "@hooks/*":["hooks/*"],
-      "@services/*":["services/*"],
-      "@utils/*":["utils/*"],
-      "@schemas/*":["schemas/*"]
-
+      "@components/*": ["components/*"],
+      "@app/types/*": ["types/*"],
+      "@assets/*": ["assets/*"],
+      "@hooks/*": ["hooks/*"],
+      "@services/*": ["services/*"],
+      "@utils/*": ["utils/*"],
+      "@schemas/*": ["schemas/*"]
     }
   },
-  "exclude": [
-    "dist"
-  ]
+  "exclude": ["dist"]
 }
