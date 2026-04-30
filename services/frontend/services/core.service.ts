@@ -18,9 +18,6 @@ export class CoreService {
 				Authorization: `Bearer ${this.authToken}`,
 			},
 		});
-		if (!response.ok) {
-			throw new Error(`Failed to fetch ${endpoint}: ${response.statusText}`);
-		}
 		return response;
 	}
 

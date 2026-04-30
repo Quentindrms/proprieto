@@ -40,7 +40,7 @@ export default function DetailsModal(props: DetailsModalProps) {
             <ModalBody>
                 <Text>{client.clientDetails().firstName} {client.clientDetails().name}</Text>
                 <Text>Adresse : {client.clientDetails().address}</Text>
-                <Text>Addresse email: {client.clientDetails().email}</Text>
+                <Text>Adresse email: {client.clientDetails().email}</Text>
                 <Text>Téléphone : {client.clientDetails().phone}</Text>
                 <div class="flex justify-between">
                     <ActionButton onClick={props.onEdit}>Modifier</ActionButton>

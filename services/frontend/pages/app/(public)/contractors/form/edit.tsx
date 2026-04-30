@@ -44,7 +44,7 @@ export default function EditForm() {
             )}
 
             <TextField
-                label="Addresse"
+                label="Adresse"
                 onInput={provider.handleUpdateInput("address")}
                 value={provider.updateProvider().address}
             />

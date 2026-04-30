@@ -40,7 +40,7 @@ export default function CreateForm() {
 			)}
 
 			<TextField
-				label="Addresse"
+				label="Adresse"
 				onInput={provider.handleCreateInput("address")}
 			/>
 

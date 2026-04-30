@@ -8,8 +8,8 @@ export default function LoginForm() {
 	const auth = useAuth();
 
 	function onClick() {
-		console.log(auth.email());
-		console.log(auth.password());
+		(auth.email());
+		(auth.password());
 	}
 
 	function handleInput(event: InputEvent) {
@@ -27,7 +27,7 @@ export default function LoginForm() {
 			onSubmit={auth.handleLogin}
 		>
 			<TextField
-				label="Adrese email"
+				label="Adresse email"
 				type="email"
 				name="mail"
 				onInput={handleInput}

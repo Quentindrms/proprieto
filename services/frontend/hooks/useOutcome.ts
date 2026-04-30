@@ -48,7 +48,7 @@ export function useOutcome() {
 				...prev,
 				[key]: target.type === "checkbox" ? target.checked : target.value,
 			}));
-			console.log(createOutcome());
+			createOutcome();
 		};
 	}
 
@@ -64,7 +64,7 @@ export function useOutcome() {
 
 	async function create() {
 		const validate = OutcomeCreationSchema.safeParse(createOutcome());
-		console.log(createOutcome());
+		createOutcome();
 		if (!validate.success) {
 			setFormError(validate);
 			return;
@@ -133,7 +133,7 @@ export function useOutcome() {
 	}
 
 	function update() {
-		console.log(updateOutcome());
+		updateOutcome();
 	}
 
 	return {

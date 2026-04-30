@@ -99,7 +99,6 @@ export function useProvider() {
 	}
 
 	async function remove() {
-		console.log(details().id);
 		const response = await onRemove(details().id);
 		if (response?.message !== "success") {
 			toast.error(

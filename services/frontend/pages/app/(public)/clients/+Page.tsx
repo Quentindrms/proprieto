@@ -23,7 +23,7 @@ export default function Page() {
 			<div class="w-full flex flex-col gap-5">
 				<PageNamer
 					pageName="Mes clients"
-					subText="Gestion et suivie des résidents du parc immobilier"
+					subText="Gestion et suivi des résidents du parc immobilier"
 					buttonText="Ajouter un client"
 					onClick={createModal.open}
 				/>

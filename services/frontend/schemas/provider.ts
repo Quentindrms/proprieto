@@ -18,13 +18,15 @@ const emailSchema = z
 
 const adressSchema = z
 	.string()
-	.min(5, "L'adresse doit contenir au moins 5 caracères")
+	.min(15, "L'adresse doit contenir au moins 5 caracères")
 	.max(250, "L'adresse ne peut pas contenir plus de 250 caractères");
 
 const phoneSchema = z
 	.string()
-	.min(10, "Le téléphone doit contenir au moins 10 caractères")
-	.max(20, "Le téléphone ne peut pas contenir plus de 20 caractères");
+	.regex(
+		/^\d{10}$/,
+		"Le numéro de téléphone doit contenir exactement 10 chiffres",
+	);
 
 const userIdSchema = z.string("Identifiant utilisateur invalide");
 
