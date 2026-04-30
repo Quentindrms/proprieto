@@ -59,7 +59,7 @@ export function useProperty() {
 			setFormError(validate);
 			return;
 		}
-		const response = await onCreate(createProperty());
+		const response = await onCreate(validate.data);
 		if (response?.message !== "success") {
 			toast.error("Une erreur est survenue lors de la création");
 			return;
@@ -76,7 +76,7 @@ export function useProperty() {
 			return;
 		}
 		setFormError(undefined);
-		const response = await onUpdate(updateProperty());
+		const response = await onUpdate(validation.data);
 		if (response?.message !== "success") {
 			toast.error("Une erreur est survenue lors de la mise à jour");
 			return;

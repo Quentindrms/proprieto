@@ -11,57 +11,57 @@ import {
 
 export class CreateIncomeDto {
 	@IsString()
-	name: string;
+	name!: string;
 
 	@IsNumberString()
-	amount: number;
+	amount!: number;
 
 	@IsBoolean()
-	isPaid: boolean;
+	isPaid!: boolean;
 
 	@IsDateString()
-	issueDate: string;
+	issueDate!: string;
 
 	@IsOptional()
 	@IsDateString()
 	paidOn?: string;
 
 	@IsEnum({ week: "week", month: "month", year: "year", none: "none" })
-	frequency: string;
+	frequency!: string;
 
 	@IsUUID()
-	categoryId: string;
+	categoryId!: string;
 
 	@IsUUID()
-	contractId: string;
+	contractId!: string;
 }
 
 export class UpdateIncomeDto {
 	@IsUUID()
-	id: string;
+	id!: string;
 
 	@IsString()
-	name: string;
+	name!: string;
 
 	@IsNumber()
-	amount: number;
+	amount!: number;
 
 	@IsBoolean()
-	isPaid: boolean;
+	isPaid!: boolean;
 
 	@IsDateString()
-	issueDate: string;
+	issueDate!: string;
 
 	@IsOptional()
 	@IsDateString()
 	paidOn?: string;
 
 	@IsEnum({ week: "week", month: "month", year: "year", none: "none" })
-	frequency: string;
+	frequency!: string;
 
 	@IsUUID()
-	categoryId: string;
+	categoryId!: string;
 
 	@IsUUID()
-	contractId: string;
+	contractId!: string;
 }

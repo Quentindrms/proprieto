@@ -1,7 +1,7 @@
 import { prisma } from "@libs/DatabaseClient";
 import { Injectable, type NestMiddleware } from "@nestjs/common";
+import { JwtService } from "@services/jwt.service";
 import type { NextFunction, Request, Response } from "express";
-import { JwtService } from "services/jwt.service";
 
 @Injectable()
 export class IsAuthenticatedMiddleware

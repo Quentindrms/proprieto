@@ -1,5 +1,5 @@
+import type { CreateClientDto, UpdateClientDto } from "@dto/client.dto";
 import { prisma } from "@libs/DatabaseClient";
-import type { CreateClientDto, UpdateClientDto } from "types/DtoType";
 import { ClientService } from "./client.service";
 
 jest.mock("@libs/DatabaseClient", () => ({

@@ -1,8 +1,6 @@
 import {
-	IsBoolean,
 	IsDateString,
 	IsNumber,
-	IsNumberString,
 	IsOptional,
 	IsString,
 	IsUUID,
@@ -10,27 +8,27 @@ import {
 
 export class CreatePropertyDto {
 	@IsString()
-	name: string;
+	name!: string;
 
-	@IsNumberString()
-	purchasePrice: number;
+	@IsNumber()
+	purchasePrice!: number;
 
 	@IsDateString()
-	purchaseDate: string;
+	purchaseDate!: string;
 
 	@IsUUID()
-	type: string;
+	type!: string;
 }
 
 export class UpdatePropertyDto {
 	@IsUUID()
-	id: string;
+	id!: string;
 
 	@IsString()
-	name: string;
+	name!: string;
 
 	@IsNumber()
-	purchasePrice: number;
+	purchasePrice!: number;
 
 	@IsOptional()
 	@IsDateString()
@@ -38,12 +36,12 @@ export class UpdatePropertyDto {
 
 	@IsOptional()
 	@IsDateString()
-	sellDate: Date;
+	sellDate!: Date;
 
 	@IsOptional()
 	@IsNumber()
 	sellPrice?: number;
 
 	@IsUUID()
-	type: string;
+	type!: string;
 }
