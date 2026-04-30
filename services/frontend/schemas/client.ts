@@ -23,7 +23,7 @@ const addressSchema = z
 
 const phoneSchema = z
 	.string()
-	.length(10, "Le numéro de téléphone doit contenir 10 caractères");
+	.regex(/^\d{10}$/, "Le numéro de téléphone doit contenir exactement 10 chiffres");
 
 export const CreateClientSchema = z.object({
 	name: nameSchema,
