@@ -9,7 +9,14 @@ export default function CreateForm() {
 	return (
 		<Form callback={provider.create}>
 			<TextField label="Nom" onInput={provider.handleCreateInput("name")} />
-
+			{provider.formError() && (
+				<span class="text-red-500">
+					{
+						z.treeifyError(provider.formError()!.error).properties?.name
+							?.errors[0]
+					}
+				</span>
+			)}
 			<TextField
 				label="Prénom"
 				onInput={provider.handleCreateInput("firstName")}
