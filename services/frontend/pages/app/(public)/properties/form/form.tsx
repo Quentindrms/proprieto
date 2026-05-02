@@ -32,37 +32,42 @@ export default function CreatePropertyForm() {
 				</span>
 			)}
 			<div class="flex gap-3">
-				<TextField
-					label="Prix d'acquisition"
-					name="purshacePrice"
-					onInput={property.handleCreateInput("purchasePrice")}
-					required
-				/>
-				{property.formError() && (
-					<span class="text-red-500">
-						{
-							z.treeifyError(property.formError()!.error).properties
-								?.purchasePrice?.errors[0]
-						}
-					</span>
-				)}
+				<div>
+					<TextField
+						label="Prix d'acquisition"
+						name="purshacePrice"
+						onInput={property.handleCreateInput("purchasePrice")}
+						required
+					/>
+					{property.formError() && (
+						<span class="text-red-500">
+							{
+								z.treeifyError(property.formError()!.error).properties
+									?.purchasePrice?.errors[0]
+							}
+						</span>
+					)}
+				</div>
+				<div>
+					<TextField
+						label="Date d'acquisition"
+						type="date"
+						name="purshaceDate"
+						onInput={property.handleCreateInput("purchaseDate")}
+						required
+					/>
 
-				<TextField
-					label="Date d'acquisition"
-					type="date"
-					name="purshaceDate"
-					onInput={property.handleCreateInput("purchaseDate")}
-					required
-				/>
+					{property.formError() && (
+						<span class="text-red-500">
+							{
+								z.treeifyError(property.formError()!.error).properties?.purchaseDate
+									?.errors[0]
+							}
+						</span>
+					)}
+				</div>
 			</div>
-			{property.formError() && (
-				<span class="text-red-500">
-					{
-						z.treeifyError(property.formError()!.error).properties?.purchaseDate
-							?.errors[0]
-					}
-				</span>
-			)}
+
 
 			<Select
 				label="Type de bien"
