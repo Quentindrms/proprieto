@@ -2,6 +2,7 @@ import {
 	IsBoolean,
 	IsDateString,
 	IsEnum,
+	IsNumber,
 	IsNumberString,
 	IsOptional,
 	IsString,
@@ -12,7 +13,7 @@ export class CreateOutcomeDto {
 	@IsString()
 	name!: string;
 
-	@IsNumberString()
+	@IsNumber()
 	amount!: number;
 
 	@IsBoolean()

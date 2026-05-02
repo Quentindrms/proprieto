@@ -3,7 +3,6 @@ import {
 	IsDateString,
 	IsEnum,
 	IsNumber,
-	IsNumberString,
 	IsOptional,
 	IsString,
 	IsUUID,
@@ -13,7 +12,7 @@ export class CreateIncomeDto {
 	@IsString()
 	name!: string;
 
-	@IsNumberString()
+	@IsNumber()
 	amount!: number;
 
 	@IsBoolean()
