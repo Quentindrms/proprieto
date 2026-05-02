@@ -12,7 +12,7 @@ export default function RegisterForm() {
 			class="flex flex-col gap-3 p-2 w-lg bg-background-surface rounded-xl shadow-md shadow-background-border"
 			onSubmit={auth.handleRegister}
 		>
-			<TextField label="Nom" onInput={auth.handleRegisterInputChange("name")} />
+			<TextField label="Nom" onInput={auth.handleRegisterInputChange("name")} required />
 			{auth.formError() && (
 				<span class="text-red-500">
 					{
@@ -25,6 +25,7 @@ export default function RegisterForm() {
 			<TextField
 				label="Prénom"
 				onInput={auth.handleRegisterInputChange("firstName")}
+				required
 			/>
 			{auth.formError() && (
 				<span class="text-red-500">
@@ -38,6 +39,7 @@ export default function RegisterForm() {
 				label="Adresse email"
 				type="email"
 				onInput={auth.handleRegisterInputChange("email")}
+				required
 			/>
 			{auth.formError() && (
 				<span class="text-red-500">
@@ -51,6 +53,7 @@ export default function RegisterForm() {
 			<TextField
 				label="Adresse postale"
 				onInput={auth.handleRegisterInputChange("address")}
+				required
 			/>
 			{auth.formError() && (
 				<span class="text-red-500">
@@ -65,6 +68,7 @@ export default function RegisterForm() {
 				label="Téléphone"
 				type="tel"
 				onInput={auth.handleRegisterInputChange("phone")}
+				required
 			/>
 			{auth.formError() && (
 				<span class="text-red-500">
@@ -78,6 +82,7 @@ export default function RegisterForm() {
 				label="Mot de passe"
 				type="password"
 				onInput={auth.handleRegisterInputChange("password")}
+				required
 			/>
 			{auth.formError() && (
 				<span class="text-red-500">
@@ -91,6 +96,7 @@ export default function RegisterForm() {
 				label="Confirmation du mot de passe"
 				type="password"
 				onInput={auth.handleRegisterInputChange("passwordValidation")}
+				required
 			/>
 			{auth.formError() && (
 				<span class="text-red-500">

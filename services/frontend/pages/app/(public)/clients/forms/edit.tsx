@@ -13,7 +13,7 @@ export default function EditForm() {
 
     return (
         <Form callback={client.update}>
-            <TextField label="Nom" onInput={client.handleUpdateClient("name")} value={client.clientDetails().name} />
+            <TextField label="Nom" onInput={client.handleUpdateClient("name")} value={client.clientDetails().name} required />
 
             {client.formError() && (
                 <Text class="text-red-500">
@@ -24,7 +24,7 @@ export default function EditForm() {
                 </Text>
             )}
 
-            <TextField label="Prénom" onInput={client.handleUpdateClient("firstName")} value={client.clientDetails().firstName} />
+            <TextField label="Prénom" onInput={client.handleUpdateClient("firstName")} value={client.clientDetails().firstName} required />
 
             {client.formError() && (
                 <Text class="text-red-500">
@@ -40,6 +40,7 @@ export default function EditForm() {
                 type="email"
                 onInput={client.handleUpdateClient("email")}
                 value={client.clientDetails().email}
+                required
             />
 
             {client.formError() && (
@@ -51,7 +52,7 @@ export default function EditForm() {
                 </Text>
             )}
 
-            <TextField label="Adresse" onInput={client.handleUpdateClient("address")} value={client.clientDetails().address} />
+            <TextField label="Adresse" onInput={client.handleUpdateClient("address")} value={client.clientDetails().address} required />
 
             {client.formError() && (
                 <Text class="text-red-500">
@@ -67,6 +68,7 @@ export default function EditForm() {
                 type="tel"
                 onInput={client.handleUpdateClient("phone")}
                 value={client.clientDetails().phone}
+                required
             />
 
             {client.formError() && (
