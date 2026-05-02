@@ -45,7 +45,7 @@ export function Form(props: FormProps) {
 			>
 				{hasRequiredFields() && (
 					<Text components="p">
-						Tous les champs marqués d'un * sont obligatoires
+						Tous les champs marqués d'un <span class="text-action-red">*</span> sont obligatoires
 					</Text>
 				)}
 				{local.children}
@@ -63,7 +63,7 @@ export function Label(props: LabelProps) {
 	return (
 		<label class="font-base-bold p-1" for={props.for}>
 			{props.label}
-			{props.required && <span class="">*</span>}
+			{props.required && <span class="text-action-red">*</span>}
 		</label>
 	);
 }

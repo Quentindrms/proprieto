@@ -10,12 +10,13 @@ export default function EditForm() {
 
     return (
         <Form callback={provider.edit}>
-            <TextField label="Nom" onInput={provider.handleUpdateInput("name")} value={provider.updateProvider().name} />
+            <TextField label="Nom" onInput={provider.handleUpdateInput("name")} value={provider.updateProvider().name} required />
 
             <TextField
                 label="Prénom"
                 onInput={provider.handleUpdateInput("firstName")}
                 value={provider.updateProvider().firstName}
+                required
             />
 
             {provider.formError() && (
@@ -32,6 +33,7 @@ export default function EditForm() {
                 label="Email"
                 onInput={provider.handleUpdateInput("email")}
                 value={provider.updateProvider().email}
+                required
             />
 
             {provider.formError() && (
@@ -47,6 +49,7 @@ export default function EditForm() {
                 label="Adresse"
                 onInput={provider.handleUpdateInput("address")}
                 value={provider.updateProvider().address}
+                required
             />
 
             {provider.formError() && (
@@ -63,6 +66,7 @@ export default function EditForm() {
                 label="Téléphone"
                 onInput={provider.handleUpdateInput("phone")}
                 value={provider.updateProvider().phone}
+                required
             />
 
             {provider.formError() && (
