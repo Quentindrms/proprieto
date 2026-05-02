@@ -45,6 +45,7 @@ export function EditOutcomeForm() {
                 name="name"
                 onInput={outcome.handleUpdateOutcome("name")}
                 value={outcome.updateOutcome().name}
+                required
             />
 
             {outcome.outcomeErrors() && (
@@ -62,6 +63,7 @@ export function EditOutcomeForm() {
                 name="amount"
                 onInput={outcome.handleInputOutcome("amount")}
                 value={outcome.updateOutcome().amount}
+                required
             />
 
             {outcome.outcomeErrors() && (
@@ -80,6 +82,7 @@ export function EditOutcomeForm() {
                         options={propertiesList}
                         onInput={outcome.handleInputOutcome("propertyId")}
                         value={outcome.updateOutcome().propertyId}
+                        required
                     />
 
                     {outcome.outcomeErrors() && (
@@ -98,6 +101,7 @@ export function EditOutcomeForm() {
                     options={categoryList}
                     onInput={outcome.handleInputOutcome("categoryId")}
                     value={outcome.updateOutcome().categoryId}
+                    required
                 />
 
                 {outcome.outcomeErrors() && (
@@ -116,6 +120,7 @@ export function EditOutcomeForm() {
                 options={providersList}
                 onInput={outcome.handleInputOutcome("providerId")}
                 value={outcome.updateOutcome().providerId}
+                required
             />
 
             <TextField
@@ -124,6 +129,7 @@ export function EditOutcomeForm() {
                 name="issueDate"
                 onInput={outcome.handleInputOutcome("issueDate")}
                 value={outcome.updateOutcome().issueDate ? new Date(outcome.updateOutcome().issueDate ?? "").toISOString().split("T")[0] : ""}
+                required
             />
             <div class="flex gap-5">
                 <div class="flex flex-col">
@@ -151,6 +157,7 @@ export function EditOutcomeForm() {
                         labelOptions={"Indiquer une fréquence de paiement"}
                         options={recurrence}
                         onInput={outcome.handleInputOutcome("frequency")}
+                        required
                     ></Select>
 
                     {outcome.outcomeErrors() && (
@@ -236,7 +243,7 @@ export function EditIncomeForm() {
     return (
         <Form callback={income.handleEditIncome}>
             <TextField label="Nom" onInput={income.handleUpdateIncome("name")}
-                value={income.updateIncome().name} />
+                value={income.updateIncome().name} required />
 
             {income.incomeErrors() && (
                 <Text class="text-red-500">
@@ -247,7 +254,7 @@ export function EditIncomeForm() {
                 </Text>
             )}
 
-            <TextField label="Montant" onInput={income.handleUpdateIncome("amount")} value={income.updateIncome().amount} />
+            <TextField label="Montant" onInput={income.handleUpdateIncome("amount")} value={income.updateIncome().amount} required />
             {income.incomeErrors() && (
                 <Text class="text-red-500">
                     {
@@ -264,6 +271,7 @@ export function EditIncomeForm() {
                         options={contractsList}
                         onInput={income.handleUpdateIncome("contractId")}
                         value={income.updateIncome().contractId}
+                        required
                     />
                     {income.incomeErrors() && (
                         <Text class="text-red-500">
@@ -281,6 +289,7 @@ export function EditIncomeForm() {
                         options={incomeCategory}
                         onInput={income.handleUpdateIncome("categoryId")}
                         value={income.updateIncome().categoryId}
+                        required
                     />
                     {income.incomeErrors() && (
                         <Text class="text-red-500">
@@ -305,6 +314,7 @@ export function EditIncomeForm() {
                 type="date"
                 onInput={income.handleUpdateIncome("issueDate")}
                 value={income.updateIncome().issueDate ? new Date(income.updateIncome().issueDate ?? "").toISOString().split("T")[0] : ""}
+                required
             />
             {income.incomeErrors() && (
                 <Text class="text-red-500">

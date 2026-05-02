@@ -45,6 +45,7 @@ export function CreateOutcomeForm() {
                 label="Nom"
                 name="name"
                 onInput={outcome.handleInputOutcome("name")}
+                required
             />
 
             {outcome.outcomeErrors() && (
@@ -61,6 +62,7 @@ export function CreateOutcomeForm() {
                 type="number"
                 name="amount"
                 onInput={outcome.handleInputOutcome("amount")}
+                required
             />
 
             {outcome.outcomeErrors() && (
@@ -78,6 +80,7 @@ export function CreateOutcomeForm() {
                         labelOptions="Sélectionner une proprieté"
                         options={propertiesList}
                         onInput={outcome.handleInputOutcome("propertyId")}
+                        required
                     />
 
                     {outcome.outcomeErrors() && (
@@ -95,6 +98,7 @@ export function CreateOutcomeForm() {
                     labelOptions="Sélectionner une catégorie"
                     options={categoryList}
                     onInput={outcome.handleInputOutcome("categoryId")}
+                    required
                 />
 
                 {outcome.outcomeErrors() && (
@@ -112,6 +116,7 @@ export function CreateOutcomeForm() {
                 labelOptions="Sélectionner un créancier"
                 options={providersList}
                 onInput={outcome.handleInputOutcome("providerId")}
+                required
             />
 
             <TextField
@@ -119,6 +124,7 @@ export function CreateOutcomeForm() {
                 type="date"
                 name="issueDate"
                 onInput={outcome.handleInputOutcome("issueDate")}
+                required
             />
             <div class="flex gap-5">
                 <div class="flex flex-col">
@@ -145,6 +151,7 @@ export function CreateOutcomeForm() {
                         labelOptions={"Indiquer une fréquence de paiement"}
                         options={recurrence}
                         onInput={outcome.handleInputOutcome("frequency")}
+                        required
                     ></Select>
 
                     {outcome.outcomeErrors() && (
