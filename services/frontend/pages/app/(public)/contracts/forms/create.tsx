@@ -2,6 +2,7 @@ import { Button } from "@components/button";
 import { Form, Select, TextField } from "@components/form";
 import { useContract } from "@hooks/useContract";
 import { useData } from "vike-solid/useData";
+import { z } from "zod";
 import type { Data } from "../+data";
 
 export default function CreateForm() {
@@ -23,19 +24,38 @@ export default function CreateForm() {
 	return (
 		<Form callback={contract.create}>
 			<div class="flex gap-3">
-				<TextField
-					type="date"
-					label="Date de début du contrat"
-					onInput={contract.handleCreateInput("startDate")}
-					required
-				/>
-
-				<TextField
-					type="date"
-					label="Date de fin du contrat"
-					onInput={contract.handleCreateInput("endDate")}
-					required
-				/>
+				<div>
+					<TextField
+						type="date"
+						label="Date de début du contrat"
+						onInput={contract.handleCreateInput("startDate")}
+						required
+					/>
+					{contract.formError() && (
+						<span class="text-red-500">
+							{
+								z.treeifyError(contract.formError()!.error).properties?.startDate
+									?.errors[0]
+							}
+						</span>
+					)}
+				</div>
+				<div>
+					<TextField
+						type="date"
+						label="Date de fin du contrat"
+						onInput={contract.handleCreateInput("endDate")}
+						required
+					/>
+					{contract.formError() && (
+						<span class="text-red-500">
+							{
+								z.treeifyError(contract.formError()!.error).properties?.endDate
+									?.errors[0]
+							}
+						</span>
+					)}
+				</div>
 			</div>
 
 			<TextField
@@ -44,22 +64,49 @@ export default function CreateForm() {
 				onInput={contract.handleCreateInput("lease")}
 				required
 			/>
+			{contract.formError() && (
+				<span class="text-red-500">
+					{
+						z.treeifyError(contract.formError()!.error).properties?.lease
+							?.errors[0]
+					}
+				</span>
+			)}
 			<div class="flex gap-3">
-				<Select
-					label="Propriété louée"
-					labelOptions="Sélectionner une propriété"
-					options={propertiesList}
-					onInput={contract.handleCreateInput("propertyId")}
-					required
-				/>
-
-				<Select
-					label="Client concerné"
-					labelOptions="Sélectionner un client"
-					options={clientsList}
-					onInput={contract.handleCreateInput("clientId")}
-					required
-				/>
+				<div>
+					<Select
+						label="Propriété louée"
+						labelOptions="Sélectionner une propriété"
+						options={propertiesList}
+						onInput={contract.handleCreateInput("propertyId")}
+						required
+					/>
+					{contract.formError() && (
+						<span class="text-red-500">
+							{
+								z.treeifyError(contract.formError()!.error).properties?.propertyId
+									?.errors[0]
+							}
+						</span>
+					)}
+				</div>
+				<div>
+					<Select
+						label="Client concerné"
+						labelOptions="Sélectionner un client"
+						options={clientsList}
+						onInput={contract.handleCreateInput("clientId")}
+						required
+					/>
+					{contract.formError() && (
+						<span class="text-red-500">
+							{
+								z.treeifyError(contract.formError()!.error).properties?.clientId
+									?.errors[0]
+							}
+						</span>
+					)}
+				</div>
 			</div>
 
 			<div class="flex justify-center p-4">
