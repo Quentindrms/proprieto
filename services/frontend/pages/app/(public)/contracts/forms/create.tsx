@@ -26,18 +26,21 @@ export default function CreateForm() {
 				type="date"
 				label="Date de début du contrat"
 				onInput={contract.handleCreateInput("startDate")}
+				required
 			/>
 
 			<TextField
 				type="date"
 				label="Date de fin du contrat"
 				onInput={contract.handleCreateInput("endDate")}
+				required
 			/>
 
 			<TextField
 				type="number"
 				label="Loyer mensuel"
 				onInput={contract.handleCreateInput("lease")}
+				required
 			/>
 
 			<Select
@@ -45,6 +48,7 @@ export default function CreateForm() {
 				labelOptions="Sélectionner une propriété"
 				options={propertiesList}
 				onInput={contract.handleCreateInput("propertyId")}
+				required
 			/>
 
 			<Select
@@ -52,6 +56,7 @@ export default function CreateForm() {
 				labelOptions="Sélectionner un client"
 				options={clientsList}
 				onInput={contract.handleCreateInput("clientId")}
+				required
 			/>
 
 			<div class="flex justify-center p-4">
