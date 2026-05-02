@@ -148,7 +148,7 @@ export function useFinance() {
 			return;
 		}
 		setIncomeErrors(undefined);
-		const response = await onCreateIncome(createIncome());
+		const response = await onCreateIncome(validate.data);
 		if (response.message !== "success") {
 			toast.error("Une erreur est survenue lors de la création du revenu");
 			return;
@@ -166,7 +166,7 @@ export function useFinance() {
 			return;
 		}
 		setOutcomeErrors(undefined);
-		const response = await onCreateOutcome(createOutcome());
+		const response = await onCreateOutcome(validate.data);
 		if (response?.message !== "success") {
 			toast.error("Une erreur est survenue lors de la création de la dépense");
 			return;
