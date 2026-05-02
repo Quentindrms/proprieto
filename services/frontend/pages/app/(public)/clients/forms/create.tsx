@@ -9,7 +9,7 @@ export default function CreateForm() {
 
 	return (
 		<Form callback={client.create}>
-			<TextField label="Nom" onInput={client.handleCreate("name")} />
+			<TextField label="Nom" onInput={client.handleCreate("name")} required />
 
 			{client.formError() && (
 				<Text class="text-red-500">
@@ -20,7 +20,7 @@ export default function CreateForm() {
 				</Text>
 			)}
 
-			<TextField label="Prénom" onInput={client.handleCreate("firstName")} />
+			<TextField label="Prénom" onInput={client.handleCreate("firstName")} required />
 
 			{client.formError() && (
 				<Text class="text-red-500">
@@ -35,6 +35,7 @@ export default function CreateForm() {
 				label="Adresse mail"
 				type="email"
 				onInput={client.handleCreate("email")}
+				required
 			/>
 
 			{client.formError() && (
@@ -46,7 +47,7 @@ export default function CreateForm() {
 				</Text>
 			)}
 
-			<TextField label="Adresse" onInput={client.handleCreate("address")} />
+			<TextField label="Adresse" onInput={client.handleCreate("address")} required />
 
 			{client.formError() && (
 				<Text class="text-red-500">
@@ -61,6 +62,7 @@ export default function CreateForm() {
 				label="Téléphone"
 				type="tel"
 				onInput={client.handleCreate("phone")}
+				required
 			/>
 
 			{client.formError() && (

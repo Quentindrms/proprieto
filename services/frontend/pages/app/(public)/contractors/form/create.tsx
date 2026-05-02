@@ -8,11 +8,19 @@ export default function CreateForm() {
 
 	return (
 		<Form callback={provider.create}>
-			<TextField label="Nom" onInput={provider.handleCreateInput("name")} />
-
+			<TextField label="Nom" onInput={provider.handleCreateInput("name")} required />
+			{provider.formError() && (
+				<span class="text-red-500">
+					{
+						z.treeifyError(provider.formError()!.error).properties?.name
+							?.errors[0]
+					}
+				</span>
+			)}
 			<TextField
 				label="Prénom"
 				onInput={provider.handleCreateInput("firstName")}
+				required
 			/>
 
 			{provider.formError() && (
@@ -28,6 +36,7 @@ export default function CreateForm() {
 				type="email"
 				label="Email"
 				onInput={provider.handleCreateInput("email")}
+				required
 			/>
 
 			{provider.formError() && (
@@ -42,6 +51,7 @@ export default function CreateForm() {
 			<TextField
 				label="Adresse"
 				onInput={provider.handleCreateInput("address")}
+				required
 			/>
 
 			{provider.formError() && (
@@ -57,6 +67,7 @@ export default function CreateForm() {
 				type="tel"
 				label="Téléphone"
 				onInput={provider.handleCreateInput("phone")}
+				required
 			/>
 
 			{provider.formError() && (

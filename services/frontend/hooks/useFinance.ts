@@ -202,7 +202,7 @@ export function useFinance() {
 			return;
 		}
 		setOutcomeErrors(undefined);
-		const response = await onEditOutcome(updateOutcome());
+		const response = await onEditOutcome(validate.data);
 		if (response.message !== "success") {
 			toast.error(
 				"Une erreur est survenue lors de la modification de la ressource",
@@ -220,7 +220,7 @@ export function useFinance() {
 			return;
 		}
 		setIncomeErrors(undefined);
-		const response = await onEditIncome(updateIncome());
+		const response = await onEditIncome(validate.data);
 		if (response.message !== "success") {
 			toast.error(
 				"Une erreur est survenue lors de la modification de la ressource",

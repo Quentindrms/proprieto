@@ -65,7 +65,7 @@ export function UseIncome() {
 			return;
 		}
 		setFormError(undefined);
-		const response = await onCreate(createIncome());
+		const response = await onCreate(validate.data);
 		if (response?.message !== "success") {
 			toast.error("Une erreur est survenue lors de la création de la dépense");
 			return;

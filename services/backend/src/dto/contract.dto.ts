@@ -1,4 +1,4 @@
-import { IsDateString, IsNumberString, IsUUID } from "class-validator";
+import { IsDateString, IsNumber, IsUUID } from "class-validator";
 
 export class CreateContractDto {
 	@IsDateString()
@@ -7,7 +7,7 @@ export class CreateContractDto {
 	@IsDateString()
 	endDate!: string;
 
-	@IsNumberString()
+	@IsNumber()
 	lease!: number;
 
 	@IsUUID()

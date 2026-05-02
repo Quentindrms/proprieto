@@ -6,9 +6,9 @@ export const nameSchema = z
 	.string()
 	.min(10, "Le nom d'une propriété doit contenir au moins 10 caractères")
 	.max(150, "Le nom d'une propriété ne peut exécéder 150 caractères");
-export const purchasePriceSchema = z.coerce.number(
-	"Le prix doit être un nombre",
-);
+export const purchasePriceSchema = z.coerce
+	.number("Le prix doit être un nombre")
+	.nonnegative("Le prix ne peut pas être inférieur à 0");
 export const purchaseDateSchema = z.coerce.date(
 	"Le format de la date est invalide",
 );

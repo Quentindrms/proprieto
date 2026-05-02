@@ -72,7 +72,7 @@ export function useClient() {
 			return;
 		}
 		setFormError(undefined);
-		const response = await onCreate(createClient());
+		const response = await onCreate(validate.data);
 		if (response?.message !== "success") {
 			toast.error("Une erreur est survenue lors de la création du client");
 		}
@@ -89,7 +89,7 @@ export function useClient() {
 			return;
 		}
 		setFormError(undefined);
-		const response = await onEdit(updateClient());
+		const response = await onEdit(validate.data);
 		if (response?.message !== "success") {
 			toast.error("Une erreur est survenue lors de l'édition de la ressource");
 			return;
