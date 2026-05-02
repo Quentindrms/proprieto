@@ -72,7 +72,7 @@ export function useProvider() {
 			setFormError(validate);
 			return;
 		}
-		const response = await onCreate(createProvider());
+		const response = await onCreate(validate.data);
 		if (response?.message !== "success") {
 			toast.error("Une erreur est survenue lors de la création");
 			return;
@@ -86,7 +86,7 @@ export function useProvider() {
 			setFormError(validate);
 			return;
 		}
-		const respponse = await onEdit(updateProvider());
+		const respponse = await onEdit(validate.data);
 		if (respponse?.message !== "success") {
 			toast.error(
 				"Une erreur est survenue lors de la modification de la ressource",
