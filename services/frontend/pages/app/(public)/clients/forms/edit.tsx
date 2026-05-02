@@ -1,7 +1,7 @@
 import { Button } from "@components/button";
 import { Form, TextField } from "@components/form";
 import Text from "@components/text";
-import { useClient, useClientContext } from "@hooks/useClient";
+import { useClientContext } from "@hooks/useClient";
 import { createEffect } from "solid-js";
 import { z } from "zod";
 

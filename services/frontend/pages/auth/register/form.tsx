@@ -1,4 +1,3 @@
-import { UserCreation } from "@app/types/user";
 import { Button } from "@components/button";
 import { Form, TextField } from "@components/form";
 import { useAuth } from "@hooks/useAuth";
