@@ -1,0 +1,103 @@
+@startuml Proprieto - Vue Globale des Cas d'Utilisation
+
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+actor "Propriétaire" as owner
+actor "Système" as system
+
+rectangle "Proprieto" {
+
+  package "Authentification" {
+    usecase "S'inscrire" as UC_REGISTER
+    usecase "Se connecter" as UC_LOGIN
+    usecase "Vérifier email" as UC_VERIFY
+  }
+
+  package "Gestion des Propriétés" {
+    usecase "Créer une propriété" as UC_PROP_CREATE
+    usecase "Consulter les propriétés" as UC_PROP_LIST
+    usecase "Modifier une propriété" as UC_PROP_UPDATE
+    usecase "Supprimer une propriété" as UC_PROP_DELETE
+    usecase "Consulter les types" as UC_PROP_TYPES
+    usecase "Consulter le nombre" as UC_PROP_COUNT
+  }
+
+  package "Gestion des Clients" {
+    usecase "Ajouter un client" as UC_CLIENT_CREATE
+    usecase "Consulter les clients" as UC_CLIENT_LIST
+    usecase "Modifier un client" as UC_CLIENT_UPDATE
+    usecase "Supprimer un client" as UC_CLIENT_DELETE
+  }
+
+  package "Gestion des Contrats" {
+    usecase "Créer un contrat" as UC_CONTRACT_CREATE
+    usecase "Consulter les contrats" as UC_CONTRACT_LIST
+  }
+
+  package "Gestion des Revenus" {
+    usecase "Enregistrer un revenu" as UC_INCOME_CREATE
+    usecase "Consulter les revenus" as UC_INCOME_LIST
+    usecase "Consulter revenus mensuels" as UC_INCOME_MONTHLY
+    usecase "Modifier un revenu" as UC_INCOME_UPDATE
+    usecase "Supprimer un revenu" as UC_INCOME_DELETE
+  }
+
+  package "Gestion des Dépenses" {
+    usecase "Enregistrer une dépense" as UC_OUTCOME_CREATE
+    usecase "Consulter les dépenses" as UC_OUTCOME_LIST
+    usecase "Consulter dépenses mensuelles" as UC_OUTCOME_MONTHLY
+    usecase "Modifier une dépense" as UC_OUTCOME_UPDATE
+    usecase "Supprimer une dépense" as UC_OUTCOME_DELETE
+  }
+
+  package "Gestion des Prestataires" {
+    usecase "Ajouter un prestataire" as UC_PROVIDER_CREATE
+    usecase "Consulter les prestataires" as UC_PROVIDER_LIST
+    usecase "Modifier un prestataire" as UC_PROVIDER_UPDATE
+    usecase "Supprimer un prestataire" as UC_PROVIDER_DELETE
+  }
+
+}
+
+owner --> UC_REGISTER
+owner --> UC_LOGIN
+owner --> UC_VERIFY
+
+owner --> UC_PROP_CREATE
+owner --> UC_PROP_LIST
+owner --> UC_PROP_UPDATE
+owner --> UC_PROP_DELETE
+owner --> UC_PROP_TYPES
+owner --> UC_PROP_COUNT
+
+owner --> UC_CLIENT_CREATE
+owner --> UC_CLIENT_LIST
+owner --> UC_CLIENT_UPDATE
+owner --> UC_CLIENT_DELETE
+
+owner --> UC_CONTRACT_CREATE
+owner --> UC_CONTRACT_LIST
+
+owner --> UC_INCOME_CREATE
+owner --> UC_INCOME_LIST
+owner --> UC_INCOME_MONTHLY
+owner --> UC_INCOME_UPDATE
+owner --> UC_INCOME_DELETE
+
+owner --> UC_OUTCOME_CREATE
+owner --> UC_OUTCOME_LIST
+owner --> UC_OUTCOME_MONTHLY
+owner --> UC_OUTCOME_UPDATE
+owner --> UC_OUTCOME_DELETE
+
+owner --> UC_PROVIDER_CREATE
+owner --> UC_PROVIDER_LIST
+owner --> UC_PROVIDER_UPDATE
+owner --> UC_PROVIDER_DELETE
+
+UC_REGISTER ..> UC_VERIFY : <<include>>
+system --> UC_VERIFY
+
+@enduml

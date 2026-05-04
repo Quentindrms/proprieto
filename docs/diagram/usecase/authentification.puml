@@ -1,0 +1,43 @@
+@startuml Authentification - Cas d'Utilisation
+
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+actor "Visiteur" as visitor
+actor "Propriétaire" as owner
+actor "Système" as system
+
+rectangle "Authentification" {
+
+  usecase "S'inscrire" as UC_REGISTER
+  usecase "Se connecter" as UC_LOGIN
+  usecase "Vérifier l'email" as UC_VERIFY
+  usecase "Valider les identifiants" as UC_VALIDATE
+  usecase "Générer un token JWT" as UC_JWT
+
+}
+
+visitor --> UC_REGISTER
+visitor --> UC_LOGIN
+visitor --> UC_VERIFY
+
+UC_REGISTER ..> UC_VERIFY : <<include>>
+UC_LOGIN ..> UC_VALIDATE : <<include>>
+UC_LOGIN ..> UC_JWT : <<include>>
+
+system --> UC_VERIFY : envoi email
+
+note right of UC_REGISTER
+  L'utilisateur fournit :
+  - nom, prénom
+  - email
+  - mot de passe
+end note
+
+note right of UC_LOGIN
+  Retourne un token JWT
+  pour les requêtes suivantes
+end note
+
+@enduml
