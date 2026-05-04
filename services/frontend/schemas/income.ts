@@ -9,9 +9,9 @@ const nameSchema = z
 
 const amountSchema = z.coerce.number("Le montant doit être un nombre");
 
-const isRecurringSchema = z.boolean(
-	"Une réccurence valide doit être sélectionnée",
-);
+const isRecurringSchema = z
+	.boolean("Une réccurence valide doit être sélectionnée")
+	.default(false);
 
 const isPaidSchema = z.boolean(
 	"Le statut payé doit être de type true ou false",
