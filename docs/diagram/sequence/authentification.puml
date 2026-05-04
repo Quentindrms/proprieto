@@ -1,4 +1,5 @@
 @startuml Authentification
+!pragma layout smetana
 
 title Authentification
 
@@ -8,6 +9,25 @@ participant "Middleware\nIsAuthenticated" as MW
 participant "AuthController\nPOST /auth/*" as AC
 participant "AuthService" as AS
 database "PostgreSQL\n(Prisma)" as DB
+
+== Connexion ==
+Utilisateur -> FE: Remplit le formulaire\n(email, mot de passe)
+FE -> AC: POST /auth/login
+AC -> AS: login(email, motDePasse)
+AS -> DB: Recherche l'utilisateur par email
+DB --> AS: Enregistrement utilisateur
+AS -> AS: Vérifie le mot de passe avec argon2
+AS -> AS: Signe le JWT (jose)
+AS --> AC: { token: JWT }
+AC --> FE: 200 { token }
+FE -> FE: Stocke le token dans un cookie
+
+== Vérification du token ==
+FE -> AC: POST /auth/verify\nAuthorization: Bearer <token>
+AC -> AS: verify(token)
+AS -> AS: Décode et valide le JWT
+AS --> AC: { token: JWT rafraîchi }
+AC --> FE: 200 { token }
 
 == Inscription ==
 Utilisateur -> FE: Remplit le formulaire\n(nom, prénom, email, adresse, téléphone, mot de passe)
@@ -29,25 +49,6 @@ else Données valides
         FE -> FE: Stocke le token dans un cookie
     end
 end
-
-== Connexion ==
-Utilisateur -> FE: Remplit le formulaire\n(email, mot de passe)
-FE -> AC: POST /auth/login
-AC -> AS: login(email, motDePasse)
-AS -> DB: Recherche l'utilisateur par email
-DB --> AS: Enregistrement utilisateur
-AS -> AS: Vérifie le mot de passe avec argon2
-AS -> AS: Signe le JWT (jose)
-AS --> AC: { token: JWT }
-AC --> FE: 200 { token }
-FE -> FE: Stocke le token dans un cookie
-
-== Vérification du token ==
-FE -> AC: POST /auth/verify\nAuthorization: Bearer <token>
-AC -> AS: verify(token)
-AS -> AS: Décode et valide le JWT
-AS --> AC: { token: JWT rafraîchi }
-AC --> FE: 200 { token }
 
 == Accès aux routes protégées ==
 FE -> MW: Requête vers un endpoint protégé\nAuthorization: Bearer <token>

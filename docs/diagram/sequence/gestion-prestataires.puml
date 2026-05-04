@@ -1,22 +1,29 @@
 @startuml GestionPrestataires
+!pragma layout smetana
 
 title Gestion des Prestataires
 
 actor Utilisateur
 participant "Frontend\n(Solid.js)" as FE
+participant "AuthGuard\n(JwtGuard)" as AG
 participant "ProviderController\n/provider" as PC
 participant "ProviderService" as PS
 database "PostgreSQL\n(Prisma)" as DB
 
 == Lister les prestataires ==
 Utilisateur -> FE: Accède à la page Prestataires
-FE -> PC: GET /provider/browse
-PC -> PS: browse(userId)
-PS -> DB: Recherche Providers avec Directories\noù userId = userId et isDeleted = false
-DB --> PS: Liste des prestataires avec infos annuaire
-PS --> PC: Providers[]
-PC --> FE: 200 Providers[]
-FE -> FE: Affiche les cartes prestataires
+FE -> AG: GET /provider/browse\n+ Bearer token
+alt Token invalide / expiré
+    AG --> FE: 401 Unauthorized
+else Token valide
+    AG -> PC: Requête + userId extrait du token
+    PC -> PS: browse(userId)
+    PS -> DB: Recherche Providers avec Directories\noù userId = userId et isDeleted = false
+    DB --> PS: Liste des prestataires avec infos annuaire
+    PS --> PC: Providers[]
+    PC --> FE: 200 Providers[]
+    FE -> FE: Affiche les cartes prestataires
+end
 
 == Créer un prestataire ==
 Utilisateur -> FE: Remplit le formulaire\n(nom, prénom, email, adresse, téléphone)
@@ -24,18 +31,23 @@ FE -> FE: Valide avec Zod (CreateProviderSchema)\n- name : 5–120 car.\n- first
 alt Erreurs de validation frontend
     FE -> Utilisateur: Affiche les erreurs de champ
 else Données valides
-    FE -> PC: POST /provider/create
-    PC -> PC: ValidationPipe (class-validator)\n(CreateProviderDto)\n- @IsString : name, firstName, address\n- @IsEmail : email\n- @IsPhoneNumber("FR") : phone
-    alt Erreurs de validation backend
-        PC --> FE: 400 Bad Request
-    else Données valides
-        PC -> PS: create(createProviderDto, userId)
-        PS -> DB: Insère un enregistrement Directories\n(type = "provider", lié au userId)
-        PS -> DB: Insère un enregistrement Providers\n(statut = "actif", lié au directoriesId)
-        DB --> PS: Prestataire + Annuaire créés
-        PS --> PC: Provider
-        PC --> FE: 201 Provider
-        FE -> FE: Met à jour la liste des prestataires
+    FE -> AG: POST /provider/create\n+ Bearer token
+    alt Token invalide / expiré
+        AG --> FE: 401 Unauthorized
+    else Token valide
+        AG -> PC: Requête + userId extrait du token
+        PC -> PC: ValidationPipe (class-validator)\n(CreateProviderDto)\n- @IsString : name, firstName, address\n- @IsEmail : email\n- @IsPhoneNumber("FR") : phone
+        alt Erreurs de validation backend
+            PC --> FE: 400 Bad Request
+        else Données valides
+            PC -> PS: create(createProviderDto, userId)
+            PS -> DB: Insère un enregistrement Directories\n(type = "provider", lié au userId)
+            PS -> DB: Insère un enregistrement Providers\n(statut = "actif", lié au directoriesId)
+            DB --> PS: Prestataire + Annuaire créés
+            PS --> PC: Provider
+            PC --> FE: 201 Provider
+            FE -> FE: Met à jour la liste des prestataires
+        end
     end
 end
 
@@ -45,27 +57,37 @@ FE -> FE: Valide avec Zod (UpdateProviderSchema)\n- id : string\n- name, firstNa
 alt Erreurs de validation frontend
     FE -> Utilisateur: Affiche les erreurs de champ
 else Données valides
-    FE -> PC: PUT /provider
-    PC -> PC: ValidationPipe (class-validator)\n(UpdateProviderDto)\n- @IsUUID : id\n- @IsString : name, firstName, address\n- @IsEmail : email\n- @IsPhoneNumber("FR") : phone
-    alt Erreurs de validation backend
-        PC --> FE: 400 Bad Request
-    else Données valides
-        PC -> PS: update(updateProviderDto, userId)
-        PS -> DB: Met à jour l'enregistrement Directories\noù id = directoriesId et userId = userId
-        DB --> PS: Annuaire mis à jour
-        PS --> PC: Provider
-        PC --> FE: 200 Provider
+    FE -> AG: PUT /provider\n+ Bearer token
+    alt Token invalide / expiré
+        AG --> FE: 401 Unauthorized
+    else Token valide
+        AG -> PC: Requête + userId extrait du token
+        PC -> PC: ValidationPipe (class-validator)\n(UpdateProviderDto)\n- @IsUUID : id\n- @IsString : name, firstName, address\n- @IsEmail : email\n- @IsPhoneNumber("FR") : phone
+        alt Erreurs de validation backend
+            PC --> FE: 400 Bad Request
+        else Données valides
+            PC -> PS: update(updateProviderDto, userId)
+            PS -> DB: Met à jour l'enregistrement Directories\noù id = directoriesId et userId = userId
+            DB --> PS: Annuaire mis à jour
+            PS --> PC: Provider
+            PC --> FE: 200 Provider
+        end
     end
 end
 
 == Supprimer un prestataire ==
 Utilisateur -> FE: Confirme la suppression
-FE -> PC: DELETE /provider/:id
-PC -> PS: delete(providerId, userId)
-PS -> DB: Marque isDeleted = true dans Directories\noù providerId correspond et userId = userId
-DB --> PS: Suppression logique effectuée
-PS --> PC: Succès
-PC --> FE: 200 OK
-FE -> FE: Retire le prestataire de la liste
+FE -> AG: DELETE /provider/:id\n+ Bearer token
+alt Token invalide / expiré
+    AG --> FE: 401 Unauthorized
+else Token valide
+    AG -> PC: Requête + userId extrait du token
+    PC -> PS: delete(providerId, userId)
+    PS -> DB: Marque isDeleted = true dans Directories\noù providerId correspond et userId = userId
+    DB --> PS: Suppression logique effectuée
+    PS --> PC: Succès
+    PC --> FE: 200 OK
+    FE -> FE: Retire le prestataire de la liste
+end
 
 @enduml

@@ -1,9 +1,11 @@
 @startuml GestionRevenus
+!pragma layout smetana
 
 title Gestion des Revenus
 
 actor Utilisateur
 participant "Frontend\n(Solid.js)" as FE
+participant "AuthGuard\n(JwtGuard)" as AG
 participant "IncomeController\n/income" as IC
 participant "IncomeService" as IS
 participant "IncomeCategoryController\n/income-category" as ICC
@@ -11,43 +13,63 @@ database "PostgreSQL\n(Prisma)" as DB
 
 == Lister les revenus ==
 Utilisateur -> FE: Accède à la page Finances
-FE -> IC: GET /income/browse
-IC -> IS: browse(userId)
-IS -> DB: Recherche Incomes avec Contracts et Categories\noù userId = userId et isDeleted = false
-DB --> IS: Liste des revenus avec catégorie et contrat
-IS --> IC: Incomes[]
-IC --> FE: 200 Incomes[]
+FE -> AG: GET /income/browse\n+ Bearer token
+alt Token invalide / expiré
+    AG --> FE: 401 Unauthorized
+else Token valide
+    AG -> IC: Requête + userId extrait du token
+    IC -> IS: browse(userId)
+    IS -> DB: Recherche Incomes avec Contracts et Categories\noù userId = userId et isDeleted = false
+    DB --> IS: Liste des revenus avec catégorie et contrat
+    IS --> IC: Incomes[]
+    IC --> FE: 200 Incomes[]
+end
 
 == Récupérer les revenus mensuels ==
-FE -> IC: GET /income/monthly
-IC -> IS: monthlyProfit(userId)
-IS -> DB: Agrège les revenus du mois en cours\net du mois précédent pour userId
-DB --> IS: Totaux mensuels
-IS -> IS: Calcule la croissance\n(mois actuel vs mois précédent)
-IS --> IC: { total, croissance }
-IC --> FE: 200 { total, croissance }
-FE -> FE: Affiche le total des revenus\navec l'indicateur de croissance
+FE -> AG: GET /income/monthly\n+ Bearer token
+alt Token invalide / expiré
+    AG --> FE: 401 Unauthorized
+else Token valide
+    AG -> IC: Requête + userId extrait du token
+    IC -> IS: monthlyProfit(userId)
+    IS -> DB: Agrège les revenus du mois en cours\net du mois précédent pour userId
+    DB --> IS: Totaux mensuels
+    IS -> IS: Calcule la croissance\n(mois actuel vs mois précédent)
+    IS --> IC: { total, croissance }
+    IC --> FE: 200 { total, croissance }
+    FE -> FE: Affiche le total des revenus\navec l'indicateur de croissance
+end
 
 == Créer un revenu ==
 Utilisateur -> FE: Remplit le formulaire\n(nom, montant, payé, date d'émission, fréquence, contrat, catégorie)
-FE -> ICC: GET /income-category/browse
-ICC --> FE: Categories[]
+FE -> AG: GET /income-category/browse\n+ Bearer token
+alt Token invalide / expiré
+    AG --> FE: 401 Unauthorized
+else Token valide
+    AG -> ICC: Requête + userId extrait du token
+    ICC --> FE: Categories[]
+end
 FE -> FE: Valide avec Zod (IncomeCreationSchema)\n- name : 5–150 car.\n- amount : nombre (coercé)\n- isPaid : booléen\n- issueDate : date valide (coercée)\n- paidOn : date optionnelle nullable\n- frequency : "none" | "week" | "month" | "year"\n- categoryId, contractId : UUID\n- isRecurring : booléen (défaut: false)
 alt Erreurs de validation frontend
     FE -> Utilisateur: Affiche les erreurs de champ
 else Données valides
-    FE -> IC: POST /income
-    IC -> IC: ValidationPipe (class-validator)\n(CreateIncomeDto)\n- @IsString : name\n- @IsNumber : amount\n- @IsBoolean : isPaid, isRecurring\n- @IsDateString : issueDate\n- @IsOptional @IsDateString : paidOn\n- @IsEnum : frequency\n- @IsUUID : categoryId, contractId
-    alt Erreurs de validation backend
-        IC --> FE: 400 Bad Request
-    else Données valides
-        IC -> IS: create(createIncomeDto, userId)
-        IS -> DB: Vérifie que contractId appartient à userId
-        IS -> DB: Insère un enregistrement Incomes\n(nom, montant, isPaid, dateEmission, fréquence, contractId, categoryId)
-        DB --> IS: Revenu créé
-        IS --> IC: Revenu
-        IC --> FE: 201 Revenu
-        FE -> FE: Met à jour la liste des revenus
+    FE -> AG: POST /income\n+ Bearer token
+    alt Token invalide / expiré
+        AG --> FE: 401 Unauthorized
+    else Token valide
+        AG -> IC: Requête + userId extrait du token
+        IC -> IC: ValidationPipe (class-validator)\n(CreateIncomeDto)\n- @IsString : name\n- @IsNumber : amount\n- @IsBoolean : isPaid, isRecurring\n- @IsDateString : issueDate\n- @IsOptional @IsDateString : paidOn\n- @IsEnum : frequency\n- @IsUUID : categoryId, contractId
+        alt Erreurs de validation backend
+            IC --> FE: 400 Bad Request
+        else Données valides
+            IC -> IS: create(createIncomeDto, userId)
+            IS -> DB: Vérifie que contractId appartient à userId
+            IS -> DB: Insère un enregistrement Incomes\n(nom, montant, isPaid, dateEmission, fréquence, contractId, categoryId)
+            DB --> IS: Revenu créé
+            IS --> IC: Revenu
+            IC --> FE: 201 Revenu
+            FE -> FE: Met à jour la liste des revenus
+        end
     end
 end
 
@@ -57,26 +79,36 @@ FE -> FE: Valide avec Zod (IncomeUpdateSchema)\n- id : UUID\n- (mêmes règles q
 alt Erreurs de validation frontend
     FE -> Utilisateur: Affiche les erreurs de champ
 else Données valides
-    FE -> IC: PUT /income
-    IC -> IC: ValidationPipe (class-validator)\n(UpdateIncomeDto)\n- @IsUUID : id\n- (mêmes règles que la création)
-    alt Erreurs de validation backend
-        IC --> FE: 400 Bad Request
-    else Données valides
-        IC -> IS: update(updateIncomeDto, userId)
-        IS -> DB: Met à jour l'enregistrement Incomes\noù id = incomeId et userId = userId
-        DB --> IS: Revenu mis à jour
-        IS --> IC: Revenu
-        IC --> FE: 200 Revenu
+    FE -> AG: PUT /income\n+ Bearer token
+    alt Token invalide / expiré
+        AG --> FE: 401 Unauthorized
+    else Token valide
+        AG -> IC: Requête + userId extrait du token
+        IC -> IC: ValidationPipe (class-validator)\n(UpdateIncomeDto)\n- @IsUUID : id\n- (mêmes règles que la création)
+        alt Erreurs de validation backend
+            IC --> FE: 400 Bad Request
+        else Données valides
+            IC -> IS: update(updateIncomeDto, userId)
+            IS -> DB: Met à jour l'enregistrement Incomes\noù id = incomeId et userId = userId
+            DB --> IS: Revenu mis à jour
+            IS --> IC: Revenu
+            IC --> FE: 200 Revenu
+        end
     end
 end
 
 == Supprimer un revenu ==
 Utilisateur -> FE: Confirme la suppression
-FE -> IC: DELETE /income/:id
-IC -> IS: delete(incomeId, userId)
-IS -> DB: Marque isDeleted = true\noù id = incomeId et userId = userId
-DB --> IS: Suppression logique effectuée
-IS --> IC: Succès
-IC --> FE: 200 OK
+FE -> AG: DELETE /income/:id\n+ Bearer token
+alt Token invalide / expiré
+    AG --> FE: 401 Unauthorized
+else Token valide
+    AG -> IC: Requête + userId extrait du token
+    IC -> IS: delete(incomeId, userId)
+    IS -> DB: Marque isDeleted = true\noù id = incomeId et userId = userId
+    DB --> IS: Suppression logique effectuée
+    IS --> IC: Succès
+    IC --> FE: 200 OK
+end
 
 @enduml

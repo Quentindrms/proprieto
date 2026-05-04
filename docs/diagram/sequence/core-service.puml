@@ -1,4 +1,5 @@
 @startuml CoreService
+!pragma layout smetana
 
 title CoreService — Couche HTTP Frontend (Solid.js)
 
