@@ -216,7 +216,7 @@ export function useFinance() {
 	async function handleEditIncome() {
 		const validate = IncomeUpdateSchema.safeParse(updateIncome());
 		if (!validate.success) {
-			setIncomeErrors(validate.data);
+			setIncomeErrors(validate);
 			return;
 		}
 		setIncomeErrors(undefined);
