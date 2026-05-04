@@ -26,7 +26,7 @@ const paidOnSchema = z.coerce
 	.optional()
 	.nullable();
 
-const frequencySchema = z.string("").optional();
+const frequencySchema = z.enum(["none", "week", "month", "year"]).optional();
 
 const incomeCategoryIdSchema = z.uuid("Identifiant catégorie invalide");
 
