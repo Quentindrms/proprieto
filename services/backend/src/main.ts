@@ -12,7 +12,7 @@ declare global {
 }
 
 async function bootstrap() {
-	const app = await NestFactory.create(AppModule);
+	const app = await NestFactory.create(AppModule, { cors: true });
 	await seed();
 	await app.listen(process.env.PORT ?? 4000);
 }
