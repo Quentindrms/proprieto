@@ -123,7 +123,7 @@ export function useFinance() {
 				...prev,
 				[field]: target.type === "checkbox" ? target.checked : target.value,
 			}));
-			console.log(updateIncome());
+			updateIncome();
 		};
 	}
 
@@ -198,7 +198,7 @@ export function useFinance() {
 
 	async function handleEditOutcome() {
 		const validate = OutcomeUpdateSchema.safeParse(updateOutcome());
-		console.log(updateOutcome());
+		updateOutcome();
 		if (!validate.success) {
 			setOutcomeErrors(validate);
 			return;
@@ -217,7 +217,7 @@ export function useFinance() {
 
 	async function handleEditIncome() {
 		const validate = IncomeUpdateSchema.safeParse(updateIncome());
-		console.log(updateIncome());
+		updateIncome();
 		if (!validate.success) {
 			setIncomeErrors(validate);
 			return;
