@@ -125,6 +125,8 @@ describe("Income service", () => {
 				},
 				data: {
 					amount: Number(amount),
+					isDeleted: false,
+					name: undefined,
 					...data,
 				},
 			});
