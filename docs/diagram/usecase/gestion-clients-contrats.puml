@@ -1,0 +1,46 @@
+@startuml Gestion des Clients et Contrats - Cas d'Utilisation
+
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+actor "Propriétaire" as owner
+
+rectangle "Gestion des Clients" {
+  usecase "Ajouter un client" as UC_CLIENT_CREATE
+  usecase "Consulter les clients" as UC_CLIENT_LIST
+  usecase "Modifier un client" as UC_CLIENT_UPDATE
+  usecase "Supprimer un client" as UC_CLIENT_DELETE
+}
+
+rectangle "Gestion des Contrats" {
+  usecase "Créer un contrat" as UC_CONTRACT_CREATE
+  usecase "Consulter les contrats" as UC_CONTRACT_LIST
+}
+
+owner --> UC_CLIENT_CREATE
+owner --> UC_CLIENT_LIST
+owner --> UC_CLIENT_UPDATE
+owner --> UC_CLIENT_DELETE
+
+owner --> UC_CONTRACT_CREATE
+owner --> UC_CONTRACT_LIST
+
+UC_CONTRACT_CREATE ..> UC_CLIENT_LIST : <<include>>
+
+note right of UC_CLIENT_CREATE
+  Informations du client :
+  - nom, prénom
+  - email, téléphone
+  - adresse
+end note
+
+note right of UC_CONTRACT_CREATE
+  Le contrat lie :
+  - un client
+  - une propriété
+  - une période (début/fin)
+  - un loyer
+end note
+
+@enduml

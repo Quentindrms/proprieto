@@ -1,0 +1,48 @@
+@startuml Gestion des Propriétés - Cas d'Utilisation
+
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+actor "Propriétaire" as owner
+
+rectangle "Gestion des Propriétés" {
+
+  usecase "Créer une propriété" as UC_CREATE
+  usecase "Consulter les propriétés" as UC_LIST
+  usecase "Modifier une propriété" as UC_UPDATE
+  usecase "Supprimer une propriété" as UC_DELETE
+  usecase "Consulter les types de propriété" as UC_TYPES
+  usecase "Consulter le nombre de propriétés" as UC_COUNT
+  usecase "S'authentifier" as UC_AUTH
+
+}
+
+owner --> UC_CREATE
+owner --> UC_LIST
+owner --> UC_UPDATE
+owner --> UC_DELETE
+owner --> UC_TYPES
+owner --> UC_COUNT
+
+UC_CREATE ..> UC_AUTH : <<include>>
+UC_LIST ..> UC_AUTH : <<include>>
+UC_UPDATE ..> UC_AUTH : <<include>>
+UC_DELETE ..> UC_AUTH : <<include>>
+
+UC_CREATE ..> UC_TYPES : <<extend>>
+
+note right of UC_CREATE
+  Informations requises :
+  - nom, adresse
+  - type de propriété
+  - surface, nombre de pièces
+end note
+
+note right of UC_LIST
+  Filtres disponibles :
+  - par type
+  - par ville
+end note
+
+@enduml

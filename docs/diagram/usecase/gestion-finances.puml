@@ -1,0 +1,59 @@
+@startuml Gestion Financière - Cas d'Utilisation
+
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+actor "Propriétaire" as owner
+
+rectangle "Gestion des Revenus" {
+  usecase "Enregistrer un revenu" as UC_INC_CREATE
+  usecase "Consulter les revenus" as UC_INC_LIST
+  usecase "Consulter revenus mensuels" as UC_INC_MONTHLY
+  usecase "Modifier un revenu" as UC_INC_UPDATE
+  usecase "Supprimer un revenu" as UC_INC_DELETE
+  usecase "Consulter un revenu" as UC_INC_GET
+}
+
+rectangle "Gestion des Dépenses" {
+  usecase "Enregistrer une dépense" as UC_OUT_CREATE
+  usecase "Consulter les dépenses" as UC_OUT_LIST
+  usecase "Consulter dépenses mensuelles" as UC_OUT_MONTHLY
+  usecase "Modifier une dépense" as UC_OUT_UPDATE
+  usecase "Supprimer une dépense" as UC_OUT_DELETE
+  usecase "Consulter une dépense" as UC_OUT_GET
+}
+
+owner --> UC_INC_CREATE
+owner --> UC_INC_LIST
+owner --> UC_INC_MONTHLY
+owner --> UC_INC_UPDATE
+owner --> UC_INC_DELETE
+owner --> UC_INC_GET
+
+owner --> UC_OUT_CREATE
+owner --> UC_OUT_LIST
+owner --> UC_OUT_MONTHLY
+owner --> UC_OUT_UPDATE
+owner --> UC_OUT_DELETE
+owner --> UC_OUT_GET
+
+note right of UC_INC_CREATE
+  Catégorisation possible :
+  - loyer, charges
+  - autres revenus locatifs
+end note
+
+note right of UC_OUT_CREATE
+  Catégorisation possible :
+  - travaux, entretien
+  - charges, taxes
+  - assurances
+end note
+
+note bottom of UC_INC_MONTHLY
+  Agrégation par mois
+  pour le tableau de bord
+end note
+
+@enduml
