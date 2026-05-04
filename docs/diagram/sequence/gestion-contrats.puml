@@ -1,0 +1,53 @@
+@startuml GestionContrats
+
+title Gestion des Contrats de Location
+
+actor Utilisateur
+participant "Frontend\n(Solid.js)" as FE
+participant "ContractController\n/contracts" as CC
+participant "ContractService" as CS
+database "PostgreSQL\n(Prisma)" as DB
+
+== Lister les contrats ==
+Utilisateur -> FE: Accède à la page Contrats
+FE -> CC: GET /contracts/browse
+CC -> CS: browse(userId)
+CS -> DB: Recherche Contracts avec Clients et Properties\noù userId = userId
+DB --> CS: Liste des contrats avec client et propriété
+CS --> CC: Contracts[]
+CC --> FE: 200 Contracts[]
+FE -> FE: Affiche les contrats\n(avec alertes d'expiration proches)
+
+== Créer un contrat ==
+Utilisateur -> FE: Remplit le formulaire\n(date de début, date de fin, loyer, propriété, client)
+FE -> FE: Valide avec Zod (CreateContractSchema)\n- startDate, endDate : date valide\n- lease : nombre >= 0\n- propertyId : string\n- clientId : UUID valide
+alt Erreurs de validation frontend
+    FE -> Utilisateur: Affiche les erreurs de champ
+else Données valides
+    FE -> CC: POST /contracts
+    CC -> CC: ValidationPipe (class-validator)\n(CreateContractDto)\n- @IsDateString : startDate, endDate\n- @IsNumber : lease\n- @IsUUID : propertyId, clientId
+    alt Erreurs de validation backend
+        CC --> FE: 400 Bad Request
+    else Données valides
+        CC -> CS: create(createContractDto, userId)
+        CS -> DB: Vérifie que propertyId appartient à userId
+        CS -> DB: Vérifie que clientId appartient à userId
+        CS -> DB: Insère un enregistrement Contracts\n(dateDebut, dateFin, loyer, clientId, propertyId)
+        DB --> CS: Contrat créé
+        CS --> CC: Contrat
+        CC --> FE: 201 Contrat
+        FE -> FE: Met à jour la liste des contrats
+    end
+end
+
+== Alertes d'expiration ==
+FE -> FE: Calcule les contrats expirant\ndans les 30 prochains jours
+FE -> Utilisateur: Affiche les notifications d'expiration\npour chaque contrat proche de sa fin
+
+note right of FE
+  Le frontend calcule localement
+  les alertes à partir des dates
+  de fin des contrats
+end note
+
+@enduml

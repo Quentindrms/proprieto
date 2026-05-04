@@ -1,0 +1,60 @@
+@startuml CoreService
+
+title CoreService — Couche HTTP Frontend (Solid.js)
+
+participant "Appelant\n(XxxService)" as SVC
+participant "CoreService" as CS
+participant "Backend\n(NestJS)" as BE
+
+note over CS
+  Classe de base abstraite.
+  Tous les services frontend en héritent.
+  Injecte le JWT dans chaque requête via
+  le header Authorization: Bearer <token>.
+end note
+
+== GET ==
+SVC -> CS: get<T>(endpoint)
+CS -> BE: fetch(BASE_URL + endpoint)\nGET — Content-Type: application/json\nAuthorization: Bearer <token>
+BE --> CS: Response
+CS -> CS: handleJsonResponse<T>(response)\nresponse.json() → T
+CS --> SVC: T
+
+== POST ==
+SVC -> CS: post<T, K>(endpoint, body?)
+CS -> BE: fetch(BASE_URL + endpoint)\nPOST — Content-Type: application/json\nAuthorization: Bearer <token>\nBody: JSON.stringify(body)
+BE --> CS: Response
+CS -> CS: handleJsonResponse<T>(response)
+CS --> SVC: T
+
+== PUT ==
+SVC -> CS: put<T, K>(endpoint, body?)
+CS -> BE: fetch(BASE_URL + endpoint)\nPUT — Content-Type: application/json\nAuthorization: Bearer <token>\nBody: JSON.stringify(body)
+BE --> CS: Response
+CS -> CS: handleJsonResponse<T>(response)
+CS --> SVC: T
+
+== PATCH ==
+SVC -> CS: patch<T, K>(endpoint, body?)
+CS -> BE: fetch(BASE_URL + endpoint)\nPATCH — Content-Type: application/json\nAuthorization: Bearer <token>\nBody: JSON.stringify(body)
+BE --> CS: Response
+CS -> CS: handleJsonResponse<T>(response)
+CS --> SVC: T
+
+== DELETE ==
+SVC -> CS: delete<T>(endpoint)
+CS -> BE: fetch(BASE_URL + endpoint)\nDELETE — Content-Type: application/json\nAuthorization: Bearer <token>
+BE --> CS: Response
+CS -> CS: handleJsonResponse<T>(response)
+CS --> SVC: T
+
+== Gestion d'erreur JSON ==
+CS -> CS: handleJsonResponse<T>(response)
+alt Parsing JSON réussi
+    CS --> SVC: données typées T
+else Erreur de parsing
+    CS -> CS: console.trace(error)
+    CS --> SVC: throw Error("An error as occured\nwhile parsing JSON response")
+end
+
+@enduml
