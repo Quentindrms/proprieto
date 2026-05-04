@@ -1,0 +1,212 @@
+@startuml ValidationSchemas
+!pragma layout smetana
+
+title Schémas de Validation — Frontend (Zod) & Backend (class-validator)
+
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+
+package "Frontend — Zod Schemas" {
+
+  class CreateUserSchema <<Zod>> {
+    +name : string (min 5)
+    +firstName : string (2–120)
+    +email : email (max 254)
+    +address : string (5–250)
+    +phone : regex /^\d{10}$/
+    +password : string (12–150)
+    +passwordValidation : string (12–150)
+    --
+    refine: password === passwordValidation
+  }
+
+  class CreateClientSchema <<Zod>> {
+    +name : string (2–120)
+    +firstName : string (5–120)
+    +email : email (max 254)
+    +address : string (15–250)
+    +phone : regex /^\d{10}$/
+  }
+  class UpdateClientSchema <<Zod>> {
+    +id : string
+    ..hérité de CreateClientSchema..
+  }
+
+  class CreateProviderSchema <<Zod>> {
+    +name : string (5–120)
+    +firstName : string (2–120)
+    +email : email (max 254)
+    +address : string (15–250)
+    +phone : regex /^\d{10}$/
+  }
+  class UpdateProviderSchema <<Zod>> {
+    +id : string
+    ..hérité de CreateProviderSchema..
+  }
+
+  class PropertyCreationSchema <<Zod>> {
+    +name : string (10–150)
+    +purchasePrice : number >= 0
+    +purchaseDate : date
+    +sellPrice : int (optionnel)
+    +sellDate : date (optionnel)
+    +type : UUID
+  }
+  class PropertyUpdateSchema <<Zod>> {
+    +id : string
+    ..hérité de PropertyCreationSchema..
+  }
+
+  class CreateContractSchema <<Zod>> {
+    +startDate : date
+    +endDate : date
+    +lease : number >= 0
+    +propertyId : string
+    +clientId : UUID
+  }
+  class UpdateContractSchema <<Zod>> {
+    +id : string
+    ..hérité de CreateContractSchema..
+  }
+
+  class IncomeCreationSchema <<Zod>> {
+    +name : string (5–150)
+    +amount : number (coercé)
+    +isPaid : boolean
+    +issueDate : date (coercée)
+    +paidOn : date? (nullable)
+    +frequency : "none"|"week"|"month"|"year"
+    +categoryId : UUID
+    +contractId : UUID
+    +isRecurring : boolean (défaut false)
+  }
+  class IncomeUpdateSchema <<Zod>> {
+    +id : UUID
+    ..hérité de IncomeCreationSchema..
+  }
+
+  class OutcomeCreationSchema <<Zod>> {
+    +name : string (5–150)
+    +amount : number (coercé)
+    +isRecurring : boolean
+    +isPaid : boolean
+    +issueDate : date? (coercée)
+    +paidOn : date? (nullable)
+    +frequency : "none"|"week"|"month"|"year"
+    +propertyId : string
+    +categoryId : string
+    +providerId : string
+  }
+  class OutcomeUpdateSchema <<Zod>> {
+    +id : string
+    ..hérité de OutcomeCreationSchema..
+  }
+}
+
+package "Backend — class-validator DTOs (NestJS)" {
+
+  class CreateUserDto <<DTO>> {
+    +@IsString() name
+    +@IsString() firstName
+    +@IsString() address
+    +@IsEmail() email
+    +@IsPhoneNumber("FR") phone
+    +@IsStrongPassword(minLength:12) password
+  }
+
+  class CreateClientDto <<DTO>> {
+    +@IsString() name
+    +@IsString() firstName
+    +@IsEmail() email
+    +@IsString() address
+    +@IsPhoneNumber("FR") phone
+  }
+  class UpdateClientDto <<DTO>> {
+    +@IsUUID() id
+    ..hérité de CreateClientDto..
+  }
+
+  class CreateProviderDto <<DTO>> {
+    +@IsString() name
+    +@IsString() firstName
+    +@IsEmail() email
+    +@IsString() address
+    +@IsPhoneNumber("FR") phone
+  }
+  class UpdateProviderDto <<DTO>> {
+    +@IsUUID() id
+    ..hérité de CreateProviderDto..
+  }
+
+  class CreatePropertyDto <<DTO>> {
+    +@IsString() name
+    +@IsNumber() purchasePrice
+    +@IsDateString() purchaseDate
+    +@IsUUID() type
+  }
+  class UpdatePropertyDto <<DTO>> {
+    +@IsUUID() id
+    +@IsUUID() type
+    +@IsString() name
+    +@IsNumber() purchasePrice
+    +@IsOptional @IsDateString() purchaseDate
+    +@IsOptional @IsDateString() sellDate
+    +@IsOptional @IsNumber() sellPrice
+  }
+
+  class CreateContractDto <<DTO>> {
+    +@IsDateString() startDate
+    +@IsDateString() endDate
+    +@IsNumber() lease
+    +@IsUUID() propertyId
+    +@IsUUID() clientId
+  }
+
+  class CreateIncomeDto <<DTO>> {
+    +@IsString() name
+    +@IsNumber() amount
+    +@IsBoolean() isPaid
+    +@IsDateString() issueDate
+    +@IsOptional @IsDateString() paidOn
+    +@IsEnum frequency
+    +@IsUUID() categoryId
+    +@IsUUID() contractId
+  }
+  class UpdateIncomeDto <<DTO>> {
+    +@IsUUID() id
+    ..hérité de CreateIncomeDto..
+  }
+
+  class CreateOutcomeDto <<DTO>> {
+    +@IsString() name
+    +@IsNumber() amount
+    +@IsBoolean() isRecurring
+    +@IsBoolean() isPaid
+    +@IsDateString() issueDate
+    +@IsOptional @IsDateString() paidOn
+    +@IsEnum frequency
+    +@IsUUID() providerId
+    +@IsUUID() propertyId
+    +@IsUUID() categoryId
+  }
+  class UpdateOutcomeDto <<DTO>> {
+    +@IsUUID() id
+    ..hérité de CreateOutcomeDto..
+  }
+}
+
+' Correspondances Zod <-> DTO
+CreateUserSchema .. CreateUserDto : valide les mêmes données
+CreateClientSchema .. CreateClientDto
+UpdateClientSchema .. UpdateClientDto
+CreateProviderSchema .. CreateProviderDto
+UpdateProviderSchema .. UpdateProviderDto
+PropertyCreationSchema .. CreatePropertyDto
+PropertyUpdateSchema .. UpdatePropertyDto
+CreateContractSchema .. CreateContractDto
+IncomeCreationSchema .. CreateIncomeDto
+IncomeUpdateSchema .. UpdateIncomeDto
+OutcomeCreationSchema .. CreateOutcomeDto
+OutcomeUpdateSchema .. UpdateOutcomeDto
+
+@enduml
