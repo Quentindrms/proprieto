@@ -49,7 +49,7 @@ export class UpdateOutcomeDto {
 	@IsString()
 	name!: string;
 
-	@IsNumberString()
+	@IsNumber()
 	amount!: number;
 
 	@IsBoolean()
@@ -76,7 +76,4 @@ export class UpdateOutcomeDto {
 
 	@IsUUID()
 	categoryId!: string;
-
-	@IsBoolean()
-	isDeleted!: boolean;
 }
