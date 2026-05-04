@@ -1,0 +1,81 @@
+@startuml Deploiement
+
+title Diagramme de Déploiement — Proprieto
+
+skinparam nodeBackgroundColor #f5f5f5
+skinparam nodeBorderColor #999999
+skinparam componentBackgroundColor #dae8fc
+skinparam componentBorderColor #6c8ebf
+skinparam databaseBackgroundColor #d5e8d4
+skinparam databaseBorderColor #82b366
+skinparam artifactBackgroundColor #fff2cc
+skinparam artifactBorderColor #d6b656
+
+node "Poste Client\n(Navigateur Web)" as Client {
+    component "Application Solid.js" as Frontend {
+        component "CoreService\n(couche HTTP / JWT)" as CoreService
+        component "AuthService" as AuthService
+        component "PropertyService" as PropertyService
+        component "ClientService\nProviderService" as DirectoryServices
+        component "ContractService" as ContractService
+        component "IncomeService\nOutcomeService" as FinancialServices
+        component "Validation Zod\n(schemas frontend)" as ZodValidation
+    }
+    artifact "Cookie JWT" as JWTCookie
+}
+
+node "Serveur Backend" as Backend {
+    component "API NestJS\n(Fastify)" as API {
+        component "IsAuthenticated\n(Middleware JWT)" as AuthMiddleware
+        component "AuthController\nPOST /auth/*" as AuthController
+        component "PropertyController\nGET|POST|PUT|DELETE /property/*" as PropertyController
+        component "ClientController\n/client/*" as ClientController
+        component "ProviderController\n/provider/*" as ProviderController
+        component "ContractController\n/contract/*" as ContractController
+        component "IncomeController\n/income/*" as IncomeController
+        component "OutcomeController\n/outcome/*" as OutcomeController
+        component "Validation class-validator\n(DTOs + Pipes)" as DVValidation
+    }
+    component "Prisma ORM" as Prisma
+}
+
+node "Serveur Base de Données" as DBServer {
+    database "PostgreSQL" as DB {
+        artifact "Users" as TUsers
+        artifact "Directories\n(Clients / Providers)" as TDirectories
+        artifact "Properties\nPropertyTypes" as TProperties
+        artifact "Contracts" as TContracts
+        artifact "Incomes\nOutcomes" as TFinancial
+        artifact "Categories" as TCategories
+    }
+}
+
+' Flux entre Client et Backend
+Frontend -right-> API : HTTPS\nREST JSON\nAuthorization: Bearer <JWT>
+JWTCookie ..> CoreService : lu à chaque requête
+
+' Flux interne Backend
+AuthMiddleware --> AuthController
+AuthMiddleware --> PropertyController
+AuthMiddleware --> ClientController
+AuthMiddleware --> ProviderController
+AuthMiddleware --> ContractController
+AuthMiddleware --> IncomeController
+AuthMiddleware --> OutcomeController
+
+API -down-> Prisma : Queries Prisma Client
+
+' Flux vers DB
+Prisma -down-> DB : TCP\n(connection string)
+
+note right of JWTCookie
+  Signé avec jose
+  Mot de passe hashé avec argon2
+end note
+
+note right of DB
+  Schéma géré par
+  les migrations Prisma
+end note
+
+@enduml
