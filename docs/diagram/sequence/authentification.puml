@@ -1,4 +1,5 @@
 @startuml Authentification
+!pragma layout smetana
 
 title Authentification
 
@@ -8,17 +9,6 @@ participant "Middleware\nIsAuthenticated" as MW
 participant "AuthController\nPOST /auth/*" as AC
 participant "AuthService" as AS
 database "PostgreSQL\n(Prisma)" as DB
-
-== Inscription ==
-Utilisateur -> FE: Remplit le formulaire\n(nom, prénom, email, adresse, téléphone, mot de passe)
-FE -> AC: POST /auth/register
-AC -> AS: register(createUserDto)
-AS -> DB: Crée un enregistrement Users\n(rôle, statut, mot de passe hashé avec argon2)
-AS -> DB: Crée un enregistrement Directories\n(type = "user", lié au userId)
-DB --> AS: Utilisateur + Annuaire créés
-AS --> AC: { token: JWT }
-AC --> FE: 200 { token }
-FE -> FE: Stocke le token dans un cookie
 
 == Connexion ==
 Utilisateur -> FE: Remplit le formulaire\n(email, mot de passe)
@@ -38,6 +28,27 @@ AC -> AS: verify(token)
 AS -> AS: Décode et valide le JWT
 AS --> AC: { token: JWT rafraîchi }
 AC --> FE: 200 { token }
+
+== Inscription ==
+Utilisateur -> FE: Remplit le formulaire\n(nom, prénom, email, adresse, téléphone, mot de passe)
+FE -> FE: Valide avec Zod (CreateUserSchema)\n- name : min 5 car.\n- firstName : 2–120 car.\n- email : format + max 254 car.\n- address : 5–250 car.\n- phone : regex 10 chiffres\n- password : 12–150 car.\n- passwordValidation : doit correspondre
+alt Erreurs de validation frontend
+    FE -> Utilisateur: Affiche les erreurs de champ
+else Données valides
+    FE -> AC: POST /auth/register
+    AC -> AC: ValidationPipe (class-validator)\n(CreateUserDto)\n- @IsString : name, firstName, address\n- @IsEmail : email\n- @IsPhoneNumber("FR") : phone\n- @IsStrongPassword(minLength:12) : password
+    alt Erreurs de validation backend
+        AC --> FE: 400 Bad Request
+    else Données valides
+        AC -> AS: register(createUserDto)
+        AS -> DB: Crée un enregistrement Users\n(rôle, statut, mot de passe hashé avec argon2)
+        AS -> DB: Crée un enregistrement Directories\n(type = "user", lié au userId)
+        DB --> AS: Utilisateur + Annuaire créés
+        AS --> AC: { token: JWT }
+        AC --> FE: 200 { token }
+        FE -> FE: Stocke le token dans un cookie
+    end
+end
 
 == Accès aux routes protégées ==
 FE -> MW: Requête vers un endpoint protégé\nAuthorization: Bearer <token>

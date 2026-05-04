@@ -1,0 +1,93 @@
+@startuml GestionClients
+!pragma layout smetana
+
+title Gestion des Clients
+
+actor Utilisateur
+participant "Frontend\n(Solid.js)" as FE
+participant "AuthGuard\n(JwtGuard)" as AG
+participant "ClientController\n/client" as CC
+participant "ClientService" as CS
+database "PostgreSQL\n(Prisma)" as DB
+
+== Créer un client ==
+Utilisateur -> FE: Remplit le formulaire\n(nom, prénom, email, adresse, téléphone)
+FE -> FE: Valide avec Zod (CreateClientSchema)\n- name : 2–120 car.\n- firstName : 5–120 car.\n- email : format + max 254 car.\n- address : 15–250 car.\n- phone : regex 10 chiffres
+alt Erreurs de validation frontend
+    FE -> Utilisateur: Affiche les erreurs de champ
+else Données valides
+    FE -> AG: POST /client\n+ Bearer token
+    alt Token invalide / expiré
+        AG --> FE: 401 Unauthorized
+    else Token valide
+        AG -> CC: Requête + userId extrait du token
+        CC -> CC: ValidationPipe (class-validator)\n(CreateClientDto)\n- @IsString : name, firstName, address\n- @IsEmail : email\n- @IsPhoneNumber("FR") : phone
+        alt Erreurs de validation backend
+            CC --> FE: 400 Bad Request
+        else Données valides
+            CC -> CS: create(createClientDto, userId)
+            CS -> DB: Insère un enregistrement Directories\n(type = "client", lié au userId)
+            CS -> DB: Insère un enregistrement Clients\n(statut = "actif", lié au directoriesId)
+            DB --> CS: Client + Annuaire créés
+            CS --> CC: Client
+            CC --> FE: 201 Client
+            FE -> FE: Met à jour la liste des clients
+        end
+    end
+end
+
+== Lister les clients ==
+Utilisateur -> FE: Accède à la page Clients
+FE -> AG: GET /client/browse\n+ Bearer token
+alt Token invalide / expiré
+    AG --> FE: 401 Unauthorized
+else Token valide
+    AG -> CC: Requête + userId extrait du token
+    CC -> CS: browse(userId)
+    CS -> DB: Recherche Clients avec Directories\noù userId = userId et isDeleted = false
+    DB --> CS: Liste des clients avec infos annuaire
+    CS --> CC: Clients[]
+    CC --> FE: 200 Clients[]
+    FE -> FE: Affiche les cartes clients
+end
+
+== Modifier un client ==
+Utilisateur -> FE: Modifie les informations\n(nom, prénom, email, adresse, téléphone)
+FE -> FE: Valide avec Zod (UpdateClientSchema)\n- id : string\n- name, firstName, email, address, phone\n  (mêmes règles que la création)
+alt Erreurs de validation frontend
+    FE -> Utilisateur: Affiche les erreurs de champ
+else Données valides
+    FE -> AG: PATCH /client\n+ Bearer token
+    alt Token invalide / expiré
+        AG --> FE: 401 Unauthorized
+    else Token valide
+        AG -> CC: Requête + userId extrait du token
+        CC -> CC: ValidationPipe (class-validator)\n(UpdateClientDto)\n- @IsUUID : id\n- @IsString : name, firstName, address\n- @IsEmail : email\n- @IsPhoneNumber("FR") : phone
+        alt Erreurs de validation backend
+            CC --> FE: 400 Bad Request
+        else Données valides
+            CC -> CS: update(updateClientDto, userId)
+            CS -> DB: Met à jour l'enregistrement Directories\noù id = directoriesId et userId = userId
+            DB --> CS: Annuaire mis à jour
+            CS --> CC: Client
+            CC --> FE: 200 Client
+        end
+    end
+end
+
+== Supprimer un client ==
+Utilisateur -> FE: Confirme la suppression
+FE -> AG: DELETE /client/:id\n+ Bearer token
+alt Token invalide / expiré
+    AG --> FE: 401 Unauthorized
+else Token valide
+    AG -> CC: Requête + userId extrait du token
+    CC -> CS: delete(clientId, userId)
+    CS -> DB: Marque isDeleted = true dans Directories\noù clientId correspond et userId = userId
+    DB --> CS: Suppression logique effectuée
+    CS --> CC: Succès
+    CC --> FE: 200 OK
+    FE -> FE: Retire le client de la liste
+end
+
+@enduml

@@ -1,0 +1,94 @@
+@startuml ServicesFrontend
+!pragma layout smetana
+
+title Architecture des Services Frontend (Solid.js)
+
+skinparam classAttributeIconSize 0
+
+abstract class CoreService {
+  #BASE_URL : string
+  #authToken : string | null
+  --
+  +constructor(authToken?: string | null)
+  -handleFetch(endpoint, init?) : Promise<Response>
+  -handleJsonResponse<T>(response) : Promise<T>
+  --
+  #get<T>(endpoint) : Promise<T>
+  #post<T, K>(endpoint, body?) : Promise<T>
+  #put<T, K>(endpoint, body?) : Promise<T>
+  #patch<T, K>(endpoint, body?) : Promise<T>
+  #delete<T>(endpoint) : Promise<T>
+}
+
+class AuthService {
+  +login(email, password) : Promise<{success, token}>
+  +register(user: UserCreation) : Promise<{success, message}>
+  +verify(token) : Promise<{user, token}>
+  +logout(reply: FastifyReply) : void
+}
+
+class ClientService {
+  +create(client: CreateClientType) : Promise<{message}>
+  +browse() : Promise<Client[]>
+  +edit(client: UpdateClientType) : Promise<{message}>
+  +remove(id) : Promise<{message}>
+}
+
+class ContractService {
+  +create(contract: CreateContractType) : Promise<{message}>
+  +browse() : Promise<Contract[]>
+}
+
+class PropertyService {
+  +createProperty(data: PropertyCreationType) : Promise<{message}>
+  +browseProperties() : Promise<Property[]>
+  +updateProperty(data: PropertyUpdateType) : Promise<{message}>
+  +deleteProperty(propertyId) : Promise<{message}>
+  +browsePropertyType() : Promise<PropertyType[]>
+  +countProperties() : Promise<number>
+}
+
+class ProviderService {
+  +create(provider: CreateProviderType) : Promise<{message}>
+  +browse() : Promise<ProviderType[]>
+  +edit(provider: UpdateProviderType) : Promise<{message}>
+  +remove(providerId) : Promise<{message}>
+}
+
+class IncomeService {
+  +create(income: IncomeCreationType) : Promise<{message}>
+  +browse() : Promise<IncomeType[]>
+  +getIncome(id) : Promise<IncomeDetail>
+  +deleteIncome(id) : Promise<{message}>
+  +updateIncome(income: IncomeUpdateType) : Promise<{message}>
+  +monthlyIncome() : Promise<MonthlyIncome>
+}
+
+class OutcomeService {
+  +createOutcome(outcome: OutcomeCreationType) : Promise<{message}>
+  +browseOutcome() : Promise<Outcome[]>
+  +getOutcome(id) : Promise<OutcomeDetail>
+  +deleteOutcome(id) : Promise<{message}>
+  +updateOutcome(outcome: OutcomeUpdateType) : Promise<{message}>
+  +monthlyOutcome() : Promise<MonthlyOutcome>
+}
+
+class IncomeCategoryService {
+  +browseCategories() : Promise<IncomeCategory[]>
+}
+
+class OutcomeCategoryService {
+  +browseCategory() : Promise<outcomeCategory[]>
+}
+
+CoreService <|-- AuthService
+CoreService <|-- ClientService
+CoreService <|-- ContractService
+CoreService <|-- PropertyService
+CoreService <|-- ProviderService
+CoreService <|-- IncomeService
+CoreService <|-- OutcomeService
+CoreService <|-- IncomeCategoryService
+CoreService <|-- OutcomeCategoryService
+
+@enduml

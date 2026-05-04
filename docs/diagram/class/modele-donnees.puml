@@ -1,0 +1,130 @@
+@startuml ModeleDonnees
+!pragma layout smetana
+
+title Modèle de Données (PostgreSQL / Prisma)
+
+skinparam classAttributeIconSize 0
+
+class Users {
+  +id : String <<uuid>>
+  +role : String
+  +status : String
+  +email : String <<unique>>
+  +password : String
+}
+
+class Directories {
+  +id : String <<uuid>>
+  +name : String
+  +firstName : String
+  +email : String
+  +phone : String
+  +address : String
+  +type : String
+  +isDeleted : Boolean
+  --
+  +userId : String <<FK>>
+}
+
+class Properties {
+  +id : String <<uuid>>
+  +name : String
+  +purchasePrice : Int
+  +purchaseDate : DateTime
+  +sellPrice : Int?
+  +sellDate : DateTime?
+  +isDeleted : Boolean
+  --
+  +typeId : String <<FK>>
+  +userId : String <<FK>>
+}
+
+class PropertyTypes {
+  +id : String <<uuid>>
+  +slug : String <<unique>>
+  +name : String
+}
+
+class Clients {
+  +id : String <<uuid>>
+  +status : String
+  --
+  +directoriesId : String <<FK>>
+}
+
+class Providers {
+  +id : String <<uuid>>
+  +status : String
+  --
+  +directoriesId : String <<FK>>
+}
+
+class Contracts {
+  +id : String <<uuid>>
+  +startDate : DateTime
+  +endDate : DateTime
+  +lease : Int
+  --
+  +clientId : String <<FK>>
+  +propertyId : String <<FK>>
+}
+
+class Incomes {
+  +id : String <<uuid>>
+  +name : String
+  +amount : Int
+  +isPaid : Boolean
+  +issueDate : DateTime
+  +paidOn : DateTime?
+  +frequency : String?
+  +isDeleted : Boolean
+  --
+  +contractId : String <<FK>>
+  +categoryId : String <<FK>>
+}
+
+class Outcomes {
+  +id : String <<uuid>>
+  +name : String
+  +amount : Int
+  +isRecurring : Boolean
+  +isPaid : Boolean
+  +issueDate : DateTime
+  +paidOn : DateTime?
+  +frequency : String
+  +isDeleted : Boolean
+  --
+  +propertyId : String <<FK>>
+  +providerId : String <<FK>>
+  +categoryId : String <<FK>>
+}
+
+class Categories {
+  +id : String <<uuid>>
+  +slug : String <<unique>>
+  +label : String
+  +type : String
+}
+
+' Relations
+Users "1" --> "0..*" Properties : possède
+Users "1" --> "0..*" Directories : possède
+
+Directories "1" --> "0..1" Clients : identifie
+Directories "1" --> "0..1" Providers : identifie
+
+Properties "1" --> "0..*" Contracts : lié à
+Properties "1" --> "0..*" Outcomes : concerne
+
+PropertyTypes "1" --> "0..*" Properties : type
+
+Clients "1" --> "0..*" Contracts : signe
+
+Contracts "1" --> "0..*" Incomes : génère
+
+Providers "1" --> "0..*" Outcomes : facture
+
+Categories "1" --> "0..*" Incomes : catégorise
+Categories "1" --> "0..*" Outcomes : catégorise
+
+@enduml

@@ -1,0 +1,105 @@
+@startuml GestionProprietes
+!pragma layout smetana
+
+title Gestion des Propriétés
+
+actor Utilisateur
+participant "Frontend\n(Solid.js)" as FE
+participant "AuthGuard\n(JwtGuard)" as AG
+participant "PropertyController\n/property" as PC
+participant "PropertyService" as PS
+database "PostgreSQL\n(Prisma)" as DB
+
+== Créer une propriété ==
+Utilisateur -> FE: Remplit le formulaire de création\n(nom, prix d'achat, date d'achat, type)
+FE -> FE: Valide avec Zod (PropertyCreationSchema)\n- name : 10–150 car.\n- purchasePrice : nombre >= 0\n- purchaseDate : date valide\n- type : UUID valide
+alt Erreurs de validation frontend
+    FE -> Utilisateur: Affiche les erreurs de champ
+else Données valides
+    FE -> AG: POST /property\n+ Bearer token
+    alt Token invalide / expiré
+        AG --> FE: 401 Unauthorized
+    else Token valide
+        AG -> PC: Requête + userId extrait du token
+        PC -> PC: ValidationPipe (class-validator)\n(CreatePropertyDto)\n- @IsString : name\n- @IsNumber : purchasePrice\n- @IsDateString : purchaseDate\n- @IsUUID : type
+        alt Erreurs de validation backend
+            PC --> FE: 400 Bad Request
+        else Données valides
+            PC -> PS: create(createPropertyDto, userId)
+            PS -> DB: Insère un enregistrement Properties\n(nom, prixAchat, dateAchat, typeId, userId)
+            DB --> PS: Propriété créée
+            PS --> PC: Propriété
+            PC --> FE: 201 Propriété
+            FE -> FE: Met à jour la liste des propriétés
+        end
+    end
+end
+
+== Lister les propriétés ==
+Utilisateur -> FE: Accède à la page Propriétés
+FE -> AG: GET /property/browse\n+ Bearer token
+alt Token invalide / expiré
+    AG --> FE: 401 Unauthorized
+else Token valide
+    AG -> PC: Requête + userId extrait du token
+    PC -> PS: browse(userId)
+    PS -> DB: Recherche Properties où userId = userId\net isDeleted = false
+    DB --> PS: Liste des propriétés avec type
+    PS --> PC: Propriétés[]
+    PC --> FE: 200 Propriétés[]
+    FE -> FE: Affiche les cartes de propriétés\n(filtrables par type : appartement, maison, bureau)
+end
+
+== Modifier une propriété ==
+Utilisateur -> FE: Modifie les informations\n(nom, prix de vente, date de vente, type)
+FE -> FE: Valide avec Zod (PropertyUpdateSchema)\n- id : string\n- name : 10–150 car.\n- purchasePrice : nombre >= 0\n- purchaseDate, sellDate : date valide (optionnel)\n- sellPrice : entier (optionnel)\n- type : UUID valide
+alt Erreurs de validation frontend
+    FE -> Utilisateur: Affiche les erreurs de champ
+else Données valides
+    FE -> AG: PUT /property\n+ Bearer token
+    alt Token invalide / expiré
+        AG --> FE: 401 Unauthorized
+    else Token valide
+        AG -> PC: Requête + userId extrait du token
+        PC -> PC: ValidationPipe (class-validator)\n(UpdatePropertyDto)\n- @IsUUID : id, type\n- @IsString : name\n- @IsNumber : purchasePrice\n- @IsOptional @IsDateString : purchaseDate, sellDate\n- @IsOptional @IsNumber : sellPrice
+        alt Erreurs de validation backend
+            PC --> FE: 400 Bad Request
+        else Données valides
+            PC -> PS: update(updatePropertyDto, userId)
+            PS -> DB: Met à jour l'enregistrement Properties\noù id = propertyId et userId = userId
+            DB --> PS: Propriété mise à jour
+            PS --> PC: Propriété
+            PC --> FE: 200 Propriété
+        end
+    end
+end
+
+== Supprimer une propriété ==
+Utilisateur -> FE: Confirme la suppression
+FE -> AG: DELETE /property/:id\n+ Bearer token
+alt Token invalide / expiré
+    AG --> FE: 401 Unauthorized
+else Token valide
+    AG -> PC: Requête + userId extrait du token
+    PC -> PS: delete(propertyId, userId)
+    PS -> DB: Marque isDeleted = true\noù id = propertyId et userId = userId
+    DB --> PS: Suppression logique effectuée
+    PS --> PC: Succès
+    PC --> FE: 200 OK
+    FE -> FE: Retire la propriété de la liste
+end
+
+== Compter les propriétés ==
+FE -> AG: GET /property/count\n+ Bearer token
+alt Token invalide / expiré
+    AG --> FE: 401 Unauthorized
+else Token valide
+    AG -> PC: Requête + userId extrait du token
+    PC -> PS: count(userId)
+    PS -> DB: Compte les Properties actives\noù userId = userId et isDeleted = false
+    DB --> PS: Nombre
+    PS --> PC: { count: nombre }
+    PC --> FE: 200 { count: nombre }
+end
+
+@enduml

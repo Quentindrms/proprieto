@@ -1,0 +1,69 @@
+@startuml TableauDeBord
+!pragma layout smetana
+
+title Tableau de Bord & Analytique
+
+actor Utilisateur
+participant "Frontend\n(Solid.js)" as FE
+participant "AuthGuard\n(JwtGuard)" as AG
+participant "PropertyController\n/property" as PC
+participant "IncomeController\n/income" as IC
+participant "OutcomeController\n/outcome" as OC
+participant "ContractController\n/contracts" as CC
+database "PostgreSQL\n(Prisma)" as DB
+
+== Chargement du tableau de bord ==
+Utilisateur -> FE: Accède au tableau de bord
+FE -> AG: Requêtes multiples\n+ Bearer token
+alt Token invalide / expiré
+    AG --> FE: 401 Unauthorized
+else Token valide
+    AG -> PC: GET /property/count + userId
+    PC -> DB: Compte les propriétés actives (userId)
+    DB --> PC: { count }
+    PC --> FE: 200 { count }
+
+    AG -> IC: GET /income/monthly + userId
+    IC -> DB: Agrège les revenus du mois actuel\net du mois précédent (userId)
+    DB --> IC: Totaux
+    IC -> IC: Calcule la croissance mensuelle
+    IC --> FE: 200 { total, croissance }
+
+    AG -> OC: GET /outcome/monthly + userId
+    OC -> DB: Agrège les dépenses du mois actuel\net du mois précédent (userId)
+    DB --> OC: Totaux
+    OC -> OC: Calcule la croissance mensuelle
+    OC --> FE: 200 { total, croissance }
+
+    AG -> IC: GET /income/browse + userId
+    IC -> DB: Récupère tous les revenus (userId)
+    DB --> IC: Incomes[]
+    IC --> FE: 200 Incomes[]
+
+    AG -> OC: GET /outcome/browse + userId
+    OC -> DB: Récupère toutes les dépenses (userId)
+    DB --> OC: Outcomes[]
+    OC --> FE: 200 Outcomes[]
+
+    AG -> CC: GET /contracts/browse + userId
+    CC -> DB: Récupère tous les contrats (userId)
+    DB --> CC: Contracts[]
+    CC --> FE: 200 Contracts[]
+end
+
+== Calculs côté frontend ==
+FE -> FE: Bénéfice mensuel = revenus - dépenses
+FE -> FE: Taux d'occupation = contrats actifs / total propriétés
+FE -> FE: Fusionne revenus + dépenses → historique des transactions
+FE -> FE: Classe les propriétés par performance financière
+
+== Affichage ==
+FE -> Utilisateur: Nombre de propriétés
+FE -> Utilisateur: Total revenus mensuels + croissance
+FE -> Utilisateur: Total dépenses mensuelles + croissance
+FE -> Utilisateur: Bénéfice mensuel net
+FE -> Utilisateur: Taux d'occupation
+FE -> Utilisateur: Historique des transactions (tableau)
+FE -> Utilisateur: Alertes contrats expirant bientôt
+
+@enduml

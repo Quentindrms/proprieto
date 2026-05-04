@@ -1,0 +1,36 @@
+@startuml Gestion des Prestataires - Cas d'Utilisation
+!pragma layout smetana
+
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+actor "Propriétaire" as owner
+
+rectangle "Gestion des Prestataires" {
+  usecase "Ajouter un prestataire" as UC_CREATE
+  usecase "Consulter les prestataires" as UC_LIST
+  usecase "Modifier un prestataire" as UC_UPDATE
+  usecase "Supprimer un prestataire" as UC_DELETE
+}
+
+owner --> UC_CREATE
+owner --> UC_LIST
+owner --> UC_UPDATE
+owner --> UC_DELETE
+
+UC_UPDATE ..> UC_LIST : <<include>>
+
+note right of UC_CREATE
+  Informations du prestataire :
+  - nom, spécialité
+  - email, téléphone
+  - adresse
+end note
+
+note bottom of UC_LIST
+  Les prestataires peuvent être
+  associés aux dépenses de travaux
+end note
+
+@enduml
