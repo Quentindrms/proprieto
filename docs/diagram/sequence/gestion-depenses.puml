@@ -1,9 +1,11 @@
 @startuml GestionDepenses
+!pragma layout smetana
 
 title Gestion des Dépenses
 
 actor Utilisateur
 participant "Frontend\n(Solid.js)" as FE
+participant "AuthGuard\n(JwtGuard)" as AG
 participant "OutcomeController\n/outcome" as OC
 participant "OutcomeService" as OS
 participant "OutcomeCategoryController\n/outcome-category" as OCC
@@ -11,44 +13,64 @@ database "PostgreSQL\n(Prisma)" as DB
 
 == Lister les dépenses ==
 Utilisateur -> FE: Accède à la page Finances
-FE -> OC: GET /outcome/browse
-OC -> OS: browse(userId)
-OS -> DB: Recherche Outcomes avec Properties, Providers et Categories\noù userId = userId et isDeleted = false
-DB --> OS: Liste des dépenses avec détails
-OS --> OC: Outcomes[]
-OC --> FE: 200 Outcomes[]
+FE -> AG: GET /outcome/browse\n+ Bearer token
+alt Token invalide / expiré
+    AG --> FE: 401 Unauthorized
+else Token valide
+    AG -> OC: Requête + userId extrait du token
+    OC -> OS: browse(userId)
+    OS -> DB: Recherche Outcomes avec Properties, Providers et Categories\noù userId = userId et isDeleted = false
+    DB --> OS: Liste des dépenses avec détails
+    OS --> OC: Outcomes[]
+    OC --> FE: 200 Outcomes[]
+end
 
 == Récupérer les dépenses mensuelles ==
-FE -> OC: GET /outcome/monthly
-OC -> OS: monthlyLoss(userId)
-OS -> DB: Agrège les dépenses du mois en cours\net du mois précédent pour userId
-DB --> OS: Totaux mensuels
-OS -> OS: Calcule la croissance\n(mois actuel vs mois précédent)
-OS --> OC: { total, croissance }
-OC --> FE: 200 { total, croissance }
-FE -> FE: Affiche le total des dépenses\navec l'indicateur de croissance
+FE -> AG: GET /outcome/monthly\n+ Bearer token
+alt Token invalide / expiré
+    AG --> FE: 401 Unauthorized
+else Token valide
+    AG -> OC: Requête + userId extrait du token
+    OC -> OS: monthlyLoss(userId)
+    OS -> DB: Agrège les dépenses du mois en cours\net du mois précédent pour userId
+    DB --> OS: Totaux mensuels
+    OS -> OS: Calcule la croissance\n(mois actuel vs mois précédent)
+    OS --> OC: { total, croissance }
+    OC --> FE: 200 { total, croissance }
+    FE -> FE: Affiche le total des dépenses\navec l'indicateur de croissance
+end
 
 == Créer une dépense ==
 Utilisateur -> FE: Remplit le formulaire\n(nom, montant, récurrent, payé, date, fréquence, propriété, prestataire, catégorie)
-FE -> OCC: GET /outcome-category/
-OCC --> FE: Categories[]
+FE -> AG: GET /outcome-category/\n+ Bearer token
+alt Token invalide / expiré
+    AG --> FE: 401 Unauthorized
+else Token valide
+    AG -> OCC: Requête + userId extrait du token
+    OCC --> FE: Categories[]
+end
 FE -> FE: Valide avec Zod (OutcomeCreationSchema)\n- name : 5–150 car.\n- amount : nombre (coercé)\n- isRecurring, isPaid : booléen\n- issueDate : date optionnelle (coercée)\n- paidOn : date optionnelle nullable\n- frequency : "none" | "week" | "month" | "year"\n- propertyId, categoryId, providerId : string
 alt Erreurs de validation frontend
     FE -> Utilisateur: Affiche les erreurs de champ
 else Données valides
-    FE -> OC: POST /outcome
-    OC -> OC: ValidationPipe (class-validator)\n(CreateOutcomeDto)\n- @IsString : name\n- @IsNumber : amount\n- @IsBoolean : isRecurring, isPaid\n- @IsDateString : issueDate\n- @IsOptional @IsDateString : paidOn\n- @IsEnum : frequency\n- @IsUUID : providerId, propertyId, categoryId
-    alt Erreurs de validation backend
-        OC --> FE: 400 Bad Request
-    else Données valides
-        OC -> OS: create(createOutcomeDto, userId)
-        OS -> DB: Vérifie que propertyId appartient à userId
-        OS -> DB: Vérifie que providerId appartient à userId
-        OS -> DB: Insère un enregistrement Outcomes\n(nom, montant, isRecurring, isPaid, dateEmission, fréquence, propertyId, providerId, categoryId)
-        DB --> OS: Dépense créée
-        OS --> OC: Dépense
-        OC --> FE: 201 Dépense
-        FE -> FE: Met à jour la liste des dépenses
+    FE -> AG: POST /outcome\n+ Bearer token
+    alt Token invalide / expiré
+        AG --> FE: 401 Unauthorized
+    else Token valide
+        AG -> OC: Requête + userId extrait du token
+        OC -> OC: ValidationPipe (class-validator)\n(CreateOutcomeDto)\n- @IsString : name\n- @IsNumber : amount\n- @IsBoolean : isRecurring, isPaid\n- @IsDateString : issueDate\n- @IsOptional @IsDateString : paidOn\n- @IsEnum : frequency\n- @IsUUID : providerId, propertyId, categoryId
+        alt Erreurs de validation backend
+            OC --> FE: 400 Bad Request
+        else Données valides
+            OC -> OS: create(createOutcomeDto, userId)
+            OS -> DB: Vérifie que propertyId appartient à userId
+            OS -> DB: Vérifie que providerId appartient à userId
+            OS -> DB: Insère un enregistrement Outcomes\n(nom, montant, isRecurring, isPaid, dateEmission, fréquence, propertyId, providerId, categoryId)
+            DB --> OS: Dépense créée
+            OS --> OC: Dépense
+            OC --> FE: 201 Dépense
+            FE -> FE: Met à jour la liste des dépenses
+        end
     end
 end
 
@@ -58,26 +80,36 @@ FE -> FE: Valide avec Zod (OutcomeUpdateSchema)\n- id : string\n- (mêmes règle
 alt Erreurs de validation frontend
     FE -> Utilisateur: Affiche les erreurs de champ
 else Données valides
-    FE -> OC: PUT /outcome
-    OC -> OC: ValidationPipe (class-validator)\n(UpdateOutcomeDto)\n- @IsUUID : id\n- (mêmes règles que la création)
-    alt Erreurs de validation backend
-        OC --> FE: 400 Bad Request
-    else Données valides
-        OC -> OS: update(updateOutcomeDto, userId)
-        OS -> DB: Met à jour l'enregistrement Outcomes\noù id = outcomeId et userId = userId
-        DB --> OS: Dépense mise à jour
-        OS --> OC: Dépense
-        OC --> FE: 200 Dépense
+    FE -> AG: PUT /outcome\n+ Bearer token
+    alt Token invalide / expiré
+        AG --> FE: 401 Unauthorized
+    else Token valide
+        AG -> OC: Requête + userId extrait du token
+        OC -> OC: ValidationPipe (class-validator)\n(UpdateOutcomeDto)\n- @IsUUID : id\n- (mêmes règles que la création)
+        alt Erreurs de validation backend
+            OC --> FE: 400 Bad Request
+        else Données valides
+            OC -> OS: update(updateOutcomeDto, userId)
+            OS -> DB: Met à jour l'enregistrement Outcomes\noù id = outcomeId et userId = userId
+            DB --> OS: Dépense mise à jour
+            OS --> OC: Dépense
+            OC --> FE: 200 Dépense
+        end
     end
 end
 
 == Supprimer une dépense ==
 Utilisateur -> FE: Confirme la suppression
-FE -> OC: DELETE /outcome/:id
-OC -> OS: delete(outcomeId, userId)
-OS -> DB: Marque isDeleted = true\noù id = outcomeId et userId = userId
-DB --> OS: Suppression logique effectuée
-OS --> OC: Succès
-OC --> FE: 200 OK
+FE -> AG: DELETE /outcome/:id\n+ Bearer token
+alt Token invalide / expiré
+    AG --> FE: 401 Unauthorized
+else Token valide
+    AG -> OC: Requête + userId extrait du token
+    OC -> OS: delete(outcomeId, userId)
+    OS -> DB: Marque isDeleted = true\noù id = outcomeId et userId = userId
+    DB --> OS: Suppression logique effectuée
+    OS --> OC: Succès
+    OC --> FE: 200 OK
+end
 
 @enduml
