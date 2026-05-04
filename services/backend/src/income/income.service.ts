@@ -58,15 +58,20 @@ export class IncomeService {
 	}
 
 	async update(income: UpdateIncomeDto) {
-		const { id, amount, ...data } = income;
-
 		return await prisma.incomes.update({
 			where: {
-				id,
+				id: income.id,
 			},
 			data: {
-				...data,
-				amount: Number(amount),
+				amount: income.amount,
+				categoryId: income.categoryId,
+				contractId: income.contractId,
+				frequency: income.frequency,
+				isDeleted: false,
+				isPaid: income.isPaid,
+				issueDate: income.issueDate,
+				name: income.name,
+				paidOn: income.paidOn,
 			},
 		});
 	}
