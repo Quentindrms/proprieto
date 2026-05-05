@@ -115,9 +115,17 @@ export default function Page() {
 
             <footer class="flex flex-wrap items-center justify-between gap-4 border-t border-slate-strong px-8 py-6">
                 <Heading components="h3" size="base" fontClasses="bold">Proprieto</Heading>
-                <Text size="small" class="text-muted-text font-base-regular">
-                    © {new Date().getFullYear()} Proprieto. Tous droits réservés.
-                </Text>
+                <div class="flex items-center gap-6">
+                    <a href="/mentions-legales">
+                        <Text size="small" class="text-muted-text font-base-regular hover:text-dark transition-colors">Mentions légales</Text>
+                    </a>
+                    <a href="/cgu">
+                        <Text size="small" class="text-muted-text font-base-regular hover:text-dark transition-colors">CGU</Text>
+                    </a>
+                    <Text size="small" class="text-muted-text font-base-regular">
+                        © {new Date().getFullYear()} Proprieto. Tous droits réservés.
+                    </Text>
+                </div>
             </footer>
 
         </div>
