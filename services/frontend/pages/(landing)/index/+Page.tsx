@@ -6,9 +6,8 @@ import Text from "@components/text";
 
 export default function Page() {
     return (
-        <div class="min-h-screen bg-background-base">
+        <div class="min-h-screen w-full bg-background-base">
 
-            {/* Header */}
             <header class="flex items-center justify-between px-8 py-5 border-b border-slate-strong">
                 <div class="flex flex-col">
                     <Heading components="h1" size="extra-large" fontClasses="bold">
@@ -23,7 +22,6 @@ export default function Page() {
                 </a>
             </header>
 
-            {/* Hero */}
             <section class="bg-background-primary px-8 py-24 flex flex-col items-center text-center gap-6">
                 <Badge color="primary">Gestion immobilière simplifiée</Badge>
                 <Heading components="h2" size="big" color="white" fontClasses="extra-bold" class="max-w-2xl leading-tight">
@@ -42,7 +40,6 @@ export default function Page() {
                 </div>
             </section>
 
-            {/* Features */}
             <section class="px-8 py-20 max-w-5xl mx-auto flex flex-col gap-14">
 
                 <div class="flex flex-col items-center text-center gap-3">
@@ -54,7 +51,6 @@ export default function Page() {
                     </Text>
                 </div>
 
-                {/* Feature: Finances */}
                 <div class="flex flex-col md:flex-row items-center gap-10">
                     <div class="flex flex-col gap-3 flex-1">
                         <Badge color="success">Finances</Badge>
@@ -71,7 +67,6 @@ export default function Page() {
                     </div>
                 </div>
 
-                {/* Feature: Contrats */}
                 <div class="flex flex-col md:flex-row-reverse items-center gap-10">
                     <div class="flex flex-col gap-3 flex-1">
                         <Badge color="primary">Contrats</Badge>
@@ -88,7 +83,6 @@ export default function Page() {
                     </div>
                 </div>
 
-                {/* Feature: Biens & Locataires */}
                 <div class="flex flex-col md:flex-row items-center gap-10">
                     <div class="flex flex-col gap-3 flex-1">
                         <Badge color="warning">Biens & Locataires</Badge>
@@ -107,7 +101,6 @@ export default function Page() {
 
             </section>
 
-            {/* CTA */}
             <section class="bg-background-primary px-8 py-20 flex flex-col items-center text-center gap-6">
                 <Heading components="h2" size="extra-large" color="white" fontClasses="extra-bold">
                     Prêt à simplifier votre gestion ?
@@ -120,7 +113,6 @@ export default function Page() {
                 </a>
             </section>
 
-            {/* Footer */}
             <footer class="flex flex-wrap items-center justify-between gap-4 border-t border-slate-strong px-8 py-6">
                 <Heading components="h3" size="base" fontClasses="bold">Proprieto</Heading>
                 <Text size="small" class="text-muted-text font-base-regular">
