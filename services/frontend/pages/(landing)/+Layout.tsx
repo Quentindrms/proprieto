@@ -3,8 +3,8 @@ import type { JSX } from "solid-js";
 
 export default function Layout(props: { children?: JSX.Element }) {
     return (
-        <div class="bg-background-muted/10 h-full">
-            <div class="flex">
+        <div class="bg-background-muted/10 h-full w-dvw">
+            <div class="flex w-full">
                 {props.children}
             </div>
         </div>
