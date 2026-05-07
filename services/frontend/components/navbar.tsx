@@ -18,7 +18,7 @@ export default function Navbar() {
     }
 
     return (
-        <div class="w-2xs h-dvh flex flex-col">
+        <div class="hidden w-2xs h-dvh lg:flex flex-col">
             <div class="flex flex-col p-4">
                 <Heading components="h1" size="extra-large" fontClasses="bold">
                     Proprieto
