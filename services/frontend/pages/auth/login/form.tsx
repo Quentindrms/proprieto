@@ -23,7 +23,7 @@ export default function LoginForm() {
 
 	return (
 		<form
-			class="flex flex-col gap-3 p-2 w-lg bg-background-base border border-slate-strong rounded-xl shadow-lg shadow-slate-strong"
+			class="flex flex-col gap-3 p-2 sm:w-3xs md:w-md lg:w-lg xl:w-xl bg-background-base border border-slate-strong rounded-xl shadow-lg shadow-slate-strong"
 			onSubmit={auth.handleLogin}
 		>
 			<TextField
