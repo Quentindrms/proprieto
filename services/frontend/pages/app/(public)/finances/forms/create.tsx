@@ -306,7 +306,7 @@ export function CreateIncomeForm() {
                 </Text>
             )}
 
-            <div class="flex flex-col md:flew-row gap-2">
+            <div class="flex exit gap-2">
                 <div class="flex flex-col">
                     <ToggleSwitch
                         label="Récurrent"
