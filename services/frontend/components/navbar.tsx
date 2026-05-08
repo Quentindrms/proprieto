@@ -61,6 +61,7 @@ export default function Navbar() {
             {/* Drawer sm/md */}
             <div class={clsx(
                 "lg:hidden fixed top-0 left-0 z-40 h-dvh w-2xs flex flex-col bg-background-base border-r border-slate-strong shadow-sm transition-transform duration-300",
+
                 isOpen() ? "translate-x-0" : "-translate-x-full"
             )}>
                 <div class="flex flex-col p-4 pt-16">
