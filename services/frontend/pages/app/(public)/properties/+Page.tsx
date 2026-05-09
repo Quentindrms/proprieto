@@ -86,7 +86,7 @@ export default function Page() {
 
 				<div class="hidden lg:flex flex-row gap-4 p-4">
 					<ButtonBadge color="primary" onClick={() => sortProperties("all")}>
-						Tous les biens ({properties().length})
+						Tous les biens ({data.properties.length})
 					</ButtonBadge>
 					<ButtonBadge
 						color="primary"
