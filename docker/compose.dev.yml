@@ -1,4 +1,4 @@
-name: proprio-developement 
+name: proprieto-developement 
 services:
   frontend:
     container_name: proprieto-frontend-dev
