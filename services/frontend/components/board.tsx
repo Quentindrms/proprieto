@@ -37,7 +37,7 @@ function getContractStatus(endDate: Date | string): ContractStatus {
 
 export function ContractBoard(props: ContractBoardProps) {
 	return (
-		<div class="w-xs md:w-4xl lg:w-7xl overflow-x-auto rounded-xl shadow-md bg-background-base shadow-muted-text">
+		<div class="w-full md:w-4xl lg:w-7xl overflow-x-auto rounded-xl shadow-md bg-background-base shadow-muted-text">
 			<table class="w-full border-collapse">
 				<thead class="bg-background-secondary">
 					<tr>
@@ -100,7 +100,7 @@ interface ContractorsBoardProps {
 
 export function ContractorsBoard(props: ContractorsBoardProps) {
 	return (
-		<div class="w-xs md:w-3xl lg:w-7xl overflow-x-auto rounded-xl shadow-md bg-background-base shadow-muted-text">
+		<div class="w-full md:w-3xl lg:w-7xl overflow-x-auto rounded-xl shadow-md bg-background-base shadow-muted-text">
 			<table class="w-full border-collapse">
 				<thead class="bg-background-base shadow-muted-text">
 					<tr>
@@ -179,7 +179,7 @@ export function FluxBoard(props: FluxBoardProps) {
 			<ButtonGroup
 				options={[{ label: "Revenus", value: "income", onClick: () => setDisplayOutcome(false) }, { label: "Dépenses", value: "outcome", onClick: () => setDisplayOutcome(true) }]}
 			/>
-			<div class="w-xs md:w-4xl lg:w-7xl overflow-x-auto rounded-xl shadow-md bg-background-base shadow-muted-text">
+			<div class="w-full md:w-4xl lg:w-7xl overflow-x-auto rounded-xl shadow-md bg-background-base shadow-muted-text">
 				<table class="w-full border-collapse">
 					<thead class="bg-background-base shadow-muted-text">
 						<tr>
