@@ -1,6 +1,6 @@
 import nodemailer, { type Transporter } from "nodemailer";
 import type SMTPTransport from "nodemailer/lib/smtp-transport";
-import { createAccount } from "./mails/mailList";
+import { createAccount, recoverPassword } from "./mails/mailList";
 
 export class MailerClient {
 	private transporter: Transporter;
@@ -27,13 +27,26 @@ export class MailerClient {
 	async accountCreation(recipient: string) {
 		try {
 			const maker = createAccount(recipient);
-			const email = await this.transporter.sendMail({
+			await this.transporter.sendMail({
 				from: maker.from,
 				to: maker.to,
 				subject: maker.subject,
 				html: maker.html,
 			});
-			console.log(nodemailer.getTestMessageUrl(email));
+		} catch (error) {
+			console.trace(error);
+		}
+	}
+
+	async recoverPassword(recipient: string) {
+		try {
+			const maker = recoverPassword(recipient);
+			await this.transporter.sendMail({
+				from: maker.from,
+				to: maker.to,
+				subject: maker.subject,
+				html: maker.html,
+			});
 		} catch (error) {
 			console.trace(error);
 		}

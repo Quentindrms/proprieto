@@ -79,4 +79,16 @@ export class AuthService extends JwtService {
 
 		return { user };
 	}
+
+	async recoverPassword(email: string) {
+		const user = await prisma.users.findFirst({
+			where: { email },
+			select: { email: true },
+		});
+		if (!user?.email) {
+			return;
+		}
+		const mailer = await MailerClient.create();
+		mailer.recoverPassword(user.email);
+	}
 }

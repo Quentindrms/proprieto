@@ -15,3 +15,12 @@ export function createAccount(userEmail: string): mailTemplate {
 		html: createAccountHtml(userEmail),
 	};
 }
+
+export function recoverPassword(userEmail: string): mailTemplate {
+	return {
+		from: "noreply@quentin-derimais.fr",
+		to: userEmail,
+		subject: "Vous avez oublié votre mot de passe",
+		html: "<p>Hello world</p>",
+	};
+}
