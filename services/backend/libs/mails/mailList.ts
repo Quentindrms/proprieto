@@ -1,3 +1,5 @@
+import { createAccountHtml } from "./mailText";
+
 interface mailTemplate {
 	from: string;
 	to: string;
@@ -9,7 +11,7 @@ export function createAccount(userEmail: string): mailTemplate {
 	return {
 		from: "noreply@quentin-derimais.fr",
 		to: userEmail,
-		subject: "Votre compte a été crée",
-		html: "<p>Hello world !<p>",
+		subject: "Bienvenue sur Proprieto — votre compte a été créé",
+		html: createAccountHtml(userEmail),
 	};
 }
