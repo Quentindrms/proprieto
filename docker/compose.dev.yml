@@ -50,6 +50,7 @@ services:
     networks:
       - database
       - frontback
+      - back
     restart: always
 
 
@@ -64,9 +65,19 @@ services:
       - POSTGRES_DB=${DB_NAME}
     networks:
       - database
+  
+  mailpit:
+    image: axllent/mailpit
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      - back
 
 networks:
   database: 
     driver: bridge
   frontback: 
+    driver: bridge
+  back:
     driver: bridge
