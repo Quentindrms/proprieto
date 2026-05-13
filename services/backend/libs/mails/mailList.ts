@@ -22,7 +22,9 @@ export function createAccount(userEmail: string): mailTemplate {
 export async function recoverPassword(
 	userEmail: string,
 ): Promise<mailTemplate> {
-	const renderHtml = await render(React.createElement(RecoverPassword, null));
+	const renderHtml = await render(
+		React.createElement(RecoverPassword, { resetLink: "#" }),
+	);
 	return {
 		from: "noreply@quentin-derimais.fr",
 		to: userEmail,

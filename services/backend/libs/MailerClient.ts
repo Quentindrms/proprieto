@@ -48,7 +48,7 @@ export class MailerClient {
 				html: maker.html,
 			});
 		} catch (error) {
-			console.trace();
+			console.trace(error);
 		}
 	}
 }
