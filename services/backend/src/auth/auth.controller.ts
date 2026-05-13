@@ -56,9 +56,13 @@ export class AuthController {
 		});
 	}
 
-	@Get("/recover")
-	async recoverPassword(@Res() response: Response, @Req() request: Request) {
-		const recover = await this.authService.recoverPassword("test@test.fr");
+	@Post("/recover")
+	async recoverPassword(
+		@Res() response: Response,
+		@Req() request: Request,
+		@Body() body: { email: string },
+	) {
+		const recover = await this.authService.recoverPassword(body.email);
 		return response.status(200).send({});
 	}
 }

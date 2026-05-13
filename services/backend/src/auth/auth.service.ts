@@ -85,6 +85,7 @@ export class AuthService extends JwtService {
 			where: { email },
 			select: { email: true },
 		});
+		console.log(user);
 		if (!user?.email) {
 			return;
 		}
