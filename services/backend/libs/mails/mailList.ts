@@ -1,3 +1,6 @@
+import React from "react";
+import { render } from "react-email";
+import { RecoverPassword } from "./html/recoverPasswordEMail";
 import { createAccountHtml } from "./mailText";
 
 interface mailTemplate {
@@ -16,11 +19,14 @@ export function createAccount(userEmail: string): mailTemplate {
 	};
 }
 
-export function recoverPassword(userEmail: string): mailTemplate {
+export async function recoverPassword(
+	userEmail: string,
+): Promise<mailTemplate> {
+	const renderHtml = await render(React.createElement(RecoverPassword, null));
 	return {
 		from: "noreply@quentin-derimais.fr",
 		to: userEmail,
 		subject: "Vous avez oublié votre mot de passe",
-		html: "<p>Hello world</p>",
+		html: renderHtml,
 	};
 }

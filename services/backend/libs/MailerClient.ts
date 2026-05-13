@@ -40,7 +40,7 @@ export class MailerClient {
 
 	async recoverPassword(recipient: string) {
 		try {
-			const maker = recoverPassword(recipient);
+			const maker = await recoverPassword(recipient);
 			await this.transporter.sendMail({
 				from: maker.from,
 				to: maker.to,
@@ -48,7 +48,7 @@ export class MailerClient {
 				html: maker.html,
 			});
 		} catch (error) {
-			console.trace(error);
+			console.trace();
 		}
 	}
 }
