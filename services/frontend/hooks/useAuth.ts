@@ -72,6 +72,15 @@ export function useAuth() {
 	async function handleForgetPassword() {
 		console.log(email());
 		const response = await onForgetPassword(email());
+		if (response.message !== "success") {
+			toast.error(
+				"Une erreur est survenue lors de la réinitialisation du mot de passe",
+			);
+			return;
+		}
+		toast.success(
+			"Un email vous sera envoyé si un compte existe avec cette adresse email",
+		);
 	}
 
 	return {

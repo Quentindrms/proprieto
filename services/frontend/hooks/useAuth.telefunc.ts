@@ -38,5 +38,5 @@ export async function onLogout() {
 
 export async function onForgetPassword(email: string) {
 	const authService = new AuthService();
-	return authService.forgetPassword(email);
+	return await authService.forgetPassword(email);
 }

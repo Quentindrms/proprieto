@@ -34,6 +34,6 @@ export class AuthService extends CoreService {
 	}
 
 	async forgetPassword(email: string) {
-		return this.post("/auth/forget-password", { email });
+		return this.post<{ message: string }>("/auth/forget-password", { email });
 	}
 }
