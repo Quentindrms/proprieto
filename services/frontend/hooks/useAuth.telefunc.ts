@@ -35,3 +35,8 @@ export async function onLogout() {
 	context.fastify.reply.clearCookie("auth", { path: "/" });
 	return { success: true };
 }
+
+export async function onForgetPassword(email: string) {
+	const authService = new AuthService();
+	return authService.forgetPassword(email);
+}

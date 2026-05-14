@@ -32,4 +32,8 @@ export class AuthService extends CoreService {
 	async logout(reply: FastifyReply) {
 		reply.clearCookie("auth");
 	}
+
+	async forgetPassword(email: string) {
+		return this.post("/auth/forget-password", { email });
+	}
 }

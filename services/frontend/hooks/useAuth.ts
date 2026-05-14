@@ -4,7 +4,7 @@ import { createSignal } from "solid-js";
 import toast from "solid-toast";
 import { navigate } from "vike/client/router";
 import type { ZodSafeParseError } from "zod";
-import { onLogin, onRegister } from "./useAuth.telefunc";
+import { onForgetPassword, onLogin, onRegister } from "./useAuth.telefunc";
 
 export function useAuth() {
 	const [email, setEmail] = createSignal<string>("");
@@ -29,6 +29,11 @@ export function useAuth() {
 				[field]: target.value,
 			}));
 		};
+	}
+
+	function handleEmailInputChange(e: InputEvent) {
+		const target = e.target as HTMLInputElement;
+		setEmail(target.value);
 	}
 
 	async function handleLogin(event: SubmitEvent) {
@@ -64,6 +69,11 @@ export function useAuth() {
 		}
 	}
 
+	async function handleForgetPassword() {
+		console.log(email());
+		const response = await onForgetPassword(email());
+	}
+
 	return {
 		setEmail,
 		email,
@@ -73,5 +83,7 @@ export function useAuth() {
 		handleRegisterInputChange,
 		handleRegister,
 		formError,
+		handleForgetPassword,
+		handleEmailInputChange,
 	};
 }
