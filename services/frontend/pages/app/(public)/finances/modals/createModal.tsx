@@ -33,7 +33,7 @@ export default function CreateModal(props: CreateModalProps) {
                             onClick: () => setIsIncome(false),
                         },
                         {
-                            label: "Revenu",
+                            label: "Revenue",
                             value: "outcome",
                             onClick: () => setIsIncome(true),
                         },
