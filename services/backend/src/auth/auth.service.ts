@@ -1,4 +1,5 @@
 import { prisma } from "@libs/DatabaseClient";
+import { MailerClient } from "@libs/MailerClient";
 import { Injectable } from "@nestjs/common";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 import type { CreateUserDto } from "@src/dto/create-user.dto";
@@ -10,7 +11,7 @@ import { JwtService } from "../../services/jwt.service";
 export class AuthService extends JwtService {
 	async register(account: CreateUserDto) {
 		try {
-			await prisma.users.create({
+			const user = await prisma.users.create({
 				data: {
 					password: await argon2.hash(account.password),
 					role: "user",
@@ -28,6 +29,8 @@ export class AuthService extends JwtService {
 					},
 				},
 			});
+			const mailer = await MailerClient.create();
+			await mailer.accountCreation(user.email);
 			return { success: true, message: "Utilisateur crée" };
 		} catch (error) {
 			if (
@@ -75,5 +78,18 @@ export class AuthService extends JwtService {
 		if (!user) throw new Error("Utilisateur non trouvé ou invalide");
 
 		return { user };
+	}
+
+	async recoverPassword(email: string) {
+		const user = await prisma.users.findFirst({
+			where: { email },
+			select: { email: true },
+		});
+		console.log(user);
+		if (!user?.email) {
+			return;
+		}
+		const mailer = await MailerClient.create();
+		await mailer.recoverPassword(user.email);
 	}
 }

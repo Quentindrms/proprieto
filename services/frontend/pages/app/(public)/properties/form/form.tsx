@@ -31,7 +31,7 @@ export default function CreatePropertyForm() {
 					}
 				</span>
 			)}
-			<div class="flex gap-3">
+			<div class="flex flex-col lg:flex-row gap-3">
 				<div>
 					<TextField
 						label="Prix d'acquisition"

@@ -48,7 +48,7 @@ export default function Page() {
 				/>
 
 				<div class="flex justify-center">
-					<div class="grid grid-cols-[repeat(3,320px)] gap-4">
+					<div class="flex flex-col lg:grid grid-cols-[repeat(3,320px)] gap-4">
 						<For each={data.client}>
 							{(clt) => (
 								<ClientCard
