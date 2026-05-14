@@ -63,6 +63,6 @@ export class AuthController {
 		@Body() body: { email: string },
 	) {
 		const recover = await this.authService.recoverPassword(body.email);
-		return response.status(200).send({});
+		return response.status(200).send({ message: "success" });
 	}
 }

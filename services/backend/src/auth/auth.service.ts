@@ -1,9 +1,9 @@
 import { prisma } from "@libs/DatabaseClient";
 import { MailerClient } from "@libs/MailerClient";
 import { Injectable } from "@nestjs/common";
+import argon2 from "@node-rs/argon2";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 import type { CreateUserDto } from "@src/dto/create-user.dto";
-import argon2 from "argon2";
 import type { Users } from "../../generated/prisma/client";
 import { JwtService } from "../../services/jwt.service";
 
@@ -85,7 +85,6 @@ export class AuthService extends JwtService {
 			where: { email },
 			select: { email: true },
 		});
-		console.log(user);
 		if (!user?.email) {
 			return;
 		}
