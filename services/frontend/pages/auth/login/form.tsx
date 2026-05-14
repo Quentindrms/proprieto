@@ -1,10 +1,16 @@
 import { ActionButton, Button } from "@components/button";
 import { TextField } from "@components/form";
+import Text from "@components/text";
 import { useAuth } from "@hooks/useAuth";
 import { navigate } from "vike/client/router";
 
 export default function LoginForm() {
 	const auth = useAuth();
+
+	function onClick() {
+		(auth.email());
+		(auth.password());
+	}
 
 	function handleInput(event: InputEvent) {
 		const target = event.target as HTMLInputElement;
@@ -17,7 +23,7 @@ export default function LoginForm() {
 
 	return (
 		<form
-			class="flex flex-col gap-3 p-2 sm:w-3xs md:w-md lg:w-lg xl:w-xl bg-background-base border border-slate-strong rounded-xl shadow-lg shadow-slate-strong"
+			class="flex flex-col gap-3 p-2 w-lg bg-background-base border border-slate-strong rounded-xl shadow-lg shadow-slate-strong"
 			onSubmit={auth.handleLogin}
 		>
 			<TextField
@@ -34,7 +40,7 @@ export default function LoginForm() {
 			/>
 			<a href="/" class="text-muted-text font-base-regular text-sm">J'ai oublié mon mot de passe</a>
 			<div class="flex justify-center">
-				<Button type="submit">
+				<Button type="submit" onClick={onClick}>
 					Connexion
 				</Button>
 			</div>

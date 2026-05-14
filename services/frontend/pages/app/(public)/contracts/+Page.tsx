@@ -2,6 +2,7 @@ import { Badge } from "@components/badge";
 import { ContractBoard } from "@components/board";
 import { ButtonGroup } from "@components/button";
 import ContractExpireSoon from "@components/contract";
+import { CardRevenue } from "@components/dataCard";
 import Heading from "@components/heading";
 import PageNamer from "@components/pageNamer";
 import { useContract } from "@hooks/useContract";

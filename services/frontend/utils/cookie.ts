@@ -1,4 +1,5 @@
 import type { User } from "@app/types/user";
+import fastifyCookie from "@fastify/cookie";
 import { AuthService } from "@services/auth.service";
 import type { FastifyReply } from "fastify";
 import type { PageContextServer } from "vike/types";
@@ -15,7 +16,7 @@ export type CookieOptions = {
 
 const defaultOptions: CookieOptions = {
 	path: "/",
-	secure: process.env.NODE_ENV === "production",
+	secure: false,
 	sameSite: "strict",
 	httpOnly: false,
 	maxAge: 1000 * 60 * 60 * 24 * 30,

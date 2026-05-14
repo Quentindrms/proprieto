@@ -50,7 +50,7 @@ export default function Page() {
 				buttonText="Ajouter une propriété"
 			/>
 
-			<div class="flex flex-col lg:flex-row gap-5 justify-center">
+			<div class="flex gap-5 justify-center">
 				<CardRevenue
 					title="Dépense totale"
 					stat={data.monthlyOutcome.sum}
@@ -73,7 +73,7 @@ export default function Page() {
 
 			</div>
 
-			<div class="flex flex-col-reverse lg:flex-row gap-2">
+			<div class="flex gap-2">
 				<Board transactions={sortedTransactionRow} />
 				<div class="flex flex-col gap-2 p-2">
 					<CardRevenue
