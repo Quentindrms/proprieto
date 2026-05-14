@@ -56,7 +56,7 @@ export class AuthController {
 		});
 	}
 
-	@Post("/recover")
+	@Post("/forget-password")
 	async recoverPassword(
 		@Res() response: Response,
 		@Req() request: Request,
