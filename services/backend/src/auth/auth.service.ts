@@ -90,6 +90,6 @@ export class AuthService extends JwtService {
 			return;
 		}
 		const mailer = await MailerClient.create();
-		mailer.recoverPassword(user.email);
+		await mailer.recoverPassword(user.email);
 	}
 }

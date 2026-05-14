@@ -26,7 +26,7 @@ export class MailerClient {
 
 	async accountCreation(recipient: string) {
 		try {
-			const maker = createAccount(recipient);
+			const maker = await createAccount(recipient);
 			await this.transporter.sendMail({
 				from: maker.from,
 				to: maker.to,

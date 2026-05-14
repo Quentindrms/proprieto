@@ -1,5 +1,6 @@
 import React from "react";
 import { render } from "react-email";
+import { NewUser } from "./html/newUserPasswordEmail";
 import { RecoverPassword } from "./html/recoverPasswordEMail";
 import { createAccountHtml } from "./mailText";
 
@@ -10,12 +11,17 @@ interface mailTemplate {
 	html: string;
 }
 
-export function createAccount(userEmail: string): mailTemplate {
+export async function createAccount(userEmail: string): Promise<mailTemplate> {
+	const renderHtml = await render(
+		React.createElement(NewUser, {
+			loginUrl: "https://proprieto.quentin-derimais.fr/auth/login",
+		}),
+	);
 	return {
 		from: "noreply@quentin-derimais.fr",
 		to: userEmail,
 		subject: "Bienvenue sur Proprieto — votre compte a été créé",
-		html: createAccountHtml(userEmail),
+		html: renderHtml,
 	};
 }
 
