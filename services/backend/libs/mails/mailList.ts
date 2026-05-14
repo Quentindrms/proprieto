@@ -2,7 +2,6 @@ import React from "react";
 import { render } from "react-email";
 import { NewUser } from "./html/newUserPasswordEmail";
 import { RecoverPassword } from "./html/recoverPasswordEMail";
-import { createAccountHtml } from "./mailText";
 
 interface mailTemplate {
 	from: string;
