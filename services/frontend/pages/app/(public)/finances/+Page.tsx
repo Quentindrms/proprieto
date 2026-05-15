@@ -125,7 +125,7 @@ export default function Page() {
                     buttonText="Ajouter une transaction"
                 />
 
-                <div class="flex flex-col md:flex-row gap-4">
+                <div class="flex gap-4">
                     <CardRevenue
                         stat={totalMonthIncomes}
                         title="Revenu du mois"

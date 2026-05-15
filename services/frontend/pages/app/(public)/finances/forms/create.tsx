@@ -1,12 +1,13 @@
 import { Button } from "@components/button";
 import {
+    CheckBox,
     Form,
     Select,
     TextField,
     ToggleSwitch,
 } from "@components/form";
 import Text from "@components/text";
-import { useFinanceContext } from "@hooks/useFinance";
+import { useFinance, useFinanceContext } from "@hooks/useFinance";
 import { recurrence } from "@utils/recurrence";
 import { createSignal, Show } from "solid-js";
 import { useData } from "vike-solid/useData";
@@ -72,7 +73,7 @@ export function CreateOutcomeForm() {
                     }
                 </Text>
             )}
-            <div class="flex flex-col md:flex-row gap-2">
+            <div class="flex flex-row gap-2">
                 <div class="flex flex-col">
                     <Select
                         label="Propriété concernée"
@@ -125,7 +126,7 @@ export function CreateOutcomeForm() {
                 onInput={outcome.handleInputOutcome("issueDate")}
                 required
             />
-            <div class="flex flex-col md:flex-row gap-5">
+            <div class="flex gap-5">
                 <div class="flex flex-col">
                     <ToggleSwitch
                         label="Réccurent"
@@ -252,7 +253,7 @@ export function CreateIncomeForm() {
                     }
                 </Text>
             )}
-            <div class="flex-col md:flex-row gap-2">
+            <div class="flex gap-2">
                 <div>
                     <Select
                         label="Contrat associé"
@@ -306,7 +307,7 @@ export function CreateIncomeForm() {
                 </Text>
             )}
 
-            <div class="flex exit gap-2">
+            <div class="flex gap-2">
                 <div class="flex flex-col">
                     <ToggleSwitch
                         label="Récurrent"

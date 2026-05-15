@@ -1,5 +1,4 @@
 import { prisma } from "@libs/DatabaseClient";
-import { MailerClient } from "@libs/MailerClient";
 import { Injectable } from "@nestjs/common";
 import argon2 from "@node-rs/argon2";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
@@ -7,12 +6,13 @@ import type { CreateUserDto } from "@src/dto/auth.dto";
 import { randomBytes } from "crypto";
 import type { Users } from "../../generated/prisma/client";
 import { JwtService } from "../../services/jwt.service";
+import { MailerClient } from "@libs/MailerClient";
 
 @Injectable()
 export class AuthService extends JwtService {
 	async register(account: CreateUserDto) {
 		try {
-			const user = await prisma.users.create({
+			await prisma.users.create({
 				data: {
 					password: await argon2.hash(account.password),
 					role: "user",
@@ -30,8 +30,6 @@ export class AuthService extends JwtService {
 					},
 				},
 			});
-			const mailer = await MailerClient.create();
-			await mailer.accountCreation(user.email);
 			return { success: true, message: "Utilisateur crée" };
 		} catch (error) {
 			if (

@@ -71,13 +71,12 @@
     "moduleFileExtensions": [
       "js",
       "json",
-      "ts",
-      "tsx"
+      "ts"
     ],
     "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
-      "^.+\\.(t|j)sx?$": "ts-jest"
+      "^.+\\.(t|j)s$": "ts-jest"
     },
     "transformIgnorePatterns": [],
     "collectCoverageFrom": [

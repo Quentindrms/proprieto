@@ -16,6 +16,18 @@ services:
     networks:
       - frontback
   
+  adminer:
+    container_name: proprieto-adminer-test
+    image: adminer:latest
+    ports:
+      - ${ADMINER_PORT:-8080}:8080
+    environment:
+      - ADMINER_HOST=postgres
+      - ADMINER_USER=${DB_USERNAME}
+      - ADMINER_PASSWORD=${DB_PASSWORD}
+    networks:
+      - database
+  
   backend: 
     container_name: proprieto-backend-test
     build: 

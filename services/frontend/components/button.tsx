@@ -35,7 +35,7 @@ export function Button(props: ButtonProps) {
 	};
 
 	const globalClasses =
-		"w-2xs lg:w-fit h-2xs h-fit rounded-xl pr-5 pl-5 p-2 font-primary text-light cursor-pointer";
+		"w-fit h-fit rounded-xl pr-5 pl-5 p-2 font-primary text-light cursor-pointer";
 
 	const flexClasses = "flex gap-5 items-center";
 	return (
@@ -70,7 +70,7 @@ export function ActionButton(props: ActionButtonProps) {
 	};
 
 	const globalClasses =
-		"rounded-xl pl-5 pr-5 p-2 font-base-bold shadow-xs shadow-background-primary w-fit h-fit cursor-pointer";
+		"rounded-xl pl-5 pr-5 p-2 font-base-bold shadow-xs shadow-background-primary w-fit cursor-pointer";
 
 	return (
 		<button
