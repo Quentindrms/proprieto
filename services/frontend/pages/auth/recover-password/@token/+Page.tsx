@@ -5,12 +5,14 @@ import Text from "@components/text";
 import { useAuth } from "@hooks/useAuth";
 import { redirect } from "vike/abort";
 import { useData } from "vike-solid/useData";
+import { usePageContext } from "vike-solid/usePageContext";
 import * as z from "zod";
 import type { Data } from "./+data";
 
 export default function RecoverPassword() {
     const data = useData<Data>();
     const auth = useAuth();
+    const context = usePageContext();
 
     if (data.response.isUsed === true) {
         throw redirect("/auth/login");
@@ -21,7 +23,10 @@ export default function RecoverPassword() {
             <Heading components="h1" size="extra-large" class="p-5">
                 Réinitilisation du mot de passe
             </Heading>
-            <Form class="flex flex-col gap-3" callback={auth.handleRecoverPassword}>
+            <Form
+                class="flex flex-col gap-3"
+                callback={() => auth.handleRecoverPassword(context.routeParams.token)}
+            >
                 <TextField
                     type="password"
                     label="Nouveau mot de passe"
@@ -44,8 +49,8 @@ export default function RecoverPassword() {
                 {auth.formError() && (
                     <Text class="text-red-500">
                         {
-                            z.treeifyError(auth.formError()!.error).properties?.passwordValidation
-                                ?.errors[0]
+                            z.treeifyError(auth.formError()!.error).properties
+                                ?.passwordValidation?.errors[0]
                         }
                     </Text>
                 )}

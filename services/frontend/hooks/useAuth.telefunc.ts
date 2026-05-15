@@ -41,7 +41,7 @@ export async function onForgetPassword(email: string) {
 	return await authService.forgetPassword(email);
 }
 
-export async function onRecoverPassword(password: string) {
+export async function onRecoverPassword(password: string, token: string) {
 	const authService = new AuthService();
-	return await authService.recoverPassword(password);
+	return await authService.recoverPassword(password, token);
 }

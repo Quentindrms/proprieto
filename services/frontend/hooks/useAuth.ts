@@ -7,6 +7,7 @@ import {
 } from "@schemas/auth";
 import { createSignal } from "solid-js";
 import toast from "solid-toast";
+import { redirect } from "vike/abort";
 import { navigate } from "vike/client/router";
 import type { ZodSafeParseError } from "zod";
 import {
@@ -108,15 +109,22 @@ export function useAuth() {
 		);
 	}
 
-	async function handleRecoverPassword() {
-		console.log(recoverPassword());
+	async function handleRecoverPassword(token: string) {
+		console.log(token);
 		const validate = RecoverPasswordSchema.safeParse(recoverPassword());
 		if (!validate.success) {
 			setFormError(validate);
 			return;
 		}
 		setFormError(undefined);
-		const response = onRecoverPassword(validate.data.password);
+		const response = await onRecoverPassword(validate.data.password, token);
+		if (!response.success) {
+			toast.error(response.message);
+			return;
+		}
+		toast.success(response.message);
+		navigate("/auth/login");
+		return;
 	}
 
 	return {
