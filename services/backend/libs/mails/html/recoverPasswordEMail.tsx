@@ -48,12 +48,6 @@ export function RecoverPassword({
 				</EmailButton>
 			</Section>
 
-			<EmailInfoBox variant="warning">
-				Ce lien est valable pendant {expiresInHours} heure
-				{expiresInHours > 1 ? "s" : ""}. Passé ce délai, vous devrez faire une
-				nouvelle demande.
-			</EmailInfoBox>
-
 			<Hr
 				style={{
 					borderColor: "#e5e6ed",

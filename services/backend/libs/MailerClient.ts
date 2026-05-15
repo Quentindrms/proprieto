@@ -1,6 +1,10 @@
 import nodemailer, { type Transporter } from "nodemailer";
 import type SMTPTransport from "nodemailer/lib/smtp-transport";
-import { createAccount, recoverPassword } from "./mails/mailList";
+import {
+	createAccount,
+	recoverPassword,
+	updatePassword,
+} from "./mails/mailList";
 
 export class MailerClient {
 	private transporter: Transporter;
@@ -38,9 +42,24 @@ export class MailerClient {
 		}
 	}
 
-	async recoverPassword(recipient: string) {
+	async recoverPassword(recipient: string, token: string) {
+		const link = `https://proprieto.quentin-derimais.fr/auth/recover-password/${token}`;
 		try {
-			const maker = await recoverPassword(recipient);
+			const maker = await recoverPassword(recipient, link);
+			await this.transporter.sendMail({
+				from: maker.from,
+				to: maker.to,
+				subject: maker.subject,
+				html: maker.html,
+			});
+		} catch (error) {
+			console.trace(error);
+		}
+	}
+
+	async updatePasword(recipient: string) {
+		try {
+			const maker = await updatePassword(recipient);
 			await this.transporter.sendMail({
 				from: maker.from,
 				to: maker.to,

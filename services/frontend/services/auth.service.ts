@@ -32,4 +32,22 @@ export class AuthService extends CoreService {
 	async logout(reply: FastifyReply) {
 		reply.clearCookie("auth");
 	}
+
+	async forgetPassword(email: string) {
+		return this.post<{ message: string }>("/auth/forget-password", { email });
+	}
+
+	async recoverPassword(password: string, token: string) {
+		return this.post<{ success: true; message: string }>(
+			"/auth/recover-password",
+			{
+				password,
+				token,
+			},
+		);
+	}
+
+	verifyRecoverToken(token: string) {
+		return this.get<{ isUsed: boolean }>(`/auth/verify-recover-token/${token}`);
+	}
 }

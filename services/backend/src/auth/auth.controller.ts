@@ -2,15 +2,15 @@ import {
 	Body,
 	Controller,
 	Get,
+	Param,
 	Post,
-	Req,
 	Res,
 	UsePipes,
 } from "@nestjs/common";
 // biome-ignore lint/style/useImportType: required for class-validator metadata
-import { CreateUserDto } from "@src/dto/create-user.dto";
+import { CreateUserDto, RecoverPasswordDto } from "@src/dto/auth.dto";
 import { validationPipe } from "@src/pipes/validationPipes";
-import type { Request, Response } from "express";
+import type { Response } from "express";
 //biome-ignore lint/style/useImportType: required for NestJS DI
 import { AuthService } from "./auth.service";
 
@@ -56,13 +56,43 @@ export class AuthController {
 		});
 	}
 
-	@Post("/recover")
-	async recoverPassword(
+	@Post("/forget-password")
+	async forgetPassword(
 		@Res() response: Response,
-		@Req() request: Request,
 		@Body() body: { email: string },
 	) {
-		const recover = await this.authService.recoverPassword(body.email);
-		return response.status(200).send({});
+		await this.authService.recoverPassword(body.email);
+		return response.status(200).send({ message: "success" });
+	}
+
+	@Get("/verify-recover-token/:token")
+	async verifyRecoverToken(
+		@Res() response: Response,
+		@Param("token") token: string,
+	) {
+		const isUsed = await this.authService.verifyRecoverPasswordToken(token);
+		return response.status(200).send({ isUsed });
+	}
+
+	@Post("/recover-password")
+	async recoverPassword(
+		@Res() response: Response,
+		@Body() body: RecoverPasswordDto,
+	) {
+		console.log(body.token);
+		const updatedPassword = await this.authService.updatePassword(
+			body.password,
+			body.token,
+		);
+		if (updatedPassword.success === false) {
+			return response.status(500).send({
+				success: false,
+				message:
+					"Une erreur est survenue lors de la modification du mot de passe",
+			});
+		}
+		return response
+			.status(200)
+			.send({ success: true, message: "Mot de passe réinitialisé" });
 	}
 }
