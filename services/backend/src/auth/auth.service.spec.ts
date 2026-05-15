@@ -17,6 +17,16 @@ jest.mock("@node-rs/argon2", () => ({
 	verify: jest.fn(),
 }));
 
+jest.mock("@libs/MailerClient", () => ({
+	MailerClient: {
+		create: jest.fn().mockResolvedValue({
+			accountCreation: jest.fn().mockResolvedValue(undefined),
+			recoverPassword: jest.fn().mockResolvedValue(undefined),
+			updatePasword: jest.fn().mockResolvedValue(undefined),
+		}),
+	},
+}));
+
 jest.mock("../../services/jwt.service", () => ({
 	JwtService: class {
 		protected createJWT = jest.fn().mockResolvedValue("mock_token");

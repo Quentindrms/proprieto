@@ -25,10 +25,10 @@ test-stop:
 	docker compose -f $(TEST_COMPOSE_FILE) --env-file .env.test down
 
 prod-build: 
-	docker compose -f ${PROD_COMPOSE_FILE} --env-file .env.development build --no-cache 
+	docker compose -f ${PROD_COMPOSE_FILE} --env-file .env.prod build --no-cache 
 
 prod-start: 
-	docker compose -f ${PROD_COMPOSE_FILE} --env-file .env.development up --force-recreate
+	docker compose -f ${PROD_COMPOSE_FILE} --env-file .env.prod up --force-recreate
 
 prod-stop: 
-	docker compose -f ${PROD_COMPOSE_FILE} --env-file .env.development down
+	docker compose -f ${PROD_COMPOSE_FILE} --env-file .env.prod down

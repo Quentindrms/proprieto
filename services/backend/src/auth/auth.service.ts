@@ -30,6 +30,8 @@ export class AuthService extends JwtService {
 					},
 				},
 			});
+			const mailer = await MailerClient.create();
+			await mailer.accountCreation(account.email);
 			return { success: true, message: "Utilisateur crée" };
 		} catch (error) {
 			if (
