@@ -109,11 +109,9 @@ export class AuthService extends JwtService {
 				content,
 			},
 		});
-		console.log(`isUsed : ${isValid?.isUsed} (SERVICE)`);
 		if (!isValid?.isUsed) {
 			return false;
 		}
-		console.log(isValid?.isUsed);
 		return true;
 	}
 }

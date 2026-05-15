@@ -40,3 +40,8 @@ export async function onForgetPassword(email: string) {
 	const authService = new AuthService();
 	return await authService.forgetPassword(email);
 }
+
+export async function onRecoverPassword(password: string) {
+	const authService = new AuthService();
+	return await authService.recoverPassword(password);
+}
