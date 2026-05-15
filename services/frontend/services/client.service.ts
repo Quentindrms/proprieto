@@ -18,8 +18,4 @@ export class ClientService extends CoreService {
 	remove(id: string) {
 		return this.delete<{ message: string }>(`/client/${id}`);
 	}
-
-	verifyRecoverToken(token: string) {
-		return this.get<{ isValid: boolean }>(`/auth/verify-recover-token/${token}`);
-	}
 }

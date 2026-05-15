@@ -36,4 +36,12 @@ export class AuthService extends CoreService {
 	async forgetPassword(email: string) {
 		return this.post<{ message: string }>("/auth/forget-password", { email });
 	}
+
+	async recoverPassword(password: string) {
+		return this.post<{ success: true }>("/auth/recover-password", { password });
+	}
+
+	verifyRecoverToken(token: string) {
+		return this.get<{ isUsed: boolean }>(`/auth/verify-recover-token/${token}`);
+	}
 }

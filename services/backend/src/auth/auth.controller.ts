@@ -72,7 +72,6 @@ export class AuthController {
 		@Param("token") token: string,
 	) {
 		const isUsed = await this.authService.verifyRecoverPasswordToken(token);
-		console.log(`IsUsed : ${isUsed} (CONTROLLEUR)`);
 		return response.status(200).send({ isUsed });
 	}
 }

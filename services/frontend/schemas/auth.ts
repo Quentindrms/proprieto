@@ -49,4 +49,10 @@ export const CreateUserSchema = z
 		path: ["passwordValidation"],
 	});
 
+export const RecoverPasswordSchema = z.object({
+	password: passwordSchema,
+	passwordValidation: passwordValidationSchema,
+});
+
 export type CreateUserType = z.infer<typeof CreateUserSchema>;
+export type RecoverPasswordType = z.infer<typeof RecoverPasswordSchema>;
