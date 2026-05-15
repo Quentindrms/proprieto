@@ -49,10 +49,15 @@ export const CreateUserSchema = z
 		path: ["passwordValidation"],
 	});
 
-export const RecoverPasswordSchema = z.object({
-	password: passwordSchema,
-	passwordValidation: passwordValidationSchema,
-});
+export const RecoverPasswordSchema = z
+	.object({
+		password: passwordSchema,
+		passwordValidation: passwordValidationSchema,
+	})
+	.refine((data) => data.password === data.passwordValidation, {
+		message: "Les mots de passe ne correspondent pas",
+		path: ["passwordValidation"],
+	});
 
 export type CreateUserType = z.infer<typeof CreateUserSchema>;
 export type RecoverPasswordType = z.infer<typeof RecoverPasswordSchema>;

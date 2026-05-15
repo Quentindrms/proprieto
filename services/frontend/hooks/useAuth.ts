@@ -113,6 +113,7 @@ export function useAuth() {
 		const validate = RecoverPasswordSchema.safeParse(recoverPassword());
 		if (!validate.success) {
 			setFormError(validate);
+			return;
 		}
 		setFormError(undefined);
 		const response = onRecoverPassword(validate.data!.password);
