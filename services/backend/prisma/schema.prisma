@@ -64,7 +64,21 @@ model Users {
   properties Properties[]
   directory  Directories[]
 
+  token Tokens?
+
   @@map("users")
+}
+
+model Tokens {
+  id      Int     @id @unique @default(autoincrement())
+  content String  @db.VarChar(100)
+  isUsed  Boolean @default(false) @map("is_used") @db.Boolean()
+
+  userId String @unique
+
+  user Users @relation(fields: [userId], references: [id])
+
+  @@map("tokens")
 }
 
 model Properties {

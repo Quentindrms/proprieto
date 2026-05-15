@@ -1,6 +1,6 @@
 import { prisma } from "@libs/DatabaseClient";
-import type { CreateUserDto } from "@src/dto/create-user.dto";
-import argon2 from "argon2";
+import type { CreateUserDto } from "@src/dto/auth.dto";
+import argon2 from "@node-rs/argon2";
 import { AuthService } from "./auth.service";
 
 jest.mock("@libs/DatabaseClient", () => ({
@@ -12,7 +12,7 @@ jest.mock("@libs/DatabaseClient", () => ({
 	},
 }));
 
-jest.mock("argon2", () => ({
+jest.mock("@node-rs/argon2", () => ({
 	hash: jest.fn().mockResolvedValue("hashed_password"),
 	verify: jest.fn(),
 }));

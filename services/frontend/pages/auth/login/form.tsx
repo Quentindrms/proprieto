@@ -38,7 +38,7 @@ export default function LoginForm() {
 				name="password"
 				onInput={handleInput}
 			/>
-			<a href="/" class="text-muted-text font-base-regular text-sm">J'ai oublié mon mot de passe</a>
+			<a href="/auth/forget-password/" class="text-muted-text font-base-regular text-sm">J'ai oublié mon mot de passe</a>
 			<div class="flex justify-center">
 				<Button type="submit" onClick={onClick}>
 					Connexion

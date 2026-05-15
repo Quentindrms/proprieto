@@ -8,9 +8,10 @@ services:
     ports: 
       - ${FRONTEND_PORT:-3000}:3000
       - ${HMR_PORT:-24678}:24678
-    volumes: 
+    volumes:
       - ../services/frontend:/app
-    environment: 
+      - /app/node_modules
+    environment:
       - NODE_ENV=development
     networks:
       - frontback
@@ -36,6 +37,7 @@ services:
       - ${BACKEND_PORT:-4000}:4000
     volumes:
       - ../services/backend:/app
+      - /app/node_modules
     environment:
       - NODE_ENV=development
       - DB_USERNAME=${DB_USERNAME}

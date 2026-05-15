@@ -1,10 +1,20 @@
 import type { UserCreation } from "@app/types/user";
-import { CreateUserSchema, type CreateUserType } from "@schemas/auth";
+import {
+	CreateUserSchema,
+	type CreateUserType,
+	RecoverPasswordSchema,
+	type RecoverPasswordType,
+} from "@schemas/auth";
 import { createSignal } from "solid-js";
 import toast from "solid-toast";
 import { navigate } from "vike/client/router";
 import type { ZodSafeParseError } from "zod";
-import { onLogin, onRegister } from "./useAuth.telefunc";
+import {
+	onForgetPassword,
+	onLogin,
+	onRecoverPassword,
+	onRegister,
+} from "./useAuth.telefunc";
 
 export function useAuth() {
 	const [email, setEmail] = createSignal<string>("");
@@ -18,13 +28,34 @@ export function useAuth() {
 		passwordValidation: "",
 		phone: "",
 	});
+	const [recoverPassword, setRecoverPassword] =
+		createSignal<RecoverPasswordType>({
+			password: "",
+			passwordValidation: "",
+		});
+
 	const [formError, setFormError] =
-		createSignal<ZodSafeParseError<CreateUserType>>();
+		createSignal<ZodSafeParseError<CreateUserType | RecoverPasswordType>>();
 
 	function handleRegisterInputChange(field: keyof UserCreation) {
 		return (e: InputEvent) => {
 			const target = e.target as HTMLInputElement;
-			setFormData((prev) => ({
+			setFormData((prev: UserCreation) => ({
+				...prev,
+				[field]: target.value,
+			}));
+		};
+	}
+
+	function handleEmailInputChange(e: InputEvent) {
+		const target = e.target as HTMLInputElement;
+		setEmail(target.value);
+	}
+
+	function handleRecoverPasswordInputChange(field: keyof RecoverPasswordType) {
+		return (e: InputEvent) => {
+			const target = e.target as HTMLInputElement;
+			setRecoverPassword((prev: RecoverPasswordType) => ({
 				...prev,
 				[field]: target.value,
 			}));
@@ -64,6 +95,37 @@ export function useAuth() {
 		}
 	}
 
+	async function handleForgetPassword() {
+		const response = await onForgetPassword(email());
+		if (response.message !== "success") {
+			toast.error(
+				"Une erreur est survenue lors de la réinitialisation du mot de passe",
+			);
+			return;
+		}
+		toast.success(
+			"Un email vous sera envoyé si un compte existe avec cette adresse email",
+		);
+	}
+
+	async function handleRecoverPassword(token: string) {
+		console.log(token);
+		const validate = RecoverPasswordSchema.safeParse(recoverPassword());
+		if (!validate.success) {
+			setFormError(validate);
+			return;
+		}
+		setFormError(undefined);
+		const response = await onRecoverPassword(validate.data.password, token);
+		if (!response.success) {
+			toast.error(response.message);
+			return;
+		}
+		toast.success(response.message);
+		navigate("/auth/login");
+		return;
+	}
+
 	return {
 		setEmail,
 		email,
@@ -73,5 +135,9 @@ export function useAuth() {
 		handleRegisterInputChange,
 		handleRegister,
 		formError,
+		handleForgetPassword,
+		handleEmailInputChange,
+		handleRecoverPassword,
+		handleRecoverPasswordInputChange,
 	};
 }
