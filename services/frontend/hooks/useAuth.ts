@@ -116,7 +116,7 @@ export function useAuth() {
 			return;
 		}
 		setFormError(undefined);
-		const response = onRecoverPassword(validate.data!.password);
+		const response = onRecoverPassword(validate.data.password);
 	}
 
 	return {
