@@ -1,5 +1,5 @@
 import { prisma } from "@libs/DatabaseClient";
-import type { CreateUserDto } from "@src/dto/create-user.dto";
+import type { CreateUserDto } from "@src/dto/auth.dto";
 import argon2 from "argon2";
 import { AuthService } from "./auth.service";
 
