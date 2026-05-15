@@ -4,14 +4,13 @@ import {
 	Get,
 	Param,
 	Post,
-	Req,
 	Res,
 	UsePipes,
 } from "@nestjs/common";
 // biome-ignore lint/style/useImportType: required for class-validator metadata
 import { CreateUserDto, RecoverPasswordDto } from "@src/dto/auth.dto";
 import { validationPipe } from "@src/pipes/validationPipes";
-import type { Response, response } from "express";
+import type { Response } from "express";
 //biome-ignore lint/style/useImportType: required for NestJS DI
 import { AuthService } from "./auth.service";
 

@@ -7,7 +7,6 @@ import {
 } from "@schemas/auth";
 import { createSignal } from "solid-js";
 import toast from "solid-toast";
-import { redirect } from "vike/abort";
 import { navigate } from "vike/client/router";
 import type { ZodSafeParseError } from "zod";
 import {
