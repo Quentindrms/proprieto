@@ -3,6 +3,21 @@ import type { Response } from "express";
 import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.service";
 
+jest.mock("@node-rs/argon2", () => ({
+	hash: jest.fn().mockResolvedValue("hashed_password"),
+	verify: jest.fn(),
+}));
+
+jest.mock("@libs/MailerClient", () => ({
+	MailerClient: {
+		create: jest.fn().mockResolvedValue({
+			accountCreation: jest.fn(),
+			recoverPassword: jest.fn(),
+			updatePasword: jest.fn(),
+		}),
+	},
+}));
+
 jest.mock("@libs/DatabaseClient", () => ({
 	prisma: {
 		users: {
