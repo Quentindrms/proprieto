@@ -1,8 +1,17 @@
-import { Body, Controller, Post, Res, UsePipes } from "@nestjs/common";
+import {
+	Body,
+	Controller,
+	Get,
+	Param,
+	Post,
+	Req,
+	Res,
+	UsePipes,
+} from "@nestjs/common";
 // biome-ignore lint/style/useImportType: required for class-validator metadata
 import { CreateUserDto } from "@src/dto/create-user.dto";
 import { validationPipe } from "@src/pipes/validationPipes";
-import type { Response } from "express";
+import type { Response, response } from "express";
 //biome-ignore lint/style/useImportType: required for NestJS DI
 import { AuthService } from "./auth.service";
 
@@ -55,5 +64,15 @@ export class AuthController {
 	) {
 		await this.authService.recoverPassword(body.email);
 		return response.status(200).send({ message: "success" });
+	}
+
+	@Get("/verify-recover-token/:token")
+	async verifyRecoverToken(
+		@Res() response: Response,
+		@Param("token") token: string,
+	) {
+		const isValid = await this.authService.verifyRecoverPasswordToken(token);
+		console.log(isValid);
+		return response.status(200).send({ isValid });
 	}
 }

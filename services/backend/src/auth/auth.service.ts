@@ -4,6 +4,7 @@ import { Injectable } from "@nestjs/common";
 import argon2 from "@node-rs/argon2";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 import type { CreateUserDto } from "@src/dto/create-user.dto";
+import { randomBytes } from "crypto";
 import type { Users } from "../../generated/prisma/client";
 import { JwtService } from "../../services/jwt.service";
 
@@ -83,12 +84,32 @@ export class AuthService extends JwtService {
 	async recoverPassword(email: string) {
 		const user = await prisma.users.findFirst({
 			where: { email },
-			select: { email: true },
+			select: { email: true, id: true },
 		});
 		if (!user?.email) {
 			return;
 		}
-		const mailer = await MailerClient.create();
-		await mailer.recoverPassword(user.email);
+		const token = randomBytes(32).toString("hex");
+		try {
+			await prisma.tokens.upsert({
+				where: { userId: user.id },
+				update: { content: token, isUsed: false },
+				create: { userId: user.id, content: token },
+			});
+			const mailer = await MailerClient.create();
+			await mailer.recoverPassword(user.email, token);
+		} catch (error) {
+			console.trace(error);
+		}
+	}
+
+	async verifyRecoverPasswordToken(content: string) {
+		const isValid = await prisma.tokens.findFirst({
+			where: {
+				isUsed: false,
+				content,
+			},
+		});
+		return isValid?.isUsed || true;
 	}
 }

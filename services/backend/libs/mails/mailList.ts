@@ -26,9 +26,10 @@ export async function createAccount(userEmail: string): Promise<mailTemplate> {
 
 export async function recoverPassword(
 	userEmail: string,
+	link: string,
 ): Promise<mailTemplate> {
 	const renderHtml = await render(
-		React.createElement(RecoverPassword, { resetLink: "#" }),
+		React.createElement(RecoverPassword, { resetLink: link }),
 	);
 	return {
 		from: "noreply@quentin-derimais.fr",

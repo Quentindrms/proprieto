@@ -38,9 +38,10 @@ export class MailerClient {
 		}
 	}
 
-	async recoverPassword(recipient: string) {
+	async recoverPassword(recipient: string, token: string) {
+		const link = `https://proprieto.quentin-derimais.fr/auth/recover-password/${token}`;
 		try {
-			const maker = await recoverPassword(recipient);
+			const maker = await recoverPassword(recipient, link);
 			await this.transporter.sendMail({
 				from: maker.from,
 				to: maker.to,
