@@ -106,10 +106,14 @@ export class AuthService extends JwtService {
 	async verifyRecoverPasswordToken(content: string) {
 		const isValid = await prisma.tokens.findFirst({
 			where: {
-				isUsed: false,
 				content,
 			},
 		});
-		return isValid?.isUsed || true;
+		console.log(`isUsed : ${isValid?.isUsed} (SERVICE)`);
+		if (!isValid?.isUsed) {
+			return false;
+		}
+		console.log(isValid?.isUsed);
+		return true;
 	}
 }
