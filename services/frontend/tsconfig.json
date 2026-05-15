@@ -11,6 +11,7 @@
     "esModuleInterop": true,
     "jsx": "react-jsx",
     "jsxImportSource": "solid-js",
+    "baseUrl": "./",
     "paths": {
       "@components/*": ["components/*"],
       "@app/types/*": ["types/*"],
