@@ -1,3 +1,4 @@
+import { AuthService } from "@services/auth.service";
 import { ClientService } from "@services/client.service";
 import { getCookiesFromPageContext } from "@utils/cookie";
 import type { PageContextServer } from "vike/types";
@@ -5,12 +6,10 @@ import type { PageContextServer } from "vike/types";
 export type Data = Awaited<ReturnType<typeof data>>;
 
 export async function data(pageContext: PageContextServer) {
-    const cookies = getCookiesFromPageContext(pageContext);
+	const authSevice = new AuthService();
+	const response = await authSevice.verifyRecoverToken(
+		pageContext.routeParams.token,
+	);
 
-    const clientService = new ClientService(cookies.auth);
-    const response = await clientService.verifyRecoverToken(
-        pageContext.routeParams.token,
-    );
-
-    return { response };
+	return { response };
 }
