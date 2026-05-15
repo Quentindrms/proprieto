@@ -125,7 +125,7 @@ export class AuthService extends JwtService {
 					userId: true,
 				},
 			});
-			await prisma.users.update({
+			const updatePasword = await prisma.users.update({
 				where: {
 					id: user?.userId,
 				},
@@ -138,6 +138,8 @@ export class AuthService extends JwtService {
 					},
 				},
 			});
+			const mailer = await MailerClient.create();
+			mailer.updatePasword(updatePasword.email);
 			return { success: true };
 		} catch (error) {
 			console.trace(error);
