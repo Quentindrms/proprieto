@@ -3,7 +3,7 @@ import { MailerClient } from "@libs/MailerClient";
 import { Injectable } from "@nestjs/common";
 import argon2 from "@node-rs/argon2";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
-import type { CreateUserDto } from "@src/dto/create-user.dto";
+import type { CreateUserDto } from "@src/dto/auth.dto";
 import { randomBytes } from "crypto";
 import type { Users } from "../../generated/prisma/client";
 import { JwtService } from "../../services/jwt.service";
@@ -113,5 +113,35 @@ export class AuthService extends JwtService {
 			return false;
 		}
 		return true;
+	}
+
+	async updatePassword(password: string, token: string) {
+		try {
+			const user = await prisma.tokens.findFirst({
+				where: {
+					content: token,
+				},
+				select: {
+					userId: true,
+				},
+			});
+			await prisma.users.update({
+				where: {
+					id: user?.userId,
+				},
+				data: {
+					password: await argon2.hash(password),
+					token: {
+						update: {
+							isUsed: true,
+						},
+					},
+				},
+			});
+			return { success: true };
+		} catch (error) {
+			console.trace(error);
+			return { success: false };
+		}
 	}
 }
