@@ -9,6 +9,7 @@ services:
       - NODE_ENV=production
     networks:
       - frontback
+      - reverse-proxy-net
     restart: always
 
   backend:
@@ -62,5 +63,7 @@ networks:
     driver: bridge
   frontback:
     driver: bridge
-  back: 
+  back:
     driver: bridge
+  reverse-proxy-net:
+    external: true
