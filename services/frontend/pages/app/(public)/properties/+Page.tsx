@@ -84,7 +84,7 @@ export default function Page() {
 					subText="Gérez et suivez l'ensemble de votre parc immobilier"
 				/>
 
-				<div class="flex flex-row gap-4 p-4">
+				<div class="flex flex-col gap-2 items-center md:flex-col lg:flex-row">
 					<ButtonBadge color="primary" onClick={() => sortProperties("all")}>
 						Tous les biens ({properties().length})
 					</ButtonBadge>
