@@ -53,7 +53,7 @@ export function Modal(props: ModalProps) {
 					rest.class,
 				)}
 			>
-				<section class="bg-background-base w-2xl flex flex-col justify-center items-center rounded-xl p-5 gap-2">
+				<section class="bg-background-base w-full max-w-2xl mx-4 max-h-[90dvh] flex flex-col rounded-xl p-5 gap-2 overflow-hidden">
 					{local.children}
 				</section>
 			</div>
@@ -87,7 +87,7 @@ export function ModalBody(props: ModalBodyProps) {
 		<div
 			{...props}
 			class={clsx(
-				"p-2 grow overflow-y-auto bg-background-surface rounded-b-md flex  flex-col gap-4",
+				"p-2 grow overflow-y-auto overflow-x-hidden bg-background-surface rounded-b-md flex flex-col gap-4",
 			)}
 		>
 			{props.children}
