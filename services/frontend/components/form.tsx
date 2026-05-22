@@ -86,7 +86,7 @@ export function TextField(props: TextFieldProps) {
 	return (
 		<fieldset class="flex flex-col">
 			<Label label={local.label} required={rest.required} for={rest.name} />
-			<input type={props.type ? props.type : "text"} class="bg-background-base border-slate-strong border rounded-md p-1 shadow-md shadow-slate-marked focus:outline-none focus:ring-2 focus:ring-action-green" id={rest.name} {...rest} />
+			<input type={props.type ? props.type : "text"} class="w-3xs md:w-md lg:w-lg bg-background-base border-slate-strong border rounded-md p-1 shadow-md shadow-slate-marked focus:outline-none focus:ring-2 focus:ring-action-green" id={rest.name} {...rest} />
 		</fieldset>
 	);
 }
