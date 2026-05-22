@@ -1,8 +1,13 @@
+import { Show } from "solid-js";
 import type { Property } from "../types/property";
 import { Badge } from "./badge";
 import { Button } from "./button";
 import Heading from "./heading";
 import Text from "./text";
+import { FaSolidHouse } from 'solid-icons/fa'
+import { ImOffice } from 'solid-icons/im'
+import { FaSolidBuilding } from 'solid-icons/fa'
+import { BiSolidCarGarage } from 'solid-icons/bi'
 
 interface PropertyCardProps {
 	property: Property;
@@ -17,8 +22,11 @@ export default function PropertyCard(props: PropertyCardProps) {
 			type="button"
 			onClick={props.onClick}
 			class="w-xs flex flex-col bg-background-base rounded-md shadow-md shadow-background-muted text-left cursor-pointer">
-			<div class="" id="headerImage">
-
+			<div class="flex items-center justify-center p-4" id="headerImage">
+				<Show when={props.property.propertyType.slug === "house"}><FaSolidHouse size={75} /></Show>
+				<Show when={props.property.propertyType.slug === "office"}><ImOffice size={75} /></Show>
+				<Show when={props.property.propertyType.slug === "apartment"}><FaSolidBuilding size={75} /></Show>
+				<Show when={props.property.propertyType.slug === "garage"}><BiSolidCarGarage size={75} /></Show>
 			</div>
 			<div id="headerCard" class="flex justify-between p-2">
 				<Heading components="h3" size="large" fontClasses="medium">{props.property.name}</Heading>
