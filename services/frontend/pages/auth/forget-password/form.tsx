@@ -15,7 +15,7 @@ export default function ForgetPasswordForm() {
                 </a>
             </div>
 
-            <div class="w-xs lg:w-lg flex flex-col justify-center items-center gap-3">
+            <div class="flex flex-wrap justify-center items-center gap-3 w-xs md:w-md lg:w-lg">
                 <Form callback={auth.handleForgetPassword}>
                     <Text class="text-muted-text italic" size="extra-small">Saissez l'adresse email associé à votre compte et nous vous transmettrons les informations pour réintialiser votre mot de passe</Text>
                     <TextField required type="email" label="Adresse email" onInput={auth.handleEmailInputChange} />
