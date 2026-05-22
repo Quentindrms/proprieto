@@ -21,7 +21,7 @@ export default function UpdateProperty(props: UpdateProperty) {
     }));
 
     return (
-        <Form callback={() => { property.update(props.onSuccess) }}>
+        <Form callback={() => { property.update(props.onSuccess) }} class="w-full">
             <TextField
                 label="Nom"
                 name="name"

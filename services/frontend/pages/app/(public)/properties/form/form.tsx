@@ -16,7 +16,7 @@ export default function CreatePropertyForm() {
 	}));
 
 	return (
-		<Form callback={property.create}>
+		<Form callback={property.create} class="w-full">
 			<TextField
 				label="Nom"
 				name="name"
@@ -31,7 +31,7 @@ export default function CreatePropertyForm() {
 					}
 				</span>
 			)}
-			<div class="flex flex-col md:flex-row gap-3">
+			<div class="flex flex-col gap-3">
 				<div>
 					<TextField
 						label="Prix d'acquisition"

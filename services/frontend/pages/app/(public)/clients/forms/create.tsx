@@ -8,7 +8,7 @@ export default function CreateForm() {
 	const client = useClient();
 
 	return (
-		<Form callback={client.create}>
+		<Form callback={client.create} class="w-full">
 			<TextField label="Nom" onInput={client.handleCreate("name")} required />
 
 			{client.formError() && (

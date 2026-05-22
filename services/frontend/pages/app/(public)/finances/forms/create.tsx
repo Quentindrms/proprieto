@@ -40,7 +40,7 @@ export function CreateOutcomeForm() {
     const outcome = useFinanceContext();
 
     return (
-        <Form callback={outcome.handleCreateOutcome}>
+        <Form callback={outcome.handleCreateOutcome} class="w-full">
             <TextField
                 label="Nom"
                 name="name"
@@ -232,7 +232,7 @@ export function CreateIncomeForm() {
     }))
 
     return (
-        <Form callback={income.handleCreateIncome}>
+        <Form callback={income.handleCreateIncome} class="w-full">
             <TextField label="Nom" onInput={income.handleInputIncome("name")} />
 
             {income.incomeErrors() && (

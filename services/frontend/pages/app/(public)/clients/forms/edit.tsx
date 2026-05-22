@@ -12,7 +12,7 @@ export default function EditForm() {
     });
 
     return (
-        <Form callback={client.update}>
+        <Form callback={client.update} class="w-full">
             <TextField label="Nom" onInput={client.handleUpdateClient("name")} value={client.clientDetails().name} required />
 
             {client.formError() && (

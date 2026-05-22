@@ -87,7 +87,7 @@ export function ModalBody(props: ModalBodyProps) {
 		<div
 			{...props}
 			class={clsx(
-				"p-2 grow overflow-y-auto overflow-x-hidden bg-background-surface rounded-b-md flex flex-col gap-4",
+				"w-full p-2 grow overflow-y-auto overflow-x-hidden bg-background-surface rounded-b-md flex flex-col items-center gap-4",
 			)}
 		>
 			{props.children}

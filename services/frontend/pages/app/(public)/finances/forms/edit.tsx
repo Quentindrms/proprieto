@@ -39,7 +39,7 @@ export function EditOutcomeForm() {
     const outcome = useFinanceContext();
 
     return (
-        <Form callback={outcome.handleEditOutcome}>
+        <Form callback={outcome.handleEditOutcome} class="w-full">
             <TextField
                 label="Nom"
                 name="name"
@@ -241,7 +241,7 @@ export function EditIncomeForm() {
     }))
 
     return (
-        <Form callback={income.handleEditIncome}>
+        <Form callback={income.handleEditIncome} class="w-full">
             <TextField label="Nom" onInput={income.handleUpdateIncome("name")}
                 value={income.updateIncome().name} required />
 
