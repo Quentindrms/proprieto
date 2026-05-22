@@ -23,7 +23,7 @@ export default function CreateForm() {
 
 	return (
 		<Form callback={contract.create}>
-			<div class="flex gap-3">
+			<div class="flex flex-col md:flex-row gap-3">
 				<div>
 					<TextField
 						type="date"
@@ -72,7 +72,7 @@ export default function CreateForm() {
 					}
 				</span>
 			)}
-			<div class="flex gap-3">
+			<div class="flex flex-col md:flex-row gap-3">
 				<div>
 					<Select
 						label="Propriété louée"
