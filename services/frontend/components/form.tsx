@@ -109,7 +109,7 @@ export function Select(props: SelectProps) {
 		<fieldset class="flex flex-col">
 			<Label label={local.label} required={rest.required} />
 
-			<select class="bg-background-base rounded-md p-2 border border-slate-strong font-base-bold shadow-md shadow-slate-marked focus:outline-none focus:ring-2 focus:ring-action-green" id={rest.name} {...rest}>
+			<select class="w-3xs md:w-xs bg-background-base rounded-md p-2 border border-slate-strong font-base-bold shadow-md shadow-slate-marked focus:outline-none focus:ring-2 focus:ring-action-green" id={rest.name} {...rest}>
 				<option class="font-base-medium" value="" disabled selected>
 					- {local.labelOptions} -
 				</option>

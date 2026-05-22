@@ -73,7 +73,7 @@ export function CreateOutcomeForm() {
                     }
                 </Text>
             )}
-            <div class="flex flex-row gap-2">
+            <div class="flex flex-col gap-2">
                 <div class="flex flex-col">
                     <Select
                         label="Propriété concernée"
@@ -126,7 +126,7 @@ export function CreateOutcomeForm() {
                 onInput={outcome.handleInputOutcome("issueDate")}
                 required
             />
-            <div class="flex gap-5">
+            <div class="flex flex-col md:flex-row gap-5">
                 <div class="flex flex-col">
                     <ToggleSwitch
                         label="Réccurent"
@@ -164,7 +164,7 @@ export function CreateOutcomeForm() {
                     )}
                 </Show>
             </div>
-            <div class="flex gap-5">
+            <div class="flex flex-col md:flex-row gap-5">
                 <div class="flex flex-col">
                     <ToggleSwitch
                         label="Payé"
