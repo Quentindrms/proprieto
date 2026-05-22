@@ -115,7 +115,7 @@ export function ButtonGroup<T extends string = string>(
 		option.onClick?.();
 	}
 	return (
-		<div class="flex gap-1 p-1 bg-slate-strong rounded-xl w-fit">
+		<div class="grid grid-cols-2 md:flex gap-1 p-1 bg-slate-strong rounded-xl w-fit">
 			<For each={props.options}>
 				{(option) => (
 					<button
