@@ -21,18 +21,18 @@ export default function PropertyCard(props: PropertyCardProps) {
 		<button
 			type="button"
 			onClick={props.onClick}
-			class="w-xs flex flex-col bg-background-base rounded-md shadow-md shadow-background-muted text-left cursor-pointer">
-			<div class="flex items-center justify-center p-4" id="headerImage">
+			class="w-xs md:w-md lg:w-lg flex flex-col bg-background-base rounded-md shadow-md shadow-background-muted text-left cursor-pointer">
+			<div class="flex items-center justify-center p-4 md:w-md lg:w-lg" id="headerImage">
 				<Show when={props.property.propertyType.slug === "house"}><FaSolidHouse size={75} /></Show>
 				<Show when={props.property.propertyType.slug === "office"}><ImOffice size={75} /></Show>
 				<Show when={props.property.propertyType.slug === "apartment"}><FaSolidBuilding size={75} /></Show>
 				<Show when={props.property.propertyType.slug === "garage"}><BiSolidCarGarage size={75} /></Show>
 			</div>
-			<div id="headerCard" class="flex justify-between p-2">
+			<div id="headerCard" class="flex justify-between items-center p-2">
 				<Heading components="h3" size="large" fontClasses="medium">{props.property.name}</Heading>
 				<Text size="base">{props.property.purchasePrice}€</Text>
 			</div>
-			<div id="bodyCard" class="flex justify-between">
+			<div id="bodyCard" class="w-3xs md:w-md flex justify-between items-center">
 				<div class="flex flex-col">
 					<Text size="medium">Date d'acquisition</Text>
 					<Text size="large">{props.property.purchaseDate ? new Date(props.property.purchaseDate).toLocaleDateString("fr-FR") : "-"}</Text>

@@ -70,7 +70,7 @@ export function ActionButton(props: ActionButtonProps) {
 	};
 
 	const globalClasses =
-		"rounded-xl pl-5 pr-5 p-2 font-base-bold shadow-xs shadow-background-primary w-fit cursor-pointer";
+		"rounded-xl pl-5 pr-5 p-2 font-base-bold shadow-xs shadow-background-primary w-3xs md:w-fit h-fit cursor-pointer";
 
 	return (
 		<button
