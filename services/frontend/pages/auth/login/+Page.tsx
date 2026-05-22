@@ -4,16 +4,18 @@ import LoginForm from "./form";
 
 export default function Page() {
 	return (
-		<div class="relative flex flex-col gap-4 justify-center items-center w-dvw h-dvh">
-			<div class="absolute top-6 left-6">
+		<div class="flex flex-col min-h-dvh w-dvw">
+			<div class="p-4">
 				<a href="/">
 					<ActionButton color="outline">Accueil</ActionButton>
 				</a>
 			</div>
-			<Heading components="h1" size="extra-large" color="black" fontClasses="bold">
-				Connexion
-			</Heading>
-			<LoginForm />
+			<div class="flex flex-1 flex-col gap-4 justify-center items-center p-4 pb-8">
+				<Heading components="h1" size="extra-large" color="black" fontClasses="bold">
+					Connexion
+				</Heading>
+				<LoginForm />
+			</div>
 		</div>
 	);
 }

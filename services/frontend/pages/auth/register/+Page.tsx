@@ -5,14 +5,16 @@ import RegisterForm from "./form";
 export default function Page() {
 
     return (
-        <div class="relative h-dvh w-full flex flex-col justify-center items-center gap-4">
-            <div class="absolute top-6 left-6">
+        <div class="flex flex-col min-h-dvh w-full">
+            <div class="p-4">
                 <a href="/auth/login">
                     <ActionButton color="outline">Connexion</ActionButton>
                 </a>
             </div>
-            <Heading components="h1" size="extra-large" fontClasses="extra-bold">Inscription</Heading>
-            <RegisterForm />
+            <div class="flex flex-1 flex-col gap-4 justify-center items-center p-4 pb-8">
+                <Heading components="h1" size="extra-large" fontClasses="extra-bold">Inscription</Heading>
+                <RegisterForm />
+            </div>
         </div>
     )
 }

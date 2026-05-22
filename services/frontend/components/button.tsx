@@ -35,7 +35,7 @@ export function Button(props: ButtonProps) {
 	};
 
 	const globalClasses =
-		"w-fit h-fit rounded-xl pr-5 pl-5 p-2 font-primary text-light cursor-pointer";
+		"w-3xs md:w-fit h-fit rounded-xl pr-5 pl-5 p-2 font-primary text-light cursor-pointer";
 
 	const flexClasses = "flex gap-5 items-center";
 	return (
@@ -70,7 +70,7 @@ export function ActionButton(props: ActionButtonProps) {
 	};
 
 	const globalClasses =
-		"rounded-xl pl-5 pr-5 p-2 font-base-bold shadow-xs shadow-background-primary w-fit cursor-pointer";
+		"rounded-xl pl-5 pr-5 p-2 font-base-bold shadow-xs shadow-background-primary w-3xs md:w-fit h-fit cursor-pointer";
 
 	return (
 		<button
@@ -115,7 +115,7 @@ export function ButtonGroup<T extends string = string>(
 		option.onClick?.();
 	}
 	return (
-		<div class="flex gap-1 p-1 bg-slate-strong rounded-xl w-fit">
+		<div class="grid grid-cols-2 md:flex gap-1 p-1 bg-slate-strong rounded-xl w-fit">
 			<For each={props.options}>
 				{(option) => (
 					<button

@@ -8,7 +8,7 @@ export default function RegisterForm() {
 
 	return (
 		<Form callback={auth.handleRegister}
-			class="flex flex-col gap-3 p-2 w-lg bg-background-surface rounded-xl shadow-md shadow-background-border"
+			class="flex flex-col gap-3 p-2 bg-background-surface rounded-xl shadow-md shadow-background-border"
 			onSubmit={auth.handleRegister}
 		>
 			<TextField label="Nom" onInput={auth.handleRegisterInputChange("name")} required />

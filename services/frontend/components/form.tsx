@@ -40,7 +40,7 @@ export function Form(props: FormProps) {
 				{...rest}
 				onSubmit={handleSubmit}
 				class={clsx(
-					"flex flex-col rounded-2xl w-xl bg-background-base p-4 shadow-xs shadow-background-muted gap-2",
+					"flex flex-col rounded-2xl w-2xs md:w-md lg:w-lg bg-background-base p-4 shadow-xs shadow-background-muted gap-2",
 				)}
 			>
 				{hasRequiredFields() && (
@@ -86,7 +86,7 @@ export function TextField(props: TextFieldProps) {
 	return (
 		<fieldset class="flex flex-col">
 			<Label label={local.label} required={rest.required} for={rest.name} />
-			<input type={props.type ? props.type : "text"} class="bg-background-base border-slate-strong border rounded-md p-1 shadow-md shadow-slate-marked focus:outline-none focus:ring-2 focus:ring-action-green" id={rest.name} {...rest} />
+			<input type={props.type ? props.type : "text"} class="w-3xs md:w-md lg:w-lg bg-background-base border-slate-strong border rounded-md p-1 shadow-md shadow-slate-marked focus:outline-none focus:ring-2 focus:ring-action-green" id={rest.name} {...rest} />
 		</fieldset>
 	);
 }
@@ -109,7 +109,7 @@ export function Select(props: SelectProps) {
 		<fieldset class="flex flex-col">
 			<Label label={local.label} required={rest.required} />
 
-			<select class="bg-background-base rounded-md p-2 border border-slate-strong font-base-bold shadow-md shadow-slate-marked focus:outline-none focus:ring-2 focus:ring-action-green" id={rest.name} {...rest}>
+			<select class="w-3xs md:w-xs bg-background-base rounded-md p-2 border border-slate-strong font-base-bold shadow-md shadow-slate-marked focus:outline-none focus:ring-2 focus:ring-action-green" id={rest.name} {...rest}>
 				<option class="font-base-medium" value="" disabled selected>
 					- {local.labelOptions} -
 				</option>
