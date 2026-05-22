@@ -40,7 +40,7 @@ export function Form(props: FormProps) {
 				{...rest}
 				onSubmit={handleSubmit}
 				class={clsx(
-					"flex flex-col rounded-2xl w-xs md:w-md lg:w-lg bg-background-base p-4 shadow-xs shadow-background-muted gap-2",
+					"flex flex-col rounded-2xl w-2xs md:w-md lg:w-lg bg-background-base p-4 shadow-xs shadow-background-muted gap-2",
 				)}
 			>
 				{hasRequiredFields() && (
