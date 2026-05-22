@@ -253,7 +253,7 @@ export function CreateIncomeForm() {
                     }
                 </Text>
             )}
-            <div class="flex gap-2">
+            <div class="flex-col md:flex-row gap-2">
                 <div>
                     <Select
                         label="Contrat associé"
