@@ -22,9 +22,9 @@ export default function CreateForm() {
 	}));
 
 	return (
-		<Form callback={contract.create}>
-			<div class="flex flex-col md:flex-row gap-3">
-				<div>
+		<Form callback={contract.create} class="w-full">
+			<div class="flex flex-col sm:flex-row gap-3">
+				<div class="w-full">
 					<TextField
 						type="date"
 						label="Date de début du contrat"
@@ -40,7 +40,7 @@ export default function CreateForm() {
 						</span>
 					)}
 				</div>
-				<div>
+				<div class="w-full">
 					<TextField
 						type="date"
 						label="Date de fin du contrat"
@@ -72,8 +72,8 @@ export default function CreateForm() {
 					}
 				</span>
 			)}
-			<div class="flex flex-col md:flex-row gap-3">
-				<div>
+			<div class="flex flex-col sm:flex-row gap-3">
+				<div class="w-full">
 					<Select
 						label="Propriété louée"
 						labelOptions="Sélectionner une propriété"
@@ -90,7 +90,7 @@ export default function CreateForm() {
 						</span>
 					)}
 				</div>
-				<div>
+				<div class="w-full">
 					<Select
 						label="Client concerné"
 						labelOptions="Sélectionner un client"

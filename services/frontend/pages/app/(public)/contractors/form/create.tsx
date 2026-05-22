@@ -7,7 +7,7 @@ export default function CreateForm() {
 	const provider = useProvider();
 
 	return (
-		<Form callback={provider.create}>
+		<Form callback={provider.create} class="w-full">
 			<TextField label="Nom" onInput={provider.handleCreateInput("name")} required />
 			{provider.formError() && (
 				<span class="text-red-500">
