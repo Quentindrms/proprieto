@@ -1,6 +1,5 @@
 import { FiMail, FiPhone, FiUser } from "solid-icons/fi";
 import type { Client } from "../types/client";
-import { Badge } from "./badge";
 import { ActionButton } from "./button";
 import Heading from "./heading";
 import Text from "./text";
