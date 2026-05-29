@@ -16,7 +16,7 @@ export function Badge(props: BadgeProps) {
     };
 
     const globalClasses =
-        "w-fit h-fit pl-4 pr-4 pb-2 pt-2 rounded-full shadow-xs shadow-background-muted";
+        "w-fit h-fit pl-4 pr-4 pb-2 pt-2 rounded-full shadow-xs shadow-background-muted hover:scale-110";
 
     return (
         <div class={clsx([globalClasses, colorClases[props.color]])}>
@@ -42,7 +42,7 @@ export function ButtonBadge(props: ButtonBadgeProps) {
     };
 
     const globalClasses =
-        "w-3xs md:w-fit h-fit pl-4 pr-4 pb-2 pt-2 rounded-full shadow-xs shadow-background-muted";
+        "w-3xs md:w-fit h-fit pl-4 pr-4 pb-2 pt-2 rounded-full shadow-xs shadow-background-muted hover:scale-105";
 
     return (
         <button class={clsx([globalClasses, colorClases[local.color]])} {...rest}>
