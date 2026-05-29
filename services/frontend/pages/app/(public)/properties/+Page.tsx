@@ -85,19 +85,20 @@ export default function Page() {
 				/>
 
 				<div class="flex flex-col gap-2 items-center md:flex-col lg:flex-row p-2">
-					<ButtonBadge color="primary" onClick={() => sortProperties("all")}>
+					<ButtonBadge color="primary" onClick={() => sortProperties("all")} effect>
 						Tous les biens ({data.properties.length})
 					</ButtonBadge>
 					<ButtonBadge
 						color="primary"
 						onClick={() => sortProperties("apartment")}
+						effect
 					>
 						Appartements
 					</ButtonBadge>
-					<ButtonBadge color="primary" onClick={() => sortProperties("house")}>
+					<ButtonBadge color="primary" onClick={() => sortProperties("house")} effect>
 						Maisons
 					</ButtonBadge>
-					<ButtonBadge color="primary" onClick={() => sortProperties("office")}>
+					<ButtonBadge color="primary" onClick={() => sortProperties("office")} effect>
 						Bureaux
 					</ButtonBadge>
 				</div>
