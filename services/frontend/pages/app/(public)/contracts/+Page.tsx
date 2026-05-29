@@ -52,7 +52,7 @@ export default function Page() {
 				/>
 			</div>
 			<div class="flex gap-2">
-				<div class="flex flex-col w-xs md:w-md lg:w-lg p-4 gap-2 bg-background-base rounded-md">
+				<div class="flex flex-col w-md md:w-md lg:w-lg p-4 gap-2 bg-background-base rounded-md">
 					<div class="flex justify-between items-center">
 						<Heading components="h3" size="medium" fontClasses="bold">
 							Baux arrivant à terme (nombre)

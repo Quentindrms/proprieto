@@ -37,7 +37,7 @@ function getContractStatus(endDate: Date | string): ContractStatus {
 
 export function ContractBoard(props: ContractBoardProps) {
 	return (
-		<div class="w-xs md:w-xl lg:w-7xl overflow-x-auto rounded-xl shadow-md bg-background-base shadow-muted-text">
+		<div class="w-90 md:w-xl lg:w-7xl overflow-x-auto rounded-xl shadow-md bg-background-base shadow-muted-text">
 			<table class="w-full border-collapse">
 				<thead class="bg-background-secondary">
 					<tr>
