@@ -9,10 +9,10 @@ interface BadgeProps {
 
 export function Badge(props: BadgeProps) {
     const colorClases: Record<BadgeColor, string> = {
-        success: "bg-action-green text-green-800 font-base-extrabold",
-        error: "bg-action-red text-dark text-red-800 font-base-extrabold",
-        primary: "bg-background-primary text-light font-base-extrabold",
-        warning: "bg-action-orange text-amber-800 font-base-extrabold",
+        success: "bg-action-green/75 border border-action-green text-green-800 font-base-extrabold",
+        error: "bg-action-red/75 border-action-red text-dark text-red-800 font-base-extrabold",
+        primary: "bg-background-primary/75 border-background-primary text-light font-base-extrabold",
+        warning: "bg-action-orange/75 text-amber-800 border border-action-orange font-base-extrabold",
     };
 
     const globalClasses =
