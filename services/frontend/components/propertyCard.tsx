@@ -3,8 +3,7 @@ import { FaSolidBuilding, FaSolidHouse } from "solid-icons/fa";
 import { ImOffice } from "solid-icons/im";
 import { Show } from "solid-js";
 import type { Property } from "../types/property";
-import { Badge } from "./badge";
-import { Button } from "./button";
+
 import Heading from "./heading";
 import Text from "./text";
 
