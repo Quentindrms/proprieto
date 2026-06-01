@@ -131,7 +131,7 @@ export interface FluxRowData {
     name: string;
     category: string;
     issueDate: string;
-    amount: string;
+    amount: number;
     type: "outcome" | "income";
     onClick: (item: Omit<FluxRowData, "onClick">) => void;
 }
@@ -152,7 +152,7 @@ export function FluxRow(props: FluxRowData) {
                 <Text size="medium">{props.issueDate}</Text>
             </td>
             <td class="px-4 py-3">
-                <Text size="medium">{props.amount}€</Text>
+                <Text size="medium">{Intl.NumberFormat("fr-FR").format(props.amount)}€</Text>
             </td>
         </tr>
     )
