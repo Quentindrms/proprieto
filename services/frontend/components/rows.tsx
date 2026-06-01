@@ -23,7 +23,7 @@ export default function TransactionRow(props: TransactionRowData) {
     const isIncome = () => props.type === "income";
 
     return (
-        <tr class="last:border-0 hover:bg-background-secondary transition-colors">
+        <tr class="last:border-0 hover:bg-background-muted/10 transition-colors">
             <td class="px-4 py-3">
                 <div class="flex items-center gap-3">
                     {isIncome() ? (
