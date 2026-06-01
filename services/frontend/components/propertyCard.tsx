@@ -19,7 +19,7 @@ export default function PropertyCard(props: PropertyCardProps) {
 		<button
 			type="button"
 			onClick={props.onClick}
-			class="w-xs md:w-md lg:w-lg flex flex-col bg-background-base rounded-md shadow-md/60 shadow-background-muted text-left cursor-pointer p-2"
+			class="w-xs md:w-md lg:w-lg flex flex-col bg-background-base rounded-md shadow-lg inset-shadow-sm shadow-slate-900/80 text-left cursor-pointer p-2"
 		>
 			<div
 				class="flex items-center justify-center p-4 md:w-md lg:w-lg"
