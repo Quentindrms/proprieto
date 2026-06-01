@@ -2,7 +2,6 @@ import { useFinance } from "@hooks/useFinance";
 import {
     onCreateIncome,
     onCreateOutcome,
-    onDeleteFlux,
     onEditIncome,
     onEditOutcome,
 } from "@hooks/useFinance.telefunc";
@@ -36,8 +35,9 @@ const fakeCheckboxEvent = (checked: boolean) =>
 describe("UseFinance - Créer une dépense", () => {
     it("Doit setter formError et ne pas appeler onCreate si les données sont invalides", async () => {
         const finance = useFinance();
+        const closeModal = vi.fn();
 
-        await finance.handleCreateOutcome();
+        await finance.handleCreateOutcome(closeModal);
         expect(finance.outcomeErrors()).toBeDefined();
         expect(finance.outcomeErrors()?.success).toBe(false);
         expect(onCreateOutcome).not.toHaveBeenCalled();
@@ -45,6 +45,7 @@ describe("UseFinance - Créer une dépense", () => {
 
     it("Ne doit pas setter formError et doit appeler onCreate si les données sont valides", async () => {
         const finance = useFinance();
+        const closeModal = vi.fn();
 
         finance.handleInputOutcome("amount")(fakeEvent("100"))
         finance.handleInputOutcome("categoryId")(fakeEvent(crypto.randomUUID()))
@@ -59,7 +60,7 @@ describe("UseFinance - Créer une dépense", () => {
 
 
 
-        await finance.handleCreateOutcome();
+        await finance.handleCreateOutcome(closeModal);
         expect(finance.outcomeErrors()).not.toBeDefined();
         expect(onCreateOutcome).toHaveBeenCalled();
     })
@@ -98,8 +99,10 @@ describe("UseFinnance - Modifier une dépense", () => {
 describe("UseFinnance - Créer un revenu", () => {
     it("Doit setter formError et ne pas appeler onCreate si les données sont valides", async () => {
         const finance = useFinance();
+        const closeModal = vi.fn();
 
-        await finance.handleCreateIncome();
+
+        await finance.handleCreateIncome(closeModal);
         expect(finance.incomeErrors()).toBeDefined();
         expect(finance.incomeErrors()?.success).toBe(false);
         expect(onCreateIncome).not.toHaveBeenCalled();
@@ -107,6 +110,7 @@ describe("UseFinnance - Créer un revenu", () => {
 
     it("Ne doit pas setter formError et doit appeler onCreate si les données sont valides", async () => {
         const finance = useFinance();
+        const closeModal = vi.fn();
 
         finance.handleInputIncome("amount")(fakeEvent("100"))
         finance.handleInputIncome("categoryId")(fakeEvent(crypto.randomUUID()))
@@ -118,7 +122,7 @@ describe("UseFinnance - Créer un revenu", () => {
         finance.handleInputIncome("paidOn")(fakeEvent(new Date().toISOString()))
         finance.handleInputIncome("contractId")(fakeEvent(crypto.randomUUID()))
 
-        await finance.handleCreateIncome();
+        await finance.handleCreateIncome(closeModal);
         expect(finance.incomeErrors()).not.toBeDefined();
         expect(onCreateIncome).toHaveBeenCalled()
     })
