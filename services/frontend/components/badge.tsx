@@ -20,7 +20,7 @@ export function Badge(props: BadgeProps) {
     };
 
     const globalClasses =
-        "w-fit h-fit pl-4 pr-4 pb-2 pt-2 rounded-full shadow-md shadow-background-muted hover:scale-110";
+        "w-fit h-fit pl-4 pr-4 pb-2 pt-2 rounded-full shadow-md shadow-background-muted hover:-translate-x-1 transition-transform";
 
     return (
         <div class={clsx([globalClasses, colorClases[props.color]])}>
@@ -54,7 +54,7 @@ export function ButtonBadge(props: ButtonBadgeProps) {
             class={clsx([
                 globalClasses,
                 colorClases[local.color],
-                props.effect ? "hover:scale-105" : "",
+                props.effect ? "hover:-translate-y-0.5 transition-transform" : "",
             ])}
             {...rest}
         >

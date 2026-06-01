@@ -101,7 +101,7 @@ export function NavbarLink(props: NavbarLinkProps) {
     return (
         <a
             href={props.value}
-            class="text-xl p-3 rounded-md font-base-bold text-muted-text hover:bg-muted-text/10 hover:text-dark"
+            class="inline-block text-xl p-3 rounded-md font-base-bold text-muted-text hover:bg-muted-text/10 hover:text-dark hover:translate-x-2 transition-transform duration-150"
         >
             {props.name}
         </a>
