@@ -29,6 +29,23 @@ export function CardRevenue(props: CardRevenueProps) {
     )
 }
 
+interface CardInfoProps {
+    title: string,
+    stat: number,
+}
+
+export function CardInfo(props: CardInfoProps) {
+    const globalClasses =
+        "h-xs p-2 w-2xs border-2 border-slate-marked background-base rounded-xl flex flex-col justify-center gap-1 shadow-md/50 shadow-background-muted bg-background-base";
+
+    return (
+        <div class={clsx([globalClasses])}>
+            <Heading components="h2" size="medium" color="gray">{props.title}</Heading>
+            <p class="font-base-extrabold text-3xl">{Intl.NumberFormat("fr-FR").format(props.stat)}</p>
+        </div>
+    )
+}
+
 interface CardProgressionBarProps {
     title: string;
     value: number;

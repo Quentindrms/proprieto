@@ -1,6 +1,6 @@
 import type { Property } from "@app/types/property";
 import Board from "@components/board";
-import { CardProgressionBar, CardRevenue } from "@components/dataCard";
+import { CardInfo, CardProgressionBar, CardRevenue, CardTicket } from "@components/dataCard";
 import Heading from "@components/heading";
 import PageNamer from "@components/pageNamer";
 import PropertyCard from "@components/propertyCard";
@@ -50,7 +50,7 @@ export default function Page() {
 				buttonText="Ajouter une propriété"
 			/>
 
-			<div class="flex flex-col md:flex-row gap-5 justify-center items-center">
+			<div class="flex flex-col md:flex-row gap-5 justify-center items-center items-stretch">
 				<CardRevenue
 					title="Dépense totale"
 					stat={data.monthlyOutcome.sum}
@@ -69,6 +69,16 @@ export default function Page() {
 							? `+${data.monthlyIncome.growth}% par rapport au mois précédent`
 							: `${data.monthlyOutcome.growth}% par rapport au mois précédent`
 					}
+				/>
+
+				<CardInfo
+					title="Revenu en attente de paiement"
+					stat={0}
+				/>
+
+				<CardInfo
+					title="Dépense en attente de paiement"
+					stat={0}
 				/>
 
 			</div>
