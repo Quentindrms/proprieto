@@ -9,8 +9,6 @@ import type { Data } from "./+data";
 export default function Page() {
 	const data = useData<Data>();
 
-	const currentMonthProfit = data.monthlyIncome.sum - data.monthlyOutcome.sum;
-
 	const incomesRow: TransactionRowData[] = data.monthlyIncome.incomes.map(
 		(income) => ({
 			id: income.id,
@@ -57,7 +55,7 @@ export default function Page() {
 							? `${data.monthlyOutcome.growth}% par rapport au mois précédent`
 							: `${data.monthlyOutcome.growth}% par rapport au mois précédent`
 					}
-					dynamic
+					dynamic={true}
 				/>
 				<CardRevenue
 					title="Revenu total"
@@ -83,12 +81,6 @@ export default function Page() {
 
 			<div class="flex flex-col-reverse items-center md:flex-row gap-2">
 				<Board transactions={sortedTransactionRow} />
-				<div class="flex flex-col gap-2 p-2">
-					<CardRevenue
-						title="Profit du portefeuille"
-						stat={currentMonthProfit}
-					/>
-				</div>
 			</div>
 
 			<div class="flex flex-col gap-2">
