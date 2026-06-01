@@ -13,7 +13,11 @@ import { useData } from "vike-solid/useData";
 import { z } from "zod";
 import type { Data } from "../+data";
 
-export function CreateOutcomeForm() {
+interface CreateOutcomeFormProps {
+    close: () => void,
+}
+
+export function CreateOutcomeForm(props: CreateOutcomeFormProps) {
     const data = useData<Data>();
     const [isRecuring, setIsRecuring] = createSignal<boolean>(false);
     const [isPaid, setIsPaid] = createSignal<boolean>(false);
@@ -39,7 +43,7 @@ export function CreateOutcomeForm() {
     const outcome = useFinanceContext();
 
     return (
-        <Form callback={outcome.handleCreateOutcome} class="w-full">
+        <Form callback={() => outcome.handleCreateOutcome(props.close)} class="w-full">
             <TextField
                 label="Nom"
                 name="name"
@@ -209,10 +213,12 @@ export function CreateOutcomeForm() {
     );
 }
 
+interface CreateIncomeFormProps {
+    close: () => void,
+}
 
 
-
-export function CreateIncomeForm() {
+export function CreateIncomeForm(props: CreateIncomeFormProps) {
     const data = useData<Data>();
     const [isPaid, setIsPaid] = createSignal<boolean>(false);
     const [isRecuring, setIsRecuring] = createSignal<boolean>(false);
@@ -231,7 +237,7 @@ export function CreateIncomeForm() {
     }))
 
     return (
-        <Form callback={income.handleCreateIncome} class="w-full">
+        <Form callback={() => income.handleCreateIncome(props.close)} class="w-full">
             <TextField label="Nom" onInput={income.handleInputIncome("name")} required />
 
             {income.incomeErrors() && (

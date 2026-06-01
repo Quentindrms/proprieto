@@ -141,7 +141,7 @@ export function useFinance() {
 	 * Handle submit event for creation/update/deletion
 	 */
 
-	async function handleCreateIncome() {
+	async function handleCreateIncome(closeModal: () => void) {
 		const validate = IncomeCreationSchema.safeParse(createIncome());
 		createIncome();
 		if (!validate.success) {
@@ -156,10 +156,11 @@ export function useFinance() {
 		}
 		toast.success("Revenu crée");
 		await reload();
+		closeModal();
 		return;
 	}
 
-	async function handleCreateOutcome() {
+	async function handleCreateOutcome(closeModal: () => void) {
 		const validate = OutcomeCreationSchema.safeParse(createOutcome());
 		createOutcome();
 		if (!validate.success) {
@@ -174,6 +175,7 @@ export function useFinance() {
 		}
 		toast.success("Dépense crée");
 		await reload();
+		closeModal();
 		return;
 	}
 

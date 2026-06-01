@@ -39,8 +39,8 @@ export default function CreateModal(props: CreateModalProps) {
                         },
                     ]}
                 />
-                <Show when={isIncome()} fallback={<CreateOutcomeForm />}>
-                    <CreateIncomeForm />
+                <Show when={isIncome()} fallback={<CreateOutcomeForm close={props.close} />}>
+                    <CreateIncomeForm close={props.close} />
                 </Show>
             </ModalBody>
         </Modal>
