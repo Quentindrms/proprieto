@@ -23,7 +23,7 @@ export function CardRevenue(props: CardRevenueProps) {
     return (
         <div class={clsx([globalClasses])}>
             <Heading components="h2" size="medium" color="gray">{props.title}</Heading>
-            <p class="font-base-extrabold text-3xl">{props.stat}$</p>
+            <p class="font-base-extrabold text-3xl">{Intl.NumberFormat("fr-FR").format(props.stat)} €</p>
             {props.comment && <Text size="small" class={clsx([colorText(), "font-base-bold"])}>{props.comment}</Text>}
         </div>
     )

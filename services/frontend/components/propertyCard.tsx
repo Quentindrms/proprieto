@@ -42,7 +42,7 @@ export default function PropertyCard(props: PropertyCardProps) {
 				<Heading components="h3" size="large" fontClasses="medium">
 					{props.property.name}
 				</Heading>
-				<Text size="base">{props.property.purchasePrice}€</Text>
+				<Text size="base">{props.property.purchasePrice ? (Intl.NumberFormat("fr-FR").format(props.property.purchasePrice)) : "-"} €</Text>
 			</div>
 			<div
 				id="bodyCard"
