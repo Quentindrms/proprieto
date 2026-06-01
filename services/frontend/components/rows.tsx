@@ -3,7 +3,6 @@ import {
     BsArrowDownRightCircleFill,
     BsArrowUpRightCircleFill,
 } from "solid-icons/bs";
-import { FaSolidEdit, FaSolidTrashCan } from "solid-icons/fa";
 import { Badge } from "./badge";
 import Heading from "./heading";
 import Text from "./text";
@@ -203,20 +202,6 @@ export function ContractorRow(props: ContractorRowData) {
                     <Text size="medium" class="italic text-muted-text">
                         {props.mail}
                     </Text>
-                </div>
-            </td>
-            <td class="px-4 py-3">
-                <div class="flex gap-5">
-                    <FaSolidEdit
-                        class="cursor-pointer"
-                        size={25}
-                        color="var(--color--dark)"
-                    />
-                    <FaSolidTrashCan
-                        class="cursor-pointer"
-                        size={25}
-                        color="var(--color-action-red)"
-                    />
                 </div>
             </td>
         </tr>

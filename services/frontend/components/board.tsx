@@ -119,11 +119,6 @@ export function ContractorsBoard(props: ContractorsBoardProps) {
 								Contact
 							</Heading>
 						</th>
-						<th class="px-4 py-3 text-left">
-							<Heading components="h4" size="large">
-								Actions
-							</Heading>
-						</th>
 					</tr>
 				</thead>
 				<tbody class="bg-background-base">
@@ -149,7 +144,7 @@ export interface FluxBoardItem {
 	name: string;
 	category: string;
 	issueDate: string;
-	amount: string;
+	amount: number;
 	type: "outcome" | "income";
 }
 
