@@ -49,7 +49,7 @@ export default function Navbar() {
             {/* Sidebar */}
             <div
                 class={`
-                flex flex-col w-2xs h-dvh bg-background-base
+                flex flex-col w-2xs h-dvh bg-background-base lg:bg-background-base/0
                 fixed lg:static inset-y-0 left-0 z-40
                 transition-transform duration-300
                 ${isOpen() ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
