@@ -58,7 +58,7 @@ export default function TransactionRow(props: TransactionRowData) {
             <td class="px-4 py-3">
                 <div class="flex justify-center">
                     <Badge color={isIncome() ? "success" : "error"}>
-                        {isIncome() ? "Entrée" : "Sortie"}
+                        {isIncome() ? "Revenu" : "Dépense"}
                     </Badge>
                 </div>
             </td>
