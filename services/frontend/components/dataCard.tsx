@@ -71,7 +71,7 @@ export function CardProgressionBar(props: CardProgressionBarProps) {
 
             <div class="border border-slate-marked rounded-full bg-slate-marked">
                 <div
-                    class="h-5 rounded-full bg-action-green"
+                    class="h-5 rounded-full bg-action-green/70"
                     style={{ width: `${progress()}%` }}
                 ></div>
             </div>
