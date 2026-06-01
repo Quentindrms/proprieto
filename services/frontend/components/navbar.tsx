@@ -1,11 +1,11 @@
 import { onLogout } from "@hooks/useAuth.telefunc";
+import { ImCross } from "solid-icons/im";
 import { createSignal, Show } from "solid-js";
 import toast from "solid-toast";
 import { reload } from "vike/client/router";
 import { ActionButton } from "./button";
 import Heading from "./heading";
 import Text from "./text";
-import { ImCross } from 'solid-icons/im'
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = createSignal(false);
@@ -33,6 +33,7 @@ export default function Navbar() {
                     class="lg:hidden fixed top-4 left-4 z-50 flex flex-col justify-center gap-1.5 w-8 h-8 cursor-pointer"
                     onClick={() => setIsOpen(true)}
                     aria-label="Ouvrir le menu"
+                    type="button"
                 >
                     <span class="block h-0.5 bg-dark rounded" />
                     <span class="block h-0.5 bg-dark rounded" />
@@ -42,16 +43,18 @@ export default function Navbar() {
 
             {/* Overlay sombre */}
             <Show when={isOpen()}>
-                <div class="lg:hidden fixed inset-0 z-30 bg-black/40" onClick={close} />
+                <button class="lg:hidden fixed inset-0 z-30 bg-black/40" onClick={close} type="button" />
             </Show>
 
             {/* Sidebar */}
-            <div class={`
+            <div
+                class={`
                 flex flex-col w-2xs h-dvh bg-background-base
                 fixed lg:static inset-y-0 left-0 z-40
                 transition-transform duration-300
                 ${isOpen() ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
-            `}>
+            `}
+            >
                 <div class="flex items-start justify-between p-4">
                     <div class="flex flex-col">
                         <Heading components="h1" size="extra-large" fontClasses="bold">
@@ -66,6 +69,7 @@ export default function Navbar() {
                         class="lg:hidden flex flex-col justify-center gap-1.5 w-8 h-8 cursor-pointer mt-1 shrink-0"
                         onClick={close}
                         aria-label="Fermer le menu"
+                        type="button"
                     >
                         <ImCross color="var(--color-background-dark)" />
                     </button>

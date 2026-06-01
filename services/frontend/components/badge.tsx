@@ -1,6 +1,5 @@
 import clsx from "clsx";
 import { type JSX, splitProps } from "solid-js";
-import { effect } from "solid-js/web";
 import type { BadgeColor } from "../types/styleTypes";
 
 interface BadgeProps {
