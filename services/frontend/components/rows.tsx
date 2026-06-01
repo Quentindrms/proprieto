@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import {
     BsArrowDownRightCircleFill,
     BsArrowUpRightCircleFill,
@@ -10,12 +11,12 @@ import Text from "./text";
 export type TransactionType = "income" | "outcome";
 
 export interface TransactionRowData {
-    id: string,
+    id: string;
     name: string;
     amount: number;
     type: TransactionType;
     isPaid: boolean;
-    issueDate: Date,
+    issueDate: Date;
 }
 
 export default function TransactionRow(props: TransactionRowData) {
@@ -137,9 +138,20 @@ export interface FluxRowData {
 }
 
 export function FluxRow(props: FluxRowData) {
-
     return (
-        <tr class="last:border-0 hover:bg-background-muted/10 transition-colors" onClick={() => props.onClick({ id: props.id, name: props.name, category: props.category, issueDate: props.issueDate, amount: props.amount, type: props.type })}>
+        <tr
+            class="last:border-0 hover:bg-background-muted/10 transition-colors"
+            onClick={() =>
+                props.onClick({
+                    id: props.id,
+                    name: props.name,
+                    category: props.category,
+                    issueDate: props.issueDate,
+                    amount: props.amount,
+                    type: props.type,
+                })
+            }
+        >
             <td class="px-4 py-3">
                 <Heading components="h3" size="medium">
                     {props.name}
@@ -152,10 +164,15 @@ export function FluxRow(props: FluxRowData) {
                 <Text size="medium">{props.issueDate}</Text>
             </td>
             <td class="px-4 py-3">
-                <Text size="medium">{Intl.NumberFormat("fr-FR").format(props.amount)}€</Text>
+                <Text
+                    size="medium"
+                    class={clsx([props.type === "income" ? "text-action-green" : "text-action-red"])}
+                >
+                    {Intl.NumberFormat("fr-FR").format(props.amount)}€
+                </Text>
             </td>
         </tr>
-    )
+    );
 }
 
 export interface ContractorRowData {
@@ -166,12 +183,16 @@ export interface ContractorRowData {
     onClick: () => void;
 }
 
-
 export function ContractorRow(props: ContractorRowData) {
     return (
-        <tr class="last:border-0 hover:bg-background-secondary transition-colors hover:bg-background-muted/10" onClick={props.onClick}>
+        <tr
+            class="last:border-0 hover:bg-background-secondary transition-colors hover:bg-background-muted/10"
+            onClick={props.onClick}
+        >
             <td class="px-4 py-3">
-                <Heading components="h3" size="medium" fontClasses="bold">{props.name}</Heading>
+                <Heading components="h3" size="medium" fontClasses="bold">
+                    {props.name}
+                </Heading>
             </td>
             <td class="px-4 py-3">
                 <Text size="medium">{props.speciality}</Text>
@@ -179,16 +200,25 @@ export function ContractorRow(props: ContractorRowData) {
             <td class="px-4 py-3">
                 <div class="flex flex-col">
                     <Text size="medium">{props.phone}</Text>
-                    <Text size="medium" class="italic text-muted-text">{props.mail}</Text>
+                    <Text size="medium" class="italic text-muted-text">
+                        {props.mail}
+                    </Text>
                 </div>
             </td>
             <td class="px-4 py-3">
                 <div class="flex gap-5">
-                    <FaSolidEdit class="cursor-pointer" size={25} color="var(--color--dark)" />
-                    <FaSolidTrashCan class="cursor-pointer" size={25} color="var(--color-action-red)" />
+                    <FaSolidEdit
+                        class="cursor-pointer"
+                        size={25}
+                        color="var(--color--dark)"
+                    />
+                    <FaSolidTrashCan
+                        class="cursor-pointer"
+                        size={25}
+                        color="var(--color-action-red)"
+                    />
                 </div>
             </td>
         </tr>
-
-    )
+    );
 }
