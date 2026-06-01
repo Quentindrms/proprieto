@@ -1,9 +1,7 @@
-import type { Property } from "@app/types/property";
 import Board from "@components/board";
-import { CardInfo, CardProgressionBar, CardRevenue, CardTicket } from "@components/dataCard";
+import { CardInfo, CardRevenue } from "@components/dataCard";
 import Heading from "@components/heading";
 import PageNamer from "@components/pageNamer";
-import PropertyCard from "@components/propertyCard";
 import type { TransactionRowData } from "@components/rows";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
@@ -50,7 +48,7 @@ export default function Page() {
 				buttonText="Ajouter une propriété"
 			/>
 
-			<div class="flex flex-col md:flex-row gap-5 justify-center items-center items-stretch">
+			<div class="flex flex-col md:flex-row gap-5 justify-center items-stretch">
 				<CardRevenue
 					title="Dépense totale"
 					stat={data.monthlyOutcome.sum}
