@@ -5,7 +5,7 @@ import { Board } from "@components/board";
 import { ButtonGroup } from "@components/button";
 import { CardRevenue } from "@components/dataCard";
 import PageNamer from "@components/pageNamer";
-import { FluxRow, type FluxRowData } from "@components/rows";
+import { FluxRow } from "@components/rows";
 import { FinanceContext, useFinance } from "@hooks/useFinance";
 import { onGetFluxDetails } from "@hooks/useFinance.telefunc";
 import { useModal } from "@hooks/useModal";
@@ -82,8 +82,6 @@ export default function Page() {
         .reduce((sum, o) => sum + o.amount, 0);
 
     const monthProfit = totalMonthIncomes - totalMonthOutcomes;
-
-    const flux = outcomes.concat(incomes);
 
     function handleEdit(
         detail: IncomeDetail | OutcomeDetail,
