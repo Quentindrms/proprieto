@@ -103,7 +103,7 @@ export default function Page() {
 					</ButtonBadge>
 				</div>
 
-				<div class="p-2 flex flex-wrap gap-4 justify-center items-center">
+				<div class="p-2 flex flex-wrap gap-x-8 gap-y-4 justify-center items-center">
 					<For each={properties().slice(0, 6)}>
 						{(property) => (
 							<PropertyCard
