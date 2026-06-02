@@ -1,17 +1,15 @@
-import type { Property } from "@app/types/property";
-import Board from "@components/board";
-import { CardProgressionBar, CardRevenue } from "@components/dataCard";
+import { Board } from "@components/board";
+import { CardInfo, CardRevenue } from "@components/dataCard";
 import Heading from "@components/heading";
 import PageNamer from "@components/pageNamer";
-import PropertyCard from "@components/propertyCard";
 import type { TransactionRowData } from "@components/rows";
+import TransactionRow from "@components/rows";
+import { lastOutcomeBoardTitle } from "@libs/boardTitle";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
 
 export default function Page() {
 	const data = useData<Data>();
-
-	const currentMonthProfit = data.monthlyIncome.sum - data.monthlyOutcome.sum;
 
 	const incomesRow: TransactionRowData[] = data.monthlyIncome.incomes.map(
 		(income) => ({
@@ -20,7 +18,7 @@ export default function Page() {
 			amount: income.amount,
 			type: "income",
 			isPaid: income.isPaid,
-			issueDate: new Date(income.issueDate)
+			issueDate: new Date(income.issueDate),
 		}),
 	);
 	const outcomesRow: TransactionRowData[] = data.monthlyOutcome.outcomes.map(
@@ -30,7 +28,7 @@ export default function Page() {
 			amount: outcome.amount,
 			type: "outcome",
 			isPaid: outcome.isPaid,
-			issueDate: new Date(outcome.issueDate)
+			issueDate: new Date(outcome.issueDate),
 		}),
 	);
 
@@ -38,19 +36,19 @@ export default function Page() {
 	const sortedTransactionRow = transactionRow.sort((a, b) => {
 		const dateA = new Date(a.issueDate).getTime();
 		const dateB = new Date(b.issueDate).getTime();
-		return (dateB - dateA);
-	})
+		return dateB - dateA;
+	});
 
 	return (
 		<div class="h-full w-full flex flex-col gap-5">
 			<PageNamer
 				onClick={() => { }}
 				pageName="Portfolio"
-				subText={`Aperçu de vos ${data.propertyCount} propriétés et de leurs performances`}
+				subText={data.propertyCount < 1 ? "Vous n'avez aucune propriété enregistrée" : (data.propertyCount === 1 ? "Aperçu de votre propriété et de sa performance" : `Aperçu de vos ${data.propertyCount} propriétés et de leurs performances`)}
 				buttonText="Ajouter une propriété"
 			/>
 
-			<div class="flex flex-col md:flex-row gap-5 justify-center items-center">
+			<div class="flex flex-col md:flex-row gap-5 justify-center items-stretch">
 				<CardRevenue
 					title="Dépense totale"
 					stat={data.monthlyOutcome.sum}
@@ -59,7 +57,7 @@ export default function Page() {
 							? `${data.monthlyOutcome.growth}% par rapport au mois précédent`
 							: `${data.monthlyOutcome.growth}% par rapport au mois précédent`
 					}
-					dynamic
+					dynamic={true}
 				/>
 				<CardRevenue
 					title="Revenu total"
@@ -71,24 +69,28 @@ export default function Page() {
 					}
 				/>
 
+				<CardInfo title="Revenu en attente de paiement" stat={0} />
+
+				<CardInfo title="Dépense en attente de paiement" stat={0} />
 			</div>
 
 			<div class="flex flex-col-reverse items-center md:flex-row gap-2">
-				<Board transactions={sortedTransactionRow} />
-				<div class="flex flex-col gap-2 p-2">
-					<CardRevenue
-						title="Profit du portefeuille"
-						stat={currentMonthProfit}
-					/>
-				</div>
+				<Board
+					body={{
+						data: transactionRow,
+						renderRow: (item: TransactionRowData) => (
+							<TransactionRow {...item} />
+						),
+					}}
+					header={{ title: lastOutcomeBoardTitle }}
+				/>
 			</div>
 
 			<div class="flex flex-col gap-2">
 				<Heading size="extra-large" components="h2">
 					Propriétés les plus perfomantes
 				</Heading>
-				<div class="flex flex-row">
-				</div>
+				<div class="flex flex-row"></div>
 			</div>
 		</div>
 	);

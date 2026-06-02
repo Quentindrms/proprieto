@@ -84,25 +84,26 @@ export default function Page() {
 					subText="Gérez et suivez l'ensemble de votre parc immobilier"
 				/>
 
-				<div class="flex flex-col gap-2 items-center md:flex-col lg:flex-row">
-					<ButtonBadge color="primary" onClick={() => sortProperties("all")}>
+				<div class="flex flex-col gap-2 items-center md:flex-col lg:flex-row p-2">
+					<ButtonBadge color="primary" onClick={() => sortProperties("all")} effect>
 						Tous les biens ({data.properties.length})
 					</ButtonBadge>
 					<ButtonBadge
 						color="primary"
 						onClick={() => sortProperties("apartment")}
+						effect
 					>
 						Appartements
 					</ButtonBadge>
-					<ButtonBadge color="primary" onClick={() => sortProperties("house")}>
+					<ButtonBadge color="primary" onClick={() => sortProperties("house")} effect>
 						Maisons
 					</ButtonBadge>
-					<ButtonBadge color="primary" onClick={() => sortProperties("office")}>
+					<ButtonBadge color="primary" onClick={() => sortProperties("office")} effect>
 						Bureaux
 					</ButtonBadge>
 				</div>
 
-				<div class="p-2 flex flex-wrap gap-x-4 gap-y-8 justify-center items-center">
+				<div class="p-2 flex flex-wrap gap-x-8 gap-y-4 justify-center items-center">
 					<For each={properties().slice(0, 6)}>
 						{(property) => (
 							<PropertyCard

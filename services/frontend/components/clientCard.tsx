@@ -1,6 +1,5 @@
 import { FiMail, FiPhone, FiUser } from "solid-icons/fi";
 import type { Client } from "../types/client";
-import { Badge } from "./badge";
 import { ActionButton } from "./button";
 import Heading from "./heading";
 import Text from "./text";
@@ -14,7 +13,7 @@ interface ClientCardProps {
 
 export function ClientCard(props: ClientCardProps) {
 	return (
-		<div class="w-xs flex flex-col p-4 bg-background-base rounded-xl gap-4 shadow-xs shadow-background-muted">
+		<div class="w-xs flex flex-col p-4 bg-background-base rounded-xl gap-4 shadow-xs shadow-background-muted hover:-translate-y-1 transition-transform">
 			<div class="flex flex-col justify-center items-center gap-2">
 				<FiUser size={90} />
 				<Heading

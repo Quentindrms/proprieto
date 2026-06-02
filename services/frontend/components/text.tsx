@@ -11,7 +11,6 @@ interface TextProps extends JSX.HTMLAttributes<HTMLParagraphElement> {
 }
 
 export default function Text(props: TextProps) {
-	const globalClasses = "font-base-medium";
 
 	const sizeClasses: Record<TextSize, string> = {
 		"extra-small": "text-2xs",
@@ -26,8 +25,7 @@ export default function Text(props: TextProps) {
 	return (
 		<Dynamic
 			class={clsx([
-				globalClasses,
-				props.bold ? "font-bold" : "",
+				props.bold ? "font-bold" : "font-base-medium",
 				props.size ? sizeClasses[props.size] : sizeClasses.base,
 				props.class,
 			])}

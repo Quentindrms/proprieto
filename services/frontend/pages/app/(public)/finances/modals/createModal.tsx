@@ -33,14 +33,14 @@ export default function CreateModal(props: CreateModalProps) {
                             onClick: () => setIsIncome(false),
                         },
                         {
-                            label: "Revenue",
+                            label: "Revenu",
                             value: "outcome",
                             onClick: () => setIsIncome(true),
                         },
                     ]}
                 />
-                <Show when={isIncome()} fallback={<CreateOutcomeForm />}>
-                    <CreateIncomeForm />
+                <Show when={isIncome()} fallback={<CreateOutcomeForm close={props.close} />}>
+                    <CreateIncomeForm close={props.close} />
                 </Show>
             </ModalBody>
         </Modal>

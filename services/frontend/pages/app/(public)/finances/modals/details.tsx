@@ -36,7 +36,7 @@ export default function DetailsModal(props: DetailsModalProps) {
             </ModalHeader>
             <ModalBody>
                 <Text>Intitulé : {props.detail?.name}</Text>
-                <Text>Montant : {props.detail?.amount} €</Text>
+                <Text>Montant : {props.detail?.amount ? Intl.NumberFormat("fr-FR").format(props.detail?.amount) : "-"} €</Text>
                 <Text>Date de mise en recouvrement : {issueDate()}</Text>
                 <Text>Statut :
                     <Text components="span" class={clsx([props.detail?.isPaid ? "text-action-green" : "text-action-red"])}>{props.detail?.isPaid ? "Payé" : "En attente"}

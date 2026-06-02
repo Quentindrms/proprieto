@@ -12,6 +12,7 @@
     "jsx": "react-jsx",
     "jsxImportSource": "solid-js",
     "baseUrl": "./",
+    "ignoreDeprecations": "6.0",
     "paths": {
       "@components/*": ["components/*"],
       "@app/types/*": ["types/*"],
@@ -19,7 +20,8 @@
       "@hooks/*": ["hooks/*"],
       "@services/*": ["services/*"],
       "@utils/*": ["utils/*"],
-      "@schemas/*": ["schemas/*"]
+      "@schemas/*": ["schemas/*"],
+      "@libs/*": ["libs/*"]
     }
   },
   "exclude": ["dist"]

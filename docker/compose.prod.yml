@@ -3,8 +3,6 @@ services:
   frontend:
     container_name: proprieto-frontend-prod
     image: ghcr.io/quentindrms/proprieto-frontend:latest
-    ports:
-      - ${FRONTEND_PORT:-3000}:3000
     environment:
       - NODE_ENV=production
     networks:
@@ -15,8 +13,6 @@ services:
   backend:
     container_name: proprieto-backend-prod
     image: ghcr.io/quentindrms/proprieto-backend:latest
-    ports:
-      - ${BACKEND_PORT:-4000}:4000
     environment:
       - NODE_ENV=production
       - DB_USERNAME=${DB_USERNAME}

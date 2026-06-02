@@ -1,13 +1,11 @@
 import type { ProviderType } from "@app/types/provider";
-import { ContractorsBoard } from "@components/board";
+import { Board } from "@components/board";
 import { ButtonGroup } from "@components/button";
 import PageNamer from "@components/pageNamer";
-import type { ContractorRowData } from "@components/rows";
+import { ContractorRow, type ContractorRowData } from "@components/rows";
 import { useModal } from "@hooks/useModal";
-import {
-	ProviderContext,
-	useProvider,
-} from "@hooks/useProvider";
+import { ProviderContext, useProvider } from "@hooks/useProvider";
+import { contractorsBoardTitle } from "@libs/boardTitle";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
 import CreateModal from "./modal/create";
@@ -75,7 +73,13 @@ export default function Page() {
 					]}
 				/>
 
-				<ContractorsBoard contractors={contractor} />
+				<Board
+					body={{
+						data: contractor,
+						renderRow: (item: ContractorRowData) => <ContractorRow {...item} />,
+					}}
+					header={{ title: contractorsBoardTitle }}
+				/>
 			</div>
 		</ProviderContext.Provider>
 	);

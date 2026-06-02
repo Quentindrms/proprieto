@@ -12,7 +12,7 @@ interface CardRevenueProps {
 
 export function CardRevenue(props: CardRevenueProps) {
     const globalClasses =
-        "p-2 w-2xs border-2 border-slate-marked background-base rounded-xl flex flex-col justify-center gap-1 shadow-xs shadow-background-muted bg-background-base";
+        "p-2 w-2xs border-2 border-slate-marked background-base rounded-xl flex flex-col justify-center gap-1 shadow-md/50 shadow-background-muted bg-background-base";
     const colorText = createMemo(() => {
         if (props.dynamic && props.stat < 0) {
             return "text-action-red"
@@ -23,8 +23,25 @@ export function CardRevenue(props: CardRevenueProps) {
     return (
         <div class={clsx([globalClasses])}>
             <Heading components="h2" size="medium" color="gray">{props.title}</Heading>
-            <p class="font-base-extrabold text-3xl">{props.stat}$</p>
+            <p class="font-base-extrabold text-3xl">{Intl.NumberFormat("fr-FR").format(props.stat)} €</p>
             {props.comment && <Text size="small" class={clsx([colorText(), "font-base-bold"])}>{props.comment}</Text>}
+        </div>
+    )
+}
+
+interface CardInfoProps {
+    title: string,
+    stat: number,
+}
+
+export function CardInfo(props: CardInfoProps) {
+    const globalClasses =
+        "h-xs p-2 w-2xs border-2 border-slate-marked background-base rounded-xl flex flex-col justify-center gap-1 shadow-md/50 shadow-background-muted bg-background-base";
+
+    return (
+        <div class={clsx([globalClasses])}>
+            <Heading components="h2" size="medium" color="gray">{props.title}</Heading>
+            <p class="font-base-extrabold text-3xl">{Intl.NumberFormat("fr-FR").format(props.stat)}</p>
         </div>
     )
 }
@@ -71,7 +88,7 @@ export function CardProgressionBar(props: CardProgressionBarProps) {
 
             <div class="border border-slate-marked rounded-full bg-slate-marked">
                 <div
-                    class="h-5 rounded-full bg-action-green"
+                    class="h-5 rounded-full bg-action-green/70"
                     style={{ width: `${progress()}%` }}
                 ></div>
             </div>
