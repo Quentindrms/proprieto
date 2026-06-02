@@ -10,17 +10,17 @@ interface BadgeProps {
 export function Badge(props: BadgeProps) {
     const colorClases: Record<BadgeColor, string> = {
         success:
-            "bg-action-green/75 border border-action-green text-light font-base-extrabold backdrop-blur-md",
+            "bg-action-green/65 border border-action-green text-green-900 font-base-extrabold backdrop-blur-md",
         error:
-            "bg-action-red/75 border-action-red text-dark text-light font-base-extrabold",
+            "bg-action-red/65 border-action-red text-dark text-red-900 font-base-extrabold",
         primary:
-            "bg-background-primary/75 border-background-primary text-light font-base-extrabold",
+            "bg-background-primary/65 border-background-primary text-light font-base-extrabold",
         warning:
-            "bg-action-orange/75 text-light border border-action-orange font-base-extrabold",
+            "bg-action-orange/65 text-orange-900 border border-action-orange font-base-extrabold",
     };
 
     const globalClasses =
-        "w-fit h-fit pl-4 pr-4 pb-2 pt-2 rounded-full shadow-md shadow-background-muted hover:-translate-x-1 transition-transform";
+        "w-fit h-fit pl-4 pr-4 pb-2 pt-2 rounded-full shadow-md hover:-translate-x-1 transition-transform";
 
     return (
         <div class={clsx([globalClasses, colorClases[props.color]])}>
