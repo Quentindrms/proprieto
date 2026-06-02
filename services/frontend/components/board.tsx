@@ -1,11 +1,9 @@
 import type { TitleBoardHeader } from "@app/types/board";
-import { createSignal, For, type JSX, Show } from "solid-js";
-import { ButtonGroup } from "./button";
+import { For, type JSX } from "solid-js";
 import Heading from "./heading";
 import {
 	ContractRow,
 	type ContractStatus,
-	FluxRow,
 } from "./rows";
 
 
