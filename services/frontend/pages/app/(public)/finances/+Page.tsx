@@ -1,14 +1,18 @@
+import type { FluxBoardItem } from "@app/types/board";
 import type { IncomeDetail } from "@app/types/income";
 import type { OutcomeDetail } from "@app/types/outcome";
-import { FluxBoard, type FluxBoardItem } from "@components/board";
+import { Board } from "@components/board";
+import { ButtonGroup } from "@components/button";
 import { CardRevenue } from "@components/dataCard";
 import PageNamer from "@components/pageNamer";
+import { FluxRow, type FluxRowData } from "@components/rows";
 import { FinanceContext, useFinance } from "@hooks/useFinance";
 import { onGetFluxDetails } from "@hooks/useFinance.telefunc";
 import { useModal } from "@hooks/useModal";
+import { fluxBoardTitle } from "@libs/boardTitle";
 import type { IncomeUpdateType } from "@schemas/income";
 import type { OutcomeUpdateType } from "@schemas/outcome";
-import { createSignal } from "solid-js";
+import { createSignal, Show } from "solid-js";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
 import CreateModal from "./modals/createModal";
@@ -23,11 +27,13 @@ export default function Page() {
     const [detail, setDetail] = createSignal<IncomeDetail | OutcomeDetail | null>(
         null,
     );
-    const [editType, setEditType] = createSignal<"income" | "outcome">("income")
+    const [editType, setEditType] = createSignal<"income" | "outcome">("income");
+
+    const [displayOutcomes, setDisplayOutcome] = createSignal<boolean>(false);
 
     const createModal = useModal(350);
     const detailsModal = useModal(350);
-    const editModal = useModal(350)
+    const editModal = useModal(350);
 
     const data = useData<Data>();
     const finances = useFinance();
@@ -44,8 +50,9 @@ export default function Page() {
         name: income.name,
         category: income.incomeCategoryId,
         issueDate: new Date(income.issueDate).toLocaleDateString("fr-FR"),
-        amount: String(income.amount),
+        amount: income.amount,
         type: "income",
+        isPaid: income.isPaid,
     }));
 
     const outcomes: FluxBoardItem[] = data.outcomeList.map((outcome) => ({
@@ -53,8 +60,9 @@ export default function Page() {
         name: outcome.name,
         category: "",
         issueDate: new Date(outcome.issueDate).toLocaleDateString("fr-FR"),
-        amount: String(outcome.amount),
+        amount: outcome.amount,
         type: "outcome",
+        isPaid: outcome.isPaid,
     }));
 
     const now = new Date();
@@ -81,7 +89,7 @@ export default function Page() {
         detail: IncomeDetail | OutcomeDetail,
         type: "income" | "outcome",
     ) {
-        setEditType(type)
+        setEditType(type);
         if (type === "income") {
             finances.setUpdateIncome({ ...(detail as unknown as IncomeUpdateType) });
             editModal.open();
@@ -146,7 +154,43 @@ export default function Page() {
                     />
                 </div>
 
-                <FluxBoard flux={flux} onClick={handleRowClick} />
+                <ButtonGroup
+                    options={[
+                        {
+                            label: "Revenus",
+                            value: "income",
+                            onClick: () => setDisplayOutcome(false),
+                        },
+                        {
+                            label: "Dépenses",
+                            value: "outcome",
+                            onClick: () => setDisplayOutcome(true),
+                        },
+                    ]}
+                />
+
+                <Show when={displayOutcomes()}>
+                    <Board
+                        body={{
+                            data: outcomes,
+                            renderRow: (item: FluxBoardItem) => (
+                                <FluxRow {...item} onClick={handleRowClick} />
+                            ),
+                        }}
+                        header={{ title: fluxBoardTitle }}
+                    />
+                </Show>
+                <Show when={!displayOutcomes()}>
+                    <Board
+                        body={{
+                            data: incomes,
+                            renderRow: (item: FluxBoardItem) => (
+                                <FluxRow {...item} onClick={handleRowClick} />
+                            ),
+                        }}
+                        header={{ title: fluxBoardTitle }}
+                    />
+                </Show>
             </div>
         </FinanceContext.Provider>
     );

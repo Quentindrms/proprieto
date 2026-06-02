@@ -3,6 +3,7 @@ import {
     BsArrowDownRightCircleFill,
     BsArrowUpRightCircleFill,
 } from "solid-icons/bs";
+import { Show } from "solid-js";
 import { Badge } from "./badge";
 import Heading from "./heading";
 import Text from "./text";
@@ -95,7 +96,9 @@ export function ContractRow(props: ContractRowData) {
                 <Text size="medium">{props.propertyName}</Text>
             </td>
             <td class="px-4 py-3">
-                <Text size="medium" bold>{props.period}</Text>
+                <Text size="medium" bold>
+                    {props.period}
+                </Text>
             </td>
             <td class="px-4 py-3 text-right">
                 <Text size="large" bold>
@@ -133,6 +136,7 @@ export interface FluxRowData {
     issueDate: string;
     amount: number;
     type: "outcome" | "income";
+    isPaid: boolean;
     onClick: (item: Omit<FluxRowData, "onClick">) => void;
 }
 
@@ -148,6 +152,7 @@ export function FluxRow(props: FluxRowData) {
                     issueDate: props.issueDate,
                     amount: props.amount,
                     type: props.type,
+                    isPaid: props.isPaid,
                 })
             }
         >
@@ -165,11 +170,20 @@ export function FluxRow(props: FluxRowData) {
             <td class="px-4 py-3">
                 <Text
                     size="medium"
-                    class={clsx([props.type === "income" ? "text-action-green" : "text-action-red"])}
+                    class={clsx([
+                        props.type === "income" ? "text-action-green" : "text-action-red",
+                    ])}
                     bold
                 >
                     {Intl.NumberFormat("fr-FR").format(props.amount)}€
                 </Text>
+            </td>
+            <td class="px-4 py-3">
+                <Show when={props.isPaid}
+                    fallback={<Badge color="warning">En attente</Badge>}
+                >
+                    <Badge color="success">Payé</Badge>
+                </Show>
             </td>
         </tr>
     );

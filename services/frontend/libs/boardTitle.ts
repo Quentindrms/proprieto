@@ -60,3 +60,26 @@ export const contractsBoardTitle: TitleBoardHeader[] = [
 		slug: "statut",
 	},
 ];
+
+export const fluxBoardTitle: TitleBoardHeader[] = [
+	{
+		label: "Nom",
+		slug: "name",
+	},
+	{
+		label: "Catégorie",
+		slug: "category",
+	},
+	{
+		label: "Date d'échéance",
+		slug: "issueDate",
+	},
+	{
+		label: "Montant",
+		slug: "amount",
+	},
+	{
+		label: "Statut",
+		slug: "statut",
+	},
+];
