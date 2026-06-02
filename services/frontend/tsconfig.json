@@ -20,7 +20,8 @@
       "@hooks/*": ["hooks/*"],
       "@services/*": ["services/*"],
       "@utils/*": ["utils/*"],
-      "@schemas/*": ["schemas/*"]
+      "@schemas/*": ["schemas/*"],
+      "@libs/*": ["libs/*"]
     }
   },
   "exclude": ["dist"]

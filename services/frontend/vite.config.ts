@@ -16,6 +16,7 @@ export default defineConfig({
 			"@services": fileURLToPath(new URL("services", import.meta.url)),
 			"@utils": fileURLToPath(new URL("utils", import.meta.url)),
 			"@schemas": fileURLToPath(new URL("schemas", import.meta.url)),
+			"@libs": fileURLToPath(new URL("libs", import.meta.url)),
 		},
 	},
 });
