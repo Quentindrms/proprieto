@@ -9,6 +9,7 @@ import { ContractRow } from "@components/rows";
 import { useContract } from "@hooks/useContract";
 import { useModal } from "@hooks/useModal";
 import { contractsBoardTitle } from "@libs/boardTitle";
+import clsx from "clsx";
 import { For } from "solid-js";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
@@ -57,7 +58,16 @@ export default function Page() {
 				<div class="flex flex-col w-md md:w-md lg:w-lg p-4 gap-2 bg-background-base rounded-xl shadow-md max-h-75 overflow-scroll">
 					<div class="flex justify-between items-center">
 						<Heading components="h3" size="medium" fontClasses="bold">
-							Baux arrivant à terme (nombre)
+							Baux arrivant à terme :{" "}
+							<span
+								class={clsx([
+									stats.endSoon.length > 1
+										? "text-action-orange"
+										: "text-action-green",
+								])}
+							>
+								{stats.endSoon.length}
+							</span>
 						</Heading>
 						<div>
 							<Badge color="warning">Action requise</Badge>
