@@ -95,17 +95,17 @@ export function ContractRow(props: ContractRowData) {
                 <Text size="medium">{props.propertyName}</Text>
             </td>
             <td class="px-4 py-3">
-                <Text size="medium">{props.period}</Text>
+                <Text size="medium" bold>{props.period}</Text>
             </td>
             <td class="px-4 py-3 text-right">
-                <Text size="large">
+                <Text size="large" bold>
                     {props.loan.toLocaleString("fr-FR", {
                         style: "currency",
                         currency: "EUR",
                     })}
                 </Text>
             </td>
-            <td class="px-4 py-3">
+            <td class="px-4 py-3 flex">
                 <Badge
                     color={
                         props.status === "active"
@@ -166,6 +166,7 @@ export function FluxRow(props: FluxRowData) {
                 <Text
                     size="medium"
                     class={clsx([props.type === "income" ? "text-action-green" : "text-action-red"])}
+                    bold
                 >
                     {Intl.NumberFormat("fr-FR").format(props.amount)}€
                 </Text>

@@ -37,10 +37,10 @@ function getContractStatus(endDate: Date | string): ContractStatus {
 
 export function ContractBoard(props: ContractBoardProps) {
 	return (
-		<div class="w-90 md:w-xl lg:w-7xl overflow-x-auto rounded-xl shadow-md bg-background-base shadow-muted-text">
+		<div class="w-90 md:w-xl lg:w-7xl overflow-x-auto rounded-xl shadow-md bg-background-muted/10 border border-background-muted/50 shadow-muted-text">
 			<table class="w-full border-collapse">
-				<thead class="bg-background-secondary">
-					<tr>
+				<thead class="border-b-2 border-background-muted/50">
+					<tr class="">
 						<th class="px-4 py-3 text-left">
 							<Heading components="h4" size="large">
 								Client
@@ -100,9 +100,9 @@ interface ContractorsBoardProps {
 
 export function ContractorsBoard(props: ContractorsBoardProps) {
 	return (
-		<div class="w-xs md:w-xl lg:w-7xl overflow-x-auto rounded-xl shadow-md bg-background-base shadow-muted-text">
+		<div class="w-xs md:w-xl lg:w-7xl overflow-x-auto rounded-xl shadow-md bg-background-muted/10 shadow-muted-text border border-background-muted/50">
 			<table class="w-full border-collapse">
-				<thead class="bg-background-base shadow-muted-text">
+				<thead class="shadow-muted-text border-b-2 border-background-muted/50">
 					<tr>
 						<th class="px-4 py-3 text-left">
 							<Heading components="h4" size="large">
@@ -174,9 +174,9 @@ export function FluxBoard(props: FluxBoardProps) {
 			<ButtonGroup
 				options={[{ label: "Revenus", value: "income", onClick: () => setDisplayOutcome(false) }, { label: "Dépenses", value: "outcome", onClick: () => setDisplayOutcome(true) }]}
 			/>
-			<div class="w-xs md:w-xl lg:w-7xl overflow-x-auto rounded-xl shadow-md bg-background-base shadow-muted-text">
+			<div class="w-xs md:w-xl lg:w-7xl overflow-x-auto rounded-xl shadow-md bg-background-muted/10 border border-background-muted/50 shadow-muted-text">
 				<table class="w-full border-collapse">
-					<thead class="bg-background-base shadow-muted-text">
+					<thead class=" shadow-muted-text border-b-2 border-background-muted/50">
 						<tr>
 							<th class="px-4 py-3 text-left">
 								<Heading components="h4" size="large">
@@ -241,9 +241,9 @@ export function FluxBoard(props: FluxBoardProps) {
 
 export default function Board(props: BoardProps) {
 	return (
-		<div class="w-full overflow-x-auto rounded-xl shadow-md bg-background-base shadow-muted-text">
+		<div class="w-full overflow-x-auto rounded-xl shadow-md bg-background-muted/10 border border-background-muted/50 shadow-muted-text">
 			<table class="w-full border-collapse">
-				<thead class="bg-background-secondary">
+				<thead class="bg-background-secondary border-b-2 border-background-muted/50">
 					<tr>
 						<th class="px-4 py-3 text-left">
 							<Heading components="h4" size="large">
