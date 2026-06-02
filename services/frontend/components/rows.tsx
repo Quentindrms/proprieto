@@ -4,7 +4,7 @@ import {
     BsArrowUpRightCircleFill,
 } from "solid-icons/bs";
 import { Show } from "solid-js";
-import { Badge } from "./badge";
+import { Badge, BadgeBoard, ButtonBadge } from "./badge";
 import Heading from "./heading";
 import Text from "./text";
 
@@ -42,8 +42,8 @@ export default function TransactionRow(props: TransactionRowData) {
                     </Heading>
                 </div>
             </td>
-            <td class="px-4 py-3">
-                <Text size="large">
+            <td class="px-4 py-3 text-center">
+                <Text size="large" class="text-left">
                     {new Date(props.issueDate).toLocaleDateString("fr-FR")}
                 </Text>
             </td>
@@ -58,16 +58,16 @@ export default function TransactionRow(props: TransactionRowData) {
             </td>
             <td class="px-4 py-3">
                 <div class="flex justify-center">
-                    <Badge color={isIncome() ? "success" : "error"}>
+                    <BadgeBoard color={isIncome() ? "success" : "error"}>
                         {isIncome() ? "Revenu" : "Dépense"}
-                    </Badge>
+                    </BadgeBoard>
                 </div>
             </td>
             <td class="px-4 py-3">
                 <div class="flex justify-center">
-                    <Badge color={props.isPaid ? "success" : "warning"}>
+                    <BadgeBoard color={props.isPaid ? "success" : "warning"}>
                         {props.isPaid ? "Payé" : "En attente"}
-                    </Badge>
+                    </BadgeBoard>
                 </div>
             </td>
         </tr>
@@ -100,7 +100,7 @@ export function ContractRow(props: ContractRowData) {
                     {props.period}
                 </Text>
             </td>
-            <td class="px-4 py-3 text-right">
+            <td class="px-4 py-3 text-left">
                 <Text size="large" bold>
                     {props.loan.toLocaleString("fr-FR", {
                         style: "currency",
@@ -108,8 +108,8 @@ export function ContractRow(props: ContractRowData) {
                     })}
                 </Text>
             </td>
-            <td class="px-4 py-3 flex">
-                <Badge
+            <td class="px-4 py-3 flex justify-center">
+                <BadgeBoard
                     color={
                         props.status === "active"
                             ? "success"
@@ -123,7 +123,7 @@ export function ContractRow(props: ContractRowData) {
                         : props.status === "expiring"
                             ? "Expire bientôt"
                             : "Expiré"}
-                </Badge>
+                </BadgeBoard>
             </td>
         </tr>
     );
@@ -156,18 +156,18 @@ export function FluxRow(props: FluxRowData) {
                 })
             }
         >
-            <td class="px-4 py-3">
+            <td class="px-4 py-3 text-center">
                 <Heading components="h3" size="medium">
                     {props.name}
                 </Heading>
             </td>
-            <td class="px-4 py-3">
+            <td class="px-4 py-3 text-center">
                 <Text size="medium">{props.category}</Text>
             </td>
-            <td class="px-4 py-3">
+            <td class="px-4 py-3 text-center">
                 <Text size="medium">{props.issueDate}</Text>
             </td>
-            <td class="px-4 py-3">
+            <td class="px-4 py-3 text-center">
                 <Text
                     size="medium"
                     class={clsx([
@@ -178,11 +178,11 @@ export function FluxRow(props: FluxRowData) {
                     {Intl.NumberFormat("fr-FR").format(props.amount)}€
                 </Text>
             </td>
-            <td class="px-4 py-3">
+            <td class="px-4 py-3 flex justify-center">
                 <Show when={props.isPaid}
-                    fallback={<Badge color="warning">En attente</Badge>}
+                    fallback={<BadgeBoard color="warning">En attente</BadgeBoard>}
                 >
-                    <Badge color="success">Payé</Badge>
+                    <BadgeBoard color="success">Payé</BadgeBoard>
                 </Show>
             </td>
         </tr>
@@ -203,15 +203,15 @@ export function ContractorRow(props: ContractorRowData) {
             class="last:border-0 hover:bg-background-secondary transition-colors hover:bg-background-muted/10"
             onClick={props.onClick}
         >
-            <td class="px-4 py-3">
+            <td class="px-4 py-3 text-center">
                 <Heading components="h3" size="medium" fontClasses="bold">
                     {props.name}
                 </Heading>
             </td>
-            <td class="px-4 py-3">
+            <td class="px-4 py-3 text-center">
                 <Text size="medium">{props.speciality}</Text>
             </td>
-            <td class="px-4 py-3">
+            <td class="px-4 py-3 text-center">
                 <div class="flex flex-col">
                     <Text size="medium">{props.phone}</Text>
                     <Text size="medium" class="italic text-muted-text">

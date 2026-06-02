@@ -39,7 +39,7 @@ function BoardHeader(props: BoardHeaderProps) {
 			<tr>
 				<For each={props.title}>
 					{(title) => (
-						<th class="px-4 py-3 text-left">
+						<th class="pt-4 pb-3 text-center">
 							<Heading components="h4" size="large">
 								{title.label}
 							</Heading>
@@ -80,34 +80,5 @@ export function Board<T>(props: BoardProps<T>) {
 	);
 }
 
-export function ContractBoard(props: ContractBoardProps) {
-	const title: TitleBoardHeader[] = [
-		{ label: "Client", slug: "client" },
-		{ label: "Propriété", slug: "property" },
-		{ label: "Période", slug: "duration" },
-		{ label: "Loyer", slug: "loan" },
-		{ label: "Statut", slug: "statut" },
-	];
 
-	return (
-		<div class="w-90 md:w-xl lg:w-7xl overflow-x-auto rounded-xl shadow-md bg-background-muted/10 border border-background-muted/50 shadow-muted-text">
-			<table class="w-full border-collapse">
-				<BoardHeader title={title} />
-				<tbody class="bg-background-base">
-					<For each={props.contracts}>
-						{(contract) => (
-							<ContractRow
-								clientName={contract.clientName}
-								propertyName={contract.propertyName}
-								period={`${new Date(contract.startDate).toLocaleDateString("fr-FR")} – ${new Date(contract.endDate).toLocaleDateString("fr-FR")}`}
-								loan={contract.loan}
-								status={getContractStatus(contract.endDate)}
-							/>
-						)}
-					</For>
-				</tbody>
-			</table>
-		</div>
-	);
-}
 
