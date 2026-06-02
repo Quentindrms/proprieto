@@ -87,20 +87,20 @@ export interface ContractRowData {
 export function ContractRow(props: ContractRowData) {
     return (
         <tr class="last:border-0 hover:bg-background-muted/10 transition-colors">
-            <td class="px-4 py-3">
+            <td class="px-4 py-3 text-center">
                 <Heading components="h3" size="medium">
                     {props.clientName}
                 </Heading>
             </td>
-            <td class="px-4 py-3">
+            <td class="px-4 py-3 text-center">
                 <Text size="medium">{props.propertyName}</Text>
             </td>
-            <td class="px-4 py-3">
+            <td class="px-4 py-3 text-center">
                 <Text size="medium" bold>
                     {props.period}
                 </Text>
             </td>
-            <td class="px-4 py-3 text-left">
+            <td class="px-4 py-3 text-center">
                 <Text size="large" bold>
                     {props.loan.toLocaleString("fr-FR", {
                         style: "currency",
