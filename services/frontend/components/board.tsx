@@ -1,17 +1,13 @@
-import { createSignal, For, Show } from "solid-js";
+import type { TitleBoardHeader } from "@app/types/board";
+import { createSignal, For, type JSX, Show } from "solid-js";
 import { ButtonGroup } from "./button";
 import Heading from "./heading";
-import TransactionRow, {
-	ContractorRow,
+import {
 	ContractRow,
 	type ContractStatus,
 	FluxRow,
-	type TransactionRowData,
 } from "./rows";
 
-interface BoardProps {
-	transactions: TransactionRowData[];
-}
 
 interface ContractBoardItem {
 	clientName: string;
@@ -25,7 +21,7 @@ interface ContractBoardProps {
 	contracts: ContractBoardItem[];
 }
 
-function getContractStatus(endDate: Date | string): ContractStatus {
+export function getContractStatus(endDate: Date | string): ContractStatus {
 	const now = new Date();
 	const end = new Date(endDate);
 	const daysUntilExpiry =
@@ -35,39 +31,70 @@ function getContractStatus(endDate: Date | string): ContractStatus {
 	return "active";
 }
 
+interface BoardHeaderProps {
+	title: TitleBoardHeader[];
+}
+
+function BoardHeader(props: BoardHeaderProps) {
+	return (
+		<thead class="border-b-2 border-background-muted/10">
+			<tr>
+				<For each={props.title}>
+					{(title) => (
+						<th class="px-4 py-3 text-left">
+							<Heading components="h4" size="large">
+								{title.label}
+							</Heading>
+						</th>
+					)}
+				</For>
+			</tr>
+		</thead>
+	);
+}
+
+interface BoardBodyProps<T> {
+	renderRow: (item: T) => JSX.Element;
+	data: T[];
+}
+
+function BoardBody<T>(props: BoardBodyProps<T>) {
+	return (
+		<tbody class="bg-background-base">
+			<For each={props.data}>{(item) => props.renderRow(item)}</For>
+		</tbody>
+	);
+}
+
+interface BoardProps<T> {
+	header: BoardHeaderProps;
+	body: BoardBodyProps<T>;
+}
+
+export function Board<T>(props: BoardProps<T>) {
+	return (
+		<div class="w-full overflow-x-auto rounded-xl shadow-md bg-background-muted/10 border border-background-muted/50 shadow-muted-text">
+			<table class="w-full">
+				<BoardHeader title={props.header.title} />
+				<BoardBody data={props.body.data} renderRow={props.body.renderRow} />
+			</table>
+		</div>
+	);
+}
+
 export function ContractBoard(props: ContractBoardProps) {
+	const title: TitleBoardHeader[] = [
+		{ label: "Client", slug: "client" },
+		{ label: "Propriété", slug: "property" },
+		{ label: "Période", slug: "duration" },
+		{ label: "Loyer", slug: "loan" },
+		{ label: "Statut", slug: "statut" },
+	];
+
 	return (
 		<div class="w-90 md:w-xl lg:w-7xl overflow-x-auto rounded-xl shadow-md bg-background-muted/10 border border-background-muted/50 shadow-muted-text">
 			<table class="w-full border-collapse">
-				<thead class="border-b-2 border-background-muted/50">
-					<tr class="">
-						<th class="px-4 py-3 text-left">
-							<Heading components="h4" size="large">
-								Client
-							</Heading>
-						</th>
-						<th class="px-4 py-3 text-left">
-							<Heading components="h4" size="large">
-								Propriété
-							</Heading>
-						</th>
-						<th class="px-4 py-3 text-left">
-							<Heading components="h4" size="large">
-								Période
-							</Heading>
-						</th>
-						<th class="px-4 py-3 text-right">
-							<Heading components="h4" size="large">
-								Loyer
-							</Heading>
-						</th>
-						<th class="px-4 py-3 text-left">
-							<Heading components="h4" size="large">
-								Statut
-							</Heading>
-						</th>
-					</tr>
-				</thead>
+				<BoardHeader title={title} />
 				<tbody class="bg-background-base">
 					<For each={props.contracts}>
 						{(contract) => (
@@ -86,61 +113,8 @@ export function ContractBoard(props: ContractBoardProps) {
 	);
 }
 
-interface ContractorsBoardItem {
-	name: string;
-	speciality: string;
-	phone: string;
-	mail: string;
-	onClick: () => void;
-}
-
-interface ContractorsBoardProps {
-	contractors: ContractorsBoardItem[];
-}
-
-export function ContractorsBoard(props: ContractorsBoardProps) {
-	return (
-		<div class="w-xs md:w-xl lg:w-7xl overflow-x-auto rounded-xl shadow-md bg-background-muted/10 shadow-muted-text border border-background-muted/50">
-			<table class="w-full border-collapse">
-				<thead class="shadow-muted-text border-b-2 border-background-muted/50">
-					<tr>
-						<th class="px-4 py-3 text-left">
-							<Heading components="h4" size="large">
-								Prestataire
-							</Heading>
-						</th>
-						<th class="px-4 py-3 text-left">
-							<Heading components="h4" size="large">
-								Spécialité
-							</Heading>
-						</th>
-						<th class="px-4 py-3 text-left">
-							<Heading components="h4" size="large">
-								Contact
-							</Heading>
-						</th>
-					</tr>
-				</thead>
-				<tbody class="bg-background-base">
-					<For each={props.contractors}>
-						{(contractor) => (
-							<ContractorRow
-								mail={contractor.mail}
-								name={contractor.name}
-								phone={contractor.phone}
-								speciality={contractor.speciality}
-								onClick={contractor.onClick}
-							/>
-						)}
-					</For>
-				</tbody>
-			</table>
-		</div>
-	);
-}
-
 export interface FluxBoardItem {
-	id: string,
+	id: string;
 	name: string;
 	category: string;
 	issueDate: string;
@@ -150,29 +124,41 @@ export interface FluxBoardItem {
 
 interface FluxBoardProps {
 	flux: FluxBoardItem[];
-	onClick: (item: FluxBoardItem) => void,
+	onClick: (item: FluxBoardItem) => void;
 }
 
 export function FluxBoard(props: FluxBoardProps) {
-
 	const [displayOutcomes, setDisplayOutcome] = createSignal<boolean>(false);
 
 	function sortFlux(flux: FluxBoardItem[]) {
-		const outcome = flux.filter((outcome) =>
-			outcome.type === "outcome");
-		const income = flux.filter((income) =>
-			income.type === "income");
+		const outcome = flux.filter((outcome) => outcome.type === "outcome");
+		const income = flux.filter((income) => income.type === "income");
 		return { income, outcome };
 	}
 
 	const flux = sortFlux(props.flux);
-	flux.income.forEach((income) => { (income) })
-	flux.outcome.forEach((outcome) => { (outcome) })
+	flux.income.forEach((income) => {
+		income;
+	});
+	flux.outcome.forEach((outcome) => {
+		outcome;
+	});
 
 	return (
 		<div>
 			<ButtonGroup
-				options={[{ label: "Revenus", value: "income", onClick: () => setDisplayOutcome(false) }, { label: "Dépenses", value: "outcome", onClick: () => setDisplayOutcome(true) }]}
+				options={[
+					{
+						label: "Revenus",
+						value: "income",
+						onClick: () => setDisplayOutcome(false),
+					},
+					{
+						label: "Dépenses",
+						value: "outcome",
+						onClick: () => setDisplayOutcome(true),
+					},
+				]}
 			/>
 			<div class="w-xs md:w-xl lg:w-7xl overflow-x-auto rounded-xl shadow-md bg-background-muted/10 border border-background-muted/50 shadow-muted-text">
 				<table class="w-full border-collapse">
@@ -234,50 +220,6 @@ export function FluxBoard(props: FluxBoardProps) {
 					</tbody>
 				</table>
 			</div>
-		</div>
-
-	);
-}
-
-export default function Board(props: BoardProps) {
-	return (
-		<div class="w-full overflow-x-auto rounded-xl shadow-md bg-background-muted/10 border border-background-muted/50 shadow-muted-text">
-			<table class="w-full border-collapse">
-				<thead class="bg-background-secondary border-b-2 border-background-muted/50">
-					<tr>
-						<th class="px-4 py-3 text-left">
-							<Heading components="h4" size="large">
-								Nom
-							</Heading>
-						</th>
-						<th class="px-4 py-3 text-center">
-							<Heading components="h4" size="large">
-								Date
-							</Heading>
-						</th>
-						<th class="px-4 py-3 text-center">
-							<Heading components="h4" size="large">
-								Montant
-							</Heading>
-						</th>
-						<th class="px-4 py-3 text-center">
-							<Heading components="h4" size="large">
-								Type
-							</Heading>
-						</th>
-						<th class="px-4 py-3 text-center">
-							<Heading components="h4" size="large">
-								Statut
-							</Heading>
-						</th>
-					</tr>
-				</thead>
-				<tbody class="bg-background-base">
-					<For each={props.transactions}>
-						{(transaction) => <TransactionRow {...transaction} />}
-					</For>
-				</tbody>
-			</table>
 		</div>
 	);
 }

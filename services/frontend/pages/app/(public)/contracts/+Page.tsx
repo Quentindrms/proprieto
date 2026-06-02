@@ -1,11 +1,14 @@
 import { Badge } from "@components/badge";
-import { ContractBoard } from "@components/board";
+import { Board, getContractStatus } from "@components/board";
 import { ButtonGroup } from "@components/button";
 import ContractExpireSoon from "@components/contract";
 import Heading from "@components/heading";
 import PageNamer from "@components/pageNamer";
+import type { ContractRowData } from "@components/rows";
+import { ContractRow } from "@components/rows";
 import { useContract } from "@hooks/useContract";
 import { useModal } from "@hooks/useModal";
+import { contractsBoardTitle } from "@libs/boardTitle";
 import { For } from "solid-js";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
@@ -18,12 +21,12 @@ export default function Page() {
 	const contract = useContract();
 	const stats = contract.getStats(data.contracts);
 
-	const contractRows = data.contracts.map((contract) => ({
+	const contractRows: ContractRowData[] = data.contracts.map((contract) => ({
 		clientName: contract.clientId,
 		propertyName: contract.property.name,
-		startDate: contract.startDate,
-		endDate: contract.endDate,
+		period: `${new Date(contract.startDate).toLocaleDateString("fr-FR")} – ${new Date(contract.endDate).toLocaleDateString("fr-FR")}`,
 		loan: contract.lease,
+		status: getContractStatus(contract.endDate),
 	}));
 
 	return (
@@ -71,11 +74,21 @@ export default function Page() {
 								/>
 							)}
 						</For>
-						{stats.endSoon.length === 0 && <Heading components="h2" size="medium">Aucun contrat expirant prochainement</Heading>}
+						{stats.endSoon.length === 0 && (
+							<Heading components="h2" size="medium">
+								Aucun contrat expirant prochainement
+							</Heading>
+						)}
 					</div>
 				</div>
 			</div>
-			<ContractBoard contracts={contractRows} />
+			<Board
+				body={{
+					data: contractRows,
+					renderRow: (item: ContractRowData) => <ContractRow {...item} />,
+				}}
+				header={{ title: contractsBoardTitle }}
+			/>
 		</div>
 	);
 }
