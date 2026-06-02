@@ -53,7 +53,7 @@ export function Modal(props: ModalProps) {
 					rest.class,
 				)}
 			>
-				<section class="bg-background-base w-full max-w-2xl mx-4 max-h-[90dvh] flex flex-col rounded-xl p-5 gap-2 overflow-hidden">
+				<section class="bg-background-base w-full max-w-2xl mx-4 max-h-[90dvh] flex flex-col rounded-xl p-5 gap-2 overflow-hidden border-2 border-background-muted/10">
 					{local.children}
 				</section>
 			</div>
