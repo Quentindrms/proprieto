@@ -1,23 +1,7 @@
 import type { TitleBoardHeader } from "@app/types/board";
 import { For, type JSX } from "solid-js";
 import Heading from "./heading";
-import {
-	ContractRow,
-	type ContractStatus,
-} from "./rows";
-
-
-interface ContractBoardItem {
-	clientName: string;
-	propertyName: string;
-	startDate: Date | string;
-	endDate: Date | string;
-	loan: number;
-}
-
-interface ContractBoardProps {
-	contracts: ContractBoardItem[];
-}
+import type { ContractStatus } from "./rows";
 
 export function getContractStatus(endDate: Date | string): ContractStatus {
 	const now = new Date();
@@ -79,6 +63,3 @@ export function Board<T>(props: BoardProps<T>) {
 		</div>
 	);
 }
-
-
-

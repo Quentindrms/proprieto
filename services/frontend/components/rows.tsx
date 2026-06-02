@@ -4,7 +4,7 @@ import {
     BsArrowUpRightCircleFill,
 } from "solid-icons/bs";
 import { Show } from "solid-js";
-import { Badge, BadgeBoard, ButtonBadge } from "./badge";
+import { BadgeBoard } from "./badge";
 import Heading from "./heading";
 import Text from "./text";
 
