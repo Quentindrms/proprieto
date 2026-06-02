@@ -19,7 +19,7 @@ export default function PropertyCard(props: PropertyCardProps) {
 		<button
 			type="button"
 			onClick={props.onClick}
-			class="w-xs md:w-md lg:w-lg flex flex-col bg-background-base rounded-md shadow-lg inset-shadow-sm shadow-slate-900/80 text-left cursor-pointer p-2 hover:-translate-y-1 transition-transform"
+			class="w-xs md:w-md lg:w-lg flex flex-col bg-background-base rounded-xl shadow-lg inset-shadow-sm text-left cursor-pointer p-2 hover:-translate-y-1 transition-transform"
 		>
 			<div
 				class="flex items-center justify-center p-4 md:w-md lg:w-lg"
@@ -38,11 +38,11 @@ export default function PropertyCard(props: PropertyCardProps) {
 					<BiSolidCarGarage size={75} />
 				</Show>
 			</div>
-			<div id="headerCard" class="flex justify-between items-center p-2">
+			<div id="headerCard" class="flex justify-between items-center p-2 gap-2">
 				<Heading components="h3" size="large" fontClasses="medium">
 					{props.property.name}
 				</Heading>
-				<Text size="base">{props.property.purchasePrice ? (Intl.NumberFormat("fr-FR").format(props.property.purchasePrice)) : "-"} €</Text>
+				<Text size="base" bold>{props.property.purchasePrice ? (Intl.NumberFormat("fr-FR").format(props.property.purchasePrice)) : "-"} €</Text>
 			</div>
 			<div
 				id="bodyCard"
@@ -50,7 +50,7 @@ export default function PropertyCard(props: PropertyCardProps) {
 			>
 				<div class="flex flex-col">
 					<Text size="medium">Date d'acquisition</Text>
-					<Text size="large">
+					<Text size="large" bold>
 						{props.property.purchaseDate
 							? new Date(props.property.purchaseDate).toLocaleDateString(
 								"fr-FR",
