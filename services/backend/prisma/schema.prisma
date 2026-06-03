@@ -84,6 +84,7 @@ model Tokens {
 model Properties {
   id            String    @id @unique @default(uuid()) @map("id_property")
   name          String    @db.VarChar(150)
+  slug          String    @db.VarChar(150)
   purchasePrice Int       @map("purchase_price") @db.Integer()
   purchaseDate  DateTime  @map("purchase_date")
   sellPrice     Int?      @map("sell_price") @db.Integer()
