@@ -53,6 +53,11 @@ export default function PropertyDetails() {
         isPaid: true,
         name: "Test",
         amount: 100,
+    }, {
+        date: new Date(),
+        isPaid: true,
+        name: "Test",
+        amount: 100,
     }]
 
     return (
@@ -80,7 +85,7 @@ export default function PropertyDetails() {
 
             <div class="flex flex-col gap-2">
                 <ButtonGroup options={buttonGroup} defaultValue="outcome" />
-                <div class="flex flex-col-reverse md:flex-row gap-4 md:justify-between">
+                <div class="flex flex-col-reverse md:flex-row gap-10 justify-start">
                     <Show when={selectedBoard() === "outcome"}>
                         <Board
                             header={{ title: PropertyFluxBoardTitle }}
