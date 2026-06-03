@@ -83,3 +83,18 @@ export const fluxBoardTitle: TitleBoardHeader[] = [
 		slug: "statut",
 	},
 ];
+
+export const PropertyFluxBoardTitle: TitleBoardHeader[] = [
+	{
+		label: "Nom",
+		slug: "name",
+	},
+	{
+		label: "Date",
+		slug: "date",
+	},
+	{
+		label: "Statut",
+		slug: "isPaid",
+	},
+];
