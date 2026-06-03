@@ -8,7 +8,10 @@ export async function data(pageContext: PageContextServer) {
 	const cookies = getCookiesFromPageContext(pageContext);
 
 	const propertyService = new PropertyService(cookies.auth);
-	const details = propertyService.propertyDetails(pageContext.routeParams.slug);
 
-	return { details };
+	const [property] = await Promise.all([
+		propertyService.propertyDetails(pageContext.routeParams.slug),
+	]);
+
+	return { property };
 }

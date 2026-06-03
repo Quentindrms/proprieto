@@ -98,6 +98,7 @@ export class PropertyController {
 		const user = request.user;
 		console.log(slug);
 		if (!user) return response.status(401).send({});
-		return response.status(200).send({});
+		const property = await this.propertyService.propertyDetails(slug, user.id);
+		return response.status(200).send(property);
 	}
 }

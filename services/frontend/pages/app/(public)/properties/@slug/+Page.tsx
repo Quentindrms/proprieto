@@ -11,8 +11,12 @@ import PropertyResume from "@components/propertyResume";
 import { PropertyFluxRow } from "@components/rows";
 import { PropertyFluxBoardTitle } from "@libs/boardTitle";
 import { createSignal, Show } from "solid-js";
+import { useData } from "vike-solid/useData";
+import type { Data } from "./+data";
 
 export default function PropertyDetails() {
+    const data = useData<Data>();
+
     const [selectedBoard, setSelectedBoard] = createSignal<
         "outcome" | "income" | "client"
     >("outcome");
@@ -35,29 +39,32 @@ export default function PropertyDetails() {
         },
     ];
 
-    const fakeData: PropertyFluxBoardItem[] = [{
-        date: new Date(),
-        isPaid: true,
-        name: "Test",
-        amount: 100,
-    },
-    {
-        date: new Date(),
-        isPaid: true,
-        name: "Test",
-        amount: 100,
-    },
-    {
-        date: new Date(),
-        isPaid: true,
-        name: "Test",
-        amount: 100,
-    }, {
-        date: new Date(),
-        isPaid: true,
-        name: "Test",
-        amount: 100,
-    }]
+    const fakeData: PropertyFluxBoardItem[] = [
+        {
+            date: new Date(),
+            isPaid: true,
+            name: "Test",
+            amount: 100,
+        },
+        {
+            date: new Date(),
+            isPaid: true,
+            name: "Test",
+            amount: 100,
+        },
+        {
+            date: new Date(),
+            isPaid: true,
+            name: "Test",
+            amount: 100,
+        },
+        {
+            date: new Date(),
+            isPaid: true,
+            name: "Test",
+            amount: 100,
+        },
+    ];
 
     return (
         <div class="w-full h-full flex-col gap-10">
@@ -113,10 +120,10 @@ export default function PropertyDetails() {
 
                     <PropertyResume
                         name="Test"
-                        purchaseDate={new Date()}
-                        purchasePrice={100}
-                        surfaceArea={70}
-                        totalLoans={10}
+                        purchaseDate={data.property.purchaseDate?.toString()}
+                        purchasePrice={data.property.purchasePrice}
+                        surfaceArea={0}
+                        totalLoans={0}
                     />
                 </div>
             </div>

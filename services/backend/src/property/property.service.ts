@@ -74,4 +74,13 @@ export class PropertyService {
 			},
 		});
 	}
+
+	async propertyDetails(slug: string, userId: string) {
+		return await prisma.properties.findFirst({
+			where: {
+				userId,
+				slug,
+			},
+		});
+	}
 }

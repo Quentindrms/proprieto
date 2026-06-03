@@ -31,6 +31,6 @@ export class PropertyService extends CoreService {
 	}
 
 	async propertyDetails(slug: string) {
-		return this.get(`/property/details/${slug}`);
+		return this.get<Property>(`/property/details/${slug}`);
 	}
 }
