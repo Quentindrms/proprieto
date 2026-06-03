@@ -94,6 +94,10 @@ export const PropertyFluxBoardTitle: TitleBoardHeader[] = [
 		slug: "date",
 	},
 	{
+		label: "Montant",
+		slug: "amount",
+	},
+	{
 		label: "Statut",
 		slug: "isPaid",
 	},
