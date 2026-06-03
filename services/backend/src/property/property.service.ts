@@ -1,4 +1,5 @@
 import { prisma } from "@libs/DatabaseClient";
+import { slugify } from "@libs/slugify";
 import { Injectable } from "@nestjs/common";
 // biome-ignore lint/style/useImportType: required for class-validator metadata
 import { CreatePropertyDto, UpdatePropertyDto } from "@src/dto/property.dto";
@@ -17,6 +18,7 @@ export class PropertyService {
 					userId: userId,
 					isDeleted: false,
 					typeId: property.type,
+					slug: slugify(property.name),
 				},
 			});
 		} catch (error) {
