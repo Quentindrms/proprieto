@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [dev]
+
+jobs:
+  test:
+    name: Run test suite 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install dependencies (backend)
+        working-directory: services/backend
+        run: pnpm install --frozen-lockfile
+
+      - name: Tests (backend)
+        working-directory: services/backend
+        run: pnpm test
+
+      - name: Install dependencies (frontend)
+        working-directory: services/frontend
+        run: pnpm install --frozen-lockfile
+
+      - name: Tests (frontend)
+        working-directory: services/frontend
+        run: pnpm test
