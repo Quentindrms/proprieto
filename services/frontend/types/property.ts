@@ -1,6 +1,7 @@
 export interface Property {
 	id: string;
 	name: string;
+	slug: string;
 	purchasePrice?: number;
 	purchaseDate?: Date;
 	sellPrice?: number;

@@ -5,6 +5,7 @@ import PropertyCard from "@components/propertyCard";
 import { useModal } from "@hooks/useModal";
 import { PropertyContext, useProperty } from "@hooks/useProperty";
 import { createSignal, For } from "solid-js";
+import { navigate } from "vike/client/router";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
 import CreateModal from "./modal/createModal";
@@ -23,6 +24,7 @@ export default function Page() {
 		name: "",
 		propertyType: { id: "", name: "", slug: "" },
 		userId: "",
+		slug: "",
 	});
 
 	const createModal = useModal(350);
@@ -47,7 +49,9 @@ export default function Page() {
 			id: propertyToEdit.id,
 			name: propertyToEdit.name,
 			purchasePrice: Number(propertyToEdit.purchasePrice ?? 0),
-			purchaseDate: propertyToEdit.purchaseDate ? new Date(propertyToEdit.purchaseDate) : new Date(),
+			purchaseDate: propertyToEdit.purchaseDate
+				? new Date(propertyToEdit.purchaseDate)
+				: new Date(),
 			sellPrice: Number(propertyToEdit.sellPrice ?? 0),
 			type: propertyToEdit.propertyType.id,
 		});
@@ -85,7 +89,11 @@ export default function Page() {
 				/>
 
 				<div class="flex flex-col gap-2 items-center md:flex-col lg:flex-row p-2">
-					<ButtonBadge color="primary" onClick={() => sortProperties("all")} effect>
+					<ButtonBadge
+						color="primary"
+						onClick={() => sortProperties("all")}
+						effect
+					>
 						Tous les biens ({data.properties.length})
 					</ButtonBadge>
 					<ButtonBadge
@@ -95,10 +103,18 @@ export default function Page() {
 					>
 						Appartements
 					</ButtonBadge>
-					<ButtonBadge color="primary" onClick={() => sortProperties("house")} effect>
+					<ButtonBadge
+						color="primary"
+						onClick={() => sortProperties("house")}
+						effect
+					>
 						Maisons
 					</ButtonBadge>
-					<ButtonBadge color="primary" onClick={() => sortProperties("office")} effect>
+					<ButtonBadge
+						color="primary"
+						onClick={() => sortProperties("office")}
+						effect
+					>
 						Bureaux
 					</ButtonBadge>
 				</div>
@@ -109,7 +125,7 @@ export default function Page() {
 							<PropertyCard
 								property={property}
 								onClick={() => {
-									detailsModal.open();
+									navigate(`/app/properties/${property.slug}`);
 									setPropertyDetails(property);
 								}}
 							/>
