@@ -1,4 +1,5 @@
 import type { TitleBoardHeader } from "@app/types/board";
+import clsx from "clsx";
 import { For, type JSX } from "solid-js";
 import Heading from "./heading";
 import type { ContractStatus } from "./rows";
@@ -51,11 +52,28 @@ function BoardBody<T>(props: BoardBodyProps<T>) {
 interface BoardProps<T> {
 	header: BoardHeaderProps;
 	body: BoardBodyProps<T>;
+	size?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "full";
 }
+
+const sizeClasses: Record<NonNullable<BoardProps<unknown>["size"]>, string> = {
+	xs: "max-w-xs",
+	sm: "max-w-sm",
+	md: "max-w-md",
+	lg: "max-w-lg",
+	xl: "max-w-xl",
+	"2xl": "max-w-2xl",
+	full: "max-w-full",
+};
 
 export function Board<T>(props: BoardProps<T>) {
 	return (
-		<div class="w-full overflow-x-auto rounded-xl shadow-md bg-background-muted/10 border border-background-muted/50 shadow-muted-text">
+		<div
+			class={clsx([
+				"w-full",
+				props.size ? sizeClasses[props.size] : "max-w-full",
+				"overflow-x-auto rounded-xl shadow-md bg-background-muted/10 border border-background-muted/50 shadow-muted-text",
+			])}
+		>
 			<table class="w-full">
 				<BoardHeader title={props.header.title} />
 				<BoardBody data={props.body.data} renderRow={props.body.renderRow} />
