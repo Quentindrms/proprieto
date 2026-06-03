@@ -66,11 +66,13 @@ export default function PropertyDetails() {
         },
     ];
 
+    const incomes: PropertyFluxBoardItem[] = data.income.map((income) => ({ name: income.name, date: new Date(income.issueDate), isPaid: income.isPaid, amount: income.amount }));
+
     return (
         <div class="w-full h-full flex-col gap-10">
             <PageNamer
                 onClick={() => { }}
-                pageName="Détail de <nom de votre propriété>"
+                pageName={`Détail de ${data.property.name}`}
                 subText="Consulter les détails de votre propriété"
             />
 
@@ -96,7 +98,7 @@ export default function PropertyDetails() {
                         <Board
                             header={{ title: PropertyFluxBoardTitle }}
                             body={{
-                                data: fakeData,
+                                data: incomes,
                                 renderRow: (item: PropertyFluxBoardItem) => (
                                     <PropertyFluxRow {...item} />
                                 ),
@@ -109,7 +111,7 @@ export default function PropertyDetails() {
                         <Board
                             header={{ title: PropertyFluxBoardTitle }}
                             body={{
-                                data: fakeData,
+                                data: incomes,
                                 renderRow: (item: PropertyFluxBoardItem) => (
                                     <PropertyFluxRow {...item} />
                                 ),

@@ -89,4 +89,21 @@ export class IncomeController {
 		if (!update) return response.status(404).send({ message: "error" });
 		return response.status(200).send({ message: "success" });
 	}
+
+	@Get("/property/:slug")
+	async propertyIncomeDetails(
+		@Req() request: Request,
+		@Res() response: Response,
+		@Param("slug") slug: string,
+	) {
+		const user = request.user;
+		if (!user) return response.status(401).send();
+		const incomes = await this.incomeService.propertyIncomeDetails(
+			slug,
+			user.id,
+		);
+		console.log("Incomes : ", incomes);
+		if (!incomes) return response.status(404).send();
+		return response.status(200).send(incomes);
+	}
 }

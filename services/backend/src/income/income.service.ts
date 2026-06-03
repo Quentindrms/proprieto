@@ -126,4 +126,22 @@ export class IncomeService {
 			unpaidIncomes: calculateTotalUnpaid(currentMonth),
 		};
 	}
+
+	async propertyIncomeDetails(slug: string, userId: string) {
+		try {
+			return await prisma.incomes.findMany({
+				where: {
+					contract: {
+						property: {
+							slug,
+							userId,
+						},
+					},
+				},
+			});
+		} catch (error) {
+			console.trace(error);
+			return;
+		}
+	}
 }
