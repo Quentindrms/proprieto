@@ -1,6 +1,4 @@
-import { differenceInCalendarDays } from "date-fns";
 import { FiMail, FiPhone, FiUser } from "solid-icons/fi";
-import { Show } from "solid-js";
 import type { Client } from "../types/client";
 import { ActionButton } from "./button";
 import Heading from "./heading";
@@ -70,28 +68,3 @@ export function ClientList(props: ClientListProps) {
 	);
 }
 
-interface CurrentContractCardProps {
-	endDate: Date;
-	client: string;
-}
-
-export function CurrentContractCard(props: CurrentContractCardProps) {
-	const dayLeft = differenceInCalendarDays(props.endDate, new Date());
-
-	return (
-		<div class="w-xs flex flex-col p-4 bg-background-base rounded-xl gap-4 shadow-xs shadow-background-muted hover:-translate-y-1 transition-transform">
-			<Heading components="h3" size="large" fontClasses="medium">
-				Contrat en cours :
-			</Heading>
-			<Text>{props.client}</Text>
-			<Text>
-				Se termine le {props.endDate.toLocaleDateString("fr-FR")}{" "}
-				<Show when={dayLeft < 100}>
-					<span class="italic">
-						({dayLeft} {dayLeft > 1 ? "jours" : "jour"})
-					</span>
-				</Show>
-			</Text>
-		</div>
-	);
-}
