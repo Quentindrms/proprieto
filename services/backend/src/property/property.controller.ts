@@ -88,4 +88,16 @@ export class PropertyController {
 		const properties = await this.propertyService.countProperties(user.id);
 		return response.status(200).send(properties);
 	}
+
+	@Get("details/:slug")
+	async propertyDetails(
+		@Req() request: Request,
+		@Res() response: Response,
+		@Param("slug") slug: string,
+	) {
+		const user = request.user;
+		console.log(slug);
+		if (!user) return response.status(401).send({});
+		return response.status(200).send({});
+	}
 }

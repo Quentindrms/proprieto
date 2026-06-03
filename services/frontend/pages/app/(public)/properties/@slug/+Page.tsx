@@ -9,7 +9,6 @@ import {
 import PageNamer from "@components/pageNamer";
 import PropertyResume from "@components/propertyResume";
 import { PropertyFluxRow } from "@components/rows";
-import Text from "@components/text";
 import { PropertyFluxBoardTitle } from "@libs/boardTitle";
 import { createSignal, Show } from "solid-js";
 
