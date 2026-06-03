@@ -1,7 +1,6 @@
 import { differenceInCalendarDays } from "date-fns";
 import { FiMail, FiPhone, FiUser } from "solid-icons/fi";
 import { Show } from "solid-js";
-import { da } from "zod/locales";
 import type { Client } from "../types/client";
 import { ActionButton } from "./button";
 import Heading from "./heading";
