@@ -16,7 +16,7 @@ export default function PropertyResume(props: PropertyResumeProps) {
 
             <Text size="large">Nom : <span class="font-bold">{props.name}</span></Text>
             <Text size="large">Date d'achat : <span class="font-bold">{props.purchaseDate ? new Date(props.purchaseDate).toLocaleDateString("fr-FR") : " - "}</span></Text>
-            <Text size="large">Prix d'achat : <span class="font-bold">{props.purchasePrice} €</span></Text>
+            <Text size="large">Prix d'achat : <span class="font-bold">{props.purchasePrice ? Intl.NumberFormat("fr-FR").format(props.purchasePrice) : " - "} €</span></Text>
             <Text size="large">Superficie : <span class="font-bold">{props.surfaceArea} m2</span></Text>
             <Text size="large">Total des loyers : <span class="font-bold">{props.totalLoans} €</span></Text>
 
