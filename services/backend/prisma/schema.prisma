@@ -107,7 +107,7 @@ model Clients {
   status String @db.VarChar(50)
 
   directoriesId String
-  idDirectory   Directories @relation(fields: [directoriesId], references: [id])
+  directory     Directories @relation(fields: [directoriesId], references: [id])
   contracts     Contracts[]
 
   @@map("clients")

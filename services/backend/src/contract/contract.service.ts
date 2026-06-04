@@ -33,4 +33,27 @@ export class ContractService {
 			},
 		});
 	}
+
+	async readDetails(slug: string, userId: string) {
+		return await prisma.contracts.findMany({
+			where: {
+				property: {
+					slug,
+					userId,
+				},
+			},
+			include: {
+				client: {
+					select: {
+						directory: {
+							select: {
+								name: true,
+								firstName: true,
+							},
+						},
+					},
+				},
+			},
+		});
+	}
 }
