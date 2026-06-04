@@ -102,7 +102,6 @@ export class IncomeController {
 			slug,
 			user.id,
 		);
-		console.log("Incomes : ", incomes);
 		if (!incomes) return response.status(404).send();
 		return response.status(200).send(incomes);
 	}
