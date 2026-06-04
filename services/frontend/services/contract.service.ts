@@ -10,4 +10,8 @@ export class ContractService extends CoreService {
 	browse() {
 		return this.get<Contract[]>("/contracts/browse");
 	}
+
+	details(slug: string) {
+		return this.get<Contract>(`/contracts/read/${slug}`);
+	}
 }

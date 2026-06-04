@@ -1,5 +1,6 @@
 export type Data = Awaited<ReturnType<typeof data>>;
 
+import { ContractService } from "@services/contract.service";
 import { IncomeService } from "@services/income.service";
 import { OutcomeService } from "@services/outcome.service";
 import { PropertyService } from "@services/property.service";
@@ -12,11 +13,13 @@ export async function data(pageContext: PageContextServer) {
 	const propertyService = new PropertyService(cookies.auth);
 	const outcomeService = new OutcomeService(cookies.auth);
 	const incomeService = new IncomeService(cookies.auth);
+	const contratService = new ContractService(cookies.auth);
 
-	const [property, income] = await Promise.all([
+	const [property, contract, income] = await Promise.all([
 		propertyService.propertyDetails(pageContext.routeParams.slug),
+		contratService.details(pageContext.routeParams.slug),
 		incomeService.incomePropertyDetails(pageContext.routeParams.slug),
 	]);
 
-	return { property, income };
+	return { property, contract, income };
 }
