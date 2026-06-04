@@ -35,7 +35,7 @@ export class ContractService {
 	}
 
 	async readDetails(slug: string, userId: string) {
-		return await prisma.contracts.findFirst({
+		return await prisma.contracts.findMany({
 			where: {
 				property: {
 					slug,
