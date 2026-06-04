@@ -80,6 +80,11 @@ export default function PropertyDetails() {
         return undefined;
     });
 
+    function recoveryRate(purchasePrice: number, totalOutcome: number, totalIncome: number) {
+        const netIncome = totalOutcome - totalIncome;
+        return ((netIncome / purchasePrice) * 100);
+    }
+
     return (
         <div class="w-full h-full flex-col gap-10">
             <PageNamer
@@ -98,9 +103,10 @@ export default function PropertyDetails() {
                     size="normal"
                     style="light"
                     title="Rentabilité locative"
-                    value={50}
+                    value={recoveryRate(data.property.purchasePrice, propertyTotalOutcome, propertyTotalIncome)}
                     max={100}
                     min={0}
+
                 />
 
                 <CardInfo stat={propertyTotalOutcome} title="Dépense totale" />
