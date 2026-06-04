@@ -131,6 +131,7 @@ export class IncomeService {
 		try {
 			return await prisma.incomes.findMany({
 				where: {
+					isDeleted: false,
 					contract: {
 						property: {
 							slug,

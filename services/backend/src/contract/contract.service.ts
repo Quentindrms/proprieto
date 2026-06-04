@@ -30,6 +30,16 @@ export class ContractService {
 				endDate: true,
 				lease: true,
 				property: true,
+				client: {
+					select: {
+						directory: {
+							select: {
+								name: true,
+								firstName: true,
+							},
+						},
+					},
+				},
 			},
 		});
 	}
