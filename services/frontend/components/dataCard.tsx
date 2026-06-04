@@ -53,7 +53,7 @@ export function CardInfo(props: CardInfoProps) {
                 {props.title}
             </Heading>
             <p class="font-base-extrabold text-3xl">
-                {Intl.NumberFormat("fr-FR").format(props.stat)}
+                {Intl.NumberFormat("fr-FR").format(props.stat)} €
             </p>
         </div>
     );
