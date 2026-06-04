@@ -2,6 +2,7 @@ import {
 	Body,
 	Controller,
 	Get,
+	Param,
 	Post,
 	Req,
 	Res,
@@ -38,5 +39,17 @@ export class ContractController {
 		if (!user) return response.status(401).send({});
 		const contracts = await this.contractService.browse(user.id);
 		return response.status(200).send(contracts);
+	}
+
+	@Get("read/:slug")
+	async readContractDetaild(
+		@Req() request: Request,
+		@Res() response: Response,
+		@Param("slug") slug: string,
+	) {
+		const user = request.user;
+		if (!user) return response.status(401).send();
+		const contract = await this.contractService.readDetails(slug, user.id);
+		return response.status(200).send(contract);
 	}
 }
