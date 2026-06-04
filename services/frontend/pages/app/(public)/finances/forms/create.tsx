@@ -231,7 +231,7 @@ export function CreateIncomeForm(props: CreateIncomeFormProps) {
         disabled: false,
     }));
     const contractsList = data.contractList.map((contract) => ({
-        label: contract.property.name,
+        label: `${contract.property.name} - ${contract.client.directory.firstName} ${contract.client.directory.name}`,
         value: contract.id,
         disabled: false,
     }))
