@@ -56,7 +56,7 @@ export default function PropertyDetails() {
         name: `${contract.client.directory.firstName} ${contract.client.directory.name}`,
         startDate: contract.startDate,
         endDate: contract.endDate,
-        totalAmount: 0,
+        totalAmount: contract.client.directory.totalIncome,
     }));
 
     const currentContract = contractsList.find((contract) => {

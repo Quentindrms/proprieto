@@ -12,6 +12,7 @@ export interface Contract {
 		directory: {
 			name: string;
 			firstName: string;
+			totalIncome: number;
 		};
 	};
 }
