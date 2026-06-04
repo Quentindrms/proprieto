@@ -53,6 +53,13 @@ export default function PropertyDetails() {
         amount: income.amount,
     }));
 
+    const outcomes: PropertyFluxBoardItem[] = data.outcome.map((outcome) => ({
+        name: outcome.name,
+        date: new Date(outcome.issueDate),
+        isPaid: outcome.isPaid,
+        amount: outcome.amount,
+    }))
+
     const contractsList: PropertyClientItem[] = data.contract.map((contract) => ({
         name: `${contract.client.directory.firstName} ${contract.client.directory.name}`,
         startDate: contract.startDate,
@@ -60,7 +67,8 @@ export default function PropertyDetails() {
         totalAmount: contract.client.directory.totalIncome,
     }));
 
-    const propertyTotalIncome = contractsList.reduce((sum, income) => sum + income.totalAmount, 0)
+    const propertyTotalIncome = contractsList.reduce((sum, income) => sum + income.totalAmount, 0);
+    const propertyTotalOutcome = outcomes.reduce((sum, outcome) => sum + outcome.amount, 0);
 
     const currentContract = contractsList.find((contract) => {
         const now = new Date();
@@ -95,7 +103,7 @@ export default function PropertyDetails() {
                     min={0}
                 />
 
-                <CardInfo stat={5000} title="Dépense totale" />
+                <CardInfo stat={propertyTotalOutcome} title="Dépense totale" />
             </div>
 
             <div class="flex flex-col gap-2">
@@ -105,7 +113,7 @@ export default function PropertyDetails() {
                         <Board
                             header={{ title: PropertyFluxBoardTitle }}
                             body={{
-                                data: incomes,
+                                data: outcomes,
                                 renderRow: (item: PropertyFluxBoardItem) => (
                                     <PropertyFluxRow {...item} />
                                 ),
