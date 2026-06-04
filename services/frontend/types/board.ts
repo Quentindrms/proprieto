@@ -22,6 +22,7 @@ export interface PropertyFluxBoardItem {
 
 export interface PropertyClientItem {
 	name: string;
-	period: string;
+	startDate: Date;
+	endDate: Date;
 	totalAmount: number;
 }

@@ -1,4 +1,7 @@
-import type { PropertyClientItem, PropertyFluxBoardItem } from "@app/types/board";
+import type {
+    PropertyClientItem,
+    PropertyFluxBoardItem,
+} from "@app/types/board";
 import { Board } from "@components/board";
 import { ButtonGroup } from "@components/button";
 import {
@@ -9,7 +12,11 @@ import {
 import PageNamer from "@components/pageNamer";
 import PropertyResume from "@components/propertyResume";
 import { PropertyClientRow, PropertyFluxRow } from "@components/rows";
-import { PropertyClientBoardTitle, PropertyFluxBoardTitle } from "@libs/boardTitle";
+import {
+    PropertyClientBoardTitle,
+    PropertyFluxBoardTitle,
+} from "@libs/boardTitle";
+import { isAfter, isBefore } from "date-fns";
 import { createSignal, Show } from "solid-js";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
@@ -39,34 +46,28 @@ export default function PropertyDetails() {
         },
     ];
 
-    const fakeData: PropertyFluxBoardItem[] = [
-        {
-            date: new Date(),
-            isPaid: true,
-            name: "Test",
-            amount: 100,
-        },
-        {
-            date: new Date(),
-            isPaid: true,
-            name: "Test",
-            amount: 100,
-        },
-        {
-            date: new Date(),
-            isPaid: true,
-            name: "Test",
-            amount: 100,
-        },
-        {
-            date: new Date(),
-            isPaid: true,
-            name: "Test",
-            amount: 100,
-        },
-    ];
+    const incomes: PropertyFluxBoardItem[] = data.income.map((income) => ({
+        name: income.name,
+        date: new Date(income.issueDate),
+        isPaid: income.isPaid,
+        amount: income.amount,
+    }));
+    const contractsList: PropertyClientItem[] = data.contract.map((contract) => ({
+        name: `${contract.client.directory.firstName} ${contract.client.directory.name}`,
+        startDate: contract.startDate,
+        endDate: contract.endDate,
+        totalAmount: 0,
+    }));
 
-    const incomes: PropertyFluxBoardItem[] = data.income.map((income) => ({ name: income.name, date: new Date(income.issueDate), isPaid: income.isPaid, amount: income.amount }));
+    const currentContract = contractsList.find((contract) => {
+        const now = new Date();
+        const before = isBefore(new Date(contract.startDate), now);
+        const after = isAfter(new Date(contract.endDate), now);
+        if (before && after) {
+            return contract;
+        }
+        return undefined;
+    });
 
     return (
         <div class="w-full h-full flex-col gap-10">
@@ -77,7 +78,10 @@ export default function PropertyDetails() {
             />
 
             <div class="flex flex-wrap gap-2 pb-4">
-                <CurrentContractCard client={`${data.contract.client.directory.firstName} ${data.contract.client.directory.name}`} endDate={new Date()} />
+                <CurrentContractCard
+                    client={currentContract ? currentContract.name : ""}
+                    endDate={currentContract?.endDate}
+                />
 
                 <CardProgressionBar
                     size="normal"
@@ -123,7 +127,12 @@ export default function PropertyDetails() {
                     <Show when={selectedBoard() === "client"}>
                         <Board
                             header={{ title: PropertyClientBoardTitle }}
-                            body={{ data: [], renderRow: (item: PropertyClientItem) => <PropertyClientRow {...item} /> }}
+                            body={{
+                                data: contractsList,
+                                renderRow: (item: PropertyClientItem) => (
+                                    <PropertyClientRow {...item} />
+                                ),
+                            }}
                             size="2xl"
                         />
                     </Show>

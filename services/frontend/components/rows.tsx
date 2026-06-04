@@ -258,7 +258,8 @@ export function PropertyFluxRow(props: PropertyFluxRowProps) {
 
 interface PropertyClientRowProps {
     name: string,
-    period: string,
+    startDate: Date,
+    endDate: Date,
     totalAmount: number,
 }
 
@@ -272,7 +273,7 @@ export function PropertyClientRow(props: PropertyClientRowProps) {
                 <Text size="medium">{props.name}</Text>
             </td>
             <td class="px-4 py-3 text-center">
-                <Text size="medium">{props.period}</Text>
+                <Text size="medium">{`${new Date(props.startDate).toLocaleDateString("fr-FR")} - ${new Date(props.endDate).toLocaleDateString("fr-FR")}`}</Text>
             </td>
             <td class="px-4 py-3 text-center">
                 <Text size="medium">{Intl.NumberFormat("fr-FR").format(props.totalAmount)} €</Text>

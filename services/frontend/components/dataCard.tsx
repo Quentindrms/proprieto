@@ -138,27 +138,35 @@ export function CardTicket(props: CardTicketProps) {
 }
 
 interface CurrentContractCardProps {
-    endDate: Date;
-    client: string;
+    endDate?: Date;
+    client?: string;
 }
 
 export function CurrentContractCard(props: CurrentContractCardProps) {
-    const dayLeft = differenceInCalendarDays(props.endDate, new Date());
+    let dayLeft: number;
+    if (props.endDate) {
+        dayLeft = differenceInCalendarDays(props.endDate, new Date());
+    }
+    else {
+        dayLeft = 0
+    }
 
     return (
         <div class="w-xs flex flex-col p-4 bg-background-base rounded-xl gap-4 shadow-xs shadow-background-muted hover:-translate-y-1 transition-transform">
             <Heading components="h3" size="large" fontClasses="medium">
                 Contrat en cours :
             </Heading>
-            <Text>{props.client}</Text>
-            <Text>
-                Se termine le {props.endDate.toLocaleDateString("fr-FR")}{" "}
-                <Show when={dayLeft < 100}>
-                    <span class="italic">
-                        ({dayLeft} {dayLeft > 1 ? "jours" : "jour"})
-                    </span>
-                </Show>
-            </Text>
+            <Show when={props.endDate && props.client} fallback={<Text>Aucun contrat en cours pour le moment</Text>} >
+                <Text>{props.client}</Text>
+                <Text>
+                    Se termine le {props.endDate ? new Date(props.endDate).toLocaleDateString("fr-FR") : ""}
+                    <Show when={dayLeft < 100}>
+                        <span class="italic">
+                            ({dayLeft} {dayLeft > 1 ? "jours" : "jour"})
+                        </span>
+                    </Show>
+                </Text>
+            </Show>
         </div>
     );
 }
