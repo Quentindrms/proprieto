@@ -30,4 +30,8 @@ export class OutcomeService extends CoreService {
 	async monthlyOutcome() {
 		return await this.get<MonthlyOutcome>("/outcome/monthly");
 	}
+
+	async outcomePropertyDetails(slug: string) {
+		return this.get<Outcome[]>(`/outcome/property/${slug}`);
+	}
 }

@@ -144,4 +144,16 @@ export class OutcomeService {
 			unpaidOutcomes: calculateTotalUnpaid(currentMonth),
 		};
 	}
+
+	async propertyOutcomeDetails(slug: string, userId: string) {
+		return await prisma.outcomes.findMany({
+			where: {
+				isDeleted: false,
+				property: {
+					slug,
+					userId,
+				},
+			},
+		});
+	}
 }

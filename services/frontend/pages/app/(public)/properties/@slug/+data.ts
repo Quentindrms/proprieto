@@ -15,11 +15,12 @@ export async function data(pageContext: PageContextServer) {
 	const incomeService = new IncomeService(cookies.auth);
 	const contratService = new ContractService(cookies.auth);
 
-	const [property, contract, income] = await Promise.all([
+	const [property, contract, income, outcome] = await Promise.all([
 		propertyService.propertyDetails(pageContext.routeParams.slug),
 		contratService.details(pageContext.routeParams.slug),
 		incomeService.incomePropertyDetails(pageContext.routeParams.slug),
+		outcomeService.outcomePropertyDetails(pageContext.routeParams.slug),
 	]);
 
-	return { property, contract, income };
+	return { property, contract, income, outcome };
 }
