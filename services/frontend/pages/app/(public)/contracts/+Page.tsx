@@ -23,7 +23,7 @@ export default function Page() {
 	const stats = contract.getStats(data.contracts);
 
 	const contractRows: ContractRowData[] = data.contracts.map((contract) => ({
-		clientName: contract.clientId,
+		clientName: `${contract.client.directory.firstName} ${contract.client.directory.name.toUpperCase()}`,
 		propertyName: contract.property.name,
 		period: `${new Date(contract.startDate).toLocaleDateString("fr-FR")} – ${new Date(contract.endDate).toLocaleDateString("fr-FR")}`,
 		loan: contract.lease,
