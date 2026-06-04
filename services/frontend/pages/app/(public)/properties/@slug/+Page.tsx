@@ -52,12 +52,15 @@ export default function PropertyDetails() {
         isPaid: income.isPaid,
         amount: income.amount,
     }));
+
     const contractsList: PropertyClientItem[] = data.contract.map((contract) => ({
         name: `${contract.client.directory.firstName} ${contract.client.directory.name}`,
         startDate: contract.startDate,
         endDate: contract.endDate,
         totalAmount: contract.client.directory.totalIncome,
     }));
+
+    const propertyTotalIncome = contractsList.reduce((sum, income) => sum + income.totalAmount, 0)
 
     const currentContract = contractsList.find((contract) => {
         const now = new Date();
@@ -142,7 +145,7 @@ export default function PropertyDetails() {
                         purchaseDate={data.property.purchaseDate?.toString()}
                         purchasePrice={data.property.purchasePrice}
                         surfaceArea={0}
-                        totalLoans={0}
+                        totalLoans={propertyTotalIncome}
                     />
                 </div>
             </div>
