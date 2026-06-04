@@ -1,4 +1,4 @@
-import type { PropertyFluxBoardItem } from "@app/types/board";
+import type { PropertyClientItem, PropertyFluxBoardItem } from "@app/types/board";
 import { Board } from "@components/board";
 import { ButtonGroup } from "@components/button";
 import {
@@ -8,8 +8,8 @@ import {
 } from "@components/dataCard";
 import PageNamer from "@components/pageNamer";
 import PropertyResume from "@components/propertyResume";
-import { PropertyFluxRow } from "@components/rows";
-import { PropertyFluxBoardTitle } from "@libs/boardTitle";
+import { PropertyClientRow, PropertyFluxRow } from "@components/rows";
+import { PropertyClientBoardTitle, PropertyFluxBoardTitle } from "@libs/boardTitle";
 import { createSignal, Show } from "solid-js";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
@@ -77,7 +77,7 @@ export default function PropertyDetails() {
             />
 
             <div class="flex flex-wrap gap-2 pb-4">
-                <CurrentContractCard client="Jean Dupont" endDate={new Date()} />
+                <CurrentContractCard client={`${data.contract.client.directory.firstName} ${data.contract.client.directory.name}`} endDate={new Date()} />
 
                 <CardProgressionBar
                     size="normal"
@@ -103,7 +103,7 @@ export default function PropertyDetails() {
                                     <PropertyFluxRow {...item} />
                                 ),
                             }}
-                            size="xl"
+                            size="2xl"
                         />
                     </Show>
 
@@ -116,12 +116,20 @@ export default function PropertyDetails() {
                                     <PropertyFluxRow {...item} />
                                 ),
                             }}
-                            size="xl"
+                            size="2xl"
+                        />
+                    </Show>
+
+                    <Show when={selectedBoard() === "client"}>
+                        <Board
+                            header={{ title: PropertyClientBoardTitle }}
+                            body={{ data: [], renderRow: (item: PropertyClientItem) => <PropertyClientRow {...item} /> }}
+                            size="2xl"
                         />
                     </Show>
 
                     <PropertyResume
-                        name="Test"
+                        name={data.property.name}
                         purchaseDate={data.property.purchaseDate?.toString()}
                         purchasePrice={data.property.purchasePrice}
                         surfaceArea={0}

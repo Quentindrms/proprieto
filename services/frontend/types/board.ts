@@ -19,3 +19,9 @@ export interface PropertyFluxBoardItem {
 	isPaid: boolean;
 	amount: number;
 }
+
+export interface PropertyClientItem {
+	name: string;
+	period: string;
+	totalAmount: number;
+}

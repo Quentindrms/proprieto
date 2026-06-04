@@ -232,7 +232,6 @@ interface PropertyFluxRowProps {
 
 export function PropertyFluxRow(props: PropertyFluxRowProps) {
 
-
     return (
         <tr
             class="last:border-0 hover:bg-background-secondary transition-colors hover:bg-background-muted/10"
@@ -252,6 +251,31 @@ export function PropertyFluxRow(props: PropertyFluxRowProps) {
                 >
                     <Badge color="success">Payé</Badge>
                 </Show>
+            </td>
+        </tr>
+    )
+}
+
+interface PropertyClientRowProps {
+    name: string,
+    period: string,
+    totalAmount: number,
+}
+
+export function PropertyClientRow(props: PropertyClientRowProps) {
+
+    return (
+        <tr
+            class="last:border-0 hover:bg-background-secondary transition-colors hover:bg-background-muted/10"
+        >
+            <td class="px-4 py-3 text-center">
+                <Text size="medium">{props.name}</Text>
+            </td>
+            <td class="px-4 py-3 text-center">
+                <Text size="medium">{props.period}</Text>
+            </td>
+            <td class="px-4 py-3 text-center">
+                <Text size="medium">{Intl.NumberFormat("fr-FR").format(props.totalAmount)} €</Text>
             </td>
         </tr>
     )
