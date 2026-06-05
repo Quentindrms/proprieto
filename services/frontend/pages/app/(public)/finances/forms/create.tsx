@@ -362,7 +362,7 @@ export function CreateIncomeForm(props: CreateIncomeFormProps) {
                     <TextField
                         label="Date de paiement"
                         type="date"
-                        onInput={income.handleInputIncome("isPaid")}
+                        onInput={income.handleInputIncome("paidOn")}
                         required
                     />
                     {income.incomeErrors() && (
