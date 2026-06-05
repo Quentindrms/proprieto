@@ -122,6 +122,15 @@ export class PropertyService {
 				slug,
 				isDeleted: false,
 			},
+			include: {
+				propertyType: {
+					select: {
+						id: true,
+						name: true,
+						slug: true,
+					},
+				},
+			},
 		});
 	}
 }
