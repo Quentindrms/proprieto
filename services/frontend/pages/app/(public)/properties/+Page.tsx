@@ -1,4 +1,3 @@
-import type { Property } from "@app/types/property";
 import { ButtonBadge } from "@components/badge";
 import PageNamer from "@components/pageNamer";
 import PropertyCard from "@components/propertyCard";
