@@ -113,6 +113,7 @@ export class OutcomeService {
 		const currentMonth = await prisma.outcomes.findMany({
 			orderBy: [{ issueDate: "desc" }],
 			where: {
+				isDeleted: false,
 				issueDate: {
 					gte: start,
 					lt: end,

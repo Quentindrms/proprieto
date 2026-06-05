@@ -91,6 +91,7 @@ export class IncomeService {
 		const currentMonth = await prisma.incomes.findMany({
 			orderBy: [{ issueDate: "asc" }],
 			where: {
+				isDeleted: false,
 				issueDate: {
 					gte: start,
 					lt: end,
