@@ -109,7 +109,6 @@ export function useAuth() {
 	}
 
 	async function handleRecoverPassword(token: string) {
-		console.log(token);
 		const validate = RecoverPasswordSchema.safeParse(recoverPassword());
 		if (!validate.success) {
 			setFormError(validate);

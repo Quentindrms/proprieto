@@ -50,7 +50,6 @@ export class PropertyController {
 		@Res() response: Response,
 		@Body() body: UpdatePropertyDto,
 	) {
-		console.log("Update property");
 		const user = request.user;
 		if (!user) return response.status(401).send({});
 		const update = await this.propertyService.updateProperty(body);

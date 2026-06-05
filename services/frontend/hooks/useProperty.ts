@@ -71,7 +71,6 @@ export function useProperty() {
 
 	async function update(onSuccess: () => void) {
 		const validation = PropertyUpdateSchema.safeParse(updateProperty());
-		console.log(validation);
 		if (!validation.success) {
 			setFormError(validation);
 			return;
