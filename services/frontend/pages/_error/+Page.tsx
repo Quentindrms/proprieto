@@ -4,7 +4,7 @@ import { Show } from "solid-js";
 import { usePageContext } from "vike-solid/usePageContext";
 
 export default function Page() {
-  const { is404, abortReason, abortStatusCode } = usePageContext();
+  const { is404 } = usePageContext();
   return (
     <div class="w-full flex flex-col justify-center items-center gap-2">
       <Show
