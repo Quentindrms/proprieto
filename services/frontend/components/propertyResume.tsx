@@ -7,6 +7,8 @@ interface PropertyResumeProps {
     purchasePrice?: number,
     totalLoans?: number,
     surfaceArea?: number,
+    onEdit: () => void,
+    onDelete: () => void,
 }
 
 export default function PropertyResume(props: PropertyResumeProps) {
@@ -21,8 +23,8 @@ export default function PropertyResume(props: PropertyResumeProps) {
             <Text size="large">Total des loyers : <span class="font-bold">{props.totalLoans} €</span></Text>
 
             <div class="flex flex-wrap gap-4 justify-between items-center p-2">
-                <Button type="button" color="green">Modifier</Button>
-                <Button type="button" color="red">Supprimer</Button>
+                <Button type="button" color="green" onClick={props.onEdit}>Modifier</Button>
+                <Button type="button" color="red" onClick={props.onDelete}>Supprimer</Button>
             </div>
         </div>
     )

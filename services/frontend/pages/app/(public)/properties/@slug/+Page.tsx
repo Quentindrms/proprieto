@@ -12,6 +12,7 @@ import {
 import PageNamer from "@components/pageNamer";
 import PropertyResume from "@components/propertyResume";
 import { PropertyClientRow, PropertyFluxRow } from "@components/rows";
+import { useModal } from "@hooks/useModal";
 import {
     PropertyClientBoardTitle,
     PropertyFluxBoardTitle,
@@ -20,8 +21,13 @@ import { isAfter, isBefore } from "date-fns";
 import { createSignal, Show } from "solid-js";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
+import DeleteModal from "./modal/delete";
 
 export default function PropertyDetails() {
+    /** Modal */
+
+    const deleteModal = useModal(350);
+
     const data = useData<Data>();
 
     const [selectedBoard, setSelectedBoard] = createSignal<
@@ -46,6 +52,8 @@ export default function PropertyDetails() {
         },
     ];
 
+    /* Data processing */
+
     const incomes: PropertyFluxBoardItem[] = data.income.map((income) => ({
         name: income.name,
         date: new Date(income.issueDate),
@@ -58,7 +66,7 @@ export default function PropertyDetails() {
         date: new Date(outcome.issueDate),
         isPaid: outcome.isPaid,
         amount: outcome.amount,
-    }))
+    }));
 
     const contractsList: PropertyClientItem[] = data.contract.map((contract) => ({
         name: `${contract.client.directory.firstName} ${contract.client.directory.name}`,
@@ -67,8 +75,16 @@ export default function PropertyDetails() {
         totalAmount: contract.client.directory.totalIncome,
     }));
 
-    const propertyTotalIncome = contractsList.reduce((sum, income) => sum + income.totalAmount, 0);
-    const propertyTotalOutcome = outcomes.reduce((sum, outcome) => sum + outcome.amount, 0);
+    const propertyTotalIncome = contractsList.reduce(
+        (sum, income) => sum + income.totalAmount,
+        0,
+    );
+    const propertyTotalOutcome = outcomes.reduce(
+        (sum, outcome) => sum + outcome.amount,
+        0,
+    );
+
+    /** Find current contract by comparating startDate and enDate with current date */
 
     const currentContract = contractsList.find((contract) => {
         const now = new Date();
@@ -80,93 +96,111 @@ export default function PropertyDetails() {
         return undefined;
     });
 
-    function recoveryRate(purchasePrice: number, totalOutcome: number, totalIncome: number) {
+    function recoveryRate(
+        purchasePrice: number,
+        totalOutcome: number,
+        totalIncome: number,
+    ) {
         const netIncome = totalIncome - totalOutcome;
         const recoveryRate = Math.round((netIncome / purchasePrice) * 100);
         if (!recoveryRate) {
-            return 0
+            return 0;
         }
         return recoveryRate;
     }
 
     return (
-        <div class="w-full h-full flex-col gap-10">
-            <PageNamer
-                onClick={() => { }}
-                pageName={`Détail de ${data.property.name}`}
-                subText="Consulter les détails de votre propriété"
+        <>
+            <DeleteModal
+                close={deleteModal.close}
+                isClosing={deleteModal.isClosing}
+                isOpened={deleteModal.isOpened}
+                delete={() => { }}
+                property={data.property}
             />
-
-            <div class="flex flex-wrap gap-2 pb-4">
-                <CurrentContractCard
-                    client={currentContract ? currentContract.name : ""}
-                    endDate={currentContract?.endDate}
+            <div class="w-full h-full flex-col gap-10">
+                <PageNamer
+                    onClick={() => { }}
+                    pageName={`Détail de ${data.property.name}`}
+                    subText="Consulter les détails de votre propriété"
                 />
 
-                <CardProgressionBar
-                    size="normal"
-                    style="light"
-                    title="Rentabilité locative"
-                    value={recoveryRate(data.property.purchasePrice, propertyTotalOutcome, propertyTotalIncome)}
-                    max={100}
-                    min={0}
-
-                />
-
-                <CardInfo stat={propertyTotalOutcome} title="Dépense totale" />
-            </div>
-
-            <div class="flex flex-col gap-2">
-                <ButtonGroup options={buttonGroup} defaultValue="outcome" />
-                <div class="flex flex-col-reverse md:flex-row gap-10 justify-start">
-                    <Show when={selectedBoard() === "outcome"}>
-                        <Board
-                            header={{ title: PropertyFluxBoardTitle }}
-                            body={{
-                                data: outcomes,
-                                renderRow: (item: PropertyFluxBoardItem) => (
-                                    <PropertyFluxRow {...item} />
-                                ),
-                            }}
-                            size="2xl"
-                        />
-                    </Show>
-
-                    <Show when={selectedBoard() === "income"}>
-                        <Board
-                            header={{ title: PropertyFluxBoardTitle }}
-                            body={{
-                                data: incomes,
-                                renderRow: (item: PropertyFluxBoardItem) => (
-                                    <PropertyFluxRow {...item} />
-                                ),
-                            }}
-                            size="2xl"
-                        />
-                    </Show>
-
-                    <Show when={selectedBoard() === "client"}>
-                        <Board
-                            header={{ title: PropertyClientBoardTitle }}
-                            body={{
-                                data: contractsList,
-                                renderRow: (item: PropertyClientItem) => (
-                                    <PropertyClientRow {...item} />
-                                ),
-                            }}
-                            size="2xl"
-                        />
-                    </Show>
-
-                    <PropertyResume
-                        name={data.property.name}
-                        purchaseDate={data.property.purchaseDate?.toString()}
-                        purchasePrice={data.property.purchasePrice}
-                        surfaceArea={0}
-                        totalLoans={propertyTotalIncome}
+                <div class="flex flex-wrap gap-2 pb-4">
+                    <CurrentContractCard
+                        client={currentContract ? currentContract.name : ""}
+                        endDate={currentContract?.endDate}
                     />
+
+                    <CardProgressionBar
+                        size="normal"
+                        style="light"
+                        title="Rentabilité locative"
+                        value={recoveryRate(
+                            data.property.purchasePrice,
+                            propertyTotalOutcome,
+                            propertyTotalIncome,
+                        )}
+                        max={100}
+                        min={0}
+                    />
+
+                    <CardInfo stat={propertyTotalOutcome} title="Dépense totale" />
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    <ButtonGroup options={buttonGroup} defaultValue="outcome" />
+                    <div class="flex flex-col-reverse md:flex-row gap-10 justify-start">
+                        <Show when={selectedBoard() === "outcome"}>
+                            <Board
+                                header={{ title: PropertyFluxBoardTitle }}
+                                body={{
+                                    data: outcomes,
+                                    renderRow: (item: PropertyFluxBoardItem) => (
+                                        <PropertyFluxRow {...item} />
+                                    ),
+                                }}
+                                size="2xl"
+                            />
+                        </Show>
+
+                        <Show when={selectedBoard() === "income"}>
+                            <Board
+                                header={{ title: PropertyFluxBoardTitle }}
+                                body={{
+                                    data: incomes,
+                                    renderRow: (item: PropertyFluxBoardItem) => (
+                                        <PropertyFluxRow {...item} />
+                                    ),
+                                }}
+                                size="2xl"
+                            />
+                        </Show>
+
+                        <Show when={selectedBoard() === "client"}>
+                            <Board
+                                header={{ title: PropertyClientBoardTitle }}
+                                body={{
+                                    data: contractsList,
+                                    renderRow: (item: PropertyClientItem) => (
+                                        <PropertyClientRow {...item} />
+                                    ),
+                                }}
+                                size="2xl"
+                            />
+                        </Show>
+
+                        <PropertyResume
+                            name={data.property.name}
+                            purchaseDate={data.property.purchaseDate?.toString()}
+                            purchasePrice={data.property.purchasePrice}
+                            surfaceArea={0}
+                            totalLoans={propertyTotalIncome}
+                            onEdit={() => { }}
+                            onDelete={deleteModal.open}
+                        />
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 }
