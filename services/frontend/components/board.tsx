@@ -1,8 +1,9 @@
 import type { TitleBoardHeader } from "@app/types/board";
 import clsx from "clsx";
-import { For, type JSX } from "solid-js";
+import { For, type JSX, Show } from "solid-js";
 import Heading from "./heading";
 import type { ContractStatus } from "./rows";
+import Text from "./text";
 
 export function getContractStatus(endDate: Date | string): ContractStatus {
 	const now = new Date();
@@ -44,7 +45,18 @@ interface BoardBodyProps<T> {
 function BoardBody<T>(props: BoardBodyProps<T>) {
 	return (
 		<tbody class="bg-background-base">
-			<For each={props.data}>{(item) => props.renderRow(item)}</For>
+			<Show
+				when={props.data.length > 0}
+				fallback={
+					<tr>
+						<td colspan={100} class="py-8 text-center">
+							<Text size="medium">Aucune donnée à afficher pour le moment</Text>
+						</td>
+					</tr>
+				}
+			>
+				<For each={props.data}>{(item) => props.renderRow(item)}</For>
+			</Show>
 		</tbody>
 	);
 }
@@ -69,7 +81,7 @@ export function Board<T>(props: BoardProps<T>) {
 	return (
 		<div
 			class={clsx([
-				"w-full",
+				"w-full min-h-fit",
 				props.size ? sizeClasses[props.size] : "max-w-full",
 				"overflow-x-auto rounded-xl shadow-md bg-background-muted/10 border border-background-muted/50 shadow-muted-text",
 			])}
