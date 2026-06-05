@@ -5,6 +5,7 @@ import { IncomeService } from "@services/income.service";
 import { OutcomeService } from "@services/outcome.service";
 import { PropertyService } from "@services/property.service";
 import { getCookiesFromPageContext } from "@utils/cookie";
+import { render } from "vike/abort";
 import type { PageContextServer } from "vike/types";
 
 export async function data(pageContext: PageContextServer) {
@@ -21,6 +22,10 @@ export async function data(pageContext: PageContextServer) {
 		incomeService.incomePropertyDetails(pageContext.routeParams.slug),
 		outcomeService.outcomePropertyDetails(pageContext.routeParams.slug),
 	]);
-
+	console.log("Property : ", property);
+	if (!property?.name) {
+		console.log(property);
+		throw render(404, "Ressource not found");
+	}
 	return { property, contract, income, outcome };
 }
