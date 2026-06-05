@@ -64,7 +64,16 @@ describe("Income service", () => {
 			await incomeService.create(validCreateIncome);
 			expect(prisma.incomes.create).toHaveBeenCalledWith({
 				data: {
-					...validCreateIncome,
+					name: validCreateIncome.name,
+					amount: validCreateIncome.amount,
+					isPaid: validCreateIncome.isPaid,
+					issueDate: new Date(validCreateIncome.issueDate),
+					paidOn: validCreateIncome.paidOn
+						? new Date(validCreateIncome.paidOn)
+						: undefined,
+					frequency: validCreateIncome.frequency,
+					contractId: validCreateIncome.contractId,
+					categoryId: validCreateIncome.categoryId,
 				},
 			});
 		});

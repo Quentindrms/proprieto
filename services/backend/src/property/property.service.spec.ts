@@ -1,5 +1,8 @@
 import { prisma } from "@libs/DatabaseClient";
-import type { CreatePropertyDto, UpdatePropertyDto } from "types/DtoType";
+import type {
+	CreatePropertyDto,
+	UpdatePropertyDto,
+} from "@src/dto/property.dto";
 import { PropertyService } from "./property.service";
 
 jest.mock("@libs/DatabaseClient", () => ({
@@ -7,12 +10,14 @@ jest.mock("@libs/DatabaseClient", () => ({
 		properties: {
 			create: jest.fn(),
 			findMany: jest.fn(),
+			findFirst: jest.fn(),
 			update: jest.fn(),
 			count: jest.fn(),
 		},
 		propertyTypes: {
 			findMany: jest.fn(),
 		},
+		$transaction: jest.fn(),
 	},
 }));
 
@@ -20,17 +25,16 @@ describe("Property service", () => {
 	let propertyService: PropertyService;
 
 	const validCreateProperty: CreatePropertyDto = {
-		isActive: true,
 		name: "property",
 		type: "house",
-		purchaseDate: new Date("01/01/2026"),
+		purchaseDate: "01/01/2026",
 		purchasePrice: 1000,
 	};
 
 	const validUpdateProperty: UpdatePropertyDto = {
 		name: "property",
 		type: "house",
-		purchaseDate: new Date("01/01/2026"),
+		purchaseDate: "01/01/2026",
 		purchasePrice: 1000,
 		id: "property-id",
 		sellDate: new Date("01/01/2026"),
@@ -45,7 +49,10 @@ describe("Property service", () => {
 	describe("Create property", () => {
 		it("Doit créer une propriété avec les bonnes données", async () => {
 			(prisma.properties.create as jest.Mock).mockResolvedValue("property");
-			const result = await propertyService.create(validCreateProperty, "user-id");
+			const result = await propertyService.create(
+				validCreateProperty,
+				"user-id",
+			);
 			expect(prisma.properties.create).toHaveBeenCalledWith({
 				data: {
 					name: validCreateProperty.name,
@@ -54,6 +61,7 @@ describe("Property service", () => {
 					userId: "user-id",
 					isDeleted: false,
 					typeId: validCreateProperty.type,
+					slug: validCreateProperty.name,
 				},
 			});
 			expect(result).toBe("property");
@@ -95,13 +103,26 @@ describe("Property service", () => {
 
 	describe("Delete property", () => {
 		it("Doit marquer la propriété comme supprimée", async () => {
-			(prisma.properties.update as jest.Mock).mockResolvedValue("deleted");
-			const result = await propertyService.deleteProperty("property-id");
-			expect(prisma.properties.update).toHaveBeenCalledWith({
-				where: { id: "property-id" },
+			const mockTransaction = {
+				properties: {
+					findFirstOrThrow: jest.fn().mockResolvedValue({ contracts: [] }),
+					update: jest.fn().mockResolvedValue(true),
+				},
+				incomes: { updateMany: jest.fn() },
+				outcomes: { updateMany: jest.fn() },
+			};
+			(prisma.$transaction as jest.Mock).mockImplementation((callback) =>
+				callback(mockTransaction),
+			);
+			const result = await propertyService.deleteProperty(
+				"property-id",
+				"user-id",
+			);
+			expect(mockTransaction.properties.update).toHaveBeenCalledWith({
+				where: { userId: "user-id", id: "property-id" },
 				data: { isDeleted: true },
 			});
-			expect(result).toBe("deleted");
+			expect(result).toBe(true);
 		});
 	});
 
@@ -125,6 +146,29 @@ describe("Property service", () => {
 				where: { userId: "user-id" },
 			});
 			expect(result).toBe(5);
+		});
+	});
+
+	describe("Property details", () => {
+		it("Doit retourner les détails d'une propriété", async () => {
+			(prisma.properties.findFirst as jest.Mock).mockResolvedValue("property");
+			const result = await propertyService.propertyDetails("slug", "user-id");
+			expect(prisma.properties.findFirst).toHaveBeenLastCalledWith({
+				where: {
+					userId: "user-id",
+					slug: "slug",
+					isDeleted: false,
+				},
+				include: {
+					propertyType: {
+						select: {
+							id: true,
+							name: true,
+							slug: true,
+						},
+					},
+				},
+			});
 		});
 	});
 });

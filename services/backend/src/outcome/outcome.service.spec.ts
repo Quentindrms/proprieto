@@ -81,6 +81,7 @@ describe("Outcome service", () => {
 					isRecurring: validCreateOutcome.isRecurring,
 					isPaid: validCreateOutcome.isPaid,
 					issueDate: new Date(validCreateOutcome.issueDate),
+					paidOn: new Date(validCreateOutcome.paidOn as string),
 					frequency: validCreateOutcome.frequency,
 					propertyId: validCreateOutcome.propertyId,
 					categoryId: validCreateOutcome.categoryId,

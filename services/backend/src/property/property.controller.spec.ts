@@ -182,9 +182,10 @@ describe("Property", () => {
 				);
 
 				expect(mockStatus).toHaveBeenCalledWith(404);
-				expect(mockSend).toHaveBeenCalledWith({});
+				expect(mockSend).toHaveBeenCalledWith({ message: "error" });
 				expect(mockPropertyService.deleteProperty).toHaveBeenCalledWith(
 					"property-id",
+					"user-id",
 				);
 			});
 
@@ -199,6 +200,7 @@ describe("Property", () => {
 				expect(mockSend).toHaveBeenCalledWith({ message: "success" });
 				expect(mockPropertyService.deleteProperty).toHaveBeenCalledWith(
 					"property-id",
+					"user-id",
 				);
 			});
 		});
