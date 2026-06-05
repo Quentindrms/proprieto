@@ -52,14 +52,54 @@ export class PropertyService {
 		});
 	}
 
-	async deleteProperty(id: string) {
-		return await prisma.properties.update({
-			where: {
-				id,
-			},
-			data: {
-				isDeleted: true,
-			},
+	async deleteProperty(id: string, userId: string) {
+		return await prisma.$transaction(async (transaction) => {
+			const property = await transaction.properties.findFirstOrThrow({
+				where: { id, userId },
+				select: {
+					contracts: {
+						where: {
+							propertyId: id,
+						},
+						select: {
+							id: true,
+						},
+					},
+				},
+			});
+
+			const contractId = property.contracts.map((contract) => contract.id);
+
+			await transaction.incomes.updateMany({
+				where: {
+					contractId: { in: contractId },
+					isDeleted: false,
+				},
+				data: {
+					isDeleted: true,
+				},
+			});
+
+			await transaction.outcomes.updateMany({
+				where: {
+					propertyId: id,
+					isDeleted: false,
+				},
+				data: {
+					isDeleted: true,
+				},
+			});
+
+			await transaction.properties.update({
+				where: {
+					userId,
+					id,
+				},
+				data: {
+					isDeleted: true,
+				},
+			});
+			return true;
 		});
 	}
 

@@ -65,7 +65,10 @@ export class PropertyController {
 	) {
 		const user = request.user;
 		if (!user) return response.status(401).send({});
-		const deleted = await this.propertyService.deleteProperty(propertyId);
+		const deleted = await this.propertyService.deleteProperty(
+			propertyId,
+			user.id,
+		);
 		if (!deleted) return response.status(404).send({});
 		return response.status(200).send({ message: "success" });
 	}
