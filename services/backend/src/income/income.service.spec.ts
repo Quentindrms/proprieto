@@ -1,6 +1,6 @@
 import { prisma } from "@libs/DatabaseClient";
-import type { Incomes } from "generated/prisma/client";
-import type { CreateIncomeDto, UpdateIncomeDto } from "types/DtoType";
+import type { Incomes } from "@prisma/browser";
+import type { CreateIncomeDto, UpdateIncomeDto } from "@src/dto/income.dto";
 import { IncomeService } from "./income.service";
 
 jest.mock("@libs/DatabaseClient", () => ({
@@ -36,18 +36,19 @@ describe("Income service", () => {
 		contractId: "contract-id",
 		frequency: "none",
 		isPaid: false,
-		issueDate: new Date("01/01/2026"),
+		issueDate: "01/01/2026",
 		name: "Income",
-		paidOn: new Date("01/01/2026"),
+		paidOn: "01/01/2026",
 	};
 
 	const validUpdateIncome: UpdateIncomeDto = {
+		name: "name",
 		amount: 0,
 		contractId: "contract-id",
 		frequency: "none",
 		isPaid: false,
-		issueDate: new Date("01/01/2026"),
-		paidOn: new Date("01/01/2026"),
+		issueDate: "01/01/2026",
+		paidOn: "01/01/2026",
 		id: "income-id",
 		categoryId: "category-id",
 	};
@@ -126,7 +127,6 @@ describe("Income service", () => {
 				data: {
 					amount: Number(amount),
 					isDeleted: false,
-					name: undefined,
 					...data,
 				},
 			});
@@ -148,8 +148,12 @@ describe("Income service", () => {
 			const now = new Date();
 			const start = new Date(Date.UTC(now.getFullYear(), now.getMonth(), 1));
 			const end = new Date(Date.UTC(now.getFullYear(), now.getMonth() + 1, 1));
-			const startPreviousMonth = new Date(Date.UTC(now.getFullYear(), now.getMonth() - 1, 1));
-			const endPreviousMonth = new Date(Date.UTC(now.getFullYear(), now.getMonth(), 1));
+			const startPreviousMonth = new Date(
+				Date.UTC(now.getFullYear(), now.getMonth() - 1, 1),
+			);
+			const endPreviousMonth = new Date(
+				Date.UTC(now.getFullYear(), now.getMonth(), 1),
+			);
 
 			(prisma.incomes.findMany as jest.Mock)
 				.mockResolvedValueOnce([validIncome])
@@ -159,6 +163,7 @@ describe("Income service", () => {
 			expect(prisma.incomes.findMany).toHaveBeenNthCalledWith(1, {
 				orderBy: [{ issueDate: "asc" }],
 				where: {
+					isDeleted: false,
 					issueDate: { gte: start, lt: end },
 					contract: { property: { userId: "user-id" } },
 				},

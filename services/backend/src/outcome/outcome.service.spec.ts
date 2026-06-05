@@ -1,6 +1,6 @@
 import { prisma } from "@libs/DatabaseClient";
-import type { Outcomes } from "generated/prisma/client";
-import type { CreateOutcomeDto, UpdateOutcomeDto } from "types/DtoType";
+import type { Outcomes } from "@prisma/client";
+import type { CreateOutcomeDto, UpdateOutcomeDto } from "@src/dto/outcome.dto";
 import { OutcomeService } from "./outcome.service";
 
 jest.mock("@libs/DatabaseClient", () => ({
@@ -43,13 +43,12 @@ describe("Outcome service", () => {
 		categoryId: "category-id",
 		frequency: "none",
 		isPaid: false,
-		issueDate: new Date("01/01/2026"),
+		issueDate: "01/01/2026",
 		name: "Outcome",
-		paidOn: new Date("01/01/2026"),
+		paidOn: "01/01/2026",
 		isRecurring: false,
 		propertyId: "property-id",
 		providerId: "provider-id",
-		isDeleted: false,
 	};
 
 	const validUpdateOutcome: UpdateOutcomeDto = {
@@ -57,14 +56,13 @@ describe("Outcome service", () => {
 		categoryId: "category-id",
 		frequency: "none",
 		isPaid: false,
-		issueDate: new Date("01/01/2026"),
-		paidOn: new Date("01/01/2026"),
+		issueDate: "01/01/2026",
+		paidOn: "01/01/2026",
 		id: "outcome-id",
 		isRecurring: false,
 		name: "Outcome",
 		propertyId: "property-id",
 		providerId: "provider-id",
-		isDeleted: false,
 	};
 
 	beforeEach(() => {
@@ -83,7 +81,6 @@ describe("Outcome service", () => {
 					isRecurring: validCreateOutcome.isRecurring,
 					isPaid: validCreateOutcome.isPaid,
 					issueDate: new Date(validCreateOutcome.issueDate),
-					paidOn: new Date(validCreateOutcome.paidOn as Date),
 					frequency: validCreateOutcome.frequency,
 					propertyId: validCreateOutcome.propertyId,
 					categoryId: validCreateOutcome.categoryId,
@@ -234,6 +231,7 @@ describe("Outcome service", () => {
 			expect(prisma.outcomes.findMany).toHaveBeenNthCalledWith(1, {
 				orderBy: [{ issueDate: "desc" }],
 				where: {
+					isDeleted: false,
 					issueDate: { gte: start, lt: end },
 					property: { userId: "user-id" },
 				},
