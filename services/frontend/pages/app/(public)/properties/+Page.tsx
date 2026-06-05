@@ -25,6 +25,8 @@ export default function Page() {
 		propertyType: { id: "", name: "", slug: "" },
 		userId: "",
 		slug: "",
+		purchaseDate: new Date(),
+		purchasePrice: 0,
 	});
 
 	const createModal = useModal(350);
