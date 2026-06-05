@@ -25,7 +25,7 @@ export async function data(pageContext: PageContextServer) {
 			propertyService.browsePropertyType(),
 		],
 	);
-	console.log("Property : ", property);
+	console.log("Property : ", property?.propertyType.slug);
 	if (!property?.name) {
 		console.log(property);
 		throw render(404, "Ressource not found");

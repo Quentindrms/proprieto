@@ -21,7 +21,6 @@ import { isAfter, isBefore } from "date-fns";
 import { createSignal, Show } from "solid-js";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
-import EditModal from "./form/edit";
 import DeleteModal from "./modal/delete";
 import EditProperty from "./modal/edit";
 
@@ -126,6 +125,7 @@ export default function PropertyDetails() {
                 close={editModal.close}
                 isClosing={editModal.isClosing}
                 isOpened={editModal.isOpened}
+                property={data.property}
             />
 
             <div class="w-full h-full flex-col gap-10">
