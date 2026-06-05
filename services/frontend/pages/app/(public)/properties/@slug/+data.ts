@@ -16,16 +16,19 @@ export async function data(pageContext: PageContextServer) {
 	const incomeService = new IncomeService(cookies.auth);
 	const contratService = new ContractService(cookies.auth);
 
-	const [property, contract, income, outcome] = await Promise.all([
-		propertyService.propertyDetails(pageContext.routeParams.slug),
-		contratService.details(pageContext.routeParams.slug),
-		incomeService.incomePropertyDetails(pageContext.routeParams.slug),
-		outcomeService.outcomePropertyDetails(pageContext.routeParams.slug),
-	]);
+	const [property, contract, income, outcome, propertyType] = await Promise.all(
+		[
+			propertyService.propertyDetails(pageContext.routeParams.slug),
+			contratService.details(pageContext.routeParams.slug),
+			incomeService.incomePropertyDetails(pageContext.routeParams.slug),
+			outcomeService.outcomePropertyDetails(pageContext.routeParams.slug),
+			propertyService.browsePropertyType(),
+		],
+	);
 	console.log("Property : ", property);
 	if (!property?.name) {
 		console.log(property);
 		throw render(404, "Ressource not found");
 	}
-	return { property, contract, income, outcome };
+	return { property, contract, income, outcome, propertyType };
 }

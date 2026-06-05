@@ -21,12 +21,15 @@ import { isAfter, isBefore } from "date-fns";
 import { createSignal, Show } from "solid-js";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
+import EditModal from "./form/edit";
 import DeleteModal from "./modal/delete";
+import EditProperty from "./modal/edit";
 
 export default function PropertyDetails() {
     /** Modal */
 
     const deleteModal = useModal(350);
+    const editModal = useModal(350);
 
     const data = useData<Data>();
 
@@ -118,6 +121,13 @@ export default function PropertyDetails() {
                 delete={() => { }}
                 property={data.property}
             />
+
+            <EditProperty
+                close={editModal.close}
+                isClosing={editModal.isClosing}
+                isOpened={editModal.isOpened}
+            />
+
             <div class="w-full h-full flex-col gap-10">
                 <PageNamer
                     onClick={() => { }}
@@ -195,7 +205,7 @@ export default function PropertyDetails() {
                             purchasePrice={data.property.purchasePrice}
                             surfaceArea={0}
                             totalLoans={propertyTotalIncome}
-                            onEdit={() => { }}
+                            onEdit={editModal.open}
                             onDelete={deleteModal.open}
                         />
                     </div>

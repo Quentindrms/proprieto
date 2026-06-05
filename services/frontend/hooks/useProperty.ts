@@ -127,9 +127,3 @@ export function useProperty() {
 }
 
 export const PropertyContext = createContext<ReturnType<typeof useProperty>>();
-
-export function usePropertyContext() {
-	const context = useContext(PropertyContext);
-	if (!context) throw new Error("Context absent");
-	return context;
-}
