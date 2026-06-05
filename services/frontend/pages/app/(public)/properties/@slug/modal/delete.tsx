@@ -3,6 +3,8 @@ import { Button } from "@components/button";
 import Heading from "@components/heading";
 import { Modal, ModalBody, ModalHeader } from "@components/modal";
 import Text from "@components/text";
+import { onDelete } from "@hooks/useClient.telefunc";
+import { useProperty } from "@hooks/useProperty";
 import type { Accessor } from "solid-js";
 
 interface ModalProps {
@@ -14,6 +16,8 @@ interface ModalProps {
 }
 
 export default function DeleteModal(props: ModalProps) {
+
+    const property = useProperty();
 
     return (
         <Modal
@@ -29,7 +33,7 @@ export default function DeleteModal(props: ModalProps) {
                 <Text class="text-action-orange" bold>Êtes vous certain de vouloir continuer ?</Text>
                 <div class="flex gap-4">
                     <Button type="button" color="green" onClick={props.close}>Annuler</Button>
-                    <Button type="button" color="red" onClick={() => props.delete}>Supprimer</Button>
+                    <Button type="button" color="red" onClick={() => property.deleteProperty(props.property.id)}>Supprimer</Button>
                 </div>
             </ModalBody>
         </Modal>
