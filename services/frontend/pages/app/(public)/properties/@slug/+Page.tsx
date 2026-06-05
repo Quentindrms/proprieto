@@ -81,8 +81,12 @@ export default function PropertyDetails() {
     });
 
     function recoveryRate(purchasePrice: number, totalOutcome: number, totalIncome: number) {
-        const netIncome = totalOutcome - totalIncome;
-        return ((netIncome / purchasePrice) * 100);
+        const netIncome = totalIncome - totalOutcome;
+        const recoveryRate = Math.round((netIncome / purchasePrice) * 100);
+        if (!recoveryRate) {
+            return 0
+        }
+        return recoveryRate;
     }
 
     return (

@@ -111,7 +111,7 @@ export function CardProgressionBar(props: CardProgressionBarProps) {
                     style={{ width: `${progress()}%` }}
                 ></div>
             </div>
-            <Text size="medium">{props.value.toPrecision(2)}%</Text>
+            <Text size="medium">{props.value}%</Text>
         </div>
     );
 }
