@@ -69,7 +69,7 @@ export class PropertyController {
 			propertyId,
 			user.id,
 		);
-		if (!deleted) return response.status(404).send({});
+		if (!deleted) return response.status(404).send({ message: "error" });
 		return response.status(200).send({ message: "success" });
 	}
 
@@ -99,9 +99,9 @@ export class PropertyController {
 		@Param("slug") slug: string,
 	) {
 		const user = request.user;
-		console.log(slug);
 		if (!user) return response.status(401).send({});
 		const property = await this.propertyService.propertyDetails(slug, user.id);
+		if (!property) return response.status(404).send({});
 		return response.status(200).send(property);
 	}
 }
