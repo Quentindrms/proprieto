@@ -12,18 +12,6 @@ import CreateModal from "./modal/createModal";
 export default function Page() {
 	const data = useData<Data>();
 
-	const [propertyDetails, setPropertyDetails] = createSignal<Property>({
-		id: "",
-		isActive: false,
-		isDeleted: false,
-		name: "",
-		propertyType: { id: "", name: "", slug: "" },
-		userId: "",
-		slug: "",
-		purchaseDate: new Date(),
-		purchasePrice: 0,
-	});
-
 	const createModal = useModal(350);
 
 	const [filter, setFilter] = createSignal<
@@ -92,7 +80,6 @@ export default function Page() {
 							property={property}
 							onClick={() => {
 								navigate(`/app/properties/${property.slug}`);
-								setPropertyDetails(property);
 							}}
 						/>
 					)}
