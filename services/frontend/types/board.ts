@@ -12,3 +12,17 @@ export interface FluxBoardItem {
 	type: "outcome" | "income";
 	isPaid: boolean;
 }
+
+export interface PropertyFluxBoardItem {
+	name: string;
+	date: Date;
+	isPaid: boolean;
+	amount: number;
+}
+
+export interface PropertyClientItem {
+	name: string;
+	startDate: Date;
+	endDate: Date;
+	totalAmount: number;
+}

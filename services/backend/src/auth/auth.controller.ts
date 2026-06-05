@@ -79,7 +79,6 @@ export class AuthController {
 		@Res() response: Response,
 		@Body() body: RecoverPasswordDto,
 	) {
-		console.log(body.token);
 		const updatedPassword = await this.authService.updatePassword(
 			body.password,
 			body.token,

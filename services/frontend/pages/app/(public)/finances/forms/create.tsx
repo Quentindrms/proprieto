@@ -231,7 +231,7 @@ export function CreateIncomeForm(props: CreateIncomeFormProps) {
         disabled: false,
     }));
     const contractsList = data.contractList.map((contract) => ({
-        label: contract.property.name,
+        label: `${contract.property.name} - ${contract.client.directory.firstName} ${contract.client.directory.name}`,
         value: contract.id,
         disabled: false,
     }))
@@ -362,7 +362,7 @@ export function CreateIncomeForm(props: CreateIncomeFormProps) {
                     <TextField
                         label="Date de paiement"
                         type="date"
-                        onInput={income.handleInputIncome("isPaid")}
+                        onInput={income.handleInputIncome("paidOn")}
                         required
                     />
                     {income.incomeErrors() && (

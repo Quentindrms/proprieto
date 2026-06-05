@@ -4,7 +4,7 @@ import {
     BsArrowUpRightCircleFill,
 } from "solid-icons/bs";
 import { Show } from "solid-js";
-import { BadgeBoard } from "./badge";
+import { Badge, BadgeBoard } from "./badge";
 import Heading from "./heading";
 import Text from "./text";
 
@@ -221,4 +221,63 @@ export function ContractorRow(props: ContractorRowData) {
             </td>
         </tr>
     );
+}
+
+interface PropertyFluxRowProps {
+    name: string,
+    date: Date,
+    amount: number,
+    isPaid: boolean,
+}
+
+export function PropertyFluxRow(props: PropertyFluxRowProps) {
+
+    return (
+        <tr
+            class="last:border-0 hover:bg-background-secondary transition-colors hover:bg-background-muted/10"
+        >
+            <td class="px-4 py-3 text-center">
+                <Text size="medium">{props.name}</Text>
+            </td>
+            <td class="px-4 py-3 text-center">
+                <Text size="medium">{props.date.toLocaleDateString("fr-FR")}</Text>
+            </td>
+            <td class="px-4 py-3 text-center">
+                <Text size="medium">{Intl.NumberFormat("fr-FR").format(props.amount)} €</Text>
+            </td>
+            <td class="px-4 py-3 flex justify-center">
+                <Show when={props.isPaid}
+                    fallback={<Badge color="warning">En attente</Badge>}
+                >
+                    <Badge color="success">Payé</Badge>
+                </Show>
+            </td>
+        </tr>
+    )
+}
+
+interface PropertyClientRowProps {
+    name: string,
+    startDate: Date,
+    endDate: Date,
+    totalAmount: number,
+}
+
+export function PropertyClientRow(props: PropertyClientRowProps) {
+
+    return (
+        <tr
+            class="last:border-0 hover:bg-background-secondary transition-colors hover:bg-background-muted/10"
+        >
+            <td class="px-4 py-3 text-center">
+                <Text size="medium">{props.name}</Text>
+            </td>
+            <td class="px-4 py-3 text-center">
+                <Text size="medium">{`${new Date(props.startDate).toLocaleDateString("fr-FR")} - ${new Date(props.endDate).toLocaleDateString("fr-FR")}`}</Text>
+            </td>
+            <td class="px-4 py-3 text-center">
+                <Text size="medium">{Intl.NumberFormat("fr-FR").format(props.totalAmount)} €</Text>
+            </td>
+        </tr>
+    )
 }

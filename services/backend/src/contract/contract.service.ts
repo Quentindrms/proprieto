@@ -30,7 +30,63 @@ export class ContractService {
 				endDate: true,
 				lease: true,
 				property: true,
+				client: {
+					select: {
+						directory: {
+							select: {
+								name: true,
+								firstName: true,
+							},
+						},
+					},
+				},
 			},
 		});
+	}
+
+	async readDetails(slug: string, userId: string) {
+		const contracts = await prisma.contracts.findMany({
+			where: {
+				property: {
+					slug,
+					userId,
+				},
+			},
+			include: {
+				client: {
+					select: {
+						directory: {
+							select: {
+								name: true,
+								firstName: true,
+							},
+						},
+					},
+				},
+				incomes: {
+					where: {
+						isDeleted: false,
+						isPaid: true,
+						category: {
+							slug: "loan",
+						},
+					},
+					select: {
+						amount: true,
+						isPaid: true,
+					},
+				},
+			},
+		});
+
+		return contracts.map(({ incomes, ...contract }) => ({
+			...contract,
+			client: {
+				directory: {
+					...contract.client.directory,
+					totalIncome: incomes.reduce((sum, income) => sum + income.amount, 0),
+				},
+			},
+		}));
 	}
 }

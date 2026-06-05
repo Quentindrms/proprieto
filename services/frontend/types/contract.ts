@@ -8,4 +8,11 @@ export interface Contract {
 	propertyId: string;
 	clientId: string;
 	property: Property;
+	client: {
+		directory: {
+			name: string;
+			firstName: string;
+			totalIncome: number;
+		};
+	};
 }

@@ -1,6 +1,6 @@
 import { prisma } from "@libs/DatabaseClient";
-import { ClientService } from "@src/client/client.service";
-import type { CreateContractDto } from "types/DtoType";
+// biome-ignore lint/style/useImportType: required for class-validator metadata
+import { CreateContractDto } from "@src/dto/contract.dto";
 import { ContractService } from "./contract.service";
 
 jest.mock("@libs/DatabaseClient", () => ({
@@ -59,6 +59,16 @@ describe("Contract service", () => {
 					endDate: true,
 					lease: true,
 					property: true,
+					client: {
+						select: {
+							directory: {
+								select: {
+									name: true,
+									firstName: true,
+								},
+							},
+						},
+					},
 				},
 			});
 		});

@@ -29,4 +29,8 @@ export class PropertyService extends CoreService {
 	async countProperties() {
 		return this.get<number>("/property/count/");
 	}
+
+	async propertyDetails(slug: string) {
+		return this.get<Property | undefined>(`/property/details/${slug}`);
+	}
 }

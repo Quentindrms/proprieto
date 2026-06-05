@@ -113,6 +113,7 @@ export class OutcomeService {
 		const currentMonth = await prisma.outcomes.findMany({
 			orderBy: [{ issueDate: "desc" }],
 			where: {
+				isDeleted: false,
 				issueDate: {
 					gte: start,
 					lt: end,
@@ -143,5 +144,17 @@ export class OutcomeService {
 			outcomesValue: currentMonth.length,
 			unpaidOutcomes: calculateTotalUnpaid(currentMonth),
 		};
+	}
+
+	async propertyOutcomeDetails(slug: string, userId: string) {
+		return await prisma.outcomes.findMany({
+			where: {
+				isDeleted: false,
+				property: {
+					slug,
+					userId,
+				},
+			},
+		});
 	}
 }
