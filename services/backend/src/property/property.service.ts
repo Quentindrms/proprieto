@@ -120,6 +120,7 @@ export class PropertyService {
 			where: {
 				userId,
 				slug,
+				isDeleted: false,
 			},
 		});
 	}
