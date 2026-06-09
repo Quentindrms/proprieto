@@ -10,7 +10,7 @@ import { useContract } from "@hooks/useContract";
 import { useModal } from "@hooks/useModal";
 import { contractsBoardTitle } from "@libs/boardTitle";
 import clsx from "clsx";
-import { For } from "solid-js";
+import { createSignal, For, Show } from "solid-js";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
 import CreateModal from "./modals/create";
@@ -18,17 +18,16 @@ import CreateModal from "./modals/create";
 export default function Page() {
 	const data = useData<Data>();
 
+	const [visibility, setVisibility] = createSignal<"all" | "onGoing" | "expired">("all")
+
 	const createModal = useModal(350);
 	const contract = useContract();
 	const stats = contract.getStats(data.contracts);
 
-	const contractRows: ContractRowData[] = data.contracts.map((contract) => ({
-		clientName: `${contract.client.directory.firstName} ${contract.client.directory.name.toUpperCase()}`,
-		propertyName: contract.property.name,
-		period: `${new Date(contract.startDate).toLocaleDateString("fr-FR")} – ${new Date(contract.endDate).toLocaleDateString("fr-FR")}`,
-		loan: contract.lease,
-		status: getContractStatus(contract.endDate),
-	}));
+	const allContracts = contract.sortContract(data.contracts);
+	const onGoingContracts = allContracts.onGoing;
+	const expiredContracts = allContracts.expired;
+	const mixedContracts = allContracts.expired.concat(allContracts.onGoing);
 
 	return (
 		<div class="w-full flex flex-col gap-5">
@@ -48,9 +47,9 @@ export default function Page() {
 			<div>
 				<ButtonGroup
 					options={[
-						{ label: "Tous les baux", value: "all", onClick: () => { } },
-						{ label: "Actifs", value: "active", onClick: () => { } },
-						{ label: "Archivés", value: "archived", onClick: () => { } },
+						{ label: "Tous les baux", value: "all", onClick: () => setVisibility("all") },
+						{ label: "Actifs", value: "active", onClick: () => setVisibility("onGoing") },
+						{ label: "Archivés", value: "archived", onClick: () => setVisibility("expired") },
 					]}
 				/>
 			</div>
@@ -92,13 +91,35 @@ export default function Page() {
 					</div>
 				</div>
 			</div>
-			<Board
-				body={{
-					data: contractRows,
-					renderRow: (item: ContractRowData) => <ContractRow {...item} />,
-				}}
-				header={{ title: contractsBoardTitle }}
-			/>
+			<Show when={visibility() === "all"} >
+				<Board
+					body={{
+						data: mixedContracts,
+						renderRow: (item: ContractRowData) => <ContractRow {...item} />,
+					}}
+					header={{ title: contractsBoardTitle }}
+				/>
+			</Show>
+
+			<Show when={visibility() === "onGoing"}>
+				<Board
+					body={{
+						data: allContracts.onGoing,
+						renderRow: (item: ContractRowData) => <ContractRow {...item} />,
+					}}
+					header={{ title: contractsBoardTitle }}
+				/>
+			</Show>
+
+			<Show when={visibility() === "expired"}>
+				<Board
+					body={{
+						data: allContracts.expired,
+						renderRow: (item: ContractRowData) => <ContractRow {...item} />,
+					}}
+					header={{ title: contractsBoardTitle }}
+				/>
+			</Show>
 		</div>
 	);
 }

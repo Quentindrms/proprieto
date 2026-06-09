@@ -1,4 +1,6 @@
 import type { Contract } from "@app/types/contract";
+import { getContractStatus } from "@components/board";
+import type { ContractRowData } from "@components/rows";
 import {
 	CreateContractSchema,
 	type CreateContractType,
@@ -110,11 +112,47 @@ export function useContract() {
 		};
 	}
 
+	function sortContract(contracts: Contract[]) {
+		const onGoing: ContractRowData[] = [];
+		const expired: ContractRowData[] = [];
+		contracts.forEach((contract) => {
+			const result = isContractExpired(contract);
+			if (result) {
+				expired.push({
+					clientName: `${contract.client.directory.firstName} ${contract.client.directory.name}`,
+					loan: contract.lease,
+					period: `${new Date(contract.startDate).toLocaleDateString("fr-FR")} - ${new Date(contract.endDate).toLocaleDateString("fr-FR")}`,
+					propertyName: contract.property.name,
+					status: "expired",
+				});
+			} else {
+				onGoing.push({
+					clientName: `${contract.client.directory.firstName} ${contract.client.directory.name}`,
+					loan: contract.lease,
+					period: `${new Date(contract.startDate).toLocaleDateString("fr-FR")} - ${new Date(contract.endDate).toLocaleDateString("fr-FR")}`,
+					propertyName: contract.property.name,
+					status: getContractStatus(contract.endDate),
+				});
+			}
+		});
+		return { onGoing, expired };
+	}
+
+	function isContractExpired(contract: Contract) {
+		const endDate = new Date(contract.endDate);
+		if (endDate.getTime() < Date.now()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	return {
 		create,
 		handleCreateInput,
 		handleUpdateInput,
 		formError,
 		getStats,
+		sortContract,
 	};
 }
