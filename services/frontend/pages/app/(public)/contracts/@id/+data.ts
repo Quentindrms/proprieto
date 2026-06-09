@@ -8,6 +8,7 @@ export async function data(pageContext: PageContextServer) {
 	const contractService = new ContractService(cookies.auth);
 
 	const [contract] = await Promise.all([contractService.details("slug")]);
+	console.log(contract);
 
 	return { contract };
 }
