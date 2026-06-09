@@ -156,6 +156,17 @@ export function useContract() {
 		return loan * months;
 	}
 
+	function progression(startDate: Date, endDate: Date) {
+		const progression = Math.round(
+			((Date.now() - new Date(startDate).getTime()) /
+				(new Date(endDate).getTime() - new Date(startDate).getTime())) *
+				100,
+		);
+		if (progression > 100) {
+			return 100;
+		}
+		return progression;
+	}
 	return {
 		create,
 		handleCreateInput,
@@ -164,5 +175,6 @@ export function useContract() {
 		getStats,
 		sortContract,
 		estimatedIncome,
+		progression,
 	};
 }

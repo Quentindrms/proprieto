@@ -28,12 +28,7 @@ export default function ContractDetails() {
                     size="normal"
                     style="light"
                     title="Progression du contrat"
-                    value={
-                        Math.round(
-                            new Date(data.contract.endDate).getTime() /
-                            new Date("01-01-2026").getTime(),
-                        ) * 100
-                    }
+                    value={contract.progression(data.contract.startDate, data.contract.endDate)}
                     max={100}
                     min={0}
                 />
