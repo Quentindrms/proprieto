@@ -1,5 +1,5 @@
 import { Badge } from "@components/badge";
-import { Board, getContractStatus } from "@components/board";
+import { Board } from "@components/board";
 import { ButtonGroup } from "@components/button";
 import ContractExpireSoon from "@components/contract";
 import Heading from "@components/heading";
@@ -25,8 +25,6 @@ export default function Page() {
 	const stats = contract.getStats(data.contracts);
 
 	const allContracts = contract.sortContract(data.contracts);
-	const onGoingContracts = allContracts.onGoing;
-	const expiredContracts = allContracts.expired;
 	const mixedContracts = allContracts.expired.concat(allContracts.onGoing);
 
 	return (
