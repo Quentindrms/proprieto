@@ -8,6 +8,7 @@ import {
 } from "@schemas/contract";
 import { createSignal } from "solid-js";
 import toast from "solid-toast";
+import { navigate } from "vike/client/router";
 import type { ZodSafeParseError } from "zod";
 import { onCreate } from "./useContract.telefunc";
 
@@ -124,6 +125,7 @@ export function useContract() {
 					period: `${new Date(contract.startDate).toLocaleDateString("fr-FR")} - ${new Date(contract.endDate).toLocaleDateString("fr-FR")}`,
 					propertyName: contract.property.name,
 					status: "expired",
+					onClick: () => navigate(`/app/contracts/${contract.property.slug}`),
 				});
 			} else {
 				onGoing.push({
@@ -132,6 +134,7 @@ export function useContract() {
 					period: `${new Date(contract.startDate).toLocaleDateString("fr-FR")} - ${new Date(contract.endDate).toLocaleDateString("fr-FR")}`,
 					propertyName: contract.property.name,
 					status: getContractStatus(contract.endDate),
+					onClick: () => navigate(`/app/contracts/${contract.property.slug}`),
 				});
 			}
 		});
