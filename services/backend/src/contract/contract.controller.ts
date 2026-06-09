@@ -66,11 +66,12 @@ export class ContractController {
 	async contractDetails(
 		@Req() request: Request,
 		@Res() response: Response,
-		@Param("slug") slug: string,
+		@Param("id") id: string,
 	) {
+		console.log(id);
 		const user = request.user;
 		if (!user) return response.status(401).send();
-		const contract = await this.contractService.readDetails(slug);
+		const contract = await this.contractService.readDetails(id);
 		if (contract instanceof NotFoundException) {
 			console.log(contract);
 			return response
