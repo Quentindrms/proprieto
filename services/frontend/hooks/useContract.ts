@@ -125,7 +125,7 @@ export function useContract() {
 					period: `${new Date(contract.startDate).toLocaleDateString("fr-FR")} - ${new Date(contract.endDate).toLocaleDateString("fr-FR")}`,
 					propertyName: contract.property.name,
 					status: "expired",
-					onClick: () => navigate(`/app/contracts/${contract.property.slug}`),
+					onClick: () => navigate(`/app/contracts/${contract.id}`),
 				});
 			} else {
 				onGoing.push({
@@ -134,7 +134,7 @@ export function useContract() {
 					period: `${new Date(contract.startDate).toLocaleDateString("fr-FR")} - ${new Date(contract.endDate).toLocaleDateString("fr-FR")}`,
 					propertyName: contract.property.name,
 					status: getContractStatus(contract.endDate),
-					onClick: () => navigate(`/app/contracts/${contract.property.slug}`),
+					onClick: () => navigate(`/app/contracts/${contract.id}`),
 				});
 			}
 		});
