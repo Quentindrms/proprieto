@@ -29,7 +29,7 @@ export class ContractController {
 	) {
 		const user = request.user;
 		if (!user) return response.status(401).send({});
-		const contract = await this.contractService.create(body, user.id);
+		const contract = await this.contractService.create(body);
 		if (contract instanceof ConflictException) {
 			console.log(contract.message, "- ", contract.getStatus());
 			return response

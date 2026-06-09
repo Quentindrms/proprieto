@@ -5,7 +5,7 @@ import { CreateContractDto } from "@src/dto/contract.dto";
 
 @Injectable()
 export class ContractService {
-	async create(contract: CreateContractDto, userId: string) {
+	async create(contract: CreateContractDto) {
 		const overLapping = await prisma.contracts.findFirst({
 			where: {
 				propertyId: contract.propertyId,
