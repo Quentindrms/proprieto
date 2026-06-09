@@ -6,6 +6,7 @@ import {
 	type CreateContractType,
 	type UpdateContractType,
 } from "@schemas/contract";
+import { differenceInMonths } from "date-fns";
 import { createSignal } from "solid-js";
 import toast from "solid-toast";
 import { navigate } from "vike/client/router";
@@ -150,6 +151,11 @@ export function useContract() {
 		}
 	}
 
+	function estimatedIncome(startDate: Date, endDate: Date, loan: number) {
+		const months = differenceInMonths(endDate, startDate);
+		return loan * months;
+	}
+
 	return {
 		create,
 		handleCreateInput,
@@ -157,5 +163,6 @@ export function useContract() {
 		formError,
 		getStats,
 		sortContract,
+		estimatedIncome,
 	};
 }
