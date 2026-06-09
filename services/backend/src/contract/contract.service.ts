@@ -110,7 +110,7 @@ export class ContractService {
 		}));
 	}
 
-	async readDetails(id: string, userId: string) {
+	async readDetails(id: string) {
 		try {
 			return await prisma.contracts.findFirstOrThrow({
 				where: {

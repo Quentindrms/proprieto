@@ -70,7 +70,7 @@ export class ContractController {
 	) {
 		const user = request.user;
 		if (!user) return response.status(401).send();
-		const contract = await this.contractService.readDetails(slug, user.id);
+		const contract = await this.contractService.readDetails(slug);
 		if (contract instanceof NotFoundException) {
 			console.log(contract);
 			return response
