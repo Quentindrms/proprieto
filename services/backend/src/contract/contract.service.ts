@@ -1,5 +1,9 @@
 import { prisma } from "@libs/DatabaseClient";
-import { ConflictException, Injectable } from "@nestjs/common";
+import {
+	ConflictException,
+	Injectable,
+	NotFoundException,
+} from "@nestjs/common";
 // biome-ignore lint/style/useImportType: required for class-validator metadata
 import { CreateContractDto } from "@src/dto/contract.dto";
 
@@ -60,7 +64,7 @@ export class ContractService {
 		});
 	}
 
-	async readDetails(slug: string, userId: string) {
+	async readDetailsByPropertySlug(slug: string, userId: string) {
 		const contracts = await prisma.contracts.findMany({
 			where: {
 				property: {
@@ -104,5 +108,28 @@ export class ContractService {
 				},
 			},
 		}));
+	}
+
+	async readDetails(id: string, userId: string) {
+		try {
+			return await prisma.contracts.findFirstOrThrow({
+				where: {
+					id,
+				},
+				include: {
+					client: {
+						include: {
+							directory: {
+								omit: {
+									userId: true,
+								},
+							},
+						},
+					},
+				},
+			});
+		} catch {
+			return new NotFoundException();
+		}
 	}
 }

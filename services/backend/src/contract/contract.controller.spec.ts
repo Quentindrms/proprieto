@@ -15,6 +15,7 @@ jest.mock("@libs/DatabaseClient", () => ({
 const mockContractService = {
 	create: jest.fn(),
 	browse: jest.fn(),
+	getContractBypropertySlug: jest.fn(),
 };
 
 const mockSend = jest.fn();

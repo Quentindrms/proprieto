@@ -3,6 +3,7 @@ import {
 	ConflictException,
 	Controller,
 	Get,
+	NotFoundException,
 	Param,
 	Post,
 	Req,
@@ -47,7 +48,22 @@ export class ContractController {
 	}
 
 	@Get("read/:slug")
-	async readContractDetaild(
+	async getContractByPropertySlug(
+		@Req() request: Request,
+		@Res() response: Response,
+		@Param("slug") slug: string,
+	) {
+		const user = request.user;
+		if (!user) return response.status(401).send();
+		const contract = await this.contractService.readDetailsByPropertySlug(
+			slug,
+			user.id,
+		);
+		return response.status(200).send(contract);
+	}
+
+	@Get("details/:id")
+	async contractDetails(
 		@Req() request: Request,
 		@Res() response: Response,
 		@Param("slug") slug: string,
@@ -55,6 +71,13 @@ export class ContractController {
 		const user = request.user;
 		if (!user) return response.status(401).send();
 		const contract = await this.contractService.readDetails(slug, user.id);
+		if (contract instanceof NotFoundException) {
+			console.log(contract);
+			return response
+				.status(contract.getStatus())
+				.send({ message: contract.message });
+		}
+		console.log(contract);
 		return response.status(200).send(contract);
 	}
 }
