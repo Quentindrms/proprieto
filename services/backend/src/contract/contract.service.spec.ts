@@ -8,6 +8,7 @@ jest.mock("@libs/DatabaseClient", () => ({
 		contracts: {
 			create: jest.fn(),
 			findMany: jest.fn(),
+			findFirst: jest.fn(),
 		},
 	},
 }));
@@ -30,8 +31,9 @@ describe("Contract service", () => {
 		};
 
 		it("Doit retourner le contrat crée", async () => {
+			(prisma.contracts.findFirst as jest.Mock).mockResolvedValue(null);
 			(prisma.contracts.create as jest.Mock).mockResolvedValue("client");
-			await contractService.create(validContract, "user-id");
+			await contractService.create(validContract);
 			const { endDate, startDate, ...rest } = validContract;
 			expect(prisma.contracts.create).toHaveBeenCalledWith({
 				data: {

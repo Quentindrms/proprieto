@@ -1,6 +1,7 @@
+import { ConflictException } from "@nestjs/common";
 import { Test, type TestingModule } from "@nestjs/testing";
+import type { CreateContractDto } from "@src/dto/contract.dto";
 import type { Request, Response } from "express";
-import type { CreateContractDto } from "types/DtoType";
 import { ContractController } from "./contract.controller";
 import { ContractService } from "./contract.service";
 
@@ -46,7 +47,7 @@ describe("Contract", () => {
 
 	describe("Create", () => {
 		it("Doit retourner une erreur 401", async () => {
-			mockContractService.create.mockResolvedValue(null);
+			mockContractService.create.mockResolvedValue(new ConflictException());
 			await contractController.createContract(
 				mockUnauthentifiedReq,
 				mockRes,
@@ -57,19 +58,16 @@ describe("Contract", () => {
 			expect(mockContractService.browse).not.toHaveBeenCalled();
 		});
 
-		it("Doit retourner une erreur 400", async () => {
-			mockContractService.create.mockResolvedValue(null);
+		it("Doit retourner une erreur 409 si le contrat est en conflit", async () => {
+			mockContractService.create.mockResolvedValue(new ConflictException());
 			await contractController.createContract(
 				mockAuthentifiedReq,
 				mockRes,
 				validContract,
 			);
-			expect(mockStatus).toHaveBeenCalledWith(400);
-			expect(mockSend).toHaveBeenCalledWith({});
-			expect(mockContractService.create).toHaveBeenCalledWith(
-				validContract,
-				"user-id",
-			);
+			expect(mockStatus).toHaveBeenCalledWith(409);
+			expect(mockSend).toHaveBeenCalledWith({ message: "Conflict" });
+			expect(mockContractService.create).toHaveBeenCalledWith(validContract);
 		});
 	});
 
