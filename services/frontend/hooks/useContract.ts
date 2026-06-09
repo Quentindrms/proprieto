@@ -60,7 +60,7 @@ export function useContract() {
 		setFormError(undefined);
 		const response = await onCreate(validate.data);
 		if (response?.message !== "success") {
-			toast.error("Une erreur est survenue lors de la création du contrat");
+			toast.error(response?.message);
 			return;
 		}
 		toast.success("Contrat crée avec succès");

@@ -1,11 +1,27 @@
 import { prisma } from "@libs/DatabaseClient";
-import { Injectable } from "@nestjs/common";
+import { ConflictException, Injectable } from "@nestjs/common";
 // biome-ignore lint/style/useImportType: required for class-validator metadata
 import { CreateContractDto } from "@src/dto/contract.dto";
 
 @Injectable()
 export class ContractService {
 	async create(contract: CreateContractDto, userId: string) {
+		const overLapping = await prisma.contracts.findFirst({
+			where: {
+				propertyId: contract.propertyId,
+				AND: [
+					{ startDate: { lt: contract.endDate } },
+					{ endDate: { gt: contract.startDate } },
+				],
+			},
+		});
+
+		if (overLapping) {
+			return new ConflictException(
+				`Un contrat existe déjà pour la période du ${overLapping.startDate.toLocaleDateString("fr-FR")} au ${overLapping.endDate.toLocaleDateString("fr-FR")}`,
+			);
+		}
+
 		return await prisma.contracts.create({
 			data: {
 				startDate: new Date(contract.startDate),

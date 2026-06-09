@@ -1,5 +1,6 @@
 import {
 	Body,
+	ConflictException,
 	Controller,
 	Get,
 	Param,
@@ -29,7 +30,12 @@ export class ContractController {
 		const user = request.user;
 		if (!user) return response.status(401).send({});
 		const contract = await this.contractService.create(body, user.id);
-		if (!contract) return response.status(400).send({});
+		if (contract instanceof ConflictException) {
+			console.log(contract.message, "- ", contract.getStatus());
+			return response
+				.status(contract.getStatus())
+				.send({ message: contract.message });
+		}
 		return response.status(200).send({ message: "success" });
 	}
 
