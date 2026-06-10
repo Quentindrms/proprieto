@@ -3,6 +3,7 @@ export type Data = Awaited<ReturnType<typeof data>>;
 import { ContractService } from "@services/contract.service";
 import { IncomeService } from "@services/income.service";
 import { getCookiesFromPageContext } from "@utils/cookie";
+import { render } from "vike/abort";
 import type { PageContextServer } from "vike/types";
 
 export async function data(pageContext: PageContextServer) {
@@ -15,6 +16,9 @@ export async function data(pageContext: PageContextServer) {
 		contractService.details(pageContext.routeParams.id),
 		incomesService.contractIncomeDetails(pageContext.routeParams.id),
 	]);
-	console.log(incomes);
+
+	if (!contract.id) {
+		throw render(404, "Ressource not found");
+	}
 	return { contract, incomes };
 }
