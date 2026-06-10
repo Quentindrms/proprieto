@@ -11,3 +11,13 @@ export async function onCreate(contract: CreateContractType) {
 		console.trace(error);
 	}
 }
+
+export async function onDelete(id: string) {
+	const authToken = getAuthTokenFromContext();
+	try {
+		const contractService = new ContractService(authToken);
+		return await contractService.deleteContract(id);
+	} catch (error) {
+		console.trace(error);
+	}
+}

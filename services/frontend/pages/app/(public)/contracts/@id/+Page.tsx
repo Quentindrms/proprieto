@@ -48,7 +48,7 @@ export default function ContractDetails() {
                 totalLease={contract.totalIncome(data.incomes)}
                 startDate={data.contract.startDate}
                 endDate={data.contract.endDate}
-                onDelete={() => { }}
+                onDelete={() => contract.deleteContract(data.contract.id)}
                 onEdit={() => { }}
             />
 

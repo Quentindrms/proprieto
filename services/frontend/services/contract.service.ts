@@ -18,4 +18,8 @@ export class ContractService extends CoreService {
 	details(id: string) {
 		return this.get<Contract>(`/contracts/details/${id}`);
 	}
+
+	deleteContract(id: string) {
+		return this.delete<{ success: boolean }>(`/contracts/${id}`);
+	}
 }

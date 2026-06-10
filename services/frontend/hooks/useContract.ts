@@ -12,7 +12,7 @@ import { createSignal } from "solid-js";
 import toast from "solid-toast";
 import { navigate } from "vike/client/router";
 import type { ZodSafeParseError } from "zod";
-import { onCreate } from "./useContract.telefunc";
+import { onCreate, onDelete } from "./useContract.telefunc";
 
 export function useContract() {
 	const [createContract, setCreateContract] = createSignal<CreateContractType>({
@@ -173,8 +173,19 @@ export function useContract() {
 		return incomes.reduce((acc, income) => acc + income.amount, 0);
 	}
 
+	async function deleteContract(id: string) {
+		const result = await onDelete(id);
+		if (result?.success === true) {
+			toast.success("Contrat supprimé");
+			navigate("/app/contracts/");
+		} else {
+			toast.error("Une erreur est survenue lors de la suppression");
+		}
+	}
+
 	return {
 		create,
+		deleteContract,
 		handleCreateInput,
 		handleUpdateInput,
 		formError,
