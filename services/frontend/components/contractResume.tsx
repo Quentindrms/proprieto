@@ -17,7 +17,7 @@ interface ContractResumeProps {
 export default function ContractResume(props: ContractResumeProps) {
 
     return (
-        <div class="p-4 h-fit w-sm lg:w-2xl border-2 border-slate-marked background-base rounded-xl flex flex-col gap-1 shadow-xs shadow-background-muted">
+        <div class="p-4 h-fit w-sm lg:w-2xl border-2 border-slate-marked background-base rounded-xl flex flex-col gap-3 shadow-xs shadow-background-muted">
 
             <Text size="large">Client : <span class="font-bold">{props.firstName} {props.name}</span></Text>
             <Text size="large">Date de début : <span class="font-bold">{new Date(props.startDate).toLocaleDateString("fr-FR")}</span></Text>
