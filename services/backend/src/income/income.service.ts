@@ -150,6 +150,7 @@ export class IncomeService {
 	async contractIncomeDetails(id: string, userId: string) {
 		return await prisma.incomes.findMany({
 			where: {
+				isPaid: true,
 				category: {
 					slug: "loan",
 				},
