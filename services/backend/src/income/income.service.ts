@@ -151,6 +151,7 @@ export class IncomeService {
 		return await prisma.incomes.findMany({
 			where: {
 				isPaid: true,
+				isDeleted: false,
 				category: {
 					slug: "loan",
 				},
