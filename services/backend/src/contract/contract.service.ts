@@ -40,6 +40,7 @@ export class ContractService {
 	async browse(userId: string) {
 		return await prisma.contracts.findMany({
 			where: {
+				isDeleted: false,
 				property: {
 					userId: userId,
 				},
@@ -70,6 +71,7 @@ export class ContractService {
 				property: {
 					slug,
 					userId,
+					isDeleted: false,
 				},
 			},
 			include: {
@@ -115,6 +117,7 @@ export class ContractService {
 			return await prisma.contracts.findFirstOrThrow({
 				where: {
 					id,
+					isDeleted: false,
 				},
 				include: {
 					client: {
