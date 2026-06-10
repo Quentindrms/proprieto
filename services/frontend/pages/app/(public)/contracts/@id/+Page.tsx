@@ -2,11 +2,9 @@ import ContractResume from "@components/contractResume";
 import {
     CardInfo,
     CardProgressionBar,
-    CurrentContractCard,
 } from "@components/dataCard";
 import PageNamer from "@components/pageNamer";
 import { useContract } from "@hooks/useContract";
-import { differenceInMonths } from "date-fns";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
 
