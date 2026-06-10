@@ -1,4 +1,5 @@
 import type { Contract } from "@app/types/contract";
+import type { IncomeType } from "@app/types/income";
 import { getContractStatus } from "@components/board";
 import type { ContractRowData } from "@components/rows";
 import {
@@ -167,6 +168,11 @@ export function useContract() {
 		}
 		return progression;
 	}
+
+	function totalIncome(incomes: IncomeType[]) {
+		return incomes.reduce((acc, income) => acc + income.amount, 0);
+	}
+
 	return {
 		create,
 		handleCreateInput,
@@ -176,5 +182,6 @@ export function useContract() {
 		sortContract,
 		estimatedIncome,
 		progression,
+		totalIncome,
 	};
 }

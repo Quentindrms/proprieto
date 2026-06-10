@@ -47,7 +47,7 @@ export default function ContractDetails() {
                 name={data.contract.client.directory.name}
                 firstName={data.contract.client.directory.firstName}
                 lease={data.contract.lease}
-                totalLease={0}
+                totalLease={contract.totalIncome(data.incomes)}
                 startDate={data.contract.startDate}
                 endDate={data.contract.endDate}
                 onDelete={() => { }}
