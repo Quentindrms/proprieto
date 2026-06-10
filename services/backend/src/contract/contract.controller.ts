@@ -2,12 +2,14 @@ import {
 	Body,
 	ConflictException,
 	Controller,
+	Delete,
 	Get,
 	NotFoundException,
 	Param,
 	Post,
 	Req,
 	Res,
+	UnauthorizedException,
 	UsePipes,
 } from "@nestjs/common";
 // biome-ignore lint/style/useImportType: required for class-validator metadata
@@ -77,5 +79,21 @@ export class ContractController {
 				.send({ message: contract.message });
 		}
 		return response.status(200).send(contract);
+	}
+
+	@Delete("/:id")
+	async deleteContract(
+		@Req() request: Request,
+		@Res() response: Response,
+		@Param("id") contractId: string,
+	) {
+		const user = request.user;
+		if (!user) return UnauthorizedException;
+		const contract = await this.contractService.deleteContract(
+			contractId,
+			user.id,
+		);
+		if (contract instanceof NotFoundException) return NotFoundException;
+		return response.status(200).send({ message: "success" });
 	}
 }

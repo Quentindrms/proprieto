@@ -132,4 +132,42 @@ export class ContractService {
 			return new NotFoundException();
 		}
 	}
+
+	async deleteContract(id: string, userId: string) {
+		try {
+			await prisma.$transaction(async (transaction) => {
+				const incomes = await transaction.incomes.findMany({
+					where: {
+						contractId: id,
+					},
+				});
+
+				const incomesId = incomes.map((income) => income.id);
+
+				await transaction.incomes.updateMany({
+					where: {
+						id: { in: incomesId },
+						isDeleted: false,
+					},
+					data: {
+						isDeleted: true,
+					},
+				});
+
+				await transaction.contracts.update({
+					where: {
+						id,
+						property: {
+							userId,
+						},
+					},
+					data: {
+						isDeleted: true,
+					},
+				});
+			});
+		} catch (error) {
+			return NotFoundException;
+		}
+	}
 }
