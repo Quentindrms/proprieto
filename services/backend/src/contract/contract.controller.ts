@@ -68,17 +68,14 @@ export class ContractController {
 		@Res() response: Response,
 		@Param("id") id: string,
 	) {
-		console.log(id);
 		const user = request.user;
 		if (!user) return response.status(401).send();
 		const contract = await this.contractService.readDetails(id);
 		if (contract instanceof NotFoundException) {
-			console.log(contract);
 			return response
 				.status(contract.getStatus())
 				.send({ message: contract.message });
 		}
-		console.log(contract);
 		return response.status(200).send(contract);
 	}
 }
