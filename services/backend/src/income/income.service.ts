@@ -146,4 +146,20 @@ export class IncomeService {
 			return;
 		}
 	}
+
+	async contractIncomeDetails(id: string, userId: string) {
+		return await prisma.incomes.findMany({
+			where: {
+				category: {
+					slug: "loan",
+				},
+				contract: {
+					id,
+					property: {
+						userId,
+					},
+				},
+			},
+		});
+	}
 }

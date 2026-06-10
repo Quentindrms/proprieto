@@ -34,4 +34,8 @@ export class IncomeService extends CoreService {
 	async incomePropertyDetails(slug: string) {
 		return this.get<IncomeType[]>(`/income/property/${slug}`);
 	}
+
+	async contractIncomeDetails(contratId: string) {
+		return this.get<IncomeType[]>(`/income/contract/${contratId}`);
+	}
 }
