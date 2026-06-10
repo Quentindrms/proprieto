@@ -13,6 +13,7 @@ export class ContractService {
 		const overLapping = await prisma.contracts.findFirst({
 			where: {
 				propertyId: contract.propertyId,
+				isDeleted: false,
 				AND: [
 					{ startDate: { lt: contract.endDate } },
 					{ endDate: { gt: contract.startDate } },
