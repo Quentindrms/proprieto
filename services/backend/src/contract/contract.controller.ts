@@ -94,6 +94,6 @@ export class ContractController {
 			user.id,
 		);
 		if (contract instanceof NotFoundException) return NotFoundException;
-		return response.status(200).send({ message: "success" });
+		return response.status(200).send({ success: true });
 	}
 }
