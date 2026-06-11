@@ -68,3 +68,21 @@ export function ClientList(props: ClientListProps) {
 	);
 }
 
+interface ClientOverviewProps {
+	client: Client,
+}
+
+export function ClientOverview(props: ClientOverviewProps) {
+	return (
+		<div class="w-xs flex flex-col p-4 bg-background-base rounded-xl gap-4 shadow-xs shadow-background-muted h-fit">
+			<div class="text-center flex-col">
+				<Heading components="h3" size="medium">Client</Heading>
+				<div class="bg-background-muted/30 w-3xs h-1 rounded-2xl m-2" />
+			</div>
+			<Text>Nom : {props.client.firstName} {props.client.name}</Text>
+			<Text>Téléphone : {props.client.phone}</Text>
+			<Text>Email : {props.client.email}</Text>
+		</div>
+	)
+}
+
