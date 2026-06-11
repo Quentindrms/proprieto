@@ -3,11 +3,13 @@ import {
 	Controller,
 	Delete,
 	Get,
+	NotFoundException,
 	Param,
 	Patch,
 	Post,
 	Req,
 	Res,
+	UnauthorizedException,
 	UsePipes,
 } from "@nestjs/common";
 // biome-ignore lint/style/useImportType: required for class-validator metadata
@@ -40,6 +42,19 @@ export class ClientController {
 		const user = request.user;
 		if (!user) return response.status(401).send({});
 		const client = await this.clientService.browseClient(user.id);
+		return response.status(200).send(client);
+	}
+
+	@Get("/:id")
+	async clientDetails(
+		@Req() request: Request,
+		@Res() response: Response,
+		@Param("id") clientId: string,
+	) {
+		const user = request.user;
+		if (!user) return UnauthorizedException;
+		const client = await this.clientService.clientDetails(clientId, user.id);
+		if (client instanceof NotFoundException) return NotFoundException;
 		return response.status(200).send(client);
 	}
 

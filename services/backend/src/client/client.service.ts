@@ -1,5 +1,5 @@
 import { prisma } from "@libs/DatabaseClient";
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import type { CreateClientDto, UpdateClientDto } from "@src/dto/client.dto";
 
 @Injectable()
@@ -34,6 +34,25 @@ export class ClientService {
 				clients: true,
 			},
 		});
+	}
+
+	async clientDetails(clientId: string, userId: string) {
+		try {
+			return await prisma.clients.findFirstOrThrow({
+				where: {
+					id: clientId,
+					directory: {
+						userId,
+						isDeleted: false,
+					},
+				},
+				include: {
+					directory: {},
+				},
+			});
+		} catch {
+			return NotFoundException;
+		}
 	}
 
 	async editClient(userId: string, client: UpdateClientDto) {
