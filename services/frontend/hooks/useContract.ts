@@ -76,7 +76,7 @@ export function useContract() {
 			return;
 		}
 		setFormError(undefined);
-		const response = await onUpdate(updateContract());
+		const response = await onUpdate(validate.data);
 		if (response?.message !== "success") {
 			toast.error("Une erreur est survenue lors de la modification");
 			return;

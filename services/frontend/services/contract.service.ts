@@ -12,7 +12,7 @@ export class ContractService extends CoreService {
 	}
 
 	update(contract: UpdateContractType) {
-		return this.put<{ message: string }>("/contract/", contract);
+		return this.put<{ message: string }>("/contracts/", contract);
 	}
 
 	detailsByPropertySlug(slug: string) {
