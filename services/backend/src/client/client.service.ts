@@ -38,16 +38,19 @@ export class ClientService {
 
 	async clientDetails(clientId: string, userId: string) {
 		try {
-			return await prisma.clients.findFirstOrThrow({
+			return await prisma.directories.findFirstOrThrow({
 				where: {
-					id: clientId,
-					directory: {
-						userId,
-						isDeleted: false,
+					userId,
+					type: "client",
+					isDeleted: false,
+					clients: {
+						some: {
+							id: clientId,
+						},
 					},
 				},
 				include: {
-					directory: {},
+					clients: {},
 				},
 			});
 		} catch {
