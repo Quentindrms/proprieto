@@ -5,7 +5,7 @@ import {
 	NotFoundException,
 } from "@nestjs/common";
 // biome-ignore lint/style/useImportType: required for class-validator metadata
-import { CreateContractDto } from "@src/dto/contract.dto";
+import { CreateContractDto, UpdateContractDto } from "@src/dto/contract.dto";
 
 @Injectable()
 export class ContractService {
@@ -36,6 +36,25 @@ export class ContractService {
 				propertyId: contract.propertyId,
 			},
 		});
+	}
+
+	async update(contract: UpdateContractDto, userId: string) {
+		try {
+			const { id } = { ...contract };
+			return await prisma.contracts.update({
+				where: {
+					id,
+					property: {
+						userId,
+					},
+				},
+				data: {
+					...contract,
+				},
+			});
+		} catch (error) {
+			console.trace(error);
+		}
 	}
 
 	async browse(userId: string) {

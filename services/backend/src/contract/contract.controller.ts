@@ -7,13 +7,14 @@ import {
 	NotFoundException,
 	Param,
 	Post,
+	Put,
 	Req,
 	Res,
 	UnauthorizedException,
 	UsePipes,
 } from "@nestjs/common";
 // biome-ignore lint/style/useImportType: required for class-validator metadata
-import { CreateContractDto } from "@src/dto/contract.dto";
+import { CreateContractDto, UpdateContractDto } from "@src/dto/contract.dto";
 import { validationPipe } from "@src/pipes/validationPipes";
 import type { Request, Response } from "express";
 //biome-ignore lint/style/useImportType: required for NestJS DI
@@ -39,6 +40,20 @@ export class ContractController {
 				.send({ message: contract.message });
 		}
 		return response.status(200).send({ message: "success" });
+	}
+
+	@Put("")
+	@UsePipes(validationPipe)
+	async updateContract(
+		@Req() request: Request,
+		@Res() response: Response,
+		@Body() body: UpdateContractDto,
+	) {
+		const user = request.user;
+		if (!user) return UnauthorizedException;
+		const contract = this.contractService.update(body, user.id);
+		if (!contract) return NotFoundException;
+		response.status(200).send({ message: "success" });
 	}
 
 	@Get("browse")
