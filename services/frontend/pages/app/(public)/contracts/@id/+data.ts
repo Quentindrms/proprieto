@@ -19,7 +19,7 @@ export async function data(pageContext: PageContextServer) {
 		incomesService.contractIncomeDetails(pageContext.routeParams.id),
 	]);
 
-	const client = clientService.clientDetails(contract.clientId);
+	const client = await clientService.clientDetails(contract.clientId);
 
 	if (!contract.id) {
 		throw render(404, "Ressource not found");

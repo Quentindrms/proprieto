@@ -1,8 +1,11 @@
+import { ClientOverview } from "@components/clientCard";
 import ContractResume from "@components/contractResume";
 import { CardInfo, CardProgressionBar } from "@components/dataCard";
 import PageNamer from "@components/pageNamer";
+import { PropertyCardOverview } from "@components/propertyCard";
 import { useContract } from "@hooks/useContract";
 import { useModal } from "@hooks/useModal";
+import { navigate } from "vike/client/router";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
 import DeleteModal from "./modal/delete";
@@ -49,17 +52,31 @@ export default function ContractDetails() {
                         title="Gain prévisionnel du contrat"
                     />
                 </div>
+                <div class="flex flex-wrap gap-4 items-center justify-center md:justify-normal md:items-start">
+                    <div class="flex flex-col gap-2 items-center justify-center">
+                        <PropertyCardOverview
+                            onClick={() =>
+                                navigate(`/app/properties/${data.contract.property.slug}`)
+                            }
+                            property={data.contract.property}
+                        />
+                        <ClientOverview
+                            client={data.client}
 
-                <ContractResume
-                    name={data.contract.client.directory.name}
-                    firstName={data.contract.client.directory.firstName}
-                    lease={data.contract.lease}
-                    totalLease={contract.totalIncome(data.incomes)}
-                    startDate={data.contract.startDate}
-                    endDate={data.contract.endDate}
-                    onDelete={() => deleteModal.open()}
-                    onEdit={() => { }}
-                />
+                        />
+                    </div>
+
+                    <ContractResume
+                        name={data.contract.client.directory.name}
+                        firstName={data.contract.client.directory.firstName}
+                        lease={data.contract.lease}
+                        totalLease={contract.totalIncome(data.incomes)}
+                        startDate={data.contract.startDate}
+                        endDate={data.contract.endDate}
+                        onDelete={() => deleteModal.open()}
+                        onEdit={() => { }}
+                    />
+                </div>
             </div>
         </>
     );
