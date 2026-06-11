@@ -80,8 +80,14 @@ export function ClientOverview(props: ClientOverviewProps) {
 				<div class="bg-background-muted/30 w-3xs h-1 rounded-2xl m-2" />
 			</div>
 			<Text>Nom : {props.client.firstName} {props.client.name}</Text>
-			<Text>Téléphone : {props.client.phone}</Text>
-			<Text>Email : {props.client.email}</Text>
+			<div class="flex gap-1 items-center">
+				<FiPhone size={25} />
+				<Text><a href={`tel:${props.client.phone}`}>{props.client.phone}</a> </Text>
+			</div>
+			<div class="flex gap-1 items-center">
+				<FiMail size={25} />
+				<Text><a href={`mailto:${props.client.email}`}>{props.client.email}</a></Text>
+			</div>
 
 		</div>
 	)
