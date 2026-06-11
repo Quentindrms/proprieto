@@ -171,7 +171,7 @@ export class ContractService {
 					},
 				});
 			});
-		} catch (error) {
+		} catch {
 			return NotFoundException;
 		}
 	}
