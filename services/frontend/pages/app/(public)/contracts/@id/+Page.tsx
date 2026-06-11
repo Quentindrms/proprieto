@@ -9,11 +9,14 @@ import { navigate } from "vike/client/router";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
 import DeleteModal from "./modal/delete";
+import EditModal from "./modal/edit";
 
 export default function ContractDetails() {
+
     const data = useData<Data>();
     const contract = useContract();
     const deleteModal = useModal(350);
+    const editModal = useModal(350);
 
     return (
         <>
@@ -21,6 +24,12 @@ export default function ContractDetails() {
                 close={deleteModal.close}
                 isClosing={deleteModal.isClosing}
                 isOpened={deleteModal.isOpened}
+            />
+
+            <EditModal
+                close={editModal.close}
+                isClosing={editModal.isClosing}
+                isOpened={editModal.isOpened}
             />
 
             <div class="w-full h-full">
@@ -74,7 +83,7 @@ export default function ContractDetails() {
                         startDate={data.contract.startDate}
                         endDate={data.contract.endDate}
                         onDelete={() => deleteModal.open()}
-                        onEdit={() => { }}
+                        onEdit={() => editModal.open()}
                     />
                 </div>
             </div>

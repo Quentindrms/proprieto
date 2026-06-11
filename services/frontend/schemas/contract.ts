@@ -27,8 +27,6 @@ export const UpdateContractSchema = z.object({
 	startDate: startDateSchema,
 	endDate: endDateSchema,
 	lease: leaseSchema,
-	propertyId: propertyIdSchema,
-	clientId: clientIdSchema,
 });
 
 export type CreateContractType = z.infer<typeof CreateContractSchema>;
