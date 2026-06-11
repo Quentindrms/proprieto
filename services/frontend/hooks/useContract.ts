@@ -5,14 +5,15 @@ import type { ContractRowData } from "@components/rows";
 import {
 	CreateContractSchema,
 	type CreateContractType,
+	UpdateContractSchema,
 	type UpdateContractType,
 } from "@schemas/contract";
 import { differenceInMonths } from "date-fns";
 import { createSignal } from "solid-js";
 import toast from "solid-toast";
-import { navigate } from "vike/client/router";
+import { navigate, reload } from "vike/client/router";
 import type { ZodSafeParseError } from "zod";
-import { onCreate, onDelete } from "./useContract.telefunc";
+import { onCreate, onDelete, onUpdate } from "./useContract.telefunc";
 
 export function useContract() {
 	const [createContract, setCreateContract] = createSignal<CreateContractType>({
@@ -26,9 +27,7 @@ export function useContract() {
 	const [updateContract, setUpdateContract] = createSignal<UpdateContractType>({
 		startDate: new Date(),
 		endDate: new Date(),
-		clientId: "",
 		lease: 0,
-		propertyId: "",
 		id: "",
 	});
 
@@ -57,7 +56,6 @@ export function useContract() {
 
 	async function create() {
 		const validate = CreateContractSchema.safeParse(createContract());
-		createContract();
 		if (!validate.success) {
 			setFormError(validate);
 			return;
@@ -69,6 +67,22 @@ export function useContract() {
 			return;
 		}
 		toast.success("Contrat crée avec succès");
+	}
+
+	async function update() {
+		const validate = UpdateContractSchema.safeParse(updateContract());
+		if (!validate.success) {
+			setFormError(validate);
+			return;
+		}
+		setFormError(undefined);
+		const response = await onUpdate(updateContract());
+		if (response?.message !== "success") {
+			toast.error("Une erreur est survenue lors de la modification");
+			return;
+		}
+		toast.success("Modification effectuée");
+		await reload();
 	}
 
 	function getMonthlyLease(contractsList: Contract[]) {
@@ -185,10 +199,12 @@ export function useContract() {
 
 	return {
 		create,
+		update,
 		deleteContract,
 		handleCreateInput,
 		handleUpdateInput,
 		formError,
+		setUpdateContract,
 		getStats,
 		sortContract,
 		estimatedIncome,

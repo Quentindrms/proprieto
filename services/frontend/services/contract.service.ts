@@ -1,5 +1,5 @@
 import type { Contract } from "@app/types/contract";
-import type { CreateContractType } from "@schemas/contract";
+import type { CreateContractType, UpdateContractType } from "@schemas/contract";
 import { CoreService } from "./core.service";
 
 export class ContractService extends CoreService {
@@ -9,6 +9,10 @@ export class ContractService extends CoreService {
 
 	browse() {
 		return this.get<Contract[]>("/contracts/browse");
+	}
+
+	update(contract: UpdateContractType) {
+		return this.put<{ message: string }>("/contract/", contract);
 	}
 
 	detailsByPropertySlug(slug: string) {
