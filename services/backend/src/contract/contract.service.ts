@@ -130,6 +130,7 @@ export class ContractService {
 							},
 						},
 					},
+					property: {},
 				},
 			});
 		} catch {
