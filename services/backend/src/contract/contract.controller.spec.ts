@@ -1,4 +1,4 @@
-import { ConflictException } from "@nestjs/common";
+import { ConflictException, NotFoundException } from "@nestjs/common";
 import { Test, type TestingModule } from "@nestjs/testing";
 import type { CreateContractDto } from "@src/dto/contract.dto";
 import type { Request, Response } from "express";
@@ -15,7 +15,10 @@ jest.mock("@libs/DatabaseClient", () => ({
 const mockContractService = {
 	create: jest.fn(),
 	browse: jest.fn(),
-	getContractBypropertySlug: jest.fn(),
+	readDetailsByPropertySlug: jest.fn(),
+	contractDetails: jest.fn(),
+	readDetails: jest.fn(),
+	deleteContract: jest.fn(),
 };
 
 const mockSend = jest.fn();
@@ -79,6 +82,88 @@ describe("Contract", () => {
 			expect(mockStatus).toHaveBeenCalledWith(200);
 			expect(mockSend).toHaveBeenCalledWith(["contract"]);
 			expect(mockContractService.browse).toHaveBeenCalledWith("user-id");
+		});
+	});
+
+	describe("Get contract by property slug", () => {
+		it("Doit retourner une erreur 401 si l'utilisateur n'est pas authentifié", async () => {
+			await contractController.getContractByPropertySlug(
+				mockUnauthentifiedReq,
+				mockRes,
+				"slug",
+			);
+			expect(mockStatus).toHaveBeenCalledWith(401);
+			expect(mockSend).toHaveBeenCalledWith();
+		});
+
+		it("Doit retourner une liste de contrats", async () => {
+			mockContractService.readDetailsByPropertySlug.mockResolvedValue([
+				"contract",
+			]);
+			await contractController.getContractByPropertySlug(
+				mockAuthentifiedReq,
+				mockRes,
+				"slug",
+			);
+			expect(mockStatus).toHaveBeenCalledWith(200);
+			expect(mockSend).toHaveBeenCalledWith(["contract"]);
+		});
+	});
+
+	describe("Contract details", () => {
+		it("Doit retourner une erreur 401 si l'utilisateur n'est pas authentifié", async () => {
+			await contractController.contractDetails(
+				mockUnauthentifiedReq,
+				mockRes,
+				"id",
+			);
+			expect(mockStatus).toHaveBeenCalledWith(401);
+			expect(mockSend).toHaveBeenCalledWith();
+		});
+
+		it("Doit retourner une NotFoundException", async () => {
+			mockContractService.readDetails.mockResolvedValue(
+				new NotFoundException(),
+			);
+			await contractController.contractDetails(
+				mockAuthentifiedReq,
+				mockRes,
+				"id",
+			);
+			expect(mockStatus).toHaveBeenCalledWith(404);
+			expect(mockSend).toHaveBeenCalledWith({ message: "Not Found" });
+		});
+
+		it("Doit retourner un statut 200 et un contrat", async () => {
+			mockContractService.readDetails.mockResolvedValue("contract");
+			await contractController.contractDetails(
+				mockAuthentifiedReq,
+				mockRes,
+				"id",
+			);
+			expect(mockStatus).toHaveBeenCalledWith(200);
+			expect(mockSend).toHaveBeenCalledWith("contract");
+		});
+	});
+
+	describe("Delete contract", () => {
+		it("Doit retourner une erreur 401 si l'utilisateur n'est pas authentifié", async () => {
+			await contractController.deleteContract(
+				mockUnauthentifiedReq,
+				mockRes,
+				"id",
+			);
+			expect(mockStatus).toHaveBeenCalledWith(401);
+			expect(mockSend).toHaveBeenCalledWith();
+		});
+
+		it("Doit retourner une erreur 404", async () => {
+			mockContractService.deleteContract.mockResolvedValue(
+				new NotFoundException(),
+			);
+			await contractController.deleteContract(mockAuthentifiedReq, mockRes, "");
+			expect(mockStatus).toHaveBeenCalledWith(404);
+			expect(mockSend).toHaveBeenCalledWith("Not Found");
 		});
 	});
 });

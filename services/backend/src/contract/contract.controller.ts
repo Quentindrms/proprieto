@@ -103,12 +103,14 @@ export class ContractController {
 		@Param("id") contractId: string,
 	) {
 		const user = request.user;
-		if (!user) return UnauthorizedException;
+		if (!user) return response.status(401).send();
 		const contract = await this.contractService.deleteContract(
 			contractId,
 			user.id,
 		);
-		if (contract instanceof NotFoundException) return NotFoundException;
+		if (contract instanceof NotFoundException) {
+			return response.status(contract.getStatus()).send(contract.message);
+		}
 		return response.status(200).send({ success: true });
 	}
 }
