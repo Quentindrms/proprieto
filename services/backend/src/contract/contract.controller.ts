@@ -50,9 +50,9 @@ export class ContractController {
 		@Body() body: UpdateContractDto,
 	) {
 		const user = request.user;
-		if (!user) return UnauthorizedException;
-		const contract = this.contractService.update(body, user.id);
-		if (!contract) return NotFoundException;
+		if (!user) return response.status(401).send();
+		const contract = await this.contractService.update(body, user.id);
+		if (!contract) return response.status(404).send({ message: "Not found" });
 		response.status(200).send({ message: "success" });
 	}
 

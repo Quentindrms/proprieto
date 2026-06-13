@@ -253,14 +253,16 @@ describe("Contract service", () => {
 		});
 
 		it("Doit retourner une NotFoundException si la transaction échoue", async () => {
-			(prisma.$transaction as jest.Mock).mockRejectedValue(new Error("error"));
+			(prisma.$transaction as jest.Mock).mockRejectedValue(
+				new NotFoundException(),
+			);
 
 			const result = await contractService.deleteContract(
 				"contract-id",
 				"user-id",
 			);
 
-			expect(result).toBe(NotFoundException);
+			expect(result).toBeInstanceOf(NotFoundException);
 		});
 	});
 });

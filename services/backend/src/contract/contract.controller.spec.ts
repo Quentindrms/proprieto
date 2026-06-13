@@ -1,6 +1,9 @@
 import { ConflictException, NotFoundException } from "@nestjs/common";
 import { Test, type TestingModule } from "@nestjs/testing";
-import type { CreateContractDto } from "@src/dto/contract.dto";
+import type {
+	CreateContractDto,
+	UpdateContractDto,
+} from "@src/dto/contract.dto";
 import type { Request, Response } from "express";
 import { ContractController } from "./contract.controller";
 import { ContractService } from "./contract.service";
@@ -18,6 +21,7 @@ const mockContractService = {
 	readDetailsByPropertySlug: jest.fn(),
 	contractDetails: jest.fn(),
 	readDetails: jest.fn(),
+	update: jest.fn(),
 	deleteContract: jest.fn(),
 };
 
@@ -36,6 +40,13 @@ describe("Contract", () => {
 		lease: 500,
 		propertyId: "property-id",
 		startDate: "01/01/2026",
+	};
+
+	const validUpdateContract: UpdateContractDto = {
+		startDate: "01/01/2025",
+		endDate: "01/01/2026",
+		lease: 500,
+		id: "id",
 	};
 
 	beforeEach(async () => {
@@ -72,6 +83,59 @@ describe("Contract", () => {
 			expect(mockStatus).toHaveBeenCalledWith(409);
 			expect(mockSend).toHaveBeenCalledWith({ message: "Conflict" });
 			expect(mockContractService.create).toHaveBeenCalledWith(validContract);
+		});
+
+		it("Doit retourner un statut 200 et un message de succès", async () => {
+			mockContractService.create.mockResolvedValue("contract");
+			await contractController.createContract(
+				mockAuthentifiedReq,
+				mockRes,
+				validContract,
+			);
+			expect(mockStatus).toHaveBeenCalledWith(200);
+			expect(mockSend).toHaveBeenCalledWith({ message: "success" });
+		});
+	});
+
+	describe("Update", () => {
+		it("Doit retourner une erreur 401", async () => {
+			mockContractService.create.mockResolvedValue(new ConflictException());
+			await contractController.createContract(
+				mockUnauthentifiedReq,
+				mockRes,
+				validContract,
+			);
+			expect(mockStatus).toHaveBeenCalledWith(401);
+			expect(mockSend).toHaveBeenCalledWith({});
+		});
+
+		it("Doit retourner une erreur 404", async () => {
+			await contractController.updateContract(
+				mockAuthentifiedReq,
+				mockRes,
+				validUpdateContract,
+			);
+			expect(mockStatus).toHaveBeenCalledWith(404);
+			expect(mockSend).toHaveBeenCalledWith({ message: "Not found" });
+			expect(mockContractService.update).toHaveBeenCalledWith(
+				validUpdateContract,
+				"user-id",
+			);
+		});
+
+		it("Doit retourner un statut 200 et un message de succès", async () => {
+			mockContractService.update.mockResolvedValue("success");
+			await contractController.updateContract(
+				mockAuthentifiedReq,
+				mockRes,
+				validUpdateContract,
+			);
+			expect(mockStatus).toHaveBeenCalledWith(200);
+			expect(mockSend).toHaveBeenCalledWith({ message: "success" });
+			expect(mockContractService.update).toHaveBeenCalledWith(
+				validUpdateContract,
+				"user-id",
+			);
 		});
 	});
 
@@ -132,6 +196,7 @@ describe("Contract", () => {
 			);
 			expect(mockStatus).toHaveBeenCalledWith(404);
 			expect(mockSend).toHaveBeenCalledWith({ message: "Not Found" });
+			expect(mockContractService.readDetails).toHaveBeenCalledWith("id");
 		});
 
 		it("Doit retourner un statut 200 et un contrat", async () => {
@@ -143,6 +208,7 @@ describe("Contract", () => {
 			);
 			expect(mockStatus).toHaveBeenCalledWith(200);
 			expect(mockSend).toHaveBeenCalledWith("contract");
+			expect(mockContractService.readDetails).toHaveBeenCalledWith("id");
 		});
 	});
 
@@ -155,6 +221,7 @@ describe("Contract", () => {
 			);
 			expect(mockStatus).toHaveBeenCalledWith(401);
 			expect(mockSend).toHaveBeenCalledWith();
+			expect(mockContractService.deleteContract).not.toHaveBeenCalled();
 		});
 
 		it("Doit retourner une erreur 404", async () => {
