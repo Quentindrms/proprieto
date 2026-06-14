@@ -19,7 +19,7 @@ export async function data(pageContext: PageContextServer) {
 	const [property, contract, income, outcome, propertyType] = await Promise.all(
 		[
 			propertyService.propertyDetails(pageContext.routeParams.slug),
-			contratService.details(pageContext.routeParams.slug),
+			contratService.detailsByPropertySlug(pageContext.routeParams.slug),
 			incomeService.incomePropertyDetails(pageContext.routeParams.slug),
 			outcomeService.outcomePropertyDetails(pageContext.routeParams.slug),
 			propertyService.browsePropertyType(),

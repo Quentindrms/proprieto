@@ -11,6 +11,10 @@ export class ClientService extends CoreService {
 		return this.get<Client[]>("/client/browse");
 	}
 
+	clientDetails(clientId: string) {
+		return this.get<Client>(`/client/${clientId}`);
+	}
+
 	edit(client: UpdateClientType) {
 		return this.patch<{ message: string }>("/client/", client);
 	}

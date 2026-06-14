@@ -82,11 +82,15 @@ export interface ContractRowData {
     period: string;
     loan: number;
     status: ContractStatus;
+    onClick: () => void;
+
 }
 
 export function ContractRow(props: ContractRowData) {
     return (
-        <tr class="last:border-0 hover:bg-background-muted/10 transition-colors">
+        <tr class="cursor-pointer last:border-0 hover:bg-background-muted/10 transition-colors"
+            onclick={props.onClick}
+        >
             <td class="px-4 py-3 text-center">
                 <Heading components="h3" size="medium">
                     {props.clientName}
