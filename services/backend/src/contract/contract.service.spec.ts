@@ -1,7 +1,7 @@
 import { prisma } from "@libs/DatabaseClient";
 import { ConflictException, NotFoundException } from "@nestjs/common";
 // biome-ignore lint/style/useImportType: required for class-validator metadata
-import { CreateContractDto } from "@src/dto/contract.dto";
+import { CreateContractDto, UpdateContractDto } from "@src/dto/contract.dto";
 import { ContractService } from "./contract.service";
 
 jest.mock("@libs/DatabaseClient", () => ({
@@ -73,6 +73,55 @@ describe("Contract service", () => {
 					startDate: new Date(startDate),
 				},
 			});
+		});
+	});
+
+	describe("Update contract", () => {
+		const validContract: UpdateContractDto = {
+			endDate: "01/01/2026",
+			lease: 100,
+			startDate: "01/01/2027",
+			id: "id",
+		};
+
+		it("Doit retourner undefined", async () => {
+			(prisma.contracts.update as jest.Mock).mockResolvedValue(undefined);
+			const result = await contractService.update(validContract, "user-id");
+			expect(prisma.contracts.update).toHaveBeenCalledWith({
+				where: {
+					id: validContract.id,
+					property: {
+						userId: "user-id",
+					},
+				},
+				data: {
+					id: validContract.id,
+					startDate: validContract.startDate,
+					endDate: validContract.endDate,
+					lease: validContract.lease,
+				},
+			});
+			expect(result).toBe(undefined);
+		});
+
+		it("Doit retourner un contrat valide", async () => {
+			(prisma.contracts.update as jest.Mock).mockResolvedValue("contract");
+			const result = await contractService.update(validContract, "user-id");
+			expect(prisma.contracts.update).toHaveBeenCalledWith({
+				where: {
+					id: validContract.id,
+					property: {
+						userId: "user-id",
+					},
+				},
+				data: {
+					id: validContract.id,
+					startDate: validContract.startDate,
+					endDate: validContract.endDate,
+					lease: validContract.lease,
+				},
+			});
+			expect(result).toBe("contract");
 		});
 	});
 
