@@ -232,5 +232,20 @@ describe("Contract", () => {
 			expect(mockStatus).toHaveBeenCalledWith(404);
 			expect(mockSend).toHaveBeenCalledWith("Not Found");
 		});
+
+		it("Doit retourner un statut 200 et un succès", async () => {
+			mockContractService.deleteContract.mockResolvedValue(true);
+			await contractController.deleteContract(
+				mockAuthentifiedReq,
+				mockRes,
+				"id",
+			);
+			expect(mockStatus).toHaveBeenCalledWith(200);
+			expect(mockSend).toHaveBeenCalledWith({ success: true });
+			expect(mockContractService.deleteContract).toHaveBeenCalledWith(
+				"id",
+				"user-id",
+			);
+		});
 	});
 });
