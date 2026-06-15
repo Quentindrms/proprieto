@@ -96,7 +96,7 @@ export class ContractController {
 		return response.status(200).send(contract);
 	}
 
-	@Delete("/:id")
+	@Delete(":id")
 	async deleteContract(
 		@Req() request: Request,
 		@Res() response: Response,
@@ -108,6 +108,21 @@ export class ContractController {
 			contractId,
 			user.id,
 		);
+		if (contract instanceof NotFoundException) {
+			return response.status(contract.getStatus()).send(contract.message);
+		}
+		return response.status(200).send({ success: true });
+	}
+
+	@Get("renew/:id")
+	async renewal(
+		@Req() request: Request,
+		@Res() response: Response,
+		@Param("id") contractId: string,
+	) {
+		const user = request.user;
+		if (!user) return response.status(401).send();
+		const contract = this.contractService.renewal(contractId, user.id);
 		if (contract instanceof NotFoundException) {
 			return response.status(contract.getStatus()).send(contract.message);
 		}

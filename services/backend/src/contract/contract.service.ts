@@ -196,4 +196,23 @@ export class ContractService {
 			return new NotFoundException();
 		}
 	}
+
+	async renewal(id: string, userId: string) {
+		try {
+			return await prisma.contracts.update({
+				where: {
+					id,
+					isRenewed: false,
+					property: {
+						userId,
+					},
+				},
+				data: {
+					isRenewed: true,
+				},
+			});
+		} catch {
+			return new NotFoundException();
+		}
+	}
 }
