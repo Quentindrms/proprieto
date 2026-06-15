@@ -71,6 +71,7 @@ export class ContractService {
 				endDate: true,
 				lease: true,
 				property: true,
+				isRenewed: true,
 				client: {
 					select: {
 						id: true,

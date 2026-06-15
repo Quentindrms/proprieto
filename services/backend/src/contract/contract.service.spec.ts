@@ -142,6 +142,7 @@ describe("Contract service", () => {
 					endDate: true,
 					lease: true,
 					property: true,
+					isRenewed: true,
 					client: {
 						select: {
 							id: true,
