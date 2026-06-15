@@ -210,5 +210,6 @@ export function useContract() {
 		estimatedIncome,
 		progression,
 		totalIncome,
+		setCreateContract,
 	};
 }

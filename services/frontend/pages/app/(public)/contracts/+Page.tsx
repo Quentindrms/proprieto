@@ -1,3 +1,4 @@
+import type { Contract } from "@app/types/contract";
 import { Badge } from "@components/badge";
 import { Board } from "@components/board";
 import { ButtonGroup } from "@components/button";
@@ -14,13 +15,18 @@ import { createSignal, For, Show } from "solid-js";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
 import CreateModal from "./modals/create";
+import RenewModal from "./modals/renew";
 
 export default function Page() {
 	const data = useData<Data>();
 
-	const [visibility, setVisibility] = createSignal<"all" | "onGoing" | "expired">("all")
+	const [visibility, setVisibility] = createSignal<
+		"all" | "onGoing" | "expired"
+	>("all");
+	const [renewContract, setRenewContract] = createSignal<Contract>();
 
 	const createModal = useModal(350);
+	const renewModal = useModal(350);
 	const contract = useContract();
 	const stats = contract.getStats(data.contracts);
 
@@ -35,6 +41,13 @@ export default function Page() {
 				isOpened={createModal.isOpened}
 			/>
 
+			<RenewModal
+				close={renewModal.close}
+				isClosing={renewModal.isClosing}
+				isOpened={renewModal.isOpened}
+				contract={renewContract()}
+			/>
+
 			<PageNamer
 				onClick={createModal.open}
 				pageName="Gestion des baux"
@@ -45,9 +58,21 @@ export default function Page() {
 			<div>
 				<ButtonGroup
 					options={[
-						{ label: "Tous les baux", value: "all", onClick: () => setVisibility("all") },
-						{ label: "Actifs", value: "active", onClick: () => setVisibility("onGoing") },
-						{ label: "Archivés", value: "archived", onClick: () => setVisibility("expired") },
+						{
+							label: "Tous les baux",
+							value: "all",
+							onClick: () => setVisibility("all"),
+						},
+						{
+							label: "Actifs",
+							value: "active",
+							onClick: () => setVisibility("onGoing"),
+						},
+						{
+							label: "Archivés",
+							value: "archived",
+							onClick: () => setVisibility("expired"),
+						},
 					]}
 				/>
 			</div>
@@ -77,7 +102,7 @@ export default function Page() {
 									clientName={`Ajouter les noms clients`}
 									contractName={contract.property.name}
 									expireDate={contract.endDate}
-									onRenew={() => { }}
+									onRenew={() => { setRenewContract(contract); renewModal.open(); }}
 								/>
 							)}
 						</For>
@@ -89,7 +114,7 @@ export default function Page() {
 					</div>
 				</div>
 			</div>
-			<Show when={visibility() === "all"} >
+			<Show when={visibility() === "all"}>
 				<Board
 					body={{
 						data: mixedContracts,
