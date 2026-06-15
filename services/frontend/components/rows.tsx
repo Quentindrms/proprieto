@@ -4,7 +4,7 @@ import {
     BsArrowUpRightCircleFill,
 } from "solid-icons/bs";
 import { Show } from "solid-js";
-import { Badge, BadgeBoard } from "./badge";
+import { Badge, BadgeBoard, StatusBadge } from "./badge";
 import Heading from "./heading";
 import Text from "./text";
 
@@ -74,7 +74,7 @@ export default function TransactionRow(props: TransactionRowData) {
     );
 }
 
-export type ContractStatus = "active" | "expiring" | "expired";
+export type ContractStatus = "active" | "expiring" | "expired" | "startSoon";
 
 export interface ContractRowData {
     clientName: string;
@@ -113,21 +113,9 @@ export function ContractRow(props: ContractRowData) {
                 </Text>
             </td>
             <td class="px-4 py-3 flex justify-center">
-                <BadgeBoard
-                    color={
-                        props.status === "active"
-                            ? "success"
-                            : props.status === "expiring"
-                                ? "warning"
-                                : "error"
-                    }
-                >
-                    {props.status === "active"
-                        ? "Actif"
-                        : props.status === "expiring"
-                            ? "Expire bientôt"
-                            : "Expiré"}
-                </BadgeBoard>
+                <StatusBadge
+                    status={props.status}
+                />
             </td>
         </tr>
     );
