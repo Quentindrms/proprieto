@@ -9,6 +9,7 @@ export interface Contract {
 	clientId: string;
 	property: Property;
 	client: {
+		id: string;
 		directory: {
 			name: string;
 			firstName: string;
