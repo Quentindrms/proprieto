@@ -18,8 +18,9 @@ export default function RenewForm(props: RenewFormProps) {
     const endDate = new Date(startDate);
     endDate.setFullYear(endDate.getFullYear() + 1);
 
-    const renewal = contract.setCreateContract({
-        clientId: props.contract.clientId,
+    const renewal = contract.setRenewContract({
+        clientId: props.contract.client.id,
+        renewContract: props.contract.id,
         propertyId: props.contract.propertyId,
         lease: props.contract.lease,
         startDate,
@@ -27,13 +28,13 @@ export default function RenewForm(props: RenewFormProps) {
     })
 
     return (
-        <Form callback={contract.create}>
+        <Form callback={contract.renew}>
             <div class="flex flex-col sm:flex-row gap-3">
                 <div class="w-full">
                     <TextField
                         type="date"
                         label="Date de début du contrat"
-                        onInput={contract.handleCreateInput("startDate")}
+                        onInput={contract.handleRenewInput("startDate")}
                         value={renewal.startDate.toLocaleDateString("fr-CA")}
                         required
                     />
@@ -50,7 +51,7 @@ export default function RenewForm(props: RenewFormProps) {
                     <TextField
                         type="date"
                         label="Date de fin du contrat"
-                        onInput={contract.handleCreateInput("endDate")}
+                        onInput={contract.handleRenewInput("endDate")}
                         value={renewal.endDate.toLocaleDateString("fr-CA")}
                         required
                     />
@@ -68,7 +69,7 @@ export default function RenewForm(props: RenewFormProps) {
             <TextField
                 type="number"
                 label="Loyer mensuel"
-                onInput={contract.handleCreateInput("lease")}
+                onInput={contract.handleRenewInput("lease")}
                 value={renewal.lease}
                 required
             />
@@ -86,7 +87,7 @@ export default function RenewForm(props: RenewFormProps) {
                         label="Propriété louée"
                         labelOptions="Sélectionner une propriété"
                         options={[{ value: props.contract.property.id, label: `${props.contract.property.name}`, disabled: false }]}
-                        onInput={contract.handleCreateInput("propertyId")}
+                        onInput={contract.handleRenewInput("propertyId")}
                         required
                     />
 
@@ -96,7 +97,7 @@ export default function RenewForm(props: RenewFormProps) {
                         label="Client concerné"
                         labelOptions="Sélectionner un client"
                         options={[{ value: props.contract.client.id, label: `${props.contract.client.directory.firstName} ${props.contract.client.directory.name}`, disabled: false }]}
-                        onInput={contract.handleCreateInput("clientId")}
+                        onInput={contract.handleRenewInput("clientId")}
                         required
                     />
                 </div>

@@ -5,6 +5,8 @@ import type { ContractRowData } from "@components/rows";
 import {
 	CreateContractSchema,
 	type CreateContractType,
+	RenewContractSchema,
+	type RenewContractType,
 	UpdateContractSchema,
 	type UpdateContractType,
 } from "@schemas/contract";
@@ -13,7 +15,7 @@ import { createSignal } from "solid-js";
 import toast from "solid-toast";
 import { navigate, reload } from "vike/client/router";
 import type { ZodSafeParseError } from "zod";
-import { onCreate, onDelete, onUpdate } from "./useContract.telefunc";
+import { onCreate, onDelete, onRenew, onUpdate } from "./useContract.telefunc";
 
 export function useContract() {
 	const [createContract, setCreateContract] = createSignal<CreateContractType>({
@@ -31,8 +33,21 @@ export function useContract() {
 		id: "",
 	});
 
+	const [renewContract, setRenewContract] = createSignal<RenewContractType>({
+		clientId: "",
+		startDate: new Date(),
+		endDate: new Date(),
+		lease: 0,
+		propertyId: "",
+		renewContract: "",
+	});
+
 	const [formError, setFormError] =
-		createSignal<ZodSafeParseError<CreateContractType | UpdateContractType>>();
+		createSignal<
+			ZodSafeParseError<
+				CreateContractType | UpdateContractType | RenewContractType
+			>
+		>();
 
 	function handleCreateInput(field: keyof CreateContractType) {
 		return (event: InputEvent) => {
@@ -54,6 +69,16 @@ export function useContract() {
 		};
 	}
 
+	function handleRenewInput(field: keyof RenewContractType) {
+		return (event: InputEvent) => {
+			const target = event.target as HTMLInputElement;
+			setRenewContract((prev) => ({
+				...prev,
+				[field]: target.value,
+			}));
+		};
+	}
+
 	async function create() {
 		const validate = CreateContractSchema.safeParse(createContract());
 		if (!validate.success) {
@@ -67,6 +92,7 @@ export function useContract() {
 			return;
 		}
 		toast.success("Contrat crée avec succès");
+		await reload();
 	}
 
 	async function update() {
@@ -82,6 +108,24 @@ export function useContract() {
 			return;
 		}
 		toast.success("Modification effectuée");
+		await reload();
+	}
+
+	async function renew() {
+		const validate = RenewContractSchema.safeParse(renewContract());
+		console.log(renewContract());
+		if (!validate.success) {
+			console.log(validate);
+			setFormError(validate);
+			return;
+		}
+		setFormError(undefined);
+		const response = await onRenew(validate.data);
+		if (response?.message !== "success") {
+			toast.error("Une erreur est survenue lors du renouvellement");
+			return;
+		}
+		toast.success("Contrat renouvelé");
 		await reload();
 	}
 
@@ -207,6 +251,7 @@ export function useContract() {
 		deleteContract,
 		handleCreateInput,
 		handleUpdateInput,
+		handleRenewInput,
 		formError,
 		setUpdateContract,
 		getStats,
@@ -214,6 +259,7 @@ export function useContract() {
 		estimatedIncome,
 		progression,
 		totalIncome,
-		setCreateContract,
+		setRenewContract,
+		renew,
 	};
 }

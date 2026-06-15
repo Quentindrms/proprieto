@@ -14,7 +14,6 @@ interface RenewModalProps {
 export default function RenewModal(props: RenewModalProps) {
     if (!props.contract) {
         props.close();
-        console.log(props.contract)
     }
     return (
         <Modal
