@@ -131,6 +131,7 @@ model Contracts {
   lease     Int      @db.Integer()
   isDeleted Boolean  @default(false) @map("is_deleted") @db.Boolean()
   isEnded   Boolean  @default(false) @map("is_endend") @db.Boolean()
+  isRenewed Boolean  @default(false) @map("is_renewed") @db.Boolean()
 
   clientId   String
   propertyId String
