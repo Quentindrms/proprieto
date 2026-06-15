@@ -118,7 +118,11 @@ export function useContract() {
 
 		return contractsList.filter((contract) => {
 			const endDate = new Date(contract.endDate);
-			return endDate >= now && endDate <= sixMonthsLater;
+			return (
+				endDate >= now &&
+				endDate <= sixMonthsLater &&
+				contract.isRenewed === false
+			);
 		});
 	}
 
