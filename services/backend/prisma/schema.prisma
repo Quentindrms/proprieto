@@ -130,6 +130,7 @@ model Contracts {
   endDate   DateTime @map("end_date")
   lease     Int      @db.Integer()
   isDeleted Boolean  @default(false) @map("is_deleted") @db.Boolean()
+  isEnded   Boolean  @default(false) @map("is_endend") @db.Boolean()
 
   clientId   String
   propertyId String
