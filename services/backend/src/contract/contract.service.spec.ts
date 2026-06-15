@@ -144,6 +144,7 @@ describe("Contract service", () => {
 					property: true,
 					client: {
 						select: {
+							id: true,
 							directory: {
 								select: {
 									name: true,
