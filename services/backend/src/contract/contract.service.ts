@@ -5,7 +5,11 @@ import {
 	NotFoundException,
 } from "@nestjs/common";
 // biome-ignore lint/style/useImportType: required for class-validator metadata
-import { CreateContractDto, UpdateContractDto } from "@src/dto/contract.dto";
+import {
+	CreateContractDto,
+	RenewContractDto,
+	UpdateContractDto,
+} from "@src/dto/contract.dto";
 
 @Injectable()
 export class ContractService {
@@ -197,19 +201,33 @@ export class ContractService {
 		}
 	}
 
-	async renewal(id: string, userId: string) {
+	async renewal(contract: RenewContractDto, userId: string) {
 		try {
-			return await prisma.contracts.update({
-				where: {
-					id,
-					isRenewed: false,
-					property: {
-						userId,
+			await prisma.$transaction(async (transaction) => {
+				const contractToRenew = await transaction.contracts.findFirstOrThrow({
+					where: {
+						id: contract.renewContract,
+						isRenewed: false,
 					},
-				},
-				data: {
-					isRenewed: true,
-				},
+				});
+				await transaction.contracts.update({
+					where: {
+						id: contractToRenew.id,
+					},
+					data: {
+						isRenewed: true,
+					},
+				});
+				await transaction.contracts.create({
+					data: {
+						startDate: new Date(contract.startDate),
+						endDate: new Date(contract.endDate),
+						lease: contract.lease,
+						clientId: contract.clientId,
+						propertyId: contract.propertyId,
+					},
+				});
+				return;
 			});
 		} catch {
 			return new NotFoundException();

@@ -14,7 +14,11 @@ import {
 	UsePipes,
 } from "@nestjs/common";
 // biome-ignore lint/style/useImportType: required for class-validator metadata
-import { CreateContractDto, UpdateContractDto } from "@src/dto/contract.dto";
+import {
+	CreateContractDto,
+	RenewContractDto,
+	UpdateContractDto,
+} from "@src/dto/contract.dto";
 import { validationPipe } from "@src/pipes/validationPipes";
 import type { Request, Response } from "express";
 //biome-ignore lint/style/useImportType: required for NestJS DI
@@ -114,18 +118,18 @@ export class ContractController {
 		return response.status(200).send({ success: true });
 	}
 
-	@Get("renew/:id")
+	@Post("renew/")
 	async renewal(
 		@Req() request: Request,
 		@Res() response: Response,
-		@Param("id") contractId: string,
+		@Body() body: RenewContractDto,
 	) {
 		const user = request.user;
 		if (!user) return response.status(401).send();
-		const contract = this.contractService.renewal(contractId, user.id);
+		const contract = this.contractService.renewal(body, user.id);
 		if (contract instanceof NotFoundException) {
 			return response.status(contract.getStatus()).send(contract.message);
 		}
-		return response.status(200).send({ success: true });
+		return response.status(200).send({ message: "success" });
 	}
 }
