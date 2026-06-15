@@ -119,6 +119,7 @@ export class ContractController {
 	}
 
 	@Post("renew/")
+	@UsePipes(validationPipe)
 	async renewal(
 		@Req() request: Request,
 		@Res() response: Response,
