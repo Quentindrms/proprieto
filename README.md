@@ -9,7 +9,10 @@ Ce projet a été réalisé dans le cadre de la soutenance du titre professionne
 ## Fonctionnalités
 
 - **Gestion des biens immobiliers** — ajout, modification et archivage des propriétés avec leur type, leur prix d'achat et leur date d'acquisition
-- **Gestion des contrats** — création et suivi des baux associant un bien à un locataire, avec leurs dates de début et de fin
+- **Gestion des contrats** — création, suivi et renouvellement des baux associant un bien à un locataire, avec leurs dates de début et de fin
+- **Statuts de contrat** — suivi de l'état de chaque contrat (actif, terminé, renouvelé) avec badge visuel
+- **Expiration automatique** — tâche planifiée qui marque automatiquement les contrats expirés chaque nuit
+- **Pages de détail** — vue détaillée par bien immobilier et par contrat
 - **Répertoire** — annuaire des locataires et des prestataires avec leurs coordonnées
 - **Finances** — suivi des revenus (loyers, etc.) et des dépenses (travaux, charges, etc.) catégorisés par bien
 - **Authentification** — inscription, connexion, réinitialisation de mot de passe et envoi d'un email de bienvenue à la création du compte
@@ -39,6 +42,7 @@ Ce projet a été réalisé dans le cadre de la soutenance du titre professionne
 | [Argon2](https://github.com/nicowillis/argon2) | Hachage des mots de passe |
 | [JOSE](https://github.com/panva/jose) | Génération et vérification des JWT |
 | [Nodemailer](https://nodemailer.com/) + [React Email](https://react.email/) | Envoi d'emails transactionnels |
+| [@nestjs/schedule](https://docs.nestjs.com/techniques/task-scheduling) | Tâches planifiées (CRON) |
 | [Jest](https://jestjs.io/) + [Supertest](https://github.com/ladjs/supertest) | Tests unitaires et d'intégration |
 
 ### Infrastructure
@@ -151,11 +155,12 @@ Les fichiers de tests se trouvent dans `services/backend/src/**/*.spec.ts` et `s
 |---|---|---|
 | Auth | `/auth` | Inscription, connexion, vérification JWT, réinitialisation de mot de passe |
 | Properties | `/property` | Gestion des biens immobiliers |
-| Contracts | `/contract` | Gestion des contrats de location |
+| Contracts | `/contract` | Gestion des contrats de location, renouvellement et suivi des statuts |
 | Incomes | `/income` | Gestion des revenus |
 | Outcomes | `/outcome` | Gestion des dépenses |
 | Clients | `/client` | Gestion des locataires |
 | Providers | `/provider` | Gestion des prestataires |
+| Tasks | — | Tâches planifiées (expiration automatique des contrats) |
 
 ---
 
