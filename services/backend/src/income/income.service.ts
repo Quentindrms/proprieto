@@ -91,6 +91,7 @@ export class IncomeService {
 		const currentMonth = await prisma.incomes.findMany({
 			orderBy: [{ issueDate: "asc" }],
 			where: {
+				isDeleted: false,
 				issueDate: {
 					gte: start,
 					lt: end,
@@ -125,5 +126,42 @@ export class IncomeService {
 			incomesValue: currentMonth.length,
 			unpaidIncomes: calculateTotalUnpaid(currentMonth),
 		};
+	}
+
+	async propertyIncomeDetails(slug: string, userId: string) {
+		try {
+			return await prisma.incomes.findMany({
+				where: {
+					isDeleted: false,
+					contract: {
+						property: {
+							slug,
+							userId,
+						},
+					},
+				},
+			});
+		} catch (error) {
+			console.trace(error);
+			return;
+		}
+	}
+
+	async contractIncomeDetails(id: string, userId: string) {
+		return await prisma.incomes.findMany({
+			where: {
+				isPaid: true,
+				isDeleted: false,
+				category: {
+					slug: "loan",
+				},
+				contract: {
+					id,
+					property: {
+						userId,
+					},
+				},
+			},
+		});
 	}
 }

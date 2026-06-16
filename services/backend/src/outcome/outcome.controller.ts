@@ -92,4 +92,20 @@ export class OutcomeController {
 		if (!outcome) return response.status(404).send({ message: "error" });
 		return response.status(200).send({ message: "success" });
 	}
+
+	@Get("/property/:slug")
+	async propertyOutcomeDetails(
+		@Req() request: Request,
+		@Res() response: Response,
+		@Param("slug") slug: string,
+	) {
+		const user = request.user;
+		if (!user) return response.status(401).send();
+		const outcomes = await this.outcomeService.propertyOutcomeDetails(
+			slug,
+			user.id,
+		);
+		if (!outcomes) return response.status(404).send();
+		return response.status(200).send(outcomes);
+	}
 }

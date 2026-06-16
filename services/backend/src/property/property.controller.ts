@@ -65,8 +65,11 @@ export class PropertyController {
 	) {
 		const user = request.user;
 		if (!user) return response.status(401).send({});
-		const deleted = await this.propertyService.deleteProperty(propertyId);
-		if (!deleted) return response.status(404).send({});
+		const deleted = await this.propertyService.deleteProperty(
+			propertyId,
+			user.id,
+		);
+		if (!deleted) return response.status(404).send({ message: "error" });
 		return response.status(200).send({ message: "success" });
 	}
 
@@ -87,5 +90,18 @@ export class PropertyController {
 		if (!user) return response.status(401).send({});
 		const properties = await this.propertyService.countProperties(user.id);
 		return response.status(200).send(properties);
+	}
+
+	@Get("details/:slug")
+	async propertyDetails(
+		@Req() request: Request,
+		@Res() response: Response,
+		@Param("slug") slug: string,
+	) {
+		const user = request.user;
+		if (!user) return response.status(401).send({});
+		const property = await this.propertyService.propertyDetails(slug, user.id);
+		if (!property) return response.status(404).send({});
+		return response.status(200).send(property);
 	}
 }

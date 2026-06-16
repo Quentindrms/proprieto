@@ -4,7 +4,7 @@ const idSchema = z.string("Identifiant créancier invalide");
 
 const nameSchema = z
 	.string()
-	.min(5, "Le nom doit contenir au moins 5 caractères")
+	.min(2, "Le nom doit contenir au moins 2 caractères")
 	.max(120, "Le nom ne peut pas contenir plus de 120 caractères");
 
 const firstNameSchema = z

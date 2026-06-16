@@ -2,6 +2,8 @@ import { z } from "zod";
 
 const idSchema = z.string("Identifiant contract invalide");
 
+const idRenewedContract = z.string("Identifiant contract invalide");
+
 const startDateSchema = z.coerce.date("Le format de date est invalide");
 
 const endDateSchema = z.coerce.date("Le format de date est invalide");
@@ -27,9 +29,17 @@ export const UpdateContractSchema = z.object({
 	startDate: startDateSchema,
 	endDate: endDateSchema,
 	lease: leaseSchema,
+});
+
+export const RenewContractSchema = z.object({
+	startDate: startDateSchema,
+	endDate: endDateSchema,
+	lease: leaseSchema,
 	propertyId: propertyIdSchema,
 	clientId: clientIdSchema,
+	renewContract: idRenewedContract,
 });
 
 export type CreateContractType = z.infer<typeof CreateContractSchema>;
 export type UpdateContractType = z.infer<typeof UpdateContractSchema>;
+export type RenewContractType = z.infer<typeof RenewContractSchema>;

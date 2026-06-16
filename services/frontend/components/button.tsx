@@ -23,9 +23,9 @@ export function Button(props: ButtonProps) {
 	const [local, rest] = splitProps(props, ["color", "icons", "children"]);
 
 	const colorClases: Record<ButtonColor, string> = {
-		green: "bg-action-green hover:bg-action-green/90",
-		red: "bg-action-red hover:bg-action-red/90",
-		blue: "bg-action-blue hover:bg-action-blue/90",
+		green: "bg-action-green/70 hover:bg-action-green/80 border border-action-green",
+		red: "bg-action-red/70 hover:bg-action-red/80 border border-action-red",
+		blue: "bg-action-blue/70 hover:bg-action-blue/80 border border-action-blue",
 	};
 
 	const IconClasses: Record<string, () => JSX.Element> = {
@@ -35,7 +35,7 @@ export function Button(props: ButtonProps) {
 	};
 
 	const globalClasses =
-		"w-3xs md:w-fit h-fit rounded-xl pr-5 pl-5 p-2 font-primary text-light cursor-pointer";
+		"w-3xs md:w-fit h-fit rounded-xl pr-5 pl-5 p-2 font-primary text-light font-bold cursor-pointer";
 
 	const flexClasses = "flex gap-5 items-center";
 	return (
@@ -70,7 +70,7 @@ export function ActionButton(props: ActionButtonProps) {
 	};
 
 	const globalClasses =
-		"rounded-xl pl-5 pr-5 p-2 font-base-bold shadow-xs shadow-background-primary w-3xs md:w-fit h-fit cursor-pointer";
+		"rounded-xl pl-5 pr-5 p-2 m-2 font-base-bold shadow-xs shadow-background-primary w-3xs md:w-fit h-fit cursor-pointer";
 
 	return (
 		<button

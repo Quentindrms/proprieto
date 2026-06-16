@@ -1,7 +1,9 @@
 {
   "packageManager": "pnpm@10.33.4",
   "pnpm": {
-    "onlyBuiltDependencies": ["esbuild"]
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   },
   "scripts": {
     "dev": "vike dev",
@@ -15,6 +17,7 @@
     "@photonjs/fastify": "^0.1.12",
     "@universal-middleware/core": "^0.4.17",
     "clsx": "^2.1.1",
+    "date-fns": "^4.4.0",
     "fastify": "^5.8.4",
     "fastify-raw-body": "^5.0.0",
     "solid-icons": "^1.2.0",

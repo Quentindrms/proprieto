@@ -1,6 +1,5 @@
 import { FiMail, FiPhone, FiUser } from "solid-icons/fi";
 import type { Client } from "../types/client";
-import { Badge } from "./badge";
 import { ActionButton } from "./button";
 import Heading from "./heading";
 import Text from "./text";
@@ -14,7 +13,7 @@ interface ClientCardProps {
 
 export function ClientCard(props: ClientCardProps) {
 	return (
-		<div class="w-xs flex flex-col p-4 bg-background-base rounded-xl gap-4 shadow-xs shadow-background-muted">
+		<div class="w-xs flex flex-col p-4 bg-background-base rounded-xl gap-4 shadow-xs shadow-background-muted hover:-translate-y-1 transition-transform">
 			<div class="flex flex-col justify-center items-center gap-2">
 				<FiUser size={90} />
 				<Heading
@@ -36,7 +35,9 @@ export function ClientCard(props: ClientCardProps) {
 				</div>
 			</div>
 			<div class="flex justify-center">
-				<ActionButton color="black" onClick={props.onClick}>Consulter le profil</ActionButton>
+				<ActionButton color="black" onClick={props.onClick}>
+					Consulter le profil
+				</ActionButton>
 			</div>
 		</div>
 	);
@@ -66,3 +67,29 @@ export function ClientList(props: ClientListProps) {
 		</div>
 	);
 }
+
+interface ClientOverviewProps {
+	client: Client,
+}
+
+export function ClientOverview(props: ClientOverviewProps) {
+	return (
+		<div class="w-xs flex flex-col p-4 bg-background-base rounded-xl gap-4 shadow-xs shadow-background-muted h-fit">
+			<div class="text-center flex-col">
+				<Heading components="h3" size="large" class="font-bold">Client</Heading>
+				<div class="bg-background-muted/30 w-3xs h-1 rounded-2xl m-2" />
+			</div>
+			<Text>Nom : {props.client.firstName} {props.client.name}</Text>
+			<div class="flex gap-1 items-center">
+				<FiPhone size={25} />
+				<Text><a href={`tel:${props.client.phone}`}>{props.client.phone}</a> </Text>
+			</div>
+			<div class="flex gap-1 items-center">
+				<FiMail size={25} />
+				<Text><a href={`mailto:${props.client.email}`}>{props.client.email}</a></Text>
+			</div>
+
+		</div>
+	)
+}
+

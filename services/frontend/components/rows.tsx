@@ -1,28 +1,29 @@
+import clsx from "clsx";
 import {
     BsArrowDownRightCircleFill,
     BsArrowUpRightCircleFill,
 } from "solid-icons/bs";
-import { FaSolidEdit, FaSolidTrashCan } from "solid-icons/fa";
-import { Badge } from "./badge";
+import { Show } from "solid-js";
+import { Badge, BadgeBoard, StatusBadge } from "./badge";
 import Heading from "./heading";
 import Text from "./text";
 
 export type TransactionType = "income" | "outcome";
 
 export interface TransactionRowData {
-    id: string,
+    id: string;
     name: string;
     amount: number;
     type: TransactionType;
     isPaid: boolean;
-    issueDate: Date,
+    issueDate: Date;
 }
 
 export default function TransactionRow(props: TransactionRowData) {
     const isIncome = () => props.type === "income";
 
     return (
-        <tr class="last:border-0 hover:bg-background-secondary transition-colors">
+        <tr class="last:border-0 hover:bg-background-muted/10 transition-colors">
             <td class="px-4 py-3">
                 <div class="flex items-center gap-3">
                     {isIncome() ? (
@@ -41,8 +42,8 @@ export default function TransactionRow(props: TransactionRowData) {
                     </Heading>
                 </div>
             </td>
-            <td class="px-4 py-3">
-                <Text size="large">
+            <td class="px-4 py-3 text-center">
+                <Text size="large" class="text-left">
                     {new Date(props.issueDate).toLocaleDateString("fr-FR")}
                 </Text>
             </td>
@@ -57,23 +58,23 @@ export default function TransactionRow(props: TransactionRowData) {
             </td>
             <td class="px-4 py-3">
                 <div class="flex justify-center">
-                    <Badge color={isIncome() ? "success" : "error"}>
-                        {isIncome() ? "Entrée" : "Sortie"}
-                    </Badge>
+                    <BadgeBoard color={isIncome() ? "success" : "error"}>
+                        {isIncome() ? "Revenu" : "Dépense"}
+                    </BadgeBoard>
                 </div>
             </td>
             <td class="px-4 py-3">
                 <div class="flex justify-center">
-                    <Badge color={props.isPaid ? "success" : "warning"}>
+                    <BadgeBoard color={props.isPaid ? "success" : "warning"}>
                         {props.isPaid ? "Payé" : "En attente"}
-                    </Badge>
+                    </BadgeBoard>
                 </div>
             </td>
         </tr>
     );
 }
 
-export type ContractStatus = "active" | "expiring" | "expired";
+export type ContractStatus = "active" | "expiring" | "expired" | "startSoon";
 
 export interface ContractRowData {
     clientName: string;
@@ -81,46 +82,40 @@ export interface ContractRowData {
     period: string;
     loan: number;
     status: ContractStatus;
+    onClick: () => void;
+
 }
 
 export function ContractRow(props: ContractRowData) {
     return (
-        <tr class="last:border-0 hover:bg-background-muted/10 transition-colors">
-            <td class="px-4 py-3">
+        <tr class="cursor-pointer last:border-0 hover:bg-background-muted/10 transition-colors"
+            onclick={props.onClick}
+        >
+            <td class="px-4 py-3 text-center">
                 <Heading components="h3" size="medium">
                     {props.clientName}
                 </Heading>
             </td>
-            <td class="px-4 py-3">
+            <td class="px-4 py-3 text-center">
                 <Text size="medium">{props.propertyName}</Text>
             </td>
-            <td class="px-4 py-3">
-                <Text size="medium">{props.period}</Text>
+            <td class="px-4 py-3 text-center">
+                <Text size="medium" bold>
+                    {props.period}
+                </Text>
             </td>
-            <td class="px-4 py-3 text-right">
-                <Text size="large">
+            <td class="px-4 py-3 text-center">
+                <Text size="large" bold>
                     {props.loan.toLocaleString("fr-FR", {
                         style: "currency",
                         currency: "EUR",
                     })}
                 </Text>
             </td>
-            <td class="px-4 py-3">
-                <Badge
-                    color={
-                        props.status === "active"
-                            ? "success"
-                            : props.status === "expiring"
-                                ? "warning"
-                                : "error"
-                    }
-                >
-                    {props.status === "active"
-                        ? "Actif"
-                        : props.status === "expiring"
-                            ? "Expire bientôt"
-                            : "Expiré"}
-                </Badge>
+            <td class="px-4 py-3 flex justify-center">
+                <StatusBadge
+                    status={props.status}
+                />
             </td>
         </tr>
     );
@@ -131,31 +126,59 @@ export interface FluxRowData {
     name: string;
     category: string;
     issueDate: string;
-    amount: string;
+    amount: number;
     type: "outcome" | "income";
+    isPaid: boolean;
     onClick: (item: Omit<FluxRowData, "onClick">) => void;
 }
 
 export function FluxRow(props: FluxRowData) {
-
     return (
-        <tr class="last:border-0 hover:bg-background-muted/10 transition-colors" onClick={() => props.onClick({ id: props.id, name: props.name, category: props.category, issueDate: props.issueDate, amount: props.amount, type: props.type })}>
-            <td class="px-4 py-3">
+        <tr
+            class="last:border-0 hover:bg-background-muted/10 transition-colors"
+            onClick={() =>
+                props.onClick({
+                    id: props.id,
+                    name: props.name,
+                    category: props.category,
+                    issueDate: props.issueDate,
+                    amount: props.amount,
+                    type: props.type,
+                    isPaid: props.isPaid,
+                })
+            }
+        >
+            <td class="px-4 py-3 text-center">
                 <Heading components="h3" size="medium">
                     {props.name}
                 </Heading>
             </td>
-            <td class="px-4 py-3">
+            <td class="px-4 py-3 text-center">
                 <Text size="medium">{props.category}</Text>
             </td>
-            <td class="px-4 py-3">
+            <td class="px-4 py-3 text-center">
                 <Text size="medium">{props.issueDate}</Text>
             </td>
-            <td class="px-4 py-3">
-                <Text size="medium">{props.amount}€</Text>
+            <td class="px-4 py-3 text-center">
+                <Text
+                    size="medium"
+                    class={clsx([
+                        props.type === "income" ? "text-action-green" : "text-action-red",
+                    ])}
+                    bold
+                >
+                    {Intl.NumberFormat("fr-FR").format(props.amount)}€
+                </Text>
+            </td>
+            <td class="px-4 py-3 flex justify-center">
+                <Show when={props.isPaid}
+                    fallback={<BadgeBoard color="warning">En attente</BadgeBoard>}
+                >
+                    <BadgeBoard color="success">Payé</BadgeBoard>
+                </Show>
             </td>
         </tr>
-    )
+    );
 }
 
 export interface ContractorRowData {
@@ -166,29 +189,87 @@ export interface ContractorRowData {
     onClick: () => void;
 }
 
-
 export function ContractorRow(props: ContractorRowData) {
     return (
-        <tr class="last:border-0 hover:bg-background-secondary transition-colors hover:bg-background-muted/10" onClick={props.onClick}>
-            <td class="px-4 py-3">
-                <Heading components="h3" size="medium" fontClasses="bold">{props.name}</Heading>
+        <tr
+            class="last:border-0 hover:bg-background-secondary transition-colors hover:bg-background-muted/10"
+            onClick={props.onClick}
+        >
+            <td class="px-4 py-3 text-center">
+                <Heading components="h3" size="medium" fontClasses="bold">
+                    {props.name}
+                </Heading>
             </td>
-            <td class="px-4 py-3">
+            <td class="px-4 py-3 text-center">
                 <Text size="medium">{props.speciality}</Text>
             </td>
-            <td class="px-4 py-3">
+            <td class="px-4 py-3 text-center">
                 <div class="flex flex-col">
                     <Text size="medium">{props.phone}</Text>
-                    <Text size="medium" class="italic text-muted-text">{props.mail}</Text>
-                </div>
-            </td>
-            <td class="px-4 py-3">
-                <div class="flex gap-5">
-                    <FaSolidEdit class="cursor-pointer" size={25} color="var(--color--dark)" />
-                    <FaSolidTrashCan class="cursor-pointer" size={25} color="var(--color-action-red)" />
+                    <Text size="medium" class="italic text-muted-text">
+                        {props.mail}
+                    </Text>
                 </div>
             </td>
         </tr>
+    );
+}
 
+interface PropertyFluxRowProps {
+    name: string,
+    date: Date,
+    amount: number,
+    isPaid: boolean,
+}
+
+export function PropertyFluxRow(props: PropertyFluxRowProps) {
+
+    return (
+        <tr
+            class="last:border-0 hover:bg-background-secondary transition-colors hover:bg-background-muted/10"
+        >
+            <td class="px-4 py-3 text-center">
+                <Text size="medium">{props.name}</Text>
+            </td>
+            <td class="px-4 py-3 text-center">
+                <Text size="medium">{props.date.toLocaleDateString("fr-FR")}</Text>
+            </td>
+            <td class="px-4 py-3 text-center">
+                <Text size="medium">{Intl.NumberFormat("fr-FR").format(props.amount)} €</Text>
+            </td>
+            <td class="px-4 py-3 flex justify-center">
+                <Show when={props.isPaid}
+                    fallback={<Badge color="warning">En attente</Badge>}
+                >
+                    <Badge color="success">Payé</Badge>
+                </Show>
+            </td>
+        </tr>
+    )
+}
+
+interface PropertyClientRowProps {
+    name: string,
+    startDate: Date,
+    endDate: Date,
+    totalAmount: number,
+}
+
+export function PropertyClientRow(props: PropertyClientRowProps) {
+
+    return (
+        <tr
+            class="last:border-0 hover:bg-background-secondary transition-colors hover:bg-background-muted/10"
+        >
+            <td class="px-4 py-3 text-center">
+                <Text size="medium">{props.name}</Text>
+            </td>
+            <td class="px-4 py-3 text-center">
+                <Text size="medium">{`${new Date(props.startDate).toLocaleDateString("fr-FR")} - ${new Date(props.endDate).toLocaleDateString("fr-FR")}`}</Text>
+            </td>
+            <td class="px-4 py-3 text-center">
+                <Text size="medium">{Intl.NumberFormat("fr-FR").format(props.totalAmount)} €</Text>
+            </td>
+        </tr>
     )
 }

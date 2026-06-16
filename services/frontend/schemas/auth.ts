@@ -2,7 +2,7 @@ import { z } from "zod";
 
 const nameSchema = z
 	.string("Le nom doit être une chaîne de caractères")
-	.min(5, "Le nom doit contenir au moins 5 caractères");
+	.min(2, "Le nom doit contenir au moins 2 caractères");
 const firstNameSchema = z
 	.string("Le prénom doit être une chaîne de caractères")
 	.min(2, "Le prénom doit contenir au moins 2 caractères")

@@ -1,20 +1,23 @@
 import { Button } from "@components/button";
 import {
-    CheckBox,
     Form,
     Select,
     TextField,
     ToggleSwitch,
 } from "@components/form";
 import Text from "@components/text";
-import { useFinance, useFinanceContext } from "@hooks/useFinance";
+import { useFinanceContext } from "@hooks/useFinance";
 import { recurrence } from "@utils/recurrence";
 import { createSignal, Show } from "solid-js";
 import { useData } from "vike-solid/useData";
 import { z } from "zod";
 import type { Data } from "../+data";
 
-export function CreateOutcomeForm() {
+interface CreateOutcomeFormProps {
+    close: () => void,
+}
+
+export function CreateOutcomeForm(props: CreateOutcomeFormProps) {
     const data = useData<Data>();
     const [isRecuring, setIsRecuring] = createSignal<boolean>(false);
     const [isPaid, setIsPaid] = createSignal<boolean>(false);
@@ -40,7 +43,7 @@ export function CreateOutcomeForm() {
     const outcome = useFinanceContext();
 
     return (
-        <Form callback={outcome.handleCreateOutcome} class="w-full">
+        <Form callback={() => outcome.handleCreateOutcome(props.close)} class="w-full">
             <TextField
                 label="Nom"
                 name="name"
@@ -210,10 +213,12 @@ export function CreateOutcomeForm() {
     );
 }
 
+interface CreateIncomeFormProps {
+    close: () => void,
+}
 
 
-
-export function CreateIncomeForm() {
+export function CreateIncomeForm(props: CreateIncomeFormProps) {
     const data = useData<Data>();
     const [isPaid, setIsPaid] = createSignal<boolean>(false);
     const [isRecuring, setIsRecuring] = createSignal<boolean>(false);
@@ -226,14 +231,14 @@ export function CreateIncomeForm() {
         disabled: false,
     }));
     const contractsList = data.contractList.map((contract) => ({
-        label: contract.property.name,
+        label: `${contract.property.name} - ${contract.client.directory.firstName} ${contract.client.directory.name}`,
         value: contract.id,
         disabled: false,
     }))
 
     return (
-        <Form callback={income.handleCreateIncome} class="w-full">
-            <TextField label="Nom" onInput={income.handleInputIncome("name")} />
+        <Form callback={() => income.handleCreateIncome(props.close)} class="w-full">
+            <TextField label="Nom" onInput={income.handleInputIncome("name")} required />
 
             {income.incomeErrors() && (
                 <Text class="text-red-500">
@@ -244,7 +249,7 @@ export function CreateIncomeForm() {
                 </Text>
             )}
 
-            <TextField label="Montant" onInput={income.handleInputIncome("amount")} />
+            <TextField label="Montant" onInput={income.handleInputIncome("amount")} required />
             {income.incomeErrors() && (
                 <Text class="text-red-500">
                     {
@@ -260,6 +265,7 @@ export function CreateIncomeForm() {
                         labelOptions="Sélectionner un contrat"
                         options={contractsList}
                         onInput={income.handleInputIncome("contractId")}
+                        required
                     />
                     {income.incomeErrors() && (
                         <Text class="text-red-500">
@@ -276,6 +282,7 @@ export function CreateIncomeForm() {
                         labelOptions="Sélectionner une catégorie"
                         options={incomeCategory}
                         onInput={income.handleInputIncome("categoryId")}
+                        required
                     />
                     {income.incomeErrors() && (
                         <Text class="text-red-500">
@@ -289,14 +296,10 @@ export function CreateIncomeForm() {
             </div>
 
             <TextField
-                label="Débiteur"
-                onInput={income.handleInputIncome("issueDate")}
-            />
-
-            <TextField
                 label="Date d'émission"
                 type="date"
                 onInput={income.handleInputIncome("issueDate")}
+                required
             />
             {income.incomeErrors() && (
                 <Text class="text-red-500">
@@ -323,6 +326,7 @@ export function CreateIncomeForm() {
                         labelOptions="Sélectionner une récurrence"
                         options={recurrence}
                         onInput={income.handleInputIncome("frequency")}
+                        required
                     />
                     {income.incomeErrors() && (
                         <Text class="text-red-500">
@@ -358,7 +362,8 @@ export function CreateIncomeForm() {
                     <TextField
                         label="Date de paiement"
                         type="date"
-                        onInput={income.handleInputIncome("isPaid")}
+                        onInput={income.handleInputIncome("paidOn")}
+                        required
                     />
                     {income.incomeErrors() && (
                         <Text class="text-red-500">

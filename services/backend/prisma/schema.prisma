@@ -84,6 +84,7 @@ model Tokens {
 model Properties {
   id            String    @id @unique @default(uuid()) @map("id_property")
   name          String    @db.VarChar(150)
+  slug          String    @db.VarChar(150)
   purchasePrice Int       @map("purchase_price") @db.Integer()
   purchaseDate  DateTime  @map("purchase_date")
   sellPrice     Int?      @map("sell_price") @db.Integer()
@@ -106,7 +107,7 @@ model Clients {
   status String @db.VarChar(50)
 
   directoriesId String
-  idDirectory   Directories @relation(fields: [directoriesId], references: [id])
+  directory     Directories @relation(fields: [directoriesId], references: [id])
   contracts     Contracts[]
 
   @@map("clients")
@@ -128,6 +129,9 @@ model Contracts {
   startDate DateTime @map("start_date")
   endDate   DateTime @map("end_date")
   lease     Int      @db.Integer()
+  isDeleted Boolean  @default(false) @map("is_deleted") @db.Boolean()
+  isEnded   Boolean  @default(false) @map("is_endend") @db.Boolean()
+  isRenewed Boolean  @default(false) @map("is_renewed") @db.Boolean()
 
   clientId   String
   propertyId String

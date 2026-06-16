@@ -5,7 +5,7 @@ async function outcomeCategory() {
 		data: [
 			{ label: "Assurance", slug: "insurance", type: "outcome" },
 			{ label: "Travaux", slug: "work", type: "outcome" },
-			{ label: "Emprunt", slug: "loan", type: "outcome" },
+			{ label: "Emprunt", slug: "credit", type: "outcome" },
 			{ label: "Eau", slug: "water", type: "outcome" },
 			{ label: "Électricité", slug: "electricity", type: "outcome" },
 		],

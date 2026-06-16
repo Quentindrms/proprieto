@@ -1,4 +1,4 @@
-import { IsDateString, IsNumber, IsUUID } from "class-validator";
+import { IsDateString, IsNumber, IsUUID, isUUID } from "class-validator";
 
 export class CreateContractDto {
 	@IsDateString()
@@ -17,4 +17,36 @@ export class CreateContractDto {
 	clientId!: string;
 }
 
-export class UpdateContractDto {}
+export class UpdateContractDto {
+	@IsUUID()
+	id!: string;
+
+	@IsDateString()
+	startDate!: string;
+
+	@IsDateString()
+	endDate!: string;
+
+	@IsNumber()
+	lease!: number;
+}
+
+export class RenewContractDto {
+	@IsDateString()
+	startDate!: string;
+
+	@IsDateString()
+	endDate!: string;
+
+	@IsNumber()
+	lease!: number;
+
+	@IsUUID()
+	propertyId!: string;
+
+	@IsUUID()
+	clientId!: string;
+
+	@IsUUID()
+	renewContract!: string;
+}

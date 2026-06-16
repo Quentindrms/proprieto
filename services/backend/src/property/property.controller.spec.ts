@@ -1,6 +1,9 @@
 import { Test, type TestingModule } from "@nestjs/testing";
-import type { PropertyTypes } from "generated/prisma/client";
-import type { CreatePropertyDto, UpdatePropertyDto } from "types/DtoType";
+import type { PropertyTypes } from "@prisma/browser";
+import type {
+	CreatePropertyDto,
+	UpdatePropertyDto,
+} from "@src/dto/property.dto";
 import {
 	mockAuthentifiedReq,
 	mockRes,
@@ -27,6 +30,7 @@ const mockPropertyService = {
 	deleteProperty: jest.fn(),
 	browseType: jest.fn(),
 	countProperties: jest.fn(),
+	propertyDetails: jest.fn(),
 };
 
 describe("Property", () => {
@@ -39,17 +43,16 @@ describe("Property", () => {
 	};
 
 	const validCreateProperty: CreatePropertyDto = {
-		isActive: true,
 		name: "property",
 		type: "house",
-		purchaseDate: new Date("01/01/2026"),
+		purchaseDate: "01/01/2026",
 		purchasePrice: 1000,
 	};
 
 	const validUpdateProperty: UpdatePropertyDto = {
 		name: "property",
 		type: "house",
-		purchaseDate: new Date("01/01/2026"),
+		purchaseDate: "01/01/2026",
 		purchasePrice: 1000,
 		id: "property-id",
 		sellDate: new Date("01/01/2026"),
@@ -182,9 +185,10 @@ describe("Property", () => {
 				);
 
 				expect(mockStatus).toHaveBeenCalledWith(404);
-				expect(mockSend).toHaveBeenCalledWith({});
+				expect(mockSend).toHaveBeenCalledWith({ message: "error" });
 				expect(mockPropertyService.deleteProperty).toHaveBeenCalledWith(
 					"property-id",
+					"user-id",
 				);
 			});
 
@@ -199,6 +203,7 @@ describe("Property", () => {
 				expect(mockSend).toHaveBeenCalledWith({ message: "success" });
 				expect(mockPropertyService.deleteProperty).toHaveBeenCalledWith(
 					"property-id",
+					"user-id",
 				);
 			});
 		});
@@ -260,6 +265,51 @@ describe("Property", () => {
 				expect(mockSend).toHaveBeenCalledWith({ message: "success" });
 				expect(mockPropertyService.create).toHaveBeenCalledWith(
 					validCreateProperty,
+					"user-id",
+				);
+			});
+		});
+
+		describe("Details", () => {
+			it("Doit retourner un statut 401 avec un message d'erreur", async () => {
+				mockPropertyService.propertyDetails.mockResolvedValue("property");
+				await propertyController.propertyDetails(
+					mockUnauthentifiedReq,
+					mockRes,
+					"slug",
+				);
+				expect(mockStatus).toHaveBeenCalledWith(401);
+				expect(mockSend).toHaveBeenCalledWith({});
+				expect(mockPropertyService.propertyDetails).not.toHaveBeenCalled();
+			});
+
+			it("Doit retourner un statut 404", async () => {
+				mockPropertyService.propertyDetails.mockResolvedValue(null);
+				const property = await propertyController.propertyDetails(
+					mockAuthentifiedReq,
+					mockRes,
+					"slug",
+				);
+				expect(mockStatus).toHaveBeenCalledWith(404);
+				expect(mockSend).toHaveBeenCalledWith({});
+				expect(mockPropertyService.propertyDetails).toHaveBeenCalledWith(
+					"slug",
+					"user-id",
+				);
+				expect(property).toBeUndefined();
+			});
+
+			it("Doit retourner un statut 200 et les détails d'une propriété", async () => {
+				mockPropertyService.propertyDetails.mockResolvedValue("property");
+				await propertyController.propertyDetails(
+					mockAuthentifiedReq,
+					mockRes,
+					"slug",
+				);
+				expect(mockStatus).toHaveBeenCalledWith(200);
+				expect(mockSend).toHaveBeenCalledWith("property");
+				expect(mockPropertyService.propertyDetails).toHaveBeenCalledWith(
+					"slug",
 					"user-id",
 				);
 			});

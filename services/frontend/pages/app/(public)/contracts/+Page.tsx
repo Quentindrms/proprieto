@@ -1,31 +1,37 @@
+import type { Contract } from "@app/types/contract";
 import { Badge } from "@components/badge";
-import { ContractBoard } from "@components/board";
+import { Board } from "@components/board";
 import { ButtonGroup } from "@components/button";
 import ContractExpireSoon from "@components/contract";
-import { CardRevenue } from "@components/dataCard";
 import Heading from "@components/heading";
 import PageNamer from "@components/pageNamer";
+import type { ContractRowData } from "@components/rows";
+import { ContractRow } from "@components/rows";
 import { useContract } from "@hooks/useContract";
 import { useModal } from "@hooks/useModal";
-import { For } from "solid-js";
+import { contractsBoardTitle } from "@libs/boardTitle";
+import clsx from "clsx";
+import { createSignal, For, Show } from "solid-js";
 import { useData } from "vike-solid/useData";
 import type { Data } from "./+data";
 import CreateModal from "./modals/create";
+import RenewModal from "./modals/renew";
 
 export default function Page() {
 	const data = useData<Data>();
 
+	const [visibility, setVisibility] = createSignal<
+		"all" | "onGoing" | "expired"
+	>("all");
+	const [renewContract, setRenewContract] = createSignal<Contract>();
+
 	const createModal = useModal(350);
+	const renewModal = useModal(350);
 	const contract = useContract();
 	const stats = contract.getStats(data.contracts);
 
-	const contractRows = data.contracts.map((contract) => ({
-		clientName: contract.clientId,
-		propertyName: contract.property.name,
-		startDate: contract.startDate,
-		endDate: contract.endDate,
-		loan: contract.lease,
-	}));
+	const allContracts = contract.sortContract(data.contracts);
+	const mixedContracts = allContracts.expired.concat(allContracts.onGoing);
 
 	return (
 		<div class="w-full flex flex-col gap-5">
@@ -33,6 +39,13 @@ export default function Page() {
 				close={createModal.close}
 				isClosing={createModal.isClosing}
 				isOpened={createModal.isOpened}
+			/>
+
+			<RenewModal
+				close={renewModal.close}
+				isClosing={renewModal.isClosing}
+				isOpened={renewModal.isOpened}
+				contract={renewContract()}
 			/>
 
 			<PageNamer
@@ -45,17 +58,38 @@ export default function Page() {
 			<div>
 				<ButtonGroup
 					options={[
-						{ label: "Tous les baux", value: "all", onClick: () => { } },
-						{ label: "Actifs", value: "active", onClick: () => { } },
-						{ label: "Archivés", value: "archived", onClick: () => { } },
+						{
+							label: "Tous les baux",
+							value: "all",
+							onClick: () => setVisibility("all"),
+						},
+						{
+							label: "Actifs",
+							value: "active",
+							onClick: () => setVisibility("onGoing"),
+						},
+						{
+							label: "Archivés",
+							value: "archived",
+							onClick: () => setVisibility("expired"),
+						},
 					]}
 				/>
 			</div>
 			<div class="flex gap-2">
-				<div class="flex flex-col w-xs md:w-md lg:w-lg p-4 gap-2 bg-background-base rounded-md">
+				<div class="flex flex-col w-md md:w-md lg:w-lg p-4 gap-2 bg-background-base rounded-xl shadow-md max-h-75 overflow-scroll">
 					<div class="flex justify-between items-center">
 						<Heading components="h3" size="medium" fontClasses="bold">
-							Baux arrivant à terme (nombre)
+							Baux arrivant à terme :{" "}
+							<span
+								class={clsx([
+									stats.endSoon.length > 1
+										? "text-action-orange"
+										: "text-action-green",
+								])}
+							>
+								{stats.endSoon.length}
+							</span>
 						</Heading>
 						<div>
 							<Badge color="warning">Action requise</Badge>
@@ -68,15 +102,47 @@ export default function Page() {
 									clientName={`Ajouter les noms clients`}
 									contractName={contract.property.name}
 									expireDate={contract.endDate}
-									onRenew={() => { }}
+									onRenew={() => { setRenewContract(contract); renewModal.open(); }}
 								/>
 							)}
 						</For>
-						{stats.endSoon.length === 0 && <Heading components="h2" size="medium">Aucun contrat expirant prochainement</Heading>}
+						{stats.endSoon.length === 0 && (
+							<Heading components="h2" size="medium">
+								Aucun contrat expirant prochainement
+							</Heading>
+						)}
 					</div>
 				</div>
 			</div>
-			<ContractBoard contracts={contractRows} />
+			<Show when={visibility() === "all"}>
+				<Board
+					body={{
+						data: mixedContracts,
+						renderRow: (item: ContractRowData) => <ContractRow {...item} />,
+					}}
+					header={{ title: contractsBoardTitle }}
+				/>
+			</Show>
+
+			<Show when={visibility() === "onGoing"}>
+				<Board
+					body={{
+						data: allContracts.onGoing,
+						renderRow: (item: ContractRowData) => <ContractRow {...item} />,
+					}}
+					header={{ title: contractsBoardTitle }}
+				/>
+			</Show>
+
+			<Show when={visibility() === "expired"}>
+				<Board
+					body={{
+						data: allContracts.expired,
+						renderRow: (item: ContractRowData) => <ContractRow {...item} />,
+					}}
+					header={{ title: contractsBoardTitle }}
+				/>
+			</Show>
 		</div>
 	);
 }

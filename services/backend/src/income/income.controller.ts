@@ -3,11 +3,13 @@ import {
 	Controller,
 	Delete,
 	Get,
+	NotFoundException,
 	Param,
 	Post,
 	Put,
 	Req,
 	Res,
+	UnauthorizedException,
 	UsePipes,
 } from "@nestjs/common";
 // biome-ignore lint/style/useImportType: required for class-validator metadata
@@ -88,5 +90,37 @@ export class IncomeController {
 		const update = await this.incomeService.update(body);
 		if (!update) return response.status(404).send({ message: "error" });
 		return response.status(200).send({ message: "success" });
+	}
+
+	@Get("/property/:slug")
+	async propertyIncomeDetails(
+		@Req() request: Request,
+		@Res() response: Response,
+		@Param("slug") slug: string,
+	) {
+		const user = request.user;
+		if (!user) return response.status(401).send();
+		const incomes = await this.incomeService.propertyIncomeDetails(
+			slug,
+			user.id,
+		);
+		if (!incomes) return response.status(404).send();
+		return response.status(200).send(incomes);
+	}
+
+	@Get("/contract/:contractId")
+	async contractIncomeDetails(
+		@Req() request: Request,
+		@Res() response: Response,
+		@Param("contractId") contractId: string,
+	) {
+		const user = request.user;
+		if (!user) return UnauthorizedException;
+		const incomes = await this.incomeService.contractIncomeDetails(
+			contractId,
+			user.id,
+		);
+		if (!incomes) return NotFoundException;
+		return response.status(200).send(incomes);
 	}
 }

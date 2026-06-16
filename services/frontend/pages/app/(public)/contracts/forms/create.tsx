@@ -81,14 +81,6 @@ export default function CreateForm() {
 						onInput={contract.handleCreateInput("propertyId")}
 						required
 					/>
-					{contract.formError() && (
-						<span class="text-red-500">
-							{
-								z.treeifyError(contract.formError()!.error).properties?.propertyId
-									?.errors[0]
-							}
-						</span>
-					)}
 				</div>
 				<div class="w-full">
 					<Select
@@ -98,14 +90,6 @@ export default function CreateForm() {
 						onInput={contract.handleCreateInput("clientId")}
 						required
 					/>
-					{contract.formError() && (
-						<span class="text-red-500">
-							{
-								z.treeifyError(contract.formError()!.error).properties?.clientId
-									?.errors[0]
-							}
-						</span>
-					)}
 				</div>
 			</div>
 
