@@ -1,4 +1,5 @@
 import { Module } from "@nestjs/common";
+import { ScheduleModule } from "@nestjs/schedule";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { AuthModule } from "./auth/auth.module";
@@ -10,6 +11,7 @@ import { OutcomeModule } from "./outcome/outcome.module";
 import { OutcomeCategoryModule } from "./outcomeCategory/outcomeCategory.module";
 import { PropertyModule } from "./property/property.module";
 import { ProviderModule } from "./provider/provider.module";
+import { TasksModule } from "./tasks/task.module";
 import { UserModule } from "./user/user.module";
 
 @Module({
@@ -24,6 +26,8 @@ import { UserModule } from "./user/user.module";
 		UserModule,
 		OutcomeCategoryModule,
 		IncomeCategoryModule,
+		ScheduleModule.forRoot(),
+		TasksModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

@@ -30,3 +30,23 @@ export class UpdateContractDto {
 	@IsNumber()
 	lease!: number;
 }
+
+export class RenewContractDto {
+	@IsDateString()
+	startDate!: string;
+
+	@IsDateString()
+	endDate!: string;
+
+	@IsNumber()
+	lease!: number;
+
+	@IsUUID()
+	propertyId!: string;
+
+	@IsUUID()
+	clientId!: string;
+
+	@IsUUID()
+	renewContract!: string;
+}
