@@ -9,7 +9,7 @@ const nameSchema = z
 
 const firstNameSchema = z
 	.string()
-	.min(5, "Le prénom doit comporter au moins 5 caractères")
+	.min(2, "Le prénom doit comporter au moins 2 caractères")
 	.max(120, "Le prénom ne peut pas comporter plus de 120 caractères");
 
 const emailSchema = z
@@ -23,7 +23,10 @@ const addressSchema = z
 
 const phoneSchema = z
 	.string()
-	.regex(/^\d{10}$/, "Le numéro de téléphone doit contenir exactement 10 chiffres");
+	.regex(
+		/^\d{10}$/,
+		"Le numéro de téléphone doit contenir exactement 10 chiffres",
+	);
 
 export const CreateClientSchema = z.object({
 	name: nameSchema,
